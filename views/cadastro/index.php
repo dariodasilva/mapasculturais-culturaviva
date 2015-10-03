@@ -61,7 +61,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             <header>
                 <a href="<?php echo $app->createUrl('cadastro', 'entidadeDados'); ?>">
                     <span class="icon"></span>
-                    <h4> 2. Dados da Entidade ou Coletivo Cultural</h4>
+                    <h4> 2. Entidade ou Coletivo Cultural</h4>
                     <span class="btn_mais"> + </span>
                 </a>
             </header>
