@@ -350,6 +350,11 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   </div>
   <script type="text/ng-template" id="modal">
     <p>Dados atualizados com sucesso!</p>
+    <p>Continue atualizando suas informações!</p>
+    <a href="/cadastro/entidadeFinanciamento/">5.Projetos Financiados</a>
+    <a href="/cadastro/articulacao/">6.Atuação e Articulação</a>
+    <a href="/cadastro/economiaViva/">7.Economia Viva</a>
+    <a href="/cadastro/formacao/">8.Formação</a>
   </script>
 
   <button class="btn-validar" ng-disabled="agent.termos_de_uso === '0'" ng-click="enviar()"> {{data.statusInscricao > 0 ? 'Atualizar' : 'Enviar'}} </button>
