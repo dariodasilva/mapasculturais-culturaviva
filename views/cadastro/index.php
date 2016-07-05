@@ -446,7 +446,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             callback(dataURL);
             canvas = null;
         };
-        img.src = '/assets/img/certificado.png';
+        img.src = '/assets/rcv/img/certificado.png';
     }
 
     var button = document.getElementById("download");
