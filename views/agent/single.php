@@ -46,7 +46,6 @@ $this->includeAngularEntityAssets($entity);
     <ul class="abas clearfix clear">
         <?php $this->applyTemplateHook('tabs','begin'); ?>
         <li class="active"><a href="#sobre">Sobre</a></li>
-        <li><a href="#agenda">Agenda</a></li>
         <?php $this->applyTemplateHook('tabs','end'); ?>
     </ul>
     <?php $this->applyTemplateHook('tabs','after'); ?>
@@ -121,12 +120,10 @@ $this->includeAngularEntityAssets($entity);
             <!-- Image Gallery BEGIN -->
                 <?php $this->part('gallery.php', array('entity'=>$entity)); ?>
             <!-- Image Gallery END -->
+            
+            <?php $this->applyTemplateHook('tab-about','end'); ?>
         </div>
         <!-- #sobre -->
-        <div id="agenda" class="aba-content">
-            <?php $this->part('agenda', array('entity' => $entity)); ?>
-        </div>
-        <!-- #agenda -->
 
         <?php $this->applyTemplateHook('tabs-content','end'); ?>
     </div>
@@ -136,12 +133,15 @@ $this->includeAngularEntityAssets($entity);
     <?php $this->part('owner', array('entity' => $entity, 'owner' => $entity->owner)); ?>
 </article>
 <div class="sidebar-left sidebar agent">
+	<!-- Related Seals BEGIN -->
+    <?php $this->part('related-seals.php', array('entity'=>$entity)); ?>
+    <!-- Related Seals END -->
+
     <?php $this->part('widget-areas', array('entity'=>$entity)); ?>
     <?php $this->part('widget-tags', array('entity'=>$entity)); ?>
     <?php $this->part('redes-sociais', array('entity'=>$entity)); ?>
 </div>
 <div class="sidebar agent sidebar-right">
-    <?php $this->part('verified', array('entity' => $entity)); ?>
     <?php if($this->controller->action == 'create'): ?>
         <div class="widget">
             <p class="alert info">Para adicionar arquivos para download ou links, primeiro é preciso salvar o agente.<span class="close"></span></p>
