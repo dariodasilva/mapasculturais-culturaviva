@@ -85,3 +85,9 @@ body {
 .controller-event #main-section {
     background-color: $gray-lighter;
 }
+
+.btn-verified {
+    &.selected {
+        background-image: url(../img/verified-icon-active.png);
+    }
+}

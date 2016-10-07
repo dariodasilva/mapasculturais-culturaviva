@@ -14,8 +14,9 @@
     <?php $this->part('messages'); ?>
     <div class="form">
         <h4>Informações Obrigatórias</h4>
-        <div class="row" ng-controller="ImageUploadCtrl">
+        <div class="row" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
             <span class="destaque espacoleft">Atividades já realizadas* <i class='hltip' title='Nos ajude a entender o histórico de seu Ponto de Cultura e as atividades desenvolvidas nele.'>?</i></span>
+
             <div class="colunm-20">
                 <div class="file-item">
                     <a ng-if="agent.files.portifolio" href="#" class="exclui" ng-click="deleteFile(agent.files.portifolio)" title="Excluir Portfólio">x</a>
@@ -53,8 +54,8 @@
                 </p>
             </label>
       </div>
-      <div class="row" ng-controller="ImageUploadCtrl">
-        <div ng-if="agent_entidade.tipoOrganizacao == 'coletivo'">
+      <div class="row" ng-if="agent_entidade.tipoOrganizacao == 'coletivo'">
+        <div ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
           <h4>Carta de Autorização de Coletivo sem Constituição Jurídica</h4>
             <div class="colunm-20">
               <div class="file-item">
@@ -84,7 +85,7 @@
         </div>
         <div class="row">
             <span class="destaque espacoleft">Carta de Reconhecimento * <i class='hltip' title='As cartas de apoio nos ajudam a entender como o Ponto de Cultura se conecta com a comunidade ao seu redor e certifica a participação da comunidade no processo.'>?</i></span>
-            <div class="colunm-20" ng-controller="ImageUploadCtrl">
+            <div class="colunm-20" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
               <div class="file-item">
                   <a ng-if="agent.files.carta1" href="#" class="exclui" ng-click="deleteFile(agent.files.carta1)" title="Excluir Carta de Recomendação">x</a>
                   <div type="file" ngf-select="uploadFile($file, 'carta1')" accept="config.pdf.validation" ngf-max-size="config.pdf.maxUploadSize" title="{{agent.files.carta1 ? 'Clique para alterar a carta de recomendação' : 'Clique para incluir uma carta de recomendação'}}">
@@ -97,7 +98,7 @@
                   <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
               </div>
             </div>
-            <div class="colunm-20" ng-controller="ImageUploadCtrl">
+            <div class="colunm-20" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
               <div class="file-item">
                   <a ng-if="agent.files.carta2" href="#" class="exclui" ng-click="deleteFile(agent.files.carta2)" title="Excluir Portfólio">x</a>
                   <div type="file" ngf-select="uploadFile($file, 'carta2')" accept="config.pdf.validation" ngf-max-size="config.pdf.maxUploadSize" title="{{agent.files.carta2 ? 'Clique para alterar a carta de recomendação' : 'Clique para incluir uma carta de recomendação'}}">
@@ -105,7 +106,7 @@
                       <img ng-if="agent.files.carta2" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
                   </div>
               </div>
-              <a ng-if="agent.files.carta2" href="{{agent.files.portifolio.url}}" target="_blank">{{agent.files.carta2.name}}</a>
+              <a ng-if="agent.files.carta2" href="{{agent.files.carta2.url}}" target="_blank">{{agent.files.carta2.name}}</a>
               <div class="progress row" ng-show="f.progress >= 0">
                   <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
               </div>
@@ -209,7 +210,7 @@
 
         </div>
         <div class="clear"></div>
-        <div class="row" ng-controller="ImageUploadCtrl">
+        <div class="row" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
             <span class="destaque espacoleft">Fotos de Divulgação do Ponto de Cultura <i class='hltip' title='Essas imagens devem mostrar as atividades que seu Ponto de Cultura desenvolve'>?</i></span>
             <p class="espacoleft">Inclua no máximo 10 arquivos, no formato JPG ou PNG com até 1MB</p>
             <div class="img_updade file-item" ng-repeat="f in agent.files.gallery">

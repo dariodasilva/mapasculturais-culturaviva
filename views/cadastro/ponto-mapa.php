@@ -24,12 +24,12 @@ border-color: gray;
           <label class="colunm-full">
 
 
-            <div class="img_updade" ng-controller="ImageUploadCtrl">
+            <div class="img_updade" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
                 <div class="file-item">
-                    <a ng-if="agent.files.logoponto" class="exclui" ng-click="deleteFile(agent.files.logoponto)" title="Excluir arquivo">x</a>
-                    <div type="file" ngf-select="uploadFile($file, 'logoponto')" accept="config.image.validation" ngf-max-size="config.image.maxUploadSize" title="{{agent.files.logoponto ? 'Clique para alterar a logo' : 'Clique para incluir uma logo'}}">
-                      <img ng-if="!agent.files.logoponto" src="<?php $this->asset('img/incluir_img.png') ?>" width="160" height="138">
-                      <img ng-if="agent.files.logoponto" src="{{agent.files.logoponto.url}}" width="160" height="138">
+                    <a ng-if="agent.files.avatar" class="exclui" ng-click="deleteFile(agent.files.avatar)" title="Excluir arquivo">x</a>
+                    <div type="file" ngf-select="uploadFile($file, 'avatar')" accept="config.image.validation" ngf-max-size="config.image.maxUploadSize" title="{{agent.files.avatar ? 'Clique para alterar a logo' : 'Clique para incluir uma logo'}}">
+                        <img ng-if="!agent.files.avatar" src="<?php $this->asset('img/incluir_img.png') ?>" width="160" height="138">
+                        <img ng-if="agent.files.avatar" src="{{agent.files.avatar.url}}" width="160" height="138">
                     </div>
                 </div>
                 <div class="progress row" ng-show="f.progress >= 0">
