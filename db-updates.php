@@ -30,8 +30,6 @@ return [
             $conn->executeQuery("INSERT INTO agent_meta (object_id, key, value) VALUES ('{$ids->agentePonto}', 'rcv_tipo', 'ponto')");
         }
     },
-            
-            
     'migra avatar dos pontos para o agente responsável' => function() use($app, $conn) {
         $umeta = $conn->fetchAll("SELECT value FROM user_meta WHERE key = 'redeCulturaViva';");
 
@@ -97,11 +95,11 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
             $obj = json_decode($meta['value']);
 
             $avatar = $conn->fetchAssoc("
-                SELECT 
-                    * 
-                FROM 
-                    file 
-                WHERE 
+                SELECT
+                    *
+                FROM
+                    file
+                WHERE
                     object_type = 'MapasCulturais\Entities\Agent' AND
                     object_id = {$obj->agentePonto} AND
                     grp = 'avatar'
@@ -110,11 +108,11 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
 //                var_dump($avatar);
                 $fid = $avatar['id'];
                 $thumbs = $conn->fetchAll("
-                    SELECT 
-                        * 
-                    FROM 
-                        file 
-                    WHERE 
+                    SELECT
+                        *
+                    FROM
+                        file
+                    WHERE
                         object_type = 'MapasCulturais\Entities\Agent' AND
                         object_id = {$obj->agentePonto} AND
                         parent_id = {$fid}
@@ -130,5 +128,33 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
         echo "\nrenomeando grupo logoponto para avatar\n";
         $conn->executeQuery("UPDATE file SET grp = 'avatar' WHERE grp = 'logoponto'");
     },
-    ];
-        
+    'add default seal' => function() use($app, $conn){
+        echo 'criando selo "Ponto de Cultura"';
+        $agent_id = $app->config['rcv.admin'];
+        $conn->executeQuery("
+            INSERT INTO seal (agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
+            VALUES ($agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
+    },
+    'add default seal to verified entities' => function() use($app, $conn) {
+        echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
+        $agent_id = $app->config['rcv.admin'];
+        $seal_id = $conn->fetchColumn('SELECT MIN(id) FROM seal WHERE agent_id = $agent_id');
+        $conn->executeQuery("
+            INSERT INTO seal_relation
+            SELECT
+                nextval('seal_relation_id_seq'),
+                1,
+                s.id,
+                CURRENT_TIMESTAMP,
+                1,
+                'MapasCulturais\Entities\Space',
+                $agent_id
+            FROM space s
+                    JOIN space_meta sm
+                        ON sm.object_id = s.id
+                        AND sm.key = 'rcv_tipo'
+                        AND sm.value = 'ponto'
+            WHERE s.is_verified = 't';"
+        );
+    }
+];
