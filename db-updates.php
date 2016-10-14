@@ -40,7 +40,7 @@ return [
     'add default seal to verified entities' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
         $agent_id = $app->config['rcv.admin'];
-        $seal_id = $conn->fetchColumn('SELECT MIN(id) FROM seal WHERE agent_id = $agent_id');
+        $seal_id = $conn->fetchColumn("SELECT MIN(id) FROM seal WHERE agent_id = $agent_id");
         $conn->executeQuery("
             INSERT INTO seal_relation
             SELECT
