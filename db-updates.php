@@ -128,14 +128,14 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
         echo "\nrenomeando grupo logoponto para avatar\n";
         $conn->executeQuery("UPDATE file SET grp = 'avatar' WHERE grp = 'logoponto'");
     },
-    'add default seal' => function() use($app, $conn){
-        echo 'criando selo "Ponto de Cultura"';
+    'rcv: add default seal for cultura viva' => function() use($app, $conn){
         $agent_id = $app->config['rcv.admin'];
+        echo "criando selo \"Ponto de Cultura\" to user $agent_id'";
         $conn->executeQuery("
             INSERT INTO seal (id, agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
             VALUES (nextval('seal_id_seq'), $agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
     },
-    'add default seal to verified agent' => function() use($app, $conn) {
+    'rcv: add default seal culturaviva to verified agents' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
         $agent_id = $app->config['rcv.admin'];
         $seal_id = $conn->fetchColumn("SELECT MIN(id) FROM seal WHERE agent_id = $agent_id");
