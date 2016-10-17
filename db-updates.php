@@ -30,14 +30,14 @@ return [
             $conn->executeQuery("INSERT INTO agent_meta (object_id, key, value) VALUES ('{$ids->agentePonto}', 'rcv_tipo', 'ponto')");
         }
     },
-    'add default seal' => function() use($app, $conn){
-        echo 'criando selo "Ponto de Cultura"';
+    'rcv: add default seal' => function() use($app, $conn){
         $agent_id = $app->config['rcv.admin'];
+        echo "criando selo \"Ponto de Cultura\" to user $agent_id'";
         $conn->executeQuery("
             INSERT INTO seal (id, agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
             VALUES (nextval('seal_id_seq'), $agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
     },
-    'add default seal to verified agent' => function() use($app, $conn) {
+    'rcv: add default seal culturaviva to verified agents' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
         $agent_id = $app->config['rcv.admin'];
         $seal_id = $conn->fetchColumn("SELECT MIN(id) FROM seal WHERE agent_id = $agent_id");
