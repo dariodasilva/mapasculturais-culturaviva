@@ -132,8 +132,8 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
         echo 'criando selo "Ponto de Cultura"';
         $agent_id = $app->config['rcv.admin'];
         $conn->executeQuery("
-            INSERT INTO seal (agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
-            VALUES ($agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
+            INSERT INTO seal (id, agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
+            VALUES (nextval('seal_id_seq'), $agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
     },
     'add default seal to verified agent' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
