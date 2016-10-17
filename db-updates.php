@@ -135,7 +135,7 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
             INSERT INTO seal (agent_id, name, short_description, valid_period, create_timestamp, status, update_timestamp )
             VALUES ($agent_id, 'Ponto de Cultura', 'Ponto de Cultura', 0, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP);");
     },
-    'add default seal to verified entities' => function() use($app, $conn) {
+    'add default seal to verified agent' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
         $agent_id = $app->config['rcv.admin'];
         $seal_id = $conn->fetchColumn("SELECT MIN(id) FROM seal WHERE agent_id = $agent_id");
@@ -143,14 +143,14 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
             INSERT INTO seal_relation
             SELECT
                 nextval('seal_relation_id_seq'),
-                1,
+                $seal_id,
                 s.id,
                 CURRENT_TIMESTAMP,
                 1,
-                'MapasCulturais\Entities\Space',
+                'MapasCulturais\Entities\Agent',
                 $agent_id
-            FROM space s
-                    JOIN space_meta sm
+            FROM agent s
+                    JOIN agent_meta sm
                         ON sm.object_id = s.id
                         AND sm.key = 'rcv_tipo'
                         AND sm.value = 'ponto'
