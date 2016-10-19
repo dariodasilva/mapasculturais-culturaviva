@@ -41,7 +41,16 @@ section{
         text-transform: uppercase;
         width: 220px;
     }
+}
 
+.infobox-open {
+    section {
+        max-width: initial;
+    }
+}
+
+#editable-entity {
+    max-width: 96%;
 }
 
 #page-entrada{

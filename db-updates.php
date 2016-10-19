@@ -40,7 +40,23 @@ return [
     'rcv: add default seal culturaviva to verified agents' => function() use($app, $conn) {
         echo 'Adicionando o selo "Ponto de Cultura" para as entidades verificadas';
         $agent_id = $app->config['rcv.admin'];
-        $seal_id = $conn->fetchColumn("SELECT MIN(id) FROM seal WHERE agent_id = $agent_id");
+        $seal_id = $conn->fetchColumn("SELECT MAX(id) FROM seal WHERE agent_id = $agent_id");
+        // Remove auto created seals in other updates ("Selo Mapas") to agents with rcv_tipo = 'ponto'
+        $conn->executeQuery("
+            DELETE FROM seal_relation
+            WHERE
+                object_type = 'MapasCulturais\Entities\Agent'
+                AND object_id IN (
+                    SELECT s.id
+                    FROM agent s
+                        JOIN agent_meta sm
+                            ON sm.object_id = s.id
+                            AND sm.key = 'rcv_tipo'
+                            AND sm.value = 'ponto'
+                    WHERE s.is_verified = 't'
+                )"
+        );
+        // Insert new default seals to agent with rcv_tipo = 'ponto'
         $conn->executeQuery("
             INSERT INTO seal_relation
             SELECT
@@ -52,10 +68,10 @@ return [
                 'MapasCulturais\Entities\Agent',
                 $agent_id
             FROM agent s
-                    JOIN agent_meta sm
-                        ON sm.object_id = s.id
-                        AND sm.key = 'rcv_tipo'
-                        AND sm.value = 'ponto'
+                JOIN agent_meta sm
+                    ON sm.object_id = s.id
+                    AND sm.key = 'rcv_tipo'
+                    AND sm.value = 'ponto'
             WHERE s.is_verified = 't';"
         );
     }
