@@ -171,7 +171,7 @@ return [
         'telefone3',
         'telefone3_operadora',
         'telefonePublico',
-	'telegram',
+	    'telegram',
         'tem_sede',
         'tipoCertificacao',
         'tipoFomento',
@@ -182,6 +182,7 @@ return [
         'twitter',
         'type',
         'youtube',
-	'whatsapp'
+	    'whatsapp'
     ),
+    'rcv.admin' => 1,
 ];
