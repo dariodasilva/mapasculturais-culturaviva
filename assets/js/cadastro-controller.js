@@ -1295,7 +1295,7 @@
              }).success(function(dados){
                 window.name = dados[0].name;
                 window.url = aux.concat(dados[0].user.id);
-                $scope.urlQRCODE = window.url;
+                $scope.urlQRCODE = aux+agent_id;
                 $scope.show = dados[0].homologado_rcv;
             });
     }]);
