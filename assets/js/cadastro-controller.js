@@ -535,7 +535,7 @@
 
             var agent_id;
             $scope.init = function(rcv_tipo){
-                
+
                 if(rcv_tipo === 'responsavel'){
                     agent_id = MapasCulturais.redeCulturaViva.agenteIndividual;
                 }else if(rcv_tipo === 'entidade'){
@@ -543,7 +543,7 @@
                 } else{
                     agent_id = MapasCulturais.redeCulturaViva.agentePonto;
                 }
-                
+
                 var params = {
                     'id': agent_id,
                     '@select': 'id,files',
@@ -555,7 +555,7 @@
                 $scope.agent.$promise.then(function(){
                     $scope.agent.files.gallery = $scope.agent.files.gallery || [];
                 });
-                
+
             };
 
             $scope.config = {
@@ -698,7 +698,7 @@
                 $scope.showInvalid($scope.agent.rcv_tipo, 'form_portifolio');
               }
             });
-            
+
 
             $scope.agent_entidade = Entity.get(params_entidade);
             $scope.agent_ponto = Entity.get(params_ponto);
@@ -1319,7 +1319,7 @@
              }).success(function(dados){
                 window.name = dados[0].name;
                 window.url = aux.concat(dados[0].user.id);
-                $scope.urlQRCODE = window.url;
+                $scope.urlQRCODE = aux+agent_id;
                 $scope.show = dados[0].homologado_rcv;
             });
     }]);
