@@ -1314,13 +1314,13 @@
                 'id': 'EQ('+agent_id+')'
             };
 
-             $http.get("/api/agent/find",{
+             $http.get("/api/agent/findOne",{
                  params: params
              }).success(function(dados){
-                window.name = dados[0].name;
-                window.url = aux.concat(dados[0].user.id);
-                $scope.urlQRCODE = aux+agent_id;
-                $scope.show = dados[0].homologado_rcv;
+                window.name = dados.name;
+                window.url = aux.concat(dados.id);
+                $scope.urlQRCODE = dados.id;
+                $scope.show = dados.homologado_rcv;
             });
     }]);
 
