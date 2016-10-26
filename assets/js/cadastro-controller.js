@@ -1319,7 +1319,7 @@
              }).success(function(dados){
                 window.name = dados.name;
                 window.url = aux.concat(dados.id);
-                $scope.urlQRCODE = dados.id;
+                $scope.urlQRCODE = window.url;
                 $scope.show = dados.homologado_rcv;
             });
     }]);
