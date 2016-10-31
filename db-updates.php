@@ -61,7 +61,7 @@ return [
         $conn->executeQuery("
             INSERT INTO seal_relation
             SELECT
-                (SELECT MAX(id) + 1 FROM seal_relation),
+                (SELECT nextval('seal_relation_id_seq')),
                 $seal_id,
                 s.id,
                 CURRENT_TIMESTAMP,
