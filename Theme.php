@@ -13,8 +13,27 @@ class Theme extends BaseV1\Theme{
 
     public function __construct(\MapasCulturais\AssetManager $asset_manager) {
         parent::__construct($asset_manager);
+        $app = App::i();
+        $view = $this;
+        $app->hook('mapasculturais.run:before', function() use($view){
+            $view->initUsermeta();
+        });
     }
 
+    function initUsermeta(){
+        $app = App::i();
+
+        if (!$app->user->is('guest')) {
+            $this->_usermeta = json_decode($app->user->redeCulturaViva);
+
+            if($this->_usermeta) {
+                $this->_inscricao   = $app->repo('Registration')->find($this->_usermeta->inscricao);
+                $this->_responsavel = $app->repo('Agent')->find($this->_usermeta->agenteIndividual);
+                $this->_entidade    = $app->repo('Agent')->find($this->_usermeta->agenteEntidade);
+                $this->_ponto       = $app->repo('Agent')->find($this->_usermeta->agentePonto);
+            }
+        }
+    }
 
     protected static function _getTexts(){
         return array(
