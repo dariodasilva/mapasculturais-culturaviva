@@ -1,0 +1,90 @@
+<div ng-controller="CertificadorFormularioCtrl" ng-cloak>
+    <tc-form name="formCertificador" on-save="salvar()">
+        <div class="col-md-12">
+            <tc-notitication id="formulario"></tc-notitication>
+        </div>
+
+        <!--Só permite alterar o agente quando é um novo cadastro-->
+        <tc-input
+            ng-model="dto.agentName"
+            label="Agente Certificador"
+            help="Selecione o Agente Certificador."
+            col-input="4"
+            required="true"
+            readonly="true"
+            ng-click="ref.buscarAgente = ref.novoRegistro ? true : false;"
+            ng-show="!ref.buscarAgente"
+            style="cursor: pointer"
+            >
+        </tc-input>
+
+        <div class="col-md-4" ng-show="ref.buscarAgente">
+            <div class="card-pf card-pf-utilization card-pf-accented">
+                <div class="card-pf-heading">
+                    <h2 class="card-pf-title">
+                        Selecionar Agente
+                    </h2>
+                </div>
+                <div class="card-pf-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <tc-input-search
+                                    on-submit="filtrarAgente(ref.filtrarAgenteTexto)"
+                                    ng-model="ref.filtrarAgenteTexto"
+                                    placeholder="Digite o nome do agente para consultar"
+                                    >
+                                </tc-input-search>
+                                <div class="col-md-12">
+                                    <br />
+                                    <tc-notitication id="bag-filtro-agentes"></tc-notitication>
+
+                                    <div class="list-group list-view-pf text-left">
+                                        <div
+                                            class="list-group-item list-view-pf-stacked"
+                                            ng-repeat="agente in agentes"
+                                            ng-click="selecionarAgente(agente)"
+                                            >
+                                            <div class="list-view-pf-main-info">
+                                                <div class="list-view-pf-body">
+                                                    <div class="list-view-pf-description">
+                                                        <div class="list-group-item-heading">
+                                                            #{{agente.id}} - {{agente.name}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" text-right">
+                                        <button
+                                            class="btn btn-primary primary-action"
+                                            type="button"
+                                            ng-click="ref.buscarAgente = false"
+                                            >
+                                            <span class="fa fa-trash"></span>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <tc-select
+            ng-model="dto.type"
+            label="Tipo de Certificador"
+            help="Selecione o tipo do certificador sendo cadastrado."
+            col-input="4"
+            field="label"
+            order="codigo"
+            options="tipos"
+            required="true"
+            >
+        </tc-select>
+    </tc-form>
+</div>

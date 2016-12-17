@@ -1,0 +1,27 @@
+<div ng-controller="PaginaCtrl" id="page-wraper" block-ui="main" ng-cloak>
+
+    <!--Menu superior, header-->
+    <div ng-include="'/assets/modules/base/templates/BarraNavegacao.html'"></div>
+
+    <div class="container main-container" id="page-content-container">
+        <ol class="breadcrumb" ng-if="page.breadcrumb">
+            <li ng-repeat="item in page.breadcrumb">
+                <a ui-sref="{{item.sref}}" ng-if="item.sref">{{item.title}}</a>
+                <span ng-if="!item.sref">{{item.title}}</span>
+            </li>
+            <li>{{page.title}}</li>
+        </ol>
+
+        <header class="page-header">
+            <h1>{{page.title}}</h1>
+            <p class="lead" ng-if="page.subTitle">{{page.subTitle}}</p>
+        </header>
+
+        <!--Exibe mensagens de notificações gerais-->
+        <tc-notitication></tc-notitication>
+
+        <!--conteúdo da página-->
+        <ui-view/>
+    </div>
+</div>
+

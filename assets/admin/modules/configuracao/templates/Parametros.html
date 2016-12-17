@@ -1,0 +1,19 @@
+<div ng-controller="ParametrosCtrl" ng-cloak>
+    <tc-form on-save="salvar()" on-clear="limpar()">
+        <tc-input-number
+            ng-model="dto.civil"
+            label="Quantidade de Certificadores da Sociedade Civil"
+            col-input="2"
+            required="true"
+            >
+        </tc-input-number>
+
+        <tc-input-number
+            ng-model="dto.government"
+            label="Quantidade de Certificadores do Poder Público"
+            col-input="2"
+            required="true"
+            >
+        </tc-input-number>
+    </tc-form>
+</div>

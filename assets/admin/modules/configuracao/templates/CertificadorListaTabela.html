@@ -1,0 +1,93 @@
+<div>
+    <tc-form buttons="buttons">
+        <div class="col-md-12">            
+            <div class="list-group list-view-pf list-view-pf-view" ng-show="certificadores.length > 0">
+                <div class="list-group-item" ng-repeat="certificador in certificadores| orderBy: '-isActive'">
+
+                    <div class="list-view-pf-actions">                        
+                        <button class="btn btn-primary" type="button">
+                            Editar
+                        </button>
+                    </div>
+
+                    <div class="list-view-pf-main-info">
+                        <div class="list-view-pf-left">
+                            <span 
+                                class="pficon pficon-ok list-view-pf-icon-md list-view-pf-icon-success"
+                                ng-show="certificador.isActive"
+                                title="Ativo"
+                                >                                    
+                            </span>
+                            <span 
+                                class="pficon pficon-error-circle-o list-view-pf-icon-md list-view-pf-icon-danger"
+                                ng-hide="certificador.isActive"
+                                title="Inativo"
+                                >                                    
+                            </span>
+                        </div>
+                        <div class="list-view-pf-body">
+                            <div class="list-view-pf-description">
+                                <div class="list-group-item-heading">
+                                    {{certificador.agentName}}
+                                </div>
+
+                            </div>
+                            <div class="list-view-pf-additional-info">
+                                <div class="list-view-pf-additional-info-item" title="4 Processos Pendentes">
+                                    <span class="pficon  glyphicon glyphicon-time"></span>
+                                    <strong>4</strong> Pendentes
+                                </div>
+                                <div class="list-view-pf-additional-info-item" title="2 Processos Em Análise">
+                                    <span class="pficon  glyphicon glyphicon-play-circle"></span>
+                                    <strong>2</strong> Em Análise
+                                </div>
+                                <div class="list-view-pf-additional-info-item" title="10 Processos Finalizados">
+                                    <span class="pficon  glyphicon glyphicon-ok-circle"></span>
+                                    <strong>10</strong> Finalizados
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            <table class="table table-striped table-bordered table-hover" ng-show="certificadores.length > 0">
+                            <caption>Lista de Agentes Certificadores {{descricao}}</caption>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome</th>
+                                    <th>Status</th>
+                                    <th>Criado em</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="certificador in certificadores| orderBy: '-isActive'">
+                                    <th scope="row">{{certificador.id}}</th>
+                                    <td>{{certificador.name}}</td>
+                                    <td>{{certificador.isActive ? 'Ativo': 'Inativo'}}</td>
+                                    <td>{{certificador.createdAt}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button">
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>-->
+            <div class="blank-slate-pf" ng-hide="certificadores.length > 0" style="margin-top: 20px;">
+                <div class="blank-slate-pf-icon">
+                    <span class="fa fa-ban"></span>
+                </div>
+                <h2>
+                    Nenhum Agente Certificador cadastrado!
+                </h2>
+                <p>
+                    Adicione novos agentes certificadores {{descricao}} pelo botão
+                    <strong>Adicionar Certificador</strong> abaixo.
+                </p>
+            </div>
+        </div>
+    </tc-form>
+</div>

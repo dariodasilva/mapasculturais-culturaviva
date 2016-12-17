@@ -1,9 +1,12 @@
 <?php
+
 namespace CulturaViva;
+
 use MapasCulturais\Themes\BaseV1;
 use MapasCulturais\App;
 
-class Theme extends BaseV1\Theme{
+class Theme extends BaseV1\Theme {
+
     /**
      * Controller Cadastro
      *
@@ -15,14 +18,12 @@ class Theme extends BaseV1\Theme{
         parent::__construct($asset_manager);
     }
 
-
-    protected static function _getTexts(){
+    protected static function _getTexts() {
         return array(
             'site: owner' => 'Ministério da Cultura',
             'site: by the site owner' => 'pelo Ministério da Cultura',
             'search: verified results' => 'Pontos Certificados',
             'search: verified' => "Certificados",
-
         );
     }
 
@@ -30,12 +31,12 @@ class Theme extends BaseV1\Theme{
         return __DIR__;
     }
 
-    function aprovado(){
+    function aprovado() {
         $inscricao = $this->_cadastro->getInscricao();
         return $inscricao->status === \MapasCulturais\Entities\Registration::STATUS_APPROVED;
     }
 
-    protected function _init(){
+    protected function _init() {
         parent::_init();
         $app = App::i();
 
@@ -44,17 +45,18 @@ class Theme extends BaseV1\Theme{
         $this->_enqueueStyles();
         $this->_enqueueScripts();
         $this->_publishAssets();
+        $this->_adminAssets();
         $this->assetManager->publishAsset('img/icon-diaspora.png', 'img/icon-diaspora.png');
         $this->assetManager->publishAsset('img/icon-telegram.png', 'img/icon-telegram.png');
         $this->assetManager->publishAsset('img/icon-instagram.png', 'img/icon-instagram.png');
         $this->assetManager->publishAsset('img/icon-whatsapp.png', 'img/icon-whatsapp.png');
         $this->assetManager->publishAsset('img/icon-culturadigital.png', 'img/icon-culturadigital.png');
 
-        $app->hook('GET(site.index):before', function() use ($app){
-            $app->redirect($app->createUrl('cadastro','index'));
+        $app->hook('GET(site.index):before', function() use ($app) {
+            $app->redirect($app->createUrl('cadastro', 'index'));
         });
 
-        if($redeCulturaViva = $this->_cadastro->getUsermeta()) {
+        if ($redeCulturaViva = $this->_cadastro->getUsermeta()) {
             $this->jsObject['redeCulturaViva'] = $redeCulturaViva;
             $inscricao = $this->_cadastro->getInscricao();
 
@@ -66,7 +68,7 @@ class Theme extends BaseV1\Theme{
         $this->assetManager->publishAsset('img/banner-home2.jpg', 'img/banner-home2.jpg');
         $this->assetManager->publishAsset('img/certificado.png', 'img/certificado.png');
 
-        $app->hook('view.render(site/search):before', function(){
+        $app->hook('view.render(site/search):before', function() {
             $this->jsObject['searchFilters'] = [
                 'agent' => ['rcv_tipo' => 'EQ(ponto)']
             ];
@@ -83,9 +85,9 @@ class Theme extends BaseV1\Theme{
             $this->jsObject['assets']['pinAgent'] = $this->asset('img/pin-agente.png', false);
         });
 
-        $app->hook('view.render(<<*>>):before', function() use($app){
-            $this->jsObject['apiCNPJ']  = $app->config['rcv.apiCNPJ'];
-            $this->jsObject['apiCNPJRF']  = $app->config['rcv.apiCNPJRF'];
+        $app->hook('view.render(<<*>>):before', function() use($app) {
+            $this->jsObject['apiCNPJ'] = $app->config['rcv.apiCNPJ'];
+            $this->jsObject['apiCNPJRF'] = $app->config['rcv.apiCNPJRF'];
             $this->jsObject['apiHeader'] = $app->config['rcv.apiHeader'];
         });
 
@@ -93,53 +95,51 @@ class Theme extends BaseV1\Theme{
             $this->transform('avatarBig');
         });
 
-        /** DESABILITANDO ROTAS  **/
+        /** DESABILITANDO ROTAS  * */
         return;
-        if(!$app->user->is('admin') && !$app->user->is('guest')){
+        if (!$app->user->is('admin') && !$app->user->is('guest')) {
             $ids = json_decode($app->user->redeCulturaViva);
             $inscricao = $app->repo('Registration')->find($ids->inscricao);
 
 
             // ROTAS DESLIGADAS PARA USUÁRIOS QUE NÃO TIVERAM SUA INSCRIÇÃO APROVADA
-            if($inscricao->status <= 0){
+            if ($inscricao->status <= 0) {
                 // desabilita o painel
-                $app->hook('GET(panel.<<*>>):before', function() use($app){
+                $app->hook('GET(panel.<<*>>):before', function() use($app) {
                     $app->redirect($app->createUrl('cadastro', 'index'), 307);
                 });
 
                 // desabilita criação de agentes e espaços
-                $app->hook('GET(<<<project|event>>.<<create|edit>>):before', function() use($app){
+                $app->hook('GET(<<<project|event>>.<<create|edit>>):before', function() use($app) {
                     $app->pass();
                 });
 
-                $app->hook('POST(<<project|event>>.index):before', function() use($app){
+                $app->hook('POST(<<project|event>>.index):before', function() use($app) {
                     $app->pass();
                 });
             }
 
             // desabilita criação de agentes e espaços para usuários não admin
-            $app->hook('GET(<<agent|space>>.<<create|edit>>):before', function() use($app){
+            $app->hook('GET(<<agent|space>>.<<create|edit>>):before', function() use($app) {
                 $app->pass();
             });
 
-            $app->hook('POST(<<agent|space>>.index):before', function() use($app){
+            $app->hook('POST(<<agent|space>>.index):before', function() use($app) {
                 $app->pass();
             });
-
         }
     }
 
-
-    protected function _enqueueStyles(){
+    protected function _enqueueStyles() {
         $this->enqueueStyle('culturaviva', 'circle', 'css/circle.css');
         $this->enqueueStyle('culturaviva', 'fonts-culturavivaiicon', 'css/fonts-icon-culturaviva.css');
         $this->enqueueStyle('vendor', 'ngDialog-style', 'css/ngDialog.min.css');
         $this->enqueueStyle('vendor', 'ngDialog-theme', 'css/ngDialog-theme-default.min.css');
     }
 
-    protected function _enqueueScripts(){
+    protected function _enqueueScripts() {
         $this->enqueueScript('culturaviva', 'angular-resource', 'vendor/angular-resource.js');
-        $this->enqueueScript('culturaviva', 'angular-messages', 'vendor/angular-messages.js');
+        $this->enqueueScript('culturaviva', 'angular-messages', 'vendor/angular-1.5.5/angular-messages.min.js');
         $this->enqueueScript('culturaviva', 'ui-mask', 'vendor/mask.js');
 
         $this->enqueueScript('culturaviva', 'cadastro-app', 'js/cadastro-app.js', ['angular-resource']);
@@ -151,35 +151,160 @@ class Theme extends BaseV1\Theme{
         $this->enqueueScript('culturaviva', 'FileSaver', 'js/FileSaver.min.js');
 
         $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
-	    $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
+        $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
         $this->enqueueScript('vendor', 'google-maps-api', 'http://maps.google.com/maps/api/js?v=3.2&sensor=false');
         $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.min.js');
         $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
         $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
     }
 
-    protected function _publishAssets(){
+    protected function _publishAssets() {
 
+    }
+
+    /**
+     * Adicionas os styles e scripts usados nas telas de administração
+     */
+    protected function _adminAssets() {
+        // fonts
+        $this->getAssetManager()->publishFolder('vendor/bootstrap/fonts/', 'fonts');
+        $this->getAssetManager()->publishFolder('vendor/patternfly/fonts/', 'fonts');
+
+
+        // styles
+        $this->enqueueAll('rcv-admin', [
+            // Vendor
+            'vendor/angular-block-ui/angular-block-ui.min.css',
+            'vendor/bootstrap/css/bootstrap.min.css',
+            'vendor/bootstrap-select/bootstrap-select.min.css',
+            'vendor/patternfly/css/patternfly.min.css',
+            'vendor/patternfly/css/patternfly-additions.min.css',
+            'vendor/angular-patternfly/angular-patternfly.min.css',
+            'vendor/jquery.bootstrap-touchspin.min.css',
+            // App
+            'css/rcv-admin.css'
+                ], 'css');
+
+        $this->enqueueAll('rcv-admin', [
+            // Vendor
+            'vendor/jquery-2.1.4.min.js',
+            'vendor/angular-1.5.5/angular.min.js',
+            'vendor/angular-1.5.5/angular-route.min.js',
+            'vendor/angular-1.5.5/angular-sanitize.min.js',
+            'vendor/angular-1.5.5/angular-messages.min.js',
+            'vendor/angular-ui-router.min.js',
+            'vendor/bootstrap/js/bootstrap.min.js',
+            'vendor/patternfly/js/patternfly.min.js',
+            'vendor/angular-block-ui/angular-block-ui.min.js',
+            'vendor/angular-bootstrap/ui-bootstrap.min.js',
+            'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
+            'vendor/bootstrap-select/bootstrap-select.min.js',
+            'vendor/angular-patternfly/angular-patternfly.min.js',
+            'vendor/jquery.bootstrap-touchspin.min.js',
+            // App
+            'admin/app.js',
+            'admin/routes.js',
+            // App:components
+            'admin/components/TcNotitication.js',
+            'admin/components/TcFormDirective.js',
+            'admin/components/TcBaseFieldDirective.js',
+            'admin/components/TcDebugDirective.js',
+            'admin/components/TcInputArrayDirective.js',
+            'admin/components/TcInputDirective.js',
+            'admin/components/TcInputNumberDirective.js',
+            'admin/components/TcInputSearchDirective.js',
+            'admin/components/TcInputTextDirective.js',
+            'admin/components/TcSelectDirective.js'
+                ], 'js');
+
+        // App:components
+        // Templates de componentes e controllers da aplicação certificação
+        $this->getAssetManager()->publishFolder('admin/components/templates/', 'components/templates');
+
+
+        // App:modules
+        $this->_addAdminAssetsModule('base', [
+            'AccessLevelDirective',
+            'BarraNavegacaoCtrl',
+            'PaginaCtrl',
+            'RBAC',
+            'UsuarioSrv',
+        ]);
+        $this->_addAdminAssetsModule('relatorios', ['RelatoriosInicioCtrl']);
+        $this->_addAdminAssetsModule('configuracao', [
+            'ParametrosCtrl',
+            'CertificadorListaCtrl',
+            'CertificadorListaTabelaDirective',
+            'CertificadorFormularioCtrl'
+        ]);
+    }
+
+    /**
+     * Facilita a inclusão de dependencias de um módulo
+     *
+     * @param type $module
+     * @param Array $files
+     */
+    protected function _addAdminAssetsModule($module, $files) {
+        // App:modules
+        $modules = 'admin/modules';
+        $this->getAssetManager()->publishFolder("$modules/$module/templates/", "modules/$module/templates/");
+        foreach ($files as $controller) {
+            $this->enqueueScript('rcv-admin', "$module.$controller", "$modules/$module/$controller.js");
+        }
+    }
+
+    /**
+     * Facilitador para trabalhar com dependencias
+     *
+     * @param type $group
+     * @param array $filenames
+     * @param type $type
+     */
+    protected function enqueueAll($group, array $filenames = [], $type = 'js') {
+        if ($type === 'js') {
+            foreach ($filenames as $filename) {
+                $this->enqueueScript($group, basename($filename, ".js"), $filename);
+            }
+        } else if ($type === 'css') {
+            foreach ($filenames as $filename) {
+                $this->enqueueStyle($group, basename($filename, ".css"), $filename);
+            }
+        }
     }
 
     function head() {
-        parent::head();
-        if($this->controller->id === 'cadastro' || $this->controller->id == 'rede' || $this->controller->id === 'admin'){
-            $this->printStyles('culturaviva');
-            $this->printScripts('culturaviva');
-        }
-    }
+        $assetsGroup = 'culturaviva';
+        if (in_array($this->controller->id, ['admin'])) {
+            $assetsGroup = 'rcv-admin';
 
+            //
+            $app = App::i();
+            $app->applyHook('mapasculturais.head');
+            $this->printDocumentMeta();
+
+            //
+            $app->applyHook('mapasculturais.styles');
+            $this->_printJsObject();
+            $app->applyHook('mapasculturais.scripts');
+        } else {
+            // Não renderiza os estilos do MapasCulturais na tela de certificação, ele atrapalha toda personalização
+            parent::head();
+        }
+
+        $this->printStyles($assetsGroup);
+        $this->printScripts($assetsGroup);
+    }
 
     public function addDocumentMetas() {
         parent::addDocumentMetas();
-        if(in_array($this->controller->action, ['single', 'edit'])){
+        if (in_array($this->controller->action, ['single', 'edit'])) {
             return;
         }
         $app = App::i();
-        foreach ($this->documentMeta as $key => $meta){
-            if(isset($meta['property']) && ($meta['property'] === 'og:image' || $meta['property'] === 'og:image:url')){
-                $this->documentMeta[$key] = array('property' => $meta['property'] , 'content' => $app->view->asset('img/cultura-viva-share.png', false));
+        foreach ($this->documentMeta as $key => $meta) {
+            if (isset($meta['property']) && ($meta['property'] === 'og:image' || $meta['property'] === 'og:image:url')) {
+                $this->documentMeta[$key] = array('property' => $meta['property'], 'content' => $app->view->asset('img/cultura-viva-share.png', false));
             }
         }
     }
@@ -191,6 +316,10 @@ class Theme extends BaseV1\Theme{
         $app->registerController('rede', 'CulturaViva\Controllers\Rede');
         $app->registerController('cadastro', 'CulturaViva\Controllers\Cadastro');
         $app->registerController('admin', 'CulturaViva\Controllers\Admin');
+        $app->registerController('certificador', 'CulturaViva\Controllers\Certificador');
+        $app->registerController('certificacao', 'CulturaViva\Controllers\Certificacao');
+        $app->registerController('configuracao', 'CulturaViva\Controllers\Configuracao');
+        $app->registerController('relatorios', 'CulturaViva\Controllers\Relatorios');
 
 //        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('portifolio', ['^application\/pdf$'], 'O portifólio deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('portifolio', ['.*'], 'O portifólio deve ser um arquivo pdf.', true));
@@ -201,9 +330,8 @@ class Theme extends BaseV1\Theme{
 
         $metadata = [
             'MapasCulturais\Entities\User' => [
-                'redeCulturaViva' => [ 'private' => true, 'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição' ]
+                'redeCulturaViva' => [ 'private' => true, 'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição']
             ],
-
             'MapasCulturais\Entities\Space' => [
                 'En_Bairro' => [
                     'label' => 'Bairro',
@@ -226,18 +354,15 @@ class Theme extends BaseV1\Theme{
                     'private' => true
                 ]
             ],
-
             'MapasCulturais\Entities\Agent' => [
                 'rcv_sede_spaceId' => [
                     'label' => 'Id do espaço linkado ao ponto de cultura',
                     'private' => true
                 ],
-
                 'rcv_tipo' => [
                     'label' => 'Tipo de agente da Rede Cultura Viva',
                     'private' => false
                 ],
-
                 // campos para salvar infos da base de pontos existente
                 'rcv_Ds_Edital' => [
                     'label' => 'Ds_Edital',
@@ -263,18 +388,14 @@ class Theme extends BaseV1\Theme{
                     'label' => 'Cod_scdc',
                     'private' => true
                 ],
-
                 'emailPrivado2' => [
                     'label' => 'Email privado 2',
                     'private' => true
                 ],
-
                 'emailPrivado3' => [
                     'label' => 'Email privado 3',
                     'private' => true
                 ],
-
-
                 'rg' => [
                     'label' => 'RG',
 //                  'required' => true,
@@ -312,13 +433,12 @@ class Theme extends BaseV1\Theme{
                         'parceiro' => 'Sou parceiro do Ponto/Pontão e estou ajudando a cadastrar'
                     )
                 ],
-
                 // Metados do Agente tipo Entidade
                 'semCNPJ' => [
                     'label' => 'CNPJ',
 //                  'required' => true,
                     'private' => true,
-                    'type'=>'boolean'
+                    'type' => 'boolean'
                 ],
                 'tipoPontoCulturaDesejado' => [
                     'label' => 'Tipo de Ponto de Cultura',
@@ -515,7 +635,6 @@ class Theme extends BaseV1\Theme{
 //                  'required' => true,
                     'private' => true
                 ],
-
                 'responsavel_telefone2' => [
                     'label' => 'Telefone do responsável',
 //                  'required' => true,
@@ -526,91 +645,78 @@ class Theme extends BaseV1\Theme{
 //                  'required' => true,
                     'private' => true
                 ],
-
                 'En_Bairro' => [
                     'label' => 'Bairro',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
                 'En_Num' => [
                     'label' => 'Número',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
                 'En_Nome_Logradouro' => [
                     'label' => 'Logradouro',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
                 'En_Complemento' => [
                     'label' => 'Complemento',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     },
                 ],
-
-
                 // @TODO: comentar quando importar os shapefiles
-
-
                 'geoEstado' => [
                     'label' => 'Estado',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
-
                 'pais' => [
                     'label' => 'Pais',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
-
                 'geoMunicipio' => [
                     'label' => 'Município',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
                 ],
-
-
                 // Seu Ponto no Mapa
                 'mesmoEndereco' => [
                     'label' => 'Mesmo Endereco',
                     'required' => false,
                     'private' => true
                 ],
-
                 'tem_sede' => [
                     'label' => 'Tem sede propria?',
 //                    'required' => true
                 ],
-
                 'sede_realizaAtividades' => [
                     'label' => 'Realiza atividades culturais na sede',
 //                    'required' => true
                 ],
-
                 'sede_cnpj' => [
                     'label' => 'O endereço da sede é o mesmo registrado para o CNPJ?',
                     'required' => false
                 ],
-
                 'cep' => [
                     'label' => 'CEP',
 //                  'required' => true,
-                    'private' => function(){
+                    'private' => function() {
                         return !$this->publicLocation;
                     }
 //                    'validations' => array(
@@ -629,12 +735,11 @@ class Theme extends BaseV1\Theme{
                     'label' => 'Espaço',
                     'required' => false
                 ],
-
                 // portifólio
                 'atividadesEmRealizacao' => [
                     'label' => 'Atividades culturais em realização'
                 ],
-		'atividadesEmRealizacaoLink' => [
+                'atividadesEmRealizacaoLink' => [
                     'label' => 'Link para suas atividades culturais em realização'
                 ],
                 'flickr' => [
@@ -649,23 +754,22 @@ class Theme extends BaseV1\Theme{
                     'label' => 'Youtube',
                     'required' => false
                 ],
-		'telegram' => [
-		    'label' => 'Telegram',
-		    'required' => false
-		],
-		'whatsapp' => [
+                'telegram' => [
+                    'label' => 'Telegram',
+                    'required' => false
+                ],
+                'whatsapp' => [
                     'label' => 'WhatsApp',
                     'required' => false
                 ],
-		'culturadigital' => [
+                'culturadigital' => [
                     'label' => 'CulturaDigital',
                     'required' => false
                 ],
-		'instagram' => [
+                'instagram' => [
                     'label' => 'Instagram',
                     'required' => false
                 ],
-
                 // Ponto Articulação
                 'participacaoMovPolitico' => [
                     'label' => '',
@@ -684,20 +788,19 @@ class Theme extends BaseV1\Theme{
                 ],
                 'simPoderPublico' => [
                     'label' => 'Quais para radio participa poder publico',
-      //              'required' => false,
+                    //              'required' => false,
                     'private' => true
                 ],
                 'simMovimentoPoliticoCultural' => [
                     'label' => 'Quais para radio participa movimento politico cultural',
-      //              'required' => false,
+                    //              'required' => false,
                     'private' => true
                 ],
                 'simForumCultural' => [
                     'label' => 'Quais para radio participa forum cultural',
-      //              'required' => false,
+                    //              'required' => false,
                     'private' => true
                 ],
-
                 // Economia Viva
                 'pontoOutrosRecursosRede' => [
                     'label' => '',
@@ -784,7 +887,6 @@ class Theme extends BaseV1\Theme{
                     'required' => false,
                     'private' => true
                 ],
-
                 'pontoContrataServicos' => [
                     'label' => '',
                     'required' => false,
@@ -804,12 +906,11 @@ class Theme extends BaseV1\Theme{
                     'label' => '',
                     'required' => false,
                     'private' => true
-                ],'pontoCustoAnual' => [
+                ], 'pontoCustoAnual' => [
                     'label' => '',
                     'required' => false,
                     'private' => true
                 ],
-
                 // Formação
                 'formador1_nome' => [
                     'label' => '',
@@ -906,7 +1007,6 @@ class Theme extends BaseV1\Theme{
                     'required' => false,
                     'private' => true
                 ],
-
                 // Termos de uso
                 'termos_de_uso' => [
                     'label' => '',
@@ -914,21 +1014,21 @@ class Theme extends BaseV1\Theme{
                     'private' => true
                 ],
                 //Homologação
-                'homologado_rcv' =>[
-                  'label' => '',
-                  'required' => false,
-                  //'private' => false
+                'homologado_rcv' => [
+                    'label' => '',
+                    'required' => false,
+                //'private' => false
                 ],
-                'info_verdadeira' =>[
-                  'label' => '',
-                  'required' => false,
-                  'private' => true
+                'info_verdadeira' => [
+                    'label' => '',
+                    'required' => false,
+                    'private' => true
                 ],
                 //Campo de observação
-                'obs' =>[
-                  'label' => '',
-                  'required' => false,
-                  'private' => true
+                'obs' => [
+                    'label' => '',
+                    'required' => false,
+                    'private' => true
                 ],
                 //3° telefone
                 'telefone3' => [
@@ -945,8 +1045,8 @@ class Theme extends BaseV1\Theme{
             ]
         ];
 
-        foreach($metadata as $entity_class => $metas){
-            foreach($metas as $key => $cfg){
+        foreach ($metadata as $entity_class => $metas) {
+            foreach ($metas as $key => $cfg) {
                 $def = new \MapasCulturais\Definitions\Metadata($key, $cfg);
                 $app->registerMetadata($def, $entity_class);
             }
@@ -975,10 +1075,11 @@ class Theme extends BaseV1\Theme{
 
         $id = 10;
 
-        foreach ($taxonomies as $slug => $description){
+        foreach ($taxonomies as $slug => $description) {
             $id++;
             $def = new \MapasCulturais\Definitions\Taxonomy($id, $slug, $description);
             $app->registerTaxonomy('MapasCulturais\Entities\Agent', $def);
         }
     }
+
 }

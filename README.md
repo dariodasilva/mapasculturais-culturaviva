@@ -1,4 +1,14 @@
-# mapasculturais-culturaviva
+[![Logotipo da Rede Cultura Viva](doc/img/logo-cultura-viva.png)](http://culturaviva.gov.br/)
+
+[![Bugs Registrados](https://badge.waffle.io/culturagovbr/mapasculturais-culturaviva.svg?label=bug&title=Bugs)](http://waffle.io/culturagovbr/mapasculturais-culturaviva)
+[![Melhorias Solicitadas](https://badge.waffle.io/culturagovbr/mapasculturais-culturaviva.svg?label=enhancement&title=Melhorias)](http://waffle.io/culturagovbr/mapasculturais-culturaviva)
+[![Tarefas Finalizadas](https://badge.waffle.io/culturagovbr/mapasculturais-culturaviva.svg?label=ready&title=Finalizadas)](http://waffle.io/culturagovbr/mapasculturais-culturaviva)
+
+
+Tema de [Mapas Culturais](https://github.com/hacklabr/mapasculturais) para a **Rede Cultura Viva**.
+
+
+## O Programa
 
 O Programa Cultura Viva, desde sua implementação em 2004, alcançou grande dimensão nacional, e atualmente é uma referência para políticas culturais em vários países da América Latina. Sua política foi desenhada para valorizar a cultura realizada na base da sociedade brasileira, a articulação em rede e a gestão compartilhada, com base nos princípios da autonomia, protagonismo e empoderamento da sociedade civil.
 
@@ -10,19 +20,25 @@ Desde 23 de julho de 2014, com a sanção da Lei Cultura Viva (Lei nº 13.018/20
 
 Atualmente está presente nos 27 estados brasileiros e em cerca de mil municípios, é um dos programas com mais capilaridade e visibilidade do Ministério da Cultura, atualmente com 4.502 Pontos fomentados. Até 2020 deverão ser fomentados mais 10.498 Pontos de Cultura para atingir a meta de 15 mil Pontos prevista no Plano Nacional de Cultura.
 
-## Tema de Mapas Culturais para a Rede Cultura Viva
 
-### Tecnologias utilizadas
+## Desenvolvedor: Primeiros Passos
 
-- PHP-Slim
-- JavaScript-AngularJs
-- Postgresql
+Siga o [Guia de Instalação e Configuração](doc/guia-instalacao.md) para ter seu ambiente de trabalho funcionando sem
+dores de cabeça.
 
-### Documentação para instalar Rede Cultura Viva
 
-- [Dependências para instalação](doc/dependencia.md)
-- [Configurar mapasculturais](doc/config-mapasculturais.md)
-- [Configurar tema culturaviva](doc/config-culturaviva.md)
 
-### Para contribuir
-[![Stories in Ready](https://badge.waffle.io/culturagovbr/mapasculturais-culturaviva.svg?label=ready&title=Ready)](http://waffle.io/culturagovbr/mapasculturais-culturaviva)
+## Links Úteis
+
+* TODO
+
+
+## Contribuindo
+
+Contribuições são bem vindas.
+
+* Faça um **pull-request** contendo correção de erros, adição de novas funcionalidades ou melhoria na documentação.
+* [Proponha](https://waffle.io/culturagovbr/mapasculturais-culturaviva) novas funcionalidades e melhorias.
+* [Reporte erros](https://waffle.io/culturagovbr/mapasculturais-culturaviva) encontrados no sistema.
+
+
