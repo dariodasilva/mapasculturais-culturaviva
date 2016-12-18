@@ -1,175 +1,251 @@
-
+------------------------------------------------------------------------------------------------------------------------
+-- Schema
+------------------------------------------------------------------------------------------------------------------------
 DROP SCHEMA culturaviva CASCADE;
 
 CREATE SCHEMA culturaviva;
 
 ALTER SCHEMA culturaviva OWNER TO vagrant;
+------------------------------------------------------------------------------------------------------------------------
 
---
--- Name: subscription_id_seq; Type: SEQUENCE; Schema: culturaviva; Owner: vagrant
---
 
-CREATE SEQUENCE culturaviva.subscription_id_seq
+------------------------------------------------------------------------------------------------------------------------
+-- Critérios de Avaliação
+------------------------------------------------------------------------------------------------------------------------
+CREATE SEQUENCE culturaviva.criterio_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+ALTER TABLE culturaviva.criterio_id_seq OWNER TO vagrant;
 
-
-ALTER TABLE culturaviva.subscription_id_seq OWNER TO vagrant;
-
---
--- Name: subscription; Type: TABLE; Schema: culturaviva; Owner: vagrant; Tablespace:
---
-
-CREATE TABLE culturaviva.subscription (
-                id integer DEFAULT nextval('culturaviva.subscription_id_seq'::regclass) NOT NULL,
-                agent_id INTEGER NOT NULL,
-                status CHAR NOT NULL,
-                created_at TIMESTAMP without time zone DEFAULT now() NOT NULL,
-                updated_at TIMESTAMP without time zone NULL,
-                CONSTRAINT subscription_pk PRIMARY KEY (id)
+CREATE TABLE culturaviva.criterio (
+    id          INTEGER DEFAULT nextval('culturaviva.criterio_id_seq'::regclass) NOT NULL,
+    ordem       INTEGER NOT NULL,
+    ativo       BOOLEAN NOT NULL,
+    descricao   TEXT NOT NULL,
+    ts_criacao  TIMESTAMP without time zone DEFAULT now() NOT NULL,
+    CONSTRAINT criterio_pk PRIMARY KEY (id)
 );
-COMMENT ON COLUMN culturaviva.subscription.id IS 'Primary key of subscription table.';
-COMMENT ON COLUMN culturaviva.subscription.agent_id IS 'Agent of subscription foreign key.';
-COMMENT ON COLUMN culturaviva.subscription.status IS 'Status of subscription:
+ALTER TABLE culturaviva.criterio OWNER TO vagrant;
 
-P - Pendent
-C - Certified
-N - No certified
-R - Resubscribe';
-COMMENT ON COLUMN culturaviva.subscription.created_at IS 'When the registry was created.';
-COMMENT ON COLUMN culturaviva.subscription.updated_at IS 'When the registry was updated.';
+COMMENT ON TABLE culturaviva.criterio IS 'Registra os Critérios usados para avaliação de uma Inscrição
 
-ALTER TABLE culturaviva.subscription OWNER TO vagrant;
+Um registro de critério não pode sofrer alteração, deve ser inserido um novo registro sempre que sofrer alterção,
+pois a avaliação das inscrições serão feitos pelos critérios existentes na epoca da finalização do cadastro pela
+entidade';
+COMMENT ON COLUMN culturaviva.criterio.id           IS 'Identificador do critério';
+COMMENT ON COLUMN culturaviva.criterio.ordem        IS 'Informa a ordem de exibição deste critério';
+COMMENT ON COLUMN culturaviva.criterio.ativo        IS 'Informa se este critério está ativo';
+COMMENT ON COLUMN culturaviva.criterio.descricao    IS 'Texto descritivo do critério';
+COMMENT ON COLUMN culturaviva.criterio.ts_criacao   IS 'Quando o registro foi criado';
+------------------------------------------------------------------------------------------------------------------------
 
 
---
--- Name: certifier_id_seq; Type: SEQUENCE; Schema: culturaviva; Owner: vagrant
---
-
-CREATE SEQUENCE culturaviva.certifier_id_seq
+------------------------------------------------------------------------------------------------------------------------
+-- Inscrições
+------------------------------------------------------------------------------------------------------------------------
+CREATE SEQUENCE culturaviva.inscricao_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+ALTER TABLE culturaviva.inscricao_id_seq OWNER TO vagrant;
 
-
-ALTER TABLE culturaviva.certifier_id_seq OWNER TO vagrant;
-
---
--- Name: certifier; Type: TABLE; Schema: culturaviva; Owner: vagrant; Tablespace:
---
-
-CREATE TABLE culturaviva.certifier (
-                id INTEGER DEFAULT nextval('culturaviva.certifier_id_seq'::regclass) NOT NULL,
-                agent_id INTEGER NOT NULL,
-                is_active BOOLEAN NOT NULL,
-                type CHAR NOT NULL,
-                created_at TIMESTAMP without time zone DEFAULT now() NOT NULL,
-                updated_at TIMESTAMP without time zone,
-                CONSTRAINT certifier_pk PRIMARY KEY (id),
-                -- Nao permite mais de um cadastro por agente/tipo
-                CONSTRAINT certifier_agent_type_uk UNIQUE (agent_id, type)
+CREATE TABLE culturaviva.inscricao (
+    id              INTEGER DEFAULT nextval('culturaviva.inscricao_id_seq'::regclass) NOT NULL,
+    agente_id       INTEGER NOT NULL,
+    estado          CHAR NOT NULL DEFAULT 'P',
+    ts_criacao      TIMESTAMP without time zone DEFAULT now() NOT NULL,
+    ts_finalizacao  TIMESTAMP without time zone NULL,
+    CONSTRAINT inscricao_pk PRIMARY KEY (id),
+    CONSTRAINT inscricao_estado_ck CHECK (estado = ANY(ARRAY['P','C','N','R']))
 );
-COMMENT ON COLUMN culturaviva.certifier.id IS 'Primary key of certifier table.';
-COMMENT ON COLUMN culturaviva.certifier.agent_id IS 'Foreign key of agent table (mapas)';
-COMMENT ON COLUMN culturaviva.certifier.is_active IS 'Status of activity to certifier.';
-COMMENT ON COLUMN culturaviva.certifier.type IS 'Type of certifier
+ALTER TABLE culturaviva.inscricao OWNER TO vagrant;
 
-S - Person of civil society
-P - Public power member
-M - Certifier with Minerva Vote';
-COMMENT ON COLUMN culturaviva.certifier.created_at IS 'When the registry was created.';
-COMMENT ON COLUMN culturaviva.certifier.updated_at IS 'When the registry was updated.';
+COMMENT ON TABLE culturaviva.inscricao IS 'Registra as Inscrições originadas pelo cadastro feito pelo Pontão/Ponto de Cultura';
+COMMENT ON COLUMN culturaviva.inscricao.id              IS 'Identificador da Inscrição';
+COMMENT ON COLUMN culturaviva.inscricao.agente_id       IS 'Referencia para o Pontão/Ponto de Cultura solicitante';
+COMMENT ON COLUMN culturaviva.inscricao.estado          IS 'Estados da inscrição
+
+P - Pendente
+C - Certificado
+N - Não Certificado
+R - Re Submissão - Inscrição rejeitada pelos certificadores, cadastro alterado pelo Ponto de Cultura e
+nova Inscrição criada para reavaliação';
+COMMENT ON COLUMN culturaviva.inscricao.ts_criacao      IS 'Quando o registro foi criado';
+COMMENT ON COLUMN culturaviva.inscricao.ts_finalizacao  IS 'Quando a avaliação da inscrição foi finalizada, alterando
+o estado da inscrição para "C - Certificado" ou "N - Não Certificado"';
+------------------------------------------------------------------------------------------------------------------------
 
 
-ALTER TABLE culturaviva.certifier OWNER TO vagrant;
+------------------------------------------------------------------------------------------------------------------------
+-- Critérios de Avaliação da Inscrição
+------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE culturaviva.inscricao_criterio (
+    inscricao_id    INTEGER NOT NULL,
+    criterio_id     INTEGER NOT NULL,
+    ts_criacao      TIMESTAMP without time zone DEFAULT now() NOT NULL,
+    CONSTRAINT inscricao_criterio_pk PRIMARY KEY (inscricao_id, criterio_id),
+    CONSTRAINT inscricao_criterio_inscricao_id_fk FOREIGN KEY (inscricao_id)
+        REFERENCES culturaviva.inscricao (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT inscricao_criterio_criterio_id_fk FOREIGN KEY (criterio_id)
+        REFERENCES culturaviva.criterio (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
+ALTER TABLE culturaviva.inscricao_criterio OWNER TO vagrant;
+
+COMMENT ON TABLE culturaviva.inscricao_criterio IS 'Registra os critérios de avaliação de uma inscrição';
+COMMENT ON COLUMN culturaviva.inscricao_criterio.inscricao_id   IS 'Referencia para a Incrição do Pontao/Ponto de Cultura';
+COMMENT ON COLUMN culturaviva.inscricao_criterio.criterio_id    IS 'Referencia para o Critério de Avaliação';
+COMMENT ON COLUMN culturaviva.inscricao_criterio.ts_criacao     IS 'Quando o registro foi criado';
+------------------------------------------------------------------------------------------------------------------------
 
 
---
--- Name: diligence_id_seq; Type: SEQUENCE; Schema: culturaviva; Owner: vagrant
---
-
-CREATE SEQUENCE culturaviva.diligence_id_seq
+------------------------------------------------------------------------------------------------------------------------
+-- Certificadores
+------------------------------------------------------------------------------------------------------------------------
+CREATE SEQUENCE culturaviva.certificador_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+ALTER TABLE culturaviva.certificador_id_seq OWNER TO vagrant;
 
 
-ALTER TABLE culturaviva.diligence_id_seq OWNER TO vagrant;
-
---
--- Name: diligence; Type: TABLE; Schema: culturaviva; Owner: vagrant; Tablespace:
---
-
-CREATE TABLE culturaviva.diligence (
-                id INTEGER DEFAULT nextval('culturaviva.diligence_id_seq'::regclass) NOT NULL,
-                subscription_id INTEGER NOT NULL,
-                certifier_id INTEGER NOT NULL,
-                status CHAR NOT NULL,
-                is_recognized BOOLEAN NOT NULL DEFAULT true,
-                is_experienced BOOLEAN NOT NULL DEFAULT true,
-                justification VARCHAR(1000),
-                created_at TIMESTAMP without time zone DEFAULT now() NOT NULL,
-                updated_at TIMESTAMP without time zone NULL,
-                CONSTRAINT diligence_pk PRIMARY KEY (id),
-                CONSTRAINT diligence_uk UNIQUE (certifier_id, subscription_id),
-                CONSTRAINT diligence_subscription_fk FOREIGN KEY (subscription_id)
-                    REFERENCES culturaviva.subscription (id)
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION
-                    NOT DEFERRABLE,
-                CONSTRAINT diligence_certifier_fk FOREIGN KEY (certifier_id)
-                    REFERENCES culturaviva.certifier (id)
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION
-                    NOT DEFERRABLE
+CREATE TABLE culturaviva.certificador (
+    id              INTEGER DEFAULT nextval('culturaviva.certificador_id_seq'::regclass) NOT NULL,
+    agente_id       INTEGER NOT NULL,
+    ativo           BOOLEAN NOT NULL DEFAULT TRUE,
+    tipo            CHAR NOT NULL,
+    titular         BOOLEAN NOT NULL DEFAULT TRUE,
+    ts_criacao      TIMESTAMP without time zone DEFAULT now() NOT NULL,
+    ts_atualizacao  TIMESTAMP without time zone,
+    CONSTRAINT certificador_pk PRIMARY KEY (id),
+    CONSTRAINT certificador_agente_tipe_uk UNIQUE (agente_id, tipo),
+    CONSTRAINT certificador_tipo_ck CHECK (tipo = ANY(ARRAY['C','P','M']))
 );
-COMMENT ON COLUMN culturaviva.diligence.id IS 'Primary key of diligence table.';
-COMMENT ON COLUMN culturaviva.diligence.subscription_id IS 'Primary key of subscription table.';
-COMMENT ON COLUMN culturaviva.diligence.certifier_id IS 'Primary key of certifier table.';
-COMMENT ON COLUMN culturaviva.diligence.status IS 'Status of diligence.
+ALTER TABLE culturaviva.certificador OWNER TO vagrant;
 
-P - Pendent
-R - Under review
-C - Certified
-N - No certified';
-COMMENT ON COLUMN culturaviva.diligence.is_recognized IS 'It indicates whether the agent is recognized.';
-COMMENT ON COLUMN culturaviva.diligence.is_experienced IS 'It indicates whether the agent is experienced';
-COMMENT ON COLUMN culturaviva.diligence.justification IS 'Justification to diligence.';
-COMMENT ON COLUMN culturaviva.diligence.created_at IS 'When the registry was created.';
-COMMENT ON COLUMN culturaviva.diligence.updated_at IS 'When the registry was updated.';
+COMMENT ON TABLE culturaviva.certificador IS 'Registra os Agentes Certificadores do sistema';
+COMMENT ON COLUMN culturaviva.certificador.id               IS 'Identificador do certificador';
+COMMENT ON COLUMN culturaviva.certificador.agente_id
+    IS 'Referencia para o usuário AGENT cadastrado no schema do MapasCulturais';
+COMMENT ON COLUMN culturaviva.certificador.ativo            IS 'Informa se este certificadro está ativo';
+COMMENT ON COLUMN culturaviva.certificador.tipo             IS 'Identifica o Tipo de Certificador
+
+C - Pessoa da Sociedade Civil
+P - Membro do Poder Publico
+M - Certificador com Voto de Minerva';
+COMMENT ON COLUMN culturaviva.certificador.titular          IS 'Informa se este certificador é TITULAR ou SUPLENTE';
+COMMENT ON COLUMN culturaviva.certificador.ts_criacao       IS 'Quando o registro foi criado';
+COMMENT ON COLUMN culturaviva.certificador.ts_atualizacao   IS 'Quando o registro foi atualizado';
+------------------------------------------------------------------------------------------------------------------------
 
 
-ALTER TABLE culturaviva.diligence OWNER TO vagrant;
+------------------------------------------------------------------------------------------------------------------------
+-- Avaliações Pelos Certificadores
+------------------------------------------------------------------------------------------------------------------------
+CREATE SEQUENCE culturaviva.avaliacao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER TABLE culturaviva.avaliacao_id_seq OWNER TO vagrant;
 
---
--- Name: configuration; Type: TABLE; Schema: culturaviva; Owner: vagrant; Tablespace:
---
-
-CREATE TABLE culturaviva.configuration (
-                id INTEGER NOT NULL,
-                civil INTEGER NOT NULL,
-                government INTEGER NOT NULL,
-                created_at TIMESTAMP without time zone DEFAULT now() NOT NULL,
-                updated_at TIMESTAMP without time zone NULL,
-                CONSTRAINT configuration_pk PRIMARY KEY (id)
+CREATE TABLE culturaviva.avaliacao (
+    id              INTEGER DEFAULT nextval('culturaviva.avaliacao_id_seq'::regclass) NOT NULL,
+    inscricao_id    INTEGER NOT NULL,
+    certificador_id INTEGER NOT NULL,
+    estado          CHAR NOT NULL,
+    observacoes     TEXT,
+    ts_finalizacao  TIMESTAMP without time zone NULL,
+    ts_criacao      TIMESTAMP without time zone DEFAULT now() NOT NULL,
+    ts_atualizacao  TIMESTAMP without time zone NULL,
+    CONSTRAINT avaliacao_pk PRIMARY KEY (id),
+    CONSTRAINT avaliacao_uk UNIQUE (inscricao_id, certificador_id),
+    CONSTRAINT avaliacao_estado_ck CHECK (estado = ANY(ARRAY['P','A','D','I','C'])),
+    CONSTRAINT avaliacao_inscricao_id_fk FOREIGN KEY (inscricao_id)
+        REFERENCES culturaviva.inscricao (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT avaliacao_certificador_id_fk FOREIGN KEY (certificador_id)
+        REFERENCES culturaviva.certificador (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
 );
-COMMENT ON COLUMN culturaviva.configuration.id IS 'Primary key of configuration table.';
-COMMENT ON COLUMN culturaviva.configuration.civil IS 'Civil agent number.';
-COMMENT ON COLUMN culturaviva.configuration.government IS 'Government agent number.';
-COMMENT ON COLUMN culturaviva.configuration.created_at IS 'When the registry was created.';
-COMMENT ON COLUMN culturaviva.configuration.updated_at IS 'When the registry was updated.';
+ALTER TABLE culturaviva.avaliacao OWNER TO vagrant;
+
+COMMENT ON TABLE culturaviva.avaliacao IS 'Registra as avaliações feitas pelos certificadores sobre as Inscrições';
+COMMENT ON COLUMN culturaviva.avaliacao.id              IS 'Identificador da avaliação';
+COMMENT ON COLUMN culturaviva.avaliacao.inscricao_id    IS 'Referencia para a Incrição do Pontao/Ponto de Cultura';
+COMMENT ON COLUMN culturaviva.avaliacao.certificador_id IS 'Referência para o Certificador responsável';
+COMMENT ON COLUMN culturaviva.avaliacao.estado          IS 'Estado da Avaliação.
+
+P - Pendente
+A - Em Analise
+D - Deferido
+I - Indeferido
+C - Cancelado - Se um certificador for inativado, as avaliações com estado "Pendente" e "Em Análise" deste certificador
+serão cancelados e redistribuidos para outro certificador ativo';
+COMMENT ON COLUMN culturaviva.avaliacao.observacoes     IS 'Comentários adicionados pelo Certificador';
+COMMENT ON COLUMN culturaviva.avaliacao.ts_finalizacao  IS 'Quando a Avaliação foi Finalizada pelo Certificador';
+COMMENT ON COLUMN culturaviva.avaliacao.ts_criacao      IS 'Quando o registro foi criado';
+COMMENT ON COLUMN culturaviva.avaliacao.ts_atualizacao  IS 'Quando o registro sofreu atualização';
 
 
-ALTER TABLE culturaviva.configuration OWNER TO vagrant;
+-- Validação de consistencia dos estados da avaliação
+DROP FUNCTION IF EXISTS culturaviva_avaliacao_fn_validacoes();
 
-------------------
+CREATE FUNCTION culturaviva_avaliacao_fn_validacoes() RETURNS TRIGGER AS $BODY$
+    BEGIN
+
+        IF (TG_OP = 'INSERT' AND NEW.estado <> 'P') THEN
+            RAISE EXCEPTION 'Avaliações devem ser criadas com estado "P - Pendente"';
+        ELSIF (TG_OP = 'UPDATE' AND NEW.estado <> 'C') THEN
+            -- NÃO PERMITIR CANCELAR AVALIAÇÕES FINALIZADAS
+            -- Só permite alterar para o estado "C - Cancelado" se a avaliação
+            -- estiver nos estados "P - Pendente" ou "A - Em Analise"
+            IF (OLD.estado <> 'P' AND OLD.estado <> 'A') THEN
+                RAISE EXCEPTION 'Não é permitido Cancelar uma avaliação já Finalizada';
+            END IF;
+        END IF;
+
+        RETURN NEW;
+    END;
+$BODY$ LANGUAGE plpgsql;
+
+CREATE TRIGGER culturaviva_avaliacao_tg_validacoes
+    BEFORE INSERT OR UPDATE ON culturaviva.avaliacao
+    FOR EACH ROW EXECUTE PROCEDURE culturaviva_avaliacao_fn_validacoes();
+------------------------------------------------------------------------------------------------------------------------
 
 
+------------------------------------------------------------------------------------------------------------------------
+-- Valores para os critérios de uma Avaliação
+------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE culturaviva.avaliacao_criterio (
+    avaliacao_id    INTEGER NOT NULL,
+    inscricao_id    INTEGER NOT NULL,
+    criterio_id     INTEGER NOT NULL,
+    aprovado        BOOLEAN NOT NULL,
+    CONSTRAINT avaliacao_criterio_pk PRIMARY KEY (avaliacao_id, inscricao_id, criterio_id),
+    CONSTRAINT avaliacao_criterio_avaliacao_id_fk FOREIGN KEY (avaliacao_id)
+        REFERENCES culturaviva.avaliacao (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT avaliacao_criterio_inscricao_criterio_fk FOREIGN KEY (inscricao_id, criterio_id)
+        REFERENCES culturaviva.inscricao_criterio (inscricao_id, criterio_id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
+ALTER TABLE culturaviva.avaliacao_criterio OWNER TO vagrant;
 
+COMMENT ON TABLE culturaviva.avaliacao_criterio IS 'Registra os valores para os Critérios de uma Inscrição Avaliados por um Certificador';
+COMMENT ON COLUMN culturaviva.avaliacao_criterio.avaliacao_id   IS 'Referencia para a Avaliação da Inscrição';
+COMMENT ON COLUMN culturaviva.avaliacao_criterio.inscricao_id   IS 'Referencia para a Incrição do Pontao/Ponto de Cultura';
+COMMENT ON COLUMN culturaviva.avaliacao_criterio.criterio_id    IS 'Referencia para o Critério de Avaliação';
+COMMENT ON COLUMN culturaviva.avaliacao_criterio.aprovado       IS 'Informa se o critério foi marcado como APROVADO pelo
+Avaliador';
+------------------------------------------------------------------------------------------------------------------------

@@ -1,9 +1,11 @@
 <?php
+
 namespace CulturaViva\Repositories;
+
 use MapasCulturais\Traits;
 
-class DiligenceRepository extends \MapasCulturais\Repository
-{
+class DiligenceRepository extends \MapasCulturais\Repository {
+
     const PENDENT = 'P';
     const UNDER_REVIEW = 'R';
     const CERTIFIED = 'C';
@@ -16,8 +18,7 @@ class DiligenceRepository extends \MapasCulturais\Repository
      * @param $status
      * @return array
      */
-    function getByCertifierAndStatus($certifierId, $status)
-    {
+    function getByCertifierAndStatus($certifierId, $status) {
         $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
         $rsm->addScalarResult('agent', 'agent');
@@ -25,7 +26,7 @@ class DiligenceRepository extends \MapasCulturais\Repository
         $rsm->addScalarResult('civilstatus', 'civilstatus');
         $rsm->addScalarResult('publicstatus', 'publicstatus');
 
-        $strQuery = "SELECT 
+        $strQuery = "SELECT
             C.id as id,
             S.agent_id as agent,
             C.id as diligence,
@@ -43,7 +44,7 @@ class DiligenceRepository extends \MapasCulturais\Repository
         } else {
             $strQuery .= ' C.status = (:status) ';
         }
-        $strOrder = $status == 'M' ? 'DESC' : 'ASC'; 
+        $strOrder = $status == 'M' ? 'DESC' : 'ASC';
         $strQuery .= " ORDER BY C.updated_at DESC, C.created_at";
         $strQuery .= ' LIMIT 10';
         $query = $this->_em->createNativeQuery($strQuery, $rsm);
@@ -61,8 +62,7 @@ class DiligenceRepository extends \MapasCulturais\Repository
      * @param $status
      * @return int
      */
-    function countByCertifierAndStatus($certifierId, $status)
-    {
+    function countByCertifierAndStatus($certifierId, $status) {
         $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
         $rsm->addScalarResult('count', 'count');
 
@@ -91,8 +91,7 @@ class DiligenceRepository extends \MapasCulturais\Repository
      * @param $status
      * @return array
      */
-    function getDiligences($certifierId)
-    {
+    function getDiligences($certifierId) {
         $diligences = [
             'pendent' => $this->getByCertifierAndStatus($certifierId, self::PENDENT),
             'review' => $this->getByCertifierAndStatus($certifierId, self::UNDER_REVIEW),
@@ -107,12 +106,11 @@ class DiligenceRepository extends \MapasCulturais\Repository
         return $diligences;
     }
 
-    function saveDiligence($diligenceId, $certifierId, $data)
-    {
+    function saveDiligence($diligenceId, $certifierId, $data) {
         $app = \MapasCulturais\App::i();
         $entity = reset($app->repo('\CulturaViva\Entities\Diligence')->findBy([
-            'id' => $diligenceId,
-            'certifierId' => $certifierId
+                    'id' => $diligenceId,
+                    'certifierId' => $certifierId
         ]));
 
         if (isset($entity) && !in_array($entity, [self::CERTIFIED, self::NO_CERTIFIED])) {
@@ -131,4 +129,5 @@ class DiligenceRepository extends \MapasCulturais\Repository
             $entity->save(true);
         }
     }
+
 }

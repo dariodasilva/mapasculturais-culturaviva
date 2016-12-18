@@ -5,33 +5,33 @@ namespace CulturaViva\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Representa os agentes certificadores
+ * Registra os Agentes Certificadores do sistema
  *
- * @ORM\Table(name="culturaviva.certifier")
  * @ORM\Entity
+ * @ORM\Table(name="culturaviva.certificador")
  * @ORM\entity(repositoryClass="MapasCulturais\Repository")
  */
-class Certifier extends \MapasCulturais\Entity {
+class Certificador extends \MapasCulturais\Entity {
 
     /**
-     * Representa Agente Certificador do Poder Público
+     * Representa Agente Certificador Membro do Poder Publico
      */
-    const TYPE_PUBLIC = 'P';
+    const TP_PUBLICO = 'P';
 
     /**
-     * Representa Agente Certificador da Sociedade Civil
+     * Representa Agente Certificador Pessoa da Sociedade Civil
      */
-    const TYPE_CIVIL = 'C';
+    const TP_CIVIL = 'C';
 
     /**
      * Representa Agente Certificador com Voto de Minerva
      */
-    const TYPE_MINERVA = 'M';
+    const TP_MINERVA = 'M';
 
     /**
      * Função de Agente Certificador do Poder Público
      */
-    const ROLE_PUBLIC = 'rcv_certificador_publico';
+    const ROLE_PUBLICO = 'rcv_certificador_publico';
 
     /**
      * Função de Agente Certificador da Sociedade Civil
@@ -44,49 +44,74 @@ class Certifier extends \MapasCulturais\Entity {
     const ROLE_MINERVA = 'rcv_certificador_minerva';
 
     /**
-     * @var integer
+     * Identificador do certificador
      *
-     * @ORM\Column(name="id", type="integer", nullable=true)
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer", nullable=true)
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="culturaviva.certifier_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="culturaviva.certificador_id_seq", allocationSize=1, initialValue=1)
+     *
+     * @var integer
      */
     protected $id;
 
     /**
+     * Referencia para o usuário AGENT cadastrado no schema do MapasCulturais
+     *
+     * @ORM\Column(name="agente_id", type="integer", nullable=false)
+     *
      * @var integer
-     *
-     * @ORM\Column(name="agent_id", type="integer", nullable=false)
      */
-    protected $agentId;
+    protected $agenteId;
 
     /**
+     * Informa se este certificadro está ativo
+     *
+     * @ORM\Column(name="ativo", type="boolean", nullable=false)
+     *
      * @var bool
-     *
-     * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    protected $isActive;
+    protected $ativo;
 
     /**
+     * Identifica o Tipo de Certificador
+     *
+     * C - Pessoa da Sociedade Civil
+     * P - Membro do Poder Publico
+     * M - Certificador com Voto de Minerva
+     *
+     * @ORM\Column(name="tipo", type="string", length=1, nullable=false)
+     *
      * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=1, nullable=false)
      */
-    protected $type;
+    protected $tipo;
 
     /**
-     * @var \DateTime
+     * Informa se este certificador é TITULAR ou SUPLENTE
      *
-     * @ORM\Column(name="created_at", type="string", nullable=false)
+     * @ORM\Column(name="titular", type="string", length=1, nullable=false)
+     *
+     * @var string
      */
-    protected $createdAt;
+    protected $titular;
 
     /**
-     * @var \DateTime
+     * Quando o registro foi criado
      *
-     * @ORM\Column(name="updated_at", type="string", nullable=true)
+     * @ORM\Column(name="ts_criacao", type="string", nullable=false)
+     *
+     * @var \DateTime
      */
-    protected $updatedAt;
+    protected $tsCriacao;
+
+    /**
+     * Quando o registro foi atualizado
+     *
+     * @ORM\Column(name="ts_atualizacao", type="string", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $tsAtualizacao;
 
     //============================================================= //
     // The following lines ara used by MapasCulturais hook system.

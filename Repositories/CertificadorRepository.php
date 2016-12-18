@@ -1,15 +1,16 @@
 <?php
+
 namespace CulturaViva\Repositories;
+
 use MapasCulturais\Traits;
 
-class CertifierRepository extends \MapasCulturais\Repository
-{
-    function save($data)
-    {
+class CertifierRepository extends \MapasCulturais\Repository {
+
+    function save($data) {
         $app = \MapasCulturais\App::i();
         $entity = reset($app->repo('\CulturaViva\Entities\Diligence')->findBy([
-            'id' => $diligenceId,
-            'certifierId' => $certifierId
+                    'id' => $diligenceId,
+                    'certifierId' => $certifierId
         ]));
 
         if (isset($entity) && !in_array($entity, [self::CERTIFIED, self::NO_CERTIFIED])) {
@@ -28,4 +29,5 @@ class CertifierRepository extends \MapasCulturais\Repository
             $entity->save(true);
         }
     }
+
 }
