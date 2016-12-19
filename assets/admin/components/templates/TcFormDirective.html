@@ -24,7 +24,8 @@
                     >
                     {{item.title}}
                 </button>
-            </span>
+            </span>            
+            <span ng-if="buttons && (onClear || onSave)">&nbsp; |</span>
 
             <span ng-if="onClear">
                 &nbsp;

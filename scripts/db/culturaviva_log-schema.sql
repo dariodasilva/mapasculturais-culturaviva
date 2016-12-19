@@ -33,8 +33,8 @@ CREATE TABLE culturaviva_log.criterio (
     log_ts      TIMESTAMP without time zone,
     log_tp      CHAR,
     log_client  VARCHAR(21),
-    log_spid    int4,
     log_user    VARCHAR(50),
+    log_spid    int4,
     id          INTEGER NOT NULL,
     ordem       INTEGER,
     ativo       BOOLEAN,
@@ -78,7 +78,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.criterio_fn_tg() RETURNS TRIGGER AS $
             id, ordem, ativo, descricao, ts_criacao
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.id, vRecord.ordem, vRecord.ativo, vRecord.descricao, vRecord.ts_criacao
         );
 
@@ -104,8 +104,8 @@ CREATE TABLE culturaviva_log.inscricao (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
     log_client      VARCHAR(21),
-    log_spid        int4,
     log_user        VARCHAR(50),
+    log_spid        int4,
     id              INTEGER,
     agente_id       INTEGER,
     estado          CHAR,
@@ -149,7 +149,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_fn_tg() RETURNS TRIGGER AS 
             id, agente_id, estado, ts_criacao, ts_finalizacao
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.id, vRecord.agente_id, vRecord.estado, vRecord.ts_criacao, vRecord.ts_finalizacao
         );
 
@@ -175,8 +175,8 @@ CREATE TABLE culturaviva_log.inscricao_criterio (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
     log_client      VARCHAR(21),
-    log_spid        int4,
     log_user        VARCHAR(50),
+    log_spid        int4,
     inscricao_id    INTEGER,
     criterio_id     INTEGER,
     ts_criacao      TIMESTAMP without time zone
@@ -218,7 +218,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_criterio_fn_tg() RETURNS TR
             inscricao_id, criterio_id, ts_criacao
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.inscricao_id, vRecord.criterio_id, vRecord.ts_criacao
         );
 
@@ -244,8 +244,8 @@ CREATE TABLE culturaviva_log.certificador (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
     log_client      VARCHAR(21),
-    log_spid        int4,
     log_user        VARCHAR(50),
+    log_spid        int4,
     id              INTEGER,
     agente_id       INTEGER,
     ativo           BOOLEAN,
@@ -291,7 +291,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.certificador_fn_tg() RETURNS TRIGGER 
             id, agente_id, ativo, tipo, titular, ts_criacao, ts_atualizacao
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.id, vRecord.agente_id, vRecord.ativo, vRecord.tipo, vRecord.titular, vRecord.ts_criacao, vRecord.ts_atualizacao
         );
 
@@ -317,8 +317,8 @@ CREATE TABLE culturaviva_log.avaliacao (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
     log_client      VARCHAR(21),
-    log_spid        int4,
     log_user        VARCHAR(50),
+    log_spid        int4,
     id              INTEGER,
     inscricao_id    INTEGER,
     certificador_id INTEGER,
@@ -365,7 +365,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_fn_tg() RETURNS TRIGGER AS 
             id, inscricao_id, certificador_id, estado, observacoes, ts_finalizacao, ts_criacao, ts_atualizacao
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.id, vRecord.inscricao_id, vRecord.certificador_id, vRecord.estado, vRecord.observacoes, vRecord.ts_finalizacao, vRecord.ts_criacao, vRecord.ts_atualizacao
         );
 
@@ -391,8 +391,8 @@ CREATE TABLE culturaviva_log.avaliacao_criterio (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
     log_client      VARCHAR(21),
-    log_spid        int4,
     log_user        VARCHAR(50),
+    log_spid        int4,
     avaliacao_id    INTEGER,
     inscricao_id    INTEGER,
     criterio_id     INTEGER,
@@ -435,7 +435,7 @@ CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() RETURNS TR
             avaliacao_id, inscricao_id, criterio_id, aprovado
         )
         VALUES (
-            clock_timestamp(), vAction, vlog_client, pg_backend_pid(), session_user,
+            clock_timestamp(), vAction, vlog_client, session_user, pg_backend_pid(), 
             vRecord.avaliacao_id, vRecord.inscricao_id, vRecord.criterio_id, vRecord.aprovado
         );
 

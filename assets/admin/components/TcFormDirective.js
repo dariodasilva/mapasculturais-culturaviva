@@ -46,6 +46,10 @@ function TcFormDirective($document) {
             if (!$attrs.hasOwnProperty('onSubmit')) {
                 $scope.onSubmit = null;
             }
+            
+            if (!$attrs.hasOwnProperty('buttons')) {
+                $scope.buttons = null;
+            }
 
             /**
              *

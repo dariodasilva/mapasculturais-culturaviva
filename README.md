@@ -26,6 +26,13 @@ Atualmente está presente nos 27 estados brasileiros e em cerca de mil municípi
 Siga o [Guia de Instalação e Configuração](doc/guia-instalacao.md) para ter seu ambiente de trabalho funcionando sem
 dores de cabeça.
 
+### Documentação
+
+- [Guia de Instalação e Configuração](doc/guia-instalacao.md)
+- [Log de Auditoria](doc/modelo-dados.md#log-de-auditoria)
+- [Modelo de Dados](doc/modelo-dados.md#modelo-fisico)
+- [Dicionário de Dados](doc/modelo-dados.md#dicionario-de-dados)
+
 
 
 ## Links Úteis

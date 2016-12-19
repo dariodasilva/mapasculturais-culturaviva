@@ -52,10 +52,10 @@ function AppConfig($stateProvider, $urlRouterProvider) {
                     ACCESS_LEVEL: window.RBAC.ACCESS_LEVEL.AGENTE_AREA
                 }
             })
-            // Configurações::Parametros
-            .state('pagina.configuracao.parametros', {
-                url: '/parametros',
-                templateUrl: urlTemplate('Parametros', 'configuracao')
+            // Configurações::Criterios
+            .state('pagina.configuracao.criterios', {
+                url: '/criterios',
+                templateUrl: urlTemplate('Criterios', 'configuracao')
             })
             // Configurações::Certificadores
             .state('pagina.configuracao.certificador', {

@@ -232,7 +232,7 @@ class Theme extends BaseV1\Theme {
         ]);
         $this->_addAdminAssetsModule('relatorios', ['RelatoriosInicioCtrl']);
         $this->_addAdminAssetsModule('configuracao', [
-            'ParametrosCtrl',
+            'CriteriosCtrl',
             'CertificadorListaCtrl',
             'CertificadorListaTabelaDirective',
             'CertificadorFormularioCtrl'
@@ -316,9 +316,8 @@ class Theme extends BaseV1\Theme {
         $app->registerController('rede', 'CulturaViva\Controllers\Rede');
         $app->registerController('cadastro', 'CulturaViva\Controllers\Cadastro');
         $app->registerController('admin', 'CulturaViva\Controllers\Admin');
+        $app->registerController('criterio', 'CulturaViva\Controllers\Criterio');        
         $app->registerController('certificador', 'CulturaViva\Controllers\Certificador');
-        $app->registerController('certificacao', 'CulturaViva\Controllers\Certificacao');
-        $app->registerController('configuracao', 'CulturaViva\Controllers\Configuracao');
         $app->registerController('relatorios', 'CulturaViva\Controllers\Relatorios');
 
 //        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('portifolio', ['^application\/pdf$'], 'O portifólio deve ser um arquivo pdf.', true));
