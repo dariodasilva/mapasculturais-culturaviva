@@ -85,9 +85,21 @@ class Theme extends BaseV1\Theme{
         $this->assetManager->publishAsset('img/banner-home2.jpg', 'img/banner-home2.jpg');
         $this->assetManager->publishAsset('img/certificado.png', 'img/certificado.png');
 
-        $app->hook('view.render(site/search):before', function(){
+        $app->hook('view.render(site/search):before', function() use($app){
+
+            $ids = $app->controller('agent')->apiQuery([
+                '@select' => 'id',
+                'rcv_tipo' => 'EQ(ponto)'
+            ]);
+
+            $ids = implode(
+                ',',
+                array_map(function($e){return $e['id'];}, $ids)
+            );
+
             $this->jsObject['searchFilters'] = [
-                'agent' => ['rcv_tipo' => 'EQ(ponto)']
+                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
+                'event' => ['owner' => "IN($ids)"]
             ];
         });
 
