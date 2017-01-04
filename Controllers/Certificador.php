@@ -3,7 +3,7 @@
 namespace CulturaViva\Controllers;
 
 use MapasCulturais\App;
-use CulturaViva\Entities\Certifier;
+use CulturaViva\Entities\Certificador as CertificadorEntity;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
@@ -11,45 +11,69 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class Certificador extends \MapasCulturais\Controller {
 
-    protected $_user = null;
-    protected $buscaAnterior = null;
-
-    function getUser() {
-        return $this->_user;
-    }
-
     /**
-     * Pesquisa de agentes por nome, para cadastro de certificador
-     *
-     * @param string $nome O nome do agente sendo buscado
+     * Lista todos os certificadores cadastrados, com informações sobre o
+     * status dos processos
      */
-    function GET_buscarAgente() {
+    function GET_listar() {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
         $this->requireAuthentication();
         $app = App::i();
 
-        $nome = $this->data['nome'];
+        $nativeQuery = "
+            WITH avaliacoes AS (
+                SELECT
+                    f.certificador_id,
+                    f.estado,
+                    count(*) AS qtd
+                FROM (
+                    SELECT
+                        certificador_id,
+                        CASE
+                            WHEN estado = ANY(ARRAY['D','I']) THEN 'F'
+                            ELSE estado
+                        END AS estado
+                    FROM culturaviva.avaliacao
+                    WHERE estado <> 'C'
+                ) f
+                GROUP BY f.certificador_id, f.estado
+            )
+            SELECT
+                c.*,
+                a.name AS agente_nome,
+                COALESCE(ap.qtd, 0) AS avaliacoes_pendentes,
+                COALESCE(aa.qtd, 0) AS avaliacoes_em_analise,
+                COALESCE(af.qtd, 0) AS avaliacoes_finalizadas
+            FROM culturaviva.certificador c
+            JOIN agent a ON a.id = c.agente_id
+            LEFT JOIN avaliacoes ap ON ap.certificador_id = c.id AND ap.estado = 'P'
+            LEFT JOIN avaliacoes aa ON aa.certificador_id = c.id AND aa.estado = 'A'
+            LEFT JOIN avaliacoes af ON af.certificador_id = c.id AND af.estado = 'F'";
 
-        // Agente, não cadastrado e diferente do usuario atual
-        $dql = 'SELECT
-                    a.id,
-                    a.userId,
-                    a.name
-                FROM \MapasCulturais\Entities\Agent a
-                JOIN a.user u
-                LEFT JOIN CulturaViva\Entities\Certifier c WITH a.id = c.agentId
-                WHERE a.user <> :usuario
-                AND c.agentId IS NULL
-                AND unaccent(lower(a.name)) LIKE unaccent(lower(:nome))';
+        $rsm = new ResultSetMapping();
 
-        $agents = $app->em->createQuery($dql)
-                ->setParameters([
-                    'usuario' => $app->user,
-                    'nome' => "%$nome%"
-                ])
-                ->setMaxResults(10)
-                ->getResult();
+        $fields = [
+            'id',
+            'agente_id',
+            'agente_nome',
+            'ativo',
+            'tipo',
+            'ts_criacao',
+            'ts_atualizacao',
+            'avaliacoes_pendentes',
+            'avaliacoes_em_analise',
+            'avaliacoes_finalizadas',
+        ];
+        foreach ($fields as $field) {
+            $prop = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $field))));
+            $rsm->addScalarResult($field, $prop);
+        }
 
-        $this->json($agents);
+        $rows = $app->em->createNativeQuery($nativeQuery, $rsm)->getResult();
+        $this->json($rows);
     }
 
     /**
@@ -117,79 +141,37 @@ class Certificador extends \MapasCulturais\Controller {
     }
 
     /**
-     * Lista todos os certificadores cadastrados, com informações sobre o
-     * status dos processos
+     * Pesquisa de agentes por nome, para cadastro de certificador
+     *
+     * @param string $nome O nome do agente sendo buscado
      */
-    function GET_listar() {
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
+    function GET_buscarAgente() {
         $this->requireAuthentication();
         $app = App::i();
 
-        $nativeQuery = "
-            WITH diligences AS (
-                SELECT
-                    f.certifier_id,
-                    f.status,
-                    count(*) AS qtd
-                FROM (
-                    SELECT
-                        certifier_id,
-                        CASE 
-                            WHEN status = ANY(ARRAY['C','N']) THEN 'F'
-                            ELSE status
-                        END AS status
-                    FROM culturaviva.diligence
-                ) f
-                GROUP BY f.certifier_id, f.status
-            )
-            SELECT 
-                c.*,
-                a.name AS agent_name,
-                COALESCE(p.qtd, 0) AS diligences_p, 
-                COALESCE(r.qtd, 0) AS diligences_r, 
-                COALESCE(f.qtd, 0) AS diligences_f 
-            FROM culturaviva.certifier c
-            JOIN agent a ON a.id = c.agent_id
-            LEFT JOIN diligences p ON p.certifier_id = c.id AND p.status = 'P'
-            LEFT JOIN diligences r ON r.certifier_id = c.id AND r.status = 'R'
-            LEFT JOIN diligences f ON f.certifier_id = c.id AND r.status = 'F'";
+        $nome = $this->data['nome'];
 
-        $rsm = new ResultSetMapping();
+        // Agente, não cadastrado e diferente do usuario atual
+        $dql = 'SELECT
+                    a.id,
+                    a.userId,
+                    a.name
+                FROM \MapasCulturais\Entities\Agent a
+                JOIN a.user u
+                LEFT JOIN CulturaViva\Entities\Certifier c WITH a.id = c.agentId
+                WHERE a.user <> :usuario
+                AND c.agentId IS NULL
+                AND unaccent(lower(a.name)) LIKE unaccent(lower(:nome))';
 
-        $fields = [
-            'id',
-            'agent_id',
-            'agent_name',
-            'is_active',
-            'type',
-            'created_at',
-            'updated_at',
-            'diligences_p',
-            'diligences_r',
-            'diligences_f',
-        ];
-        foreach ($fields as $field) {
-            $prop = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $field))));
-            $rsm->addScalarResult($field, $prop);
-        }
+        $agents = $app->em->createQuery($dql)
+                ->setParameters([
+                    'usuario' => $app->user,
+                    'nome' => "%$nome%"
+                ])
+                ->setMaxResults(10)
+                ->getResult();
 
-        $certifiers = $app->em->createNativeQuery($nativeQuery, $rsm)->getResult();
-        $this->json($certifiers);
-    }
-
-    function POST_find() {
-        $params = [];
-        if (isset($this->data['status']) && !empty($this->data['status'])) {
-            $params['isActive'] = $this->data['status'];
-        }
-        if (isset($this->data['type']) && !empty($this->data['type'])) {
-            $params['type'] = $this->data['type'];
-        }
-        $certifiers = App::i()->repo('\CulturaViva\Entities\Certifier')->findBy($params);
-        $this->json($certifiers);
+        $this->json($agents);
     }
 
 }

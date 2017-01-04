@@ -256,3 +256,64 @@ Após os passos acima, tendo configurando o projeto corretamente na sua IDE pref
 
 
 
+### Executando Profiler do projeto
+
+O Profiler é uma poderosa ferramenta que lhe dá a capacidade de analisar O código PHP e determinar gargalos ou
+geralmente ver quais partes do seu código são lentas e poderia usar um aumento de velocidade.
+
+Abaixo, segue tutorial para uso do [WebGrind](https://github.com/jokkedk/webgrind) para a análise de execução do projeto.
+
+
+Ainda no diretório ```mapasculturais```, no terminal:
+
+```bash
+# conectar a vm
+vagrant ssh
+
+# habilitando o profiler
+sudo sh -c 'echo "xdebug.profiler_enable = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini'
+
+# configurando para usar apenas com gatilho (veja como configurar sua IDE)
+sudo sh -c 'echo "xdebug.profiler_enable_trigger = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini'
+
+# sair da maquina virtual
+exit
+
+# reiniciar a vm
+vagrant reload
+```
+
+Após isso, faça o download do [WebGrind](https://github.com/jokkedk/webgrind) e extraia no diretório ```mapasculturais/webgrind```.
+
+
+
+Altera o arquivo ```Vagrantfile``` e adicione as configuraçães abaixo
+
+```bash
+# apos a linha:
+php -S 0.0.0.0:8000 -t /vagrant/src /vagrant/src/router.php &
+
+# adicione
+php -S 0.0.0.0:8001 -t /vagrant/webgrind &
+
+
+# apos a linha:
+config.vm.network "forwarded_port", guest: 8000, host: 8000
+
+# adicione
+config.vm.network "forwarded_port", guest: 8001, host: 8001
+
+# reiniciar a vm
+vagrant reload
+```
+
+Então, no terminal:
+
+```bash
+
+# reiniciar a vm
+vagrant reload
+
+```
+
+Pronto, basta acessar [http://localhost:8001](http://localhost:8001) no seu navegador e utilizar a ferramenta.

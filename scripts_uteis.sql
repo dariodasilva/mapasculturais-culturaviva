@@ -131,11 +131,12 @@ INSERT INTO culturaviva.diligence(subscription_id, certifier_id, status)
 -- CONSULTAS GENERICAS
 --------------------------------------------------------------------------------
 
--- Status possiveis de diligencias (culturaviva.diligence.status)
--- [P] Pendent
--- [R] Under review
--- [C] Certified
--- [N] No certified
+-- Status possiveis de avaliações (culturaviva.avaliacao.estado)
+-- [P] Pendente
+-- [A] Em Análise
+-- [D] Deferido
+-- [I] Indeferido
+-- [C] Cancelado
 
 
 -- Quantidade de processos por certificador agrupado por status
@@ -148,50 +149,53 @@ GROUP BY d.certifier_id, d.status;
 
 
 -- Quantidade de processos por certificador agrupado por status
--- Considerando os status "[C] Certified" e "[N] No certified" como "[F] Finalizado"
+-- Considerando os status "[D] Deferido" e "[I] Indeferido" como "[F] Finalizado"
+-- Ignora processos cancelados
 SELECT
-    f.certifier_id,
-    f.status,
+    f.certificador_id,
+    f.estado,
     count(*) AS qtd
 FROM (
     SELECT
-        certifier_id,
+        certificador_id,
         CASE 
-            WHEN status = ANY(ARRAY['C','N']) THEN 'F'
-            ELSE status
-        END AS status
-    FROM culturaviva.diligence
+            WHEN estado = ANY(ARRAY['D','I']) THEN 'F'
+            ELSE estado
+        END AS estado
+    FROM culturaviva.avaliacao
+    WHERE estado <> 'C'
 ) f
-GROUP BY f.certifier_id, f.status;
+GROUP BY f.certificador_id, f.estado;
 
 
 
--- Listar certificadores com informações sobre os processos
-WITH diligences AS (
+-- Listar certificadores com informações sobre as avaliações
+WITH avaliacoes AS (
     SELECT
-        f.certifier_id,
-        f.status,
+        f.certificador_id,
+        f.estado,
         count(*) AS qtd
     FROM (
         SELECT
-            certifier_id,
-            CASE 
-                WHEN status = ANY(ARRAY['C','N']) THEN 'F'
-                ELSE status
-            END AS status
-        FROM culturaviva.diligence
+            certificador_id,
+            CASE
+                WHEN estado = ANY(ARRAY['D','I']) THEN 'F'
+                ELSE estado
+            END AS estado
+        FROM culturaviva.avaliacao
+        WHERE estado <> 'C'
     ) f
-    GROUP BY f.certifier_id, f.status
+    GROUP BY f.certificador_id, f.estado
 )
-SELECT 
+SELECT
     c.*,
-    a.name AS agent_name,
-    COALESCE(p.qtd, 0) AS diligences_p, 
-    COALESCE(r.qtd, 0) AS diligences_r, 
-    COALESCE(f.qtd, 0) AS diligences_f 
-FROM culturaviva.certifier c
-JOIN agent a ON a.id = c.agent_id
-LEFT JOIN diligences p ON p.certifier_id = c.id AND p.status = 'P'
-LEFT JOIN diligences r ON r.certifier_id = c.id AND r.status = 'R'
-LEFT JOIN diligences f ON f.certifier_id = c.id AND r.status = 'F'
+    a.name AS agente_nome,
+    COALESCE(ap.qtd, 0) AS avaliacoes_pendentes,
+    COALESCE(aa.qtd, 0) AS avaliacoes_em_analise,
+    COALESCE(af.qtd, 0) AS avaliacoes_finalizadas
+FROM culturaviva.certificador c
+JOIN agent a ON a.id = c.agente_id
+LEFT JOIN avaliacoes ap ON ap.certificador_id = c.id AND ap.estado = 'P'
+LEFT JOIN avaliacoes aa ON aa.certificador_id = c.id AND aa.estado = 'A'
+LEFT JOIN avaliacoes af ON af.certificador_id = c.id AND af.estado = 'F'
 ;

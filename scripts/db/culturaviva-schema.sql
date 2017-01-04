@@ -63,8 +63,8 @@ CREATE TABLE culturaviva.inscricao (
     CONSTRAINT inscricao_pk PRIMARY KEY (id),
     CONSTRAINT inscricao_estado_ck CHECK (estado = ANY(ARRAY['P','C','N','R'])),
     CONSTRAINT inscricao_agente_id_fk FOREIGN KEY (agente_id)
-        REFERENCES mapas.agent (id)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+        REFERENCES agent (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
 );
 ALTER TABLE culturaviva.inscricao OWNER TO vagrant;
 
@@ -132,7 +132,7 @@ CREATE TABLE culturaviva.certificador (
     CONSTRAINT certificador_agente_tipe_uk UNIQUE (agente_id, tipo),
     CONSTRAINT certificador_tipo_ck CHECK (tipo = ANY(ARRAY['C','P','M'])),
     CONSTRAINT certificador_agente_id_fk FOREIGN KEY (agente_id)
-        REFERENCES mapas.agent (id)
+        REFERENCES agent (id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 ALTER TABLE culturaviva.certificador OWNER TO vagrant;
@@ -252,6 +252,6 @@ COMMENT ON TABLE culturaviva.avaliacao_criterio IS 'Registra os valores para os 
 COMMENT ON COLUMN culturaviva.avaliacao_criterio.avaliacao_id   IS 'Referencia para a Avaliação da Inscrição';
 COMMENT ON COLUMN culturaviva.avaliacao_criterio.inscricao_id   IS 'Referencia para a Incrição do Pontao/Ponto de Cultura';
 COMMENT ON COLUMN culturaviva.avaliacao_criterio.criterio_id    IS 'Referencia para o Critério de Avaliação';
-COMMENT ON COLUMN culturaviva.avaliacao_criterio.aprovado       IS 'Informa se o critério foi marcado como APROVADO pelo 
+COMMENT ON COLUMN culturaviva.avaliacao_criterio.aprovado       IS 'Informa se o critério foi marcado como APROVADO pelo
 Avaliador';
 ------------------------------------------------------------------------------------------------------------------------
