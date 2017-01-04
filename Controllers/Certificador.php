@@ -16,14 +16,10 @@ class Certificador extends \MapasCulturais\Controller {
      * status dos processos
      */
     function GET_listar() {
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
         $this->requireAuthentication();
         $app = App::i();
 
-        $nativeQuery = "
+        $query = "
             WITH avaliacoes AS (
                 SELECT
                     f.certificador_id,
@@ -55,7 +51,7 @@ class Certificador extends \MapasCulturais\Controller {
 
         $rsm = new ResultSetMapping();
 
-        $fields = [
+        $campos = [
             'id',
             'agente_id',
             'agente_nome',
@@ -67,13 +63,13 @@ class Certificador extends \MapasCulturais\Controller {
             'avaliacoes_em_analise',
             'avaliacoes_finalizadas',
         ];
-        foreach ($fields as $field) {
+        foreach ($campos as $field) {
             $prop = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $field))));
             $rsm->addScalarResult($field, $prop);
         }
 
-        $rows = $app->em->createNativeQuery($nativeQuery, $rsm)->getResult();
-        $this->json($rows);
+        $registros = $app->em->createNativeQuery($query, $rsm)->getResult();
+        $this->json($registros);
     }
 
     /**
@@ -84,60 +80,62 @@ class Certificador extends \MapasCulturais\Controller {
      * @see CulturaViva\Entities\Certifier
      */
     function POST_salvar() {
-
-
         $this->requireAuthentication();
         $app = App::i();
 
         $data = json_decode($app->request()->getBody());
 
         // Salva detalhes do certificador
-        $certifier = null;
+        $certificador = null;
         if (isset($data->id)) {
-            $certifier = reset(App::i()->repo('\CulturaViva\Entities\Certifier')->find($data->id));
+            $certificador = reset(App::i()->repo('\CulturaViva\Entities\Certificador')->find($data->id));
         }
 
-        if ($certifier) {
-            $certifier->updatedAt = new \DateTime(date('Y-m-d H:i:s'));
+        if ($certificador) {
+            $certificador->tsAtualizacao = new \DateTime(date('Y-m-d H:i:s'));
         } else {
-            $certifier = new Certifier;
-            $certifier->id = null;
-            $certifier->createdAt = date('Y-m-d H:i:s');
+            $certificador = new CertificadorEntity();
+            $certificador->id = null;
+            $certificador->tsCriacao = date('Y-m-d H:i:s');
         }
-        $certifier->isActive = $data->isActive;
-        $certifier->agentId = $data->agentId;
-        $certifier->type = $data->type;
+        $certificador->ativo = $data->ativo;
+        $certificador->agenteId = $data->agenteId;
+        $certificador->tipo = $data->tipo;
+        $certificador->titular = $data->titular;
 
         // Validação de consistencia
-        if (!in_array($certifier->type, [Certifier::TYPE_PUBLIC, Certifier::TYPE_CIVIL, Certifier::TYPE_MINERVA])) {
+        $tiposValidos = [CertificadorEntity::TP_PUBLICO, CertificadorEntity::TP_CIVIL, CertificadorEntity::TP_MINERVA];
+        if (!in_array($certificador->tipo, $tiposValidos)) {
             throw new \Exception('O tipo do Agente Certificador informado é inválido');
         }
 
-        $certifier->save();
+        $certificador->save();
+
+        //-------------------------------------------
+        // Faz a manutenção das permissões do usuario
 
         /**
          * @var \MapasCulturais\Entities\User
-         *
-         * Faz a manutenção das permissões do agente
          */
-        $user = $app->repo('Agent')->find($certifier->agentId);
+        $usuario = $app->repo('Agent')->find($certificador->agenteId);
 
-        if ($certifier->type === Certifier::TYPE_PUBLIC) {
-            $user->removeRole(Certifier::ROLE_CIVIL);
-            $user->addRole(Certifier::ROLE_PUBLIC);
-        } else if ($certifier->type === Certifier::TYPE_MINERVA) {
-            $user->removeRole(Certifier::ROLE_CIVIL);
-            $user->addRole(Certifier::ROLE_PUBLIC);
-            $user->addRole(Certifier::ROLE_MINERVA);
-        } else if ($certifier->type === Certifier::TYPE_CIVIL) {
-            $user->removeRole(Certifier::ROLE_PUBLIC);
-            $user->removeRole(Certifier::ROLE_MINERVA);
-            $user->addRole(Certifier::ROLE_CIVIL);
+        $perfilUsuario = null;
+        if ($certificador->tipo == CertificadorEntity::TP_PUBLICO) {
+            $perfilUsuario = CertificadorEntity::ROLE_PUBLICO;
+        } else if ($certificador->tipo == CertificadorEntity::TP_CIVIL) {
+            $perfilUsuario = CertificadorEntity::ROLE_CIVIL;
+        } else {
+            $perfilUsuario = CertificadorEntity::ROLE_MINERVA;
+        }
+        if ($certificador->ativo) {
+            $usuario->addRole($perfilUsuario);
+        } else {
+            $usuario->removeRole($perfilUsuario);
         }
 
         $app->em->flush();
 
-        $this->json($certifier);
+        $this->json($certificador);
     }
 
     /**
@@ -151,19 +149,18 @@ class Certificador extends \MapasCulturais\Controller {
 
         $nome = $this->data['nome'];
 
-        // Agente, não cadastrado e diferente do usuario atual
-        $dql = 'SELECT
+        // Agente, diferente do usuario atual
+        $query = 'SELECT
                     a.id,
                     a.userId,
                     a.name
                 FROM \MapasCulturais\Entities\Agent a
                 JOIN a.user u
-                LEFT JOIN CulturaViva\Entities\Certifier c WITH a.id = c.agentId
                 WHERE a.user <> :usuario
-                AND c.agentId IS NULL
-                AND unaccent(lower(a.name)) LIKE unaccent(lower(:nome))';
+                AND unaccent(lower(a.name)) LIKE unaccent(lower(:nome))
+                ';
 
-        $agents = $app->em->createQuery($dql)
+        $agents = $app->em->createQuery($query)
                 ->setParameters([
                     'usuario' => $app->user,
                     'nome' => "%$nome%"

@@ -21,10 +21,6 @@ class Criterio extends \MapasCulturais\Controller {
      * Salva os critérios de avaliação
      */
     function POST_salvar() {
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
-
         $this->requireAuthentication();
         $app = App::i();
 

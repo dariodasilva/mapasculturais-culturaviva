@@ -17,6 +17,11 @@ CertificadorFormularioCtrl.TIPO_CERTIFICADOR = [
     {codigo: 'M', label: 'Voto de Minerva'}
 ];
 
+CertificadorFormularioCtrl.OPCOES_ATIVO = [
+    {valor: true, label: 'Sim'},
+    {valor: false, label: 'Não'}
+];
+
 
 
 /**
@@ -28,11 +33,17 @@ CertificadorFormularioCtrl.TIPO_CERTIFICADOR = [
 CertificadorFormularioCtrl.converterParaEscopo = function (dto) {
     return {
         id: dto.id,
-        agentId: dto.agentId,
-        type: dto.type,
-        isActive: dto.isActive
+        agenteId: dto.agenteId,
+        tipo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+            return item.codigo === dto.tipo;
+        }),
+        ativo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+            return item.valor === dto.ativo;
+        })
     };
 };
+
+
 
 /**
  * Faz o mapeamento do DTO do scope para o serviço de persistencia
@@ -43,9 +54,9 @@ CertificadorFormularioCtrl.converterParaEscopo = function (dto) {
 CertificadorFormularioCtrl.converterParaSalvar = function (dto) {
     return {
         id: dto.id,
-        agentId: dto.agentId,
-        type: dto.type.codigo,
-        isActive: dto.isActive
+        agenteId: dto.agenteId,
+        tipo: dto.tipo.codigo,
+        ativo: dto.ativo.valor
     };
 };
 
@@ -81,6 +92,7 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
     ];
 
     $scope.tipos = CertificadorFormularioCtrl.TIPO_CERTIFICADOR;
+    $scope.opcoesAtivo = CertificadorFormularioCtrl.OPCOES_ATIVO;
 
     // Variaveis utilitárias
     $scope.ref = {
@@ -92,10 +104,12 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
     if (novoRegistro) {
         var paramTipoCertificador = $state.params.tipo;
         $scope.dto = {
-            type: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+            tipo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
                 return item.codigo === paramTipoCertificador;
             }),
-            isActive: true
+            ativo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+                return item.valor;
+            })
         };
     } else {
         $http.get('/certificador/obter/' + codigo)
@@ -153,8 +167,8 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
     };
 
     $scope.selecionarAgente = function (agente) {
-        $scope.dto.agentId = agente.id;
-        $scope.dto.agentName = agente.name;
+        $scope.dto.agenteId = agente.id;
+        $scope.dto.agenteNome = agente.name;
         $scope.ref.buscarAgente = false;
     };
 }

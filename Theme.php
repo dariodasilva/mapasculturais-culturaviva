@@ -16,6 +16,11 @@ class Theme extends BaseV1\Theme {
 
     public function __construct(\MapasCulturais\AssetManager $asset_manager) {
         parent::__construct($asset_manager);
+
+        // @todo: Remover
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
     }
 
     protected static function _getTexts() {
@@ -316,7 +321,7 @@ class Theme extends BaseV1\Theme {
         $app->registerController('rede', 'CulturaViva\Controllers\Rede');
         $app->registerController('cadastro', 'CulturaViva\Controllers\Cadastro');
         $app->registerController('admin', 'CulturaViva\Controllers\Admin');
-        $app->registerController('criterio', 'CulturaViva\Controllers\Criterio');        
+        $app->registerController('criterio', 'CulturaViva\Controllers\Criterio');
         $app->registerController('certificador', 'CulturaViva\Controllers\Certificador');
         $app->registerController('relatorios', 'CulturaViva\Controllers\Relatorios');
 

@@ -6,7 +6,7 @@
 
         <!--Só permite alterar o agente quando é um novo cadastro-->
         <tc-input
-            ng-model="dto.agentName"
+            ng-model="dto.agenteNome"
             label="Agente Certificador"
             help="Selecione o Agente Certificador."
             col-input="4"
@@ -76,13 +76,26 @@
 
 
         <tc-select
-            ng-model="dto.type"
+            ng-model="dto.tipo"
             label="Tipo de Certificador"
             help="Selecione o tipo do certificador sendo cadastrado."
             col-input="4"
             field="label"
             order="codigo"
             options="tipos"
+            required="true"
+            disabled="!ref.novoRegistro"
+            >
+        </tc-select>
+
+        <tc-select
+            ng-model="dto.ativo"
+            ng-if="!ref.novoRegistro"
+            label="Certificador Ativo"
+            help="Informe se este Certificador está ativo."
+            col-input="4"
+            field="label"
+            options="opcoesAtivo"
             required="true"
             >
         </tc-select>
