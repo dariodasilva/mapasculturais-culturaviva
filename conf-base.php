@@ -4,6 +4,15 @@ $config['routes']['default_controller_id'] = 'rede';
 $config['routes']['shortcuts']['busca'] = ['site', 'search'];
 $config['auth.config']['onCreateRedirectUrl'] = $config['base.url'] . 'rede/entrada/';
 
+$config['mailer.templates'] = array_merge($config['mailer.templates'],
+    [
+        'cadastro_enviado' => [
+            'title' => "Cadastro enviado com Sucesso!",
+            'template' => 'cadastro_enviado.html'
+        ]
+    ]
+);
+
 return [
     'app.siteName' => 'Rede Cultura Viva',
     'app.siteDescription' => '',

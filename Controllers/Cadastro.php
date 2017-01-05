@@ -641,6 +641,14 @@ class Cadastro extends \MapasCulturais\Controller{
             }
 
             $inscricao->send();
+            $app = \MapasCulturais\App::i();
+            $message = $app->renderMailerTemplate('cadastro_enviado', ['name' => $app->user->profile->name]);
+            $app->createAndSendMailMessage([
+                'from' => $app->config['mailer.from'],
+                'to' => $app->user->email,
+                'subject' => $message['title'],
+                'body' => $message['body']
+            ]);
 
         } else {
             $this->errorJson([
