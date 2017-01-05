@@ -26,7 +26,7 @@ class Criterio extends \MapasCulturais\Controller {
 
 
         // Obtém os critérios salvos na base
-        $salvos = $this->GET_lista();
+        $salvos = App::i()->repo('\CulturaViva\Entities\Criterio')->findBy(['ativo' => true]);
         if ($salvos == null) {
             $salvos = [];
         }
@@ -44,16 +44,25 @@ class Criterio extends \MapasCulturais\Controller {
         $aPersistir = [];
 
         // Os criterios que receberam alteração, devem ser inativados
-        $aInativar = array_udiff($salvos, $novos, function ($salvo, $novo) {
-            if (!isset($novo->id)) {
+        $aInativar = array_udiff($salvos, $novos, function ($a, $b) {
+            if (!isset($a->id)) {
+                return 1;
+            }
+            if (!isset($b->id)) {
                 return -1;
             }
-            return ($salvo->id == $novo->id && $salvo->ordem == $novo->ordem && $salvo->descricao == $novo->descricao) ? 0 : -1;
+            var_dump($a);
+            var_dump($b);
+            //var_dump($a->id == $b->id && $a->ordem == $b->ordem && $a->descricao == $b->descricao);
+            //exit();
+            return ($a->id == $b->id && $a->ordem == $b->ordem && $a->descricao == $b->descricao) ? 0 : -1;
         });
+        var_dump($aInativar);
+        exit;
 
         // Os critérios que não receberam alteração, serao ignorados
         $aIgnorar = array_uintersect($novos, $salvos, function($novo, $salvo) {
-            if (!isset($novo->id)) {
+            if (!property_exists($novo, 'id') || !isset($novo->id)) {
                 return -1;
             }
             return ($novo->id == $salvo->id && $novo->ordem == $salvo->ordem && $novo->descricao == $salvo->descricao) ? 0 : -1;
@@ -61,23 +70,27 @@ class Criterio extends \MapasCulturais\Controller {
 
         // Registros que serão persistidos
         $aPersistir = array_udiff($novos, $aIgnorar, function ($novo, $ignorar) {
-            if (!isset($novo->id)) {
+            if (!property_exists($novo, 'id') || !isset($novo->id)) {
                 return -1;
             }
             return ($novo->id == $ignorar->id && $novo->ordem == $ignorar->ordem && $novo->descricao == $ignorar->descricao) ? 0 : -1;
         });
 
+//        var_dump($aInativar,"dd");
+//        var_dump($aPersistir);
+//        return;
+
         $app->getEm()->transactional(function ($em) use ($aPersistir, $aInativar) {
             // Inativa todos os critérios atuais
             foreach ($aInativar as $criterio) {
-                $criterio->setAtivo(false);
+                $criterio->ativo = 'f';
                 $em->persist($criterio);
             }
 
             // Salva a nova lista de critérios
             foreach ($aPersistir as $cData) {
                 $criterio = new \CulturaViva\Entities\Criterio();
-                $criterio->ativo = true;
+                $criterio->ativo = 't';
                 $criterio->ordem = $cData->ordem;
                 $criterio->descricao = $cData->descricao;
                 $criterio->tsCriacao = new \DateTime(date('Y-m-d H:i:s'));
@@ -85,7 +98,7 @@ class Criterio extends \MapasCulturais\Controller {
             }
         });
 
-        $this->json($this->GET_lista());
+        $this->json(App::i()->repo('\CulturaViva\Entities\Criterio')->findBy(['ativo' => true]));
     }
 
 }

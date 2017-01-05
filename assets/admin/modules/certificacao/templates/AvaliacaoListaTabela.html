@@ -1,0 +1,74 @@
+<div class="card-pf card-pf-utilization card-pf-accented">
+    <div class="card-pf-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <tc-input-search
+                        on-submit="filtrar(ref.filtrarTexto)"
+                        ng-model="ref.filtrarTexto"
+                        placeholder="Filtrar registros"
+                        >
+                    </tc-input-search>
+
+                    <div class="col-md-12">
+                        <br />
+                        <tc-notitication id="bag-filtro-agentes"></tc-notitication>
+
+                        <div ng-if="ref.data.total > 0" style="margin-top: 20px;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="avaliacao in ref.data.rows">
+                                    <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                                        <h2 class="card-pf-title">
+                                            {{avaliacao.pontoNome}}
+                                            <p><small>({{avaliacao.pontoTipo}})</small></p>
+                                        </h2>
+                                        <div class="card-pf-body">
+                                            <p class="card-pf-aggregate-status-notifications">
+                                                <strong class="card-pf-aggregate-status-notification">
+                                                    # {{avaliacao.id}}
+                                                </strong>
+                                            </p>
+
+                                            <p>{{avaliacao.certificadorNome}}</p>
+
+                                            <p><small>({{
+                                                avaliacao.certificadorTipo == 'C'
+                                                 ? 'Civil':avaliacao.certificadorTipo == 'P'
+                                                   ?'Público':'Minerva'}})</small></p>
+
+                                            <button class="btn btn-primary editar" type="button">
+                                                Detalhar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <pagination
+                                total-items="ref.data.total"
+                                ng-model="ref.pagina"
+                                class="pagination-sm"
+                                items-per-page="10"
+                                max-size="10"
+                                previous-text="&laquo;"
+                                next-text="&raquo;"
+                                >
+                            </pagination>
+                        </div>
+
+                        <div class="blank-slate-pf" ng-show="ref.data.total < 1" style="margin-top: 20px;">
+                            <p>
+                                <span ng-show="ref.texto">
+                                    Não foram encontrados avaliações {{descricao}} com o filtro informado.
+                                </span>
+                                <span ng-hide="ref.texto">
+                                    Não existem avaliações {{descricao}}.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

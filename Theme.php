@@ -236,6 +236,10 @@ class Theme extends BaseV1\Theme {
             'UsuarioSrv',
         ]);
         $this->_addAdminAssetsModule('relatorios', ['RelatoriosInicioCtrl']);
+        $this->_addAdminAssetsModule('certificacao', [
+            'AvaliacaoListaCtrl',
+            'AvaliacaoListaTabelaDirective',
+        ]);
         $this->_addAdminAssetsModule('configuracao', [
             'CriteriosCtrl',
             'CertificadorListaCtrl',
@@ -322,6 +326,7 @@ class Theme extends BaseV1\Theme {
         $app->registerController('cadastro', 'CulturaViva\Controllers\Cadastro');
         $app->registerController('admin', 'CulturaViva\Controllers\Admin');
         $app->registerController('criterio', 'CulturaViva\Controllers\Criterio');
+        $app->registerController('avaliacao', 'CulturaViva\Controllers\Avaliacao');
         $app->registerController('certificador', 'CulturaViva\Controllers\Certificador');
         $app->registerController('relatorios', 'CulturaViva\Controllers\Relatorios');
 

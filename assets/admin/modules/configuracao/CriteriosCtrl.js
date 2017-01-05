@@ -63,14 +63,14 @@ function ParametrosCtrl($scope, $state, $http) {
 
     /**
      * Persiste os critérios de avaliação
-     * 
+     *
      * @return {undefined}
      */
     $scope.salvar = function () {
         $http.post('/criterio/salvar', $scope.criterios).success(function (data) {
             $scope.$emit('msg', 'Critérios de Avaliação salvos com sucesso', null, 'success', 'formCriterios');
-            $scope.criterios = data;
-            $scope.listaVazia = angular.copy($scope.criterios);
+            //$scope.criterios = data;
+            //$scope.listaVazia = angular.copy($scope.criterios);
         }).error(function (error) {
             $scope.$emit('msg', 'Erro inesperado ao salvar as Configurações', null, 'error', 'formCriterios');
             if (window.console && console.warn) {
@@ -85,7 +85,7 @@ function ParametrosCtrl($scope, $state, $http) {
 
     /**
      * Remove o critério informado
-     * 
+     *
      * @param {type} criterio
      * @return {undefined}
      */

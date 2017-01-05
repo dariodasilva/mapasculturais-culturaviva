@@ -18,6 +18,8 @@ angular.module('AppAdmin.directives')
 
 TcNotiticationService.$inject = ['$rootScope'];
 
+TcNotiticationService.msgNextStateCallbacks = null;
+
 /**
  * Serviço para tratamento e gerenciamento das listas de mensagens
  *
@@ -30,10 +32,15 @@ function TcNotiticationService($rootScope) {
     $rootScope.$on('msg', onRootscopeMsg);
     $rootScope.$on('msgClear', onRootscopeClearMsg);
     $rootScope.$on('msgNextState', function (event, message, parametros, type, container, delay) {
-        var discard = $rootScope.$on('$stateChangeSuccess', function () {
-            onRootscopeMsg(event, message, parametros, type, container, delay);
-            discard();
-        });
+        if (!TcNotiticationService.msgNextStateCallbacks) {
+            TcNotiticationService.msgNextStateCallbacks = [];
+        }
+        TcNotiticationService.msgNextStateCallbacks.push(
+                onRootscopeMsg.bind(null, event, message, parametros, type, container, delay));
+//        var discard = $rootScope.$on('pageContentUpdated', function () {
+//            onRootscopeMsg(event, message, parametros, type, container, delay);
+//            discard();
+//        });
     });
 
 
@@ -306,7 +313,7 @@ function TcNotiticationDirective(TcNotitication) {
                 $scope.notifications.splice(idx, 1);
             };
 
-            $scope.$watch('id', function (newId, old) {                
+            $scope.$watch('id', function (newId, old) {
                 handleEvent();
             });
 
@@ -321,6 +328,18 @@ function TcNotiticationDirective(TcNotitication) {
                 var eventName = 'tcNotitication';
                 if ($scope.id) {
                     eventName += ':' + $scope.id;
+                } else {
+                    // Notification global
+
+                    if (TcNotiticationService.msgNextStateCallbacks) {
+                        // Exibe as mensagens programadas para proxima tela
+                        setTimeout(function () {
+                            angular.forEach(TcNotiticationService.msgNextStateCallbacks, function (fn) {
+                                fn();
+                            });
+                            TcNotiticationService.msgNextStateCallbacks = null;
+                        });
+                    }
                 }
 
                 $scope.$on(eventName, function (evnt, notification) {

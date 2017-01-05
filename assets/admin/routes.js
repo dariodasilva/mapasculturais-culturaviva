@@ -43,6 +43,24 @@ function AppConfig($stateProvider, $urlRouterProvider) {
                 templateUrl: urlTemplate('RelatoriosInicio', 'relatorios')
             })
             /*----------------------------------------------------------------------------------------*/
+            // Certificação
+            /*----------------------------------------------------------------------------------------*/
+            .state('pagina.certificacao', {
+                url: '/certificacao',
+                template: '<ui-view/>',
+                data: {
+                    ACCESS_LEVEL: window.RBAC.ACCESS_LEVEL.AGENTES
+                }
+            })
+            .state('pagina.certificacao.lista', {
+                url: '/',
+                templateUrl: urlTemplate('AvaliacaoLista', 'certificacao')
+            })
+            .state('pagina.configuracao.formulario', {
+                url: '/formulario/:id',
+                templateUrl: urlTemplate('CertificadorFormulario', 'certificacao')
+            })
+            /*----------------------------------------------------------------------------------------*/
             // Configurações
             /*----------------------------------------------------------------------------------------*/
             .state('pagina.configuracao', {

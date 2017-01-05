@@ -18,8 +18,13 @@ CertificadorFormularioCtrl.TIPO_CERTIFICADOR = [
 ];
 
 CertificadorFormularioCtrl.OPCOES_ATIVO = [
-    {valor: true, label: 'Sim'},
-    {valor: false, label: 'Não'}
+    {valor: true, label: 'Ativo'},
+    {valor: false, label: 'Inativo'}
+];
+
+CertificadorFormularioCtrl.OPCOES_GRUPO = [
+    {valor: true, label: 'Titular'},
+    {valor: false, label: 'Suplente'}
 ];
 
 
@@ -34,10 +39,14 @@ CertificadorFormularioCtrl.converterParaEscopo = function (dto) {
     return {
         id: dto.id,
         agenteId: dto.agenteId,
+        agenteNome: dto.agenteNome,
         tipo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
             return item.codigo === dto.tipo;
         }),
-        ativo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+        titular: CertificadorFormularioCtrl.OPCOES_GRUPO.find(function (item) {
+            return item.valor === dto.titular;
+        }),
+        ativo: CertificadorFormularioCtrl.OPCOES_ATIVO.find(function (item) {
             return item.valor === dto.ativo;
         })
     };
@@ -56,6 +65,7 @@ CertificadorFormularioCtrl.converterParaSalvar = function (dto) {
         id: dto.id,
         agenteId: dto.agenteId,
         tipo: dto.tipo.codigo,
+        titular: dto.titular.valor,
         ativo: dto.ativo.valor
     };
 };
@@ -93,6 +103,7 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
 
     $scope.tipos = CertificadorFormularioCtrl.TIPO_CERTIFICADOR;
     $scope.opcoesAtivo = CertificadorFormularioCtrl.OPCOES_ATIVO;
+    $scope.opcoesGrupo = CertificadorFormularioCtrl.OPCOES_GRUPO;
 
     // Variaveis utilitárias
     $scope.ref = {
@@ -107,7 +118,7 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
             tipo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
                 return item.codigo === paramTipoCertificador;
             }),
-            ativo: CertificadorFormularioCtrl.TIPO_CERTIFICADOR.find(function (item) {
+            ativo: CertificadorFormularioCtrl.OPCOES_ATIVO.find(function (item) {
                 return item.valor;
             })
         };
@@ -117,7 +128,11 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
                     $scope.dto = CertificadorFormularioCtrl.converterParaEscopo(certificador);
                 })
                 .error(function (error) {
-                    $scope.$emit('msg', 'Erro ao recuperar dados do Agente de Certificação', null, 'error');
+                    var msg = 'Erro ao recuperar dados do Agente de Certificação';
+                    if (error && error.message) {
+                        msg = error.message;
+                    }
+                    $scope.$emit('msg', msg, null, 'error');
                 });
     }
 
@@ -127,7 +142,9 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
                 .success(function (certificador) {
                     $scope.$emit('msgNextState', 'Agente de Certificação salvo com sucesso', null, 'success');
                     if (novoRegistro) {
-                        $state.go('page.private.notificacao.lista', null, {
+                        $state.go('pagina.configuracao.certificador.formulario', {
+                            id: certificador.id
+                        }, {
                             reload: true,
                             inherit: true,
                             notify: true
@@ -137,7 +154,11 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
                     }
                 })
                 .error(function (error) {
-                    $scope.$emit('msg', 'Erro inesperado salvar dados', null, 'error', 'formulario');
+                    var msg = 'Erro inesperado salvar dados';
+                    if (error && error.message) {
+                        msg = error.message;
+                    }
+                    $scope.$emit('msg', msg, null, 'error', 'formulario');
                 });
     };
 

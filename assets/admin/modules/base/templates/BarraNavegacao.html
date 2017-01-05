@@ -30,8 +30,11 @@
             <li ui-sref-active="active">
                 <a ui-sref="pagina.relatorios">Início</a>
             </li>
-            <li ui-sref-active="active" access-level="CERTIFICADORES">
-                <a ui-sref="page.private.certificacao.inicio">Certificação</a>
+            <li
+                ng-class="{active:$state.includes('pagina.certificacao.*')}"
+                access-level="AGENTES"
+                >
+                <a ui-sref="pagina.certificacao.lista">Avaliações</a>
             </li>
             <li class="dropdown"
                 ng-class="{active:$state.includes('pagina.configuracao.*')||$state.includes('pagina.configuracao.*.*')}"

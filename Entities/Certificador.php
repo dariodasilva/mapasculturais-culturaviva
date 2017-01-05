@@ -89,7 +89,7 @@ class Certificador extends \MapasCulturais\Entity {
     /**
      * Informa se este certificador é TITULAR ou SUPLENTE
      *
-     * @ORM\Column(name="titular", type="string", length=1, nullable=false)
+     * @ORM\Column(name="titular", type="boolean", nullable=false)
      *
      * @var string
      */

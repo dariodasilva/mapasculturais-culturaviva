@@ -24,19 +24,19 @@ class Admin extends \MapasCulturais\Controller {
      */
     function GET_user() {
         $app = App::i();
-        $user = $app->user;
+        $usuario = $app->user;
         //$project = $app->repo('Project')->find($app->config['redeCulturaViva.projectId']);
 
         $roles = [];
-        if (!$user->is('guest')) {
-            foreach ($user->roles as $role) {
+        if (!$usuario->is('guest')) {
+            foreach ($usuario->roles as $role) {
                 $roles[] = $role->name;
             }
         }
 
         $this->json([
-            'id' => $user->id,
-            'name' => $user->profile ? $user->profile->name : null,
+            'id' => $usuario->id,
+            'name' => $usuario->profile ? $usuario->profile->name : null,
             'roles' => $roles
         ]);
     }

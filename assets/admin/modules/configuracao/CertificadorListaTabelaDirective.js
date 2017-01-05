@@ -26,18 +26,11 @@ function CertificadorListaTabelaDirective() {
             /**
              * @description Identificador do tipo de certificadores sendo listado
              */
-            tipo: '@'
-        },
-        controller: Controller
+            tipo: '@',
+            /**
+             * @description Informa o grupo do certificador sendo listado (Titular ou Suplente)
+             */
+            grupo: '@'
+        }
     };
-
-    Controller.$inject = ['$scope'];
-    function Controller($scope) {
-        $scope.buttons = [
-            {
-                title: 'Adicionar Certificador',
-                sref: 'pagina.configuracao.certificador.formulario({tipo:"' + $scope.tipo + '"})'
-            }
-        ];
-    }
 }

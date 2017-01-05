@@ -3,13 +3,22 @@
         <tab>
             <tab-heading>
                 <span class="hidden-xs">Poder</span> Público
-                <span class="badge">{{certificadores.publico.length|| 0}}</span>
+                <span class="badge">
+                    {{certificadores.publico.titular.length|| 0}}-{{certificadores.publico.suplente.length|| 0}}
+                </span>
             </tab-heading>
 
+            <h2>Titulares</h2>
             <certificador-lista-tabela
-                certificadores="certificadores.publico"
-                descricao="do Poder Público"
-                tipo="p"
+                certificadores="certificadores.publico.titular"
+                descricao="Titulares do Poder Público"
+                >
+            </certificador-lista-tabela>
+
+            <h2>Suplentes</h2>
+            <certificador-lista-tabela
+                certificadores="certificadores.publico.suplente"
+                descricao="Suplentes do Poder Público"
                 >
             </certificador-lista-tabela>
         </tab>
@@ -17,13 +26,22 @@
         <tab>
             <tab-heading>
                 <span class="hidden-xs">Sociedade</span> Civil
-                <span class="badge">{{certificadores.civil.length|| 0}}</span>
+                <span class="badge">
+                    {{certificadores.civil.titular.length|| 0}}-{{certificadores.civil.suplente.length|| 0}}
+                </span>
             </tab-heading>
 
+            <h2>Titulares</h2>
             <certificador-lista-tabela
-                certificadores="certificadores.civil"
-                descricao="da Sociedade Civil"
-                tipo="c"
+                certificadores="certificadores.civil.titular"
+                descricao="Titulares da Sociedade Civil"
+                >
+            </certificador-lista-tabela>
+
+            <h2>Suplentes</h2>
+            <certificador-lista-tabela
+                certificadores="certificadores.civil.suplente"
+                descricao="Suplentes da Sociedade Civil"
                 >
             </certificador-lista-tabela>
         </tab>
@@ -31,150 +49,40 @@
         <tab>
             <tab-heading>
                 <span class="hidden-xs">Voto de</span> Minerva
-                <span class="badge">{{certificadores.minerva.length|| 0}}</span>
+                <span class="badge">
+                    {{certificadores.minerva.titular.length|| 0}}-{{certificadores.minerva.suplente.length|| 0}}
+                </span>
             </tab-heading>
 
+            <h2>Titulares</h2>
             <certificador-lista-tabela
-                certificadores="certificadores.minerva"
-                descricao="com Voto de Minerva"
-                tipo="m"
+                certificadores="certificadores.minerva.titular"
+                descricao="Titulares com Voto de Minerva"
+                >
+            </certificador-lista-tabela>
+
+            <h2>Suplentes</h2>
+            <certificador-lista-tabela
+                certificadores="certificadores.minerva.suplente"
+                descricao="Suplentes com Voto de Minerva"
                 >
             </certificador-lista-tabela>
         </tab>
     </tabset>
 
-    <div class="col-md-12 hidden">
-
-        <div class="panel panel-default hidden">
-            <div class="panel-body">
-
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Localizar Agente</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" placeholder="codigo">
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="nome">
-                        </div>
-                        <div class="col-sm-2">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="status" class="col-sm-2 control-label">Tipo</label>
-                        <div class="col-sm-10">
-                            <div class="radio">
-                                <input type="radio" class="form-control" name="tipo" value="true" checked>
-                                Sociedade Civil
-                            </div>
-                            <div class="radio">
-                                <input type="radio" class="form-control" name="tipo" value="false">
-                                Governo
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10 text-right">
-                            <button type="button" class="btn btn-default btn-md">Cancelar</button>
-                            <button type="button" class="btn btn-primary btn-md">Salvar</button>
-                        </div>
-                    </div>
-                </form>
-
+    <div class="row">
+        <div class="form-buttons col-md-12">
+            <div class="text-right form-buttons-content">
+                <span>
+                    <span>&nbsp;</span>
+                    <a
+                        class="btn btn-primary"
+                        ui-sref="pagina.configuracao.certificador.formulario"
+                        >
+                        Adicionar Certificador
+                    </a>
+                </span>
             </div>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-
-                <form class="form-horizontal" name="certificador" ng-submit="submitForm()">
-
-                    <input type="hidden" name="id" value="{{form.id}}">
-
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Nome</label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="form.agentId" class="form-control" placeholder="codigo">
-                            <span class="hidden">Antônio José da Silva</span></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="status" class="col-sm-2 control-label">Status</label>
-                        <div class="col-sm-10">
-                            <div class="radio">
-                                <input type="radio" ng-model="form.status" class="form-control" name="status" value="" checked>
-                                Todos
-                            </div>
-                            <div class="radio">
-                                <input type="radio" ng-model="form.status" class="form-control" name="status" value="true" checked>
-                                Ativo
-                            </div>
-                            <div class="radio">
-                                <input type="radio" ng-model="form.status" class="form-control" name="status" value="false">
-                                Inativo
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="status" class="col-sm-2 control-label">Tipo</label>
-                        <div class="col-sm-10">
-                            <div class="radio">
-                                <input type="radio" ng-model="form.type" class="form-control" name="tipo" value="" checked>
-                                Todos
-                            </div>
-                            <div class="radio">
-                                <input type="radio" ng-model="form.type" class="form-control" name="tipo" value="S" checked>
-                                Sociedade Civil
-                            </div>
-                            <div class="radio">
-                                <input type="radio" ng-model="form.type" class="form-control" name="tipo" value="P">
-                                Governo
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group hidden">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Data de Criação</label>
-                        <div class="col-sm-10"><span>20/05/2016 00:00:00</span></div>
-                    </div>
-                    <div class="form-group hidden">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Data de Atualização</label>
-                        <div class="col-sm-10"><span>20/05/2016 00:00:00</span></div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10 text-right">
-                            <button type="button" class="btn btn-default btn-md">Cancelar</button>
-                            <button type="button" ng-click="find()" class="btn btn-primary btn-md">Pesquisar</button>
-                            <button type="button" ng-click="submitForm()" class="btn btn-primary btn-md">Salvar</button>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Status</th>
-                            <th>Tipo</th>
-                            <th>Criado em</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="certificador in certificadoresPublico">
-                            <th scope="row">{{certificador.id}}</th>
-                            <td>{{status(certificador.isActive)}}</td>
-                            <td>{{tipo(certificador.type)}}</td>
-                            <td>{{certificador.createdAt}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 </div>

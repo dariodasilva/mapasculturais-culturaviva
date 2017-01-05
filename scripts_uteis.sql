@@ -85,32 +85,35 @@ INSERT INTO agent(user_id, type, name, create_timestamp, status)
     
 UPDATE usr SET profile_id = (SELECT id FROM agent WHERE name = 'PontoCultura@local') 
     WHERE email = 'PontoCultura@local';
+    
+    
+INSERT INTO user_meta(id, object_id, key, value)            
+    SELECT  
+        nextval('user_meta_id_seq'),
+        usr.id,
+        'tipoPontoCulturaDesejado', 
+        'ponto'
+    FROM usr WHERE usr.email = 'PontoCultura@local'
+;
 
--- Registra o processo de certificacao
-INSERT INTO culturaviva.subscription(agent_id, status)
+-- Registra a inscrição do ponto de cultura
+INSERT INTO culturaviva.inscricao(agente_id, estado)
     VALUES ((SELECT id FROM agent WHERE name = 'PontoCultura@local'), 'P');
 
--- Atribui processo para agente certificador (registrar pela interface)
-INSERT INTO culturaviva.diligence(subscription_id, certifier_id, status)
+-- Atribui avaliação para agente certificador (registrar pela interface)
+INSERT INTO culturaviva.avaliacao(inscricao_id, certificador_id, estado)
     VALUES (
         (
             SELECT id 
-            FROM culturaviva.subscription 
-            WHERE agent_id = (SELECT id FROM agent WHERE name = 'PontoCultura@local')
+            FROM culturaviva.inscricao 
+            WHERE agente_id = (SELECT id FROM agent WHERE name = 'PontoCultura@local')
         ), 
         (
             SELECT id 
-            FROM culturaviva.certifier 
-            WHERE agent_id = (
-                SELECT id FROM agent 
-                WHERE name = 
-                    CASE 
-                        /* alternar o booleano escolher o perfil */
-                        WHEN true THEN 'AgenteCivil@local'
-                        WHEN true THEN 'AgentePublico@local'
-                        ELSE 'AgenteMinerva@local'
-                    END
-            )
+            FROM culturaviva.certificador 
+            WHERE agente_id = (SELECT id FROM agent WHERE name = 'AgenteCivil@local')
+            AND ativo = true    
+            AND tipo = 'C'
         ),
         'P' 
     );
@@ -170,6 +173,8 @@ GROUP BY f.certificador_id, f.estado;
 
 
 -- Listar certificadores com informações sobre as avaliações
+-- Considerando os status "[D] Deferido" e "[I] Indeferido" como "[F] Finalizado"
+-- Ignora processos cancelados
 WITH avaliacoes AS (
     SELECT
         f.certificador_id,
@@ -199,3 +204,72 @@ LEFT JOIN avaliacoes ap ON ap.certificador_id = c.id AND ap.estado = 'P'
 LEFT JOIN avaliacoes aa ON aa.certificador_id = c.id AND aa.estado = 'A'
 LEFT JOIN avaliacoes af ON af.certificador_id = c.id AND af.estado = 'F'
 ;
+
+
+
+-- Totalizadores de avaliações por AGENTE
+-- Considerando os status "[D] Deferido" e "[I] Indeferido" como "[F] Finalizado"
+-- Ignora processos cancelados
+SELECT
+    count(CASE WHEN avl.estado = 'P' THEN 1 END) as pendentes,
+    count(CASE WHEN avl.estado = 'A' THEN 1 END) as em_analise,
+    count(CASE WHEN avl.estado = ANY(ARRAY['D','I']) THEN 1 END) as finalizadas
+FROM culturaviva.avaliacao avl
+JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id        
+WHERE avl.estado <> 'C'
+AND cert.agente_id = :agenteId
+;
+
+
+-- Listagem/Filtro de avaliações por status
+-- Ordena por atualizações mais recentes e inscrições mais antigas
+SELECT
+    avl.*,
+    cert.tipo AS certificador_tipo,
+    agt.name AS certificador_nome,
+    pnt.name AS ponto_nome,
+    tp.value AS ponto_tipo    
+FROM culturaviva.avaliacao avl
+JOIN culturaviva.inscricao insc ON insc.id = avl.inscricao_id
+JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
+JOIN agent agt ON agt.id = cert.agente_id
+JOIN agent pnt ON pnt.id = insc.agente_id
+JOIN user_meta tp ON tp.key = 'tipoPontoCulturaDesejado' AND tp.object_id = pnt.user_id
+WHERE avl.estado <> 'C'
+AND (:agenteId = 0 OR cert.agente_id = :agenteId)
+AND (:nome == '' OR unaccent(lower(pnt.name)) LIKE unaccent(lower(:nome)))
+ORDER BY 
+    avl.ts_atualizacao DESC,
+    insc.ts_criacao ASC
+    
+user_id
+rcv_tipo
+tipoPontoCulturaDesejado
+     'ponto' => 'Ponto',
+     'pontao' => 'Pontão'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
