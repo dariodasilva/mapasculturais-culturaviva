@@ -15,6 +15,8 @@ PaginaCtrl.$inject = ['$scope', '$rootScope'];
 function PaginaCtrl($scope, $rootScope) {
     $rootScope.page = {
         title: 'Título da pagina',
+        subTitle: '',
+        titleClass: '',
         breadcrumb: []
     };
 }

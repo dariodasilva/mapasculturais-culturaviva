@@ -13,6 +13,7 @@
                     ng-if="item.sref"
                     class="btn {{item.class|| 'btn-primary'}}"
                     ui-sref="{{item.sref}}"
+                    ng-disabled="item.disabled"
                     >
                     {{item.title}}
                 </a>
@@ -21,6 +22,7 @@
                     class="btn {{item.class|| 'btn-primary'}}"
                     type="{{item.type|| 'button'}}"
                     ng-click="item.click()"
+                    ng-disabled="item.disabled"
                     >
                     {{item.title}}
                 </button>

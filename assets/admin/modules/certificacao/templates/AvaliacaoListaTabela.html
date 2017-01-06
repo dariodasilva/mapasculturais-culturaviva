@@ -16,7 +16,7 @@
 
                         <div ng-if="ref.data.total > 0" style="margin-top: 20px;">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="avaliacao in ref.data.rows">
+                                <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="avaliacao in ref.data.rows">
                                     <div class="card-pf card-pf-accented card-pf-aggregate-status">
                                         <h2 class="card-pf-title">
                                             {{avaliacao.pontoNome}}
@@ -29,16 +29,60 @@
                                                 </strong>
                                             </p>
 
-                                            <p>{{avaliacao.certificadorNome}}</p>
+                                            <div class="list-group-item list-view-pf-stacked" style="border: 0">
+                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
+                                                    <div class="list-view-pf-main-info">
+                                                        <div class="list-view-pf-left">
+                                                            <span class="pficon pficon-ok list-view-pf-icon-md list-view-pf-icon-success"></span>
+                                                        </div>
+                                                        <div class="list-view-pf-body">
+                                                            <div class="list-view-pf-description text-left">
+                                                                <div class="list-group-item-heading">
+                                                                    Agente 001
+                                                                </div>
+                                                                <div class="list-group-item-text">
+                                                                    Sociedade Civil
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
+                                                    <div class="list-view-pf-main-info">
+                                                        <div class="list-view-pf-left">
+                                                            <span class="pficon pficon-error-circle-o list-view-pf-icon-md list-view-pf-icon-danger"></span>
+                                                        </div>
+                                                        <div class="list-view-pf-body">
+                                                            <div class="list-view-pf-description text-left">
+                                                                <div class="list-group-item-heading">
+                                                                    Agente 002
+                                                                </div>
+                                                                <div class="list-group-item-text">
+                                                                    Poder Publico
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
+                                                    <div class="list-view-pf-main-info">
+                                                        <div class="list-view-pf-left">
+                                                            <span class="pficon pficon-info list-view-pf-icon-md list-view-pf-icon-info"></span>
+                                                        </div>
+                                                        <div class="list-view-pf-body">
+                                                            <div class="list-view-pf-description text-left">
+                                                                <div class="list-group-item-heading">
+                                                                    Agente 002
+                                                                </div>
+                                                                <div class="list-group-item-text">
+                                                                    Voto de Minerva
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
 
-                                            <p><small>({{
-                                                avaliacao.certificadorTipo == 'C'
-                                                 ? 'Civil':avaliacao.certificadorTipo == 'P'
-                                                   ?'Público':'Minerva'}})</small></p>
-
-                                            <button class="btn btn-primary editar" type="button">
-                                                Detalhar
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

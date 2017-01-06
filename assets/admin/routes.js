@@ -56,9 +56,9 @@ function AppConfig($stateProvider, $urlRouterProvider) {
                 url: '/',
                 templateUrl: urlTemplate('AvaliacaoLista', 'certificacao')
             })
-            .state('pagina.configuracao.formulario', {
+            .state('pagina.certificacao.formulario', {
                 url: '/formulario/:id',
-                templateUrl: urlTemplate('CertificadorFormulario', 'certificacao')
+                templateUrl: urlTemplate('AvaliacaoFormulario', 'certificacao')
             })
             /*----------------------------------------------------------------------------------------*/
             // Configurações

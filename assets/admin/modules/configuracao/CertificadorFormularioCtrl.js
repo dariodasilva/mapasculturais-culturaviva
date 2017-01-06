@@ -87,6 +87,7 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
     // Configuração da página
     $scope.page.title = novoRegistro ? 'Cadastrar Agente de Certificação' : 'Editar Agente de Certificação';
     $scope.page.subTitle = '';
+    $scope.page.titleClass = '';
     $scope.page.breadcrumb = [
         {
             title: 'Início',

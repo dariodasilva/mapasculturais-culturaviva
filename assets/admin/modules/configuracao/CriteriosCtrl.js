@@ -19,6 +19,7 @@ function ParametrosCtrl($scope, $state, $http) {
     // Configuração da página
     $scope.page.title = 'Critérios';
     $scope.page.subTitle = 'Critérios usados para avaliação de uma Inscrição';
+    $scope.page.titleClass = '';
     $scope.page.breadcrumb = [
         {
             title: 'Início',

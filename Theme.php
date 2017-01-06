@@ -56,6 +56,10 @@ class Theme extends BaseV1\Theme {
         $this->assetManager->publishAsset('img/icon-instagram.png', 'img/icon-instagram.png');
         $this->assetManager->publishAsset('img/icon-whatsapp.png', 'img/icon-whatsapp.png');
         $this->assetManager->publishAsset('img/icon-culturadigital.png', 'img/icon-culturadigital.png');
+        $this->assetManager->publishAsset('img/mock/responsavel.png', 'img/mock/responsavel.png');
+        $this->assetManager->publishAsset('img/mock/entidade.png', 'img/mock/entidade.png');
+        $this->assetManager->publishAsset('img/mock/mapa.png', 'img/mock/mapa.png');
+        $this->assetManager->publishAsset('img/mock/portfolio.png', 'img/mock/portfolio.png');
 
         $app->hook('GET(site.index):before', function() use ($app) {
             $app->redirect($app->createUrl('cadastro', 'index'));
@@ -239,6 +243,7 @@ class Theme extends BaseV1\Theme {
         $this->_addAdminAssetsModule('certificacao', [
             'AvaliacaoListaCtrl',
             'AvaliacaoListaTabelaDirective',
+            'AvaliacaoFormularioCtrl',
         ]);
         $this->_addAdminAssetsModule('configuracao', [
             'CriteriosCtrl',

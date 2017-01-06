@@ -32,9 +32,13 @@ final class NativeQueryUtil {
         $app = App::i();
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('count', 'count');
-        $data = $app->em->createNativeQuery("SELECT COUNT(*) AS count FROM ($this->sql) e", $rsm)
-                ->setParameters($this->paramseters)
-                ->getSingleResult();
+
+        $query = $app->em->createNativeQuery("SELECT COUNT(*) AS count FROM ($this->sql) e", $rsm);
+        if (is_array($this->paramseters)) {
+            $query->setParameters($this->paramseters);
+        }
+        $data = $query->getSingleResult();
+
         return $data['count'];
     }
 
@@ -46,15 +50,17 @@ final class NativeQueryUtil {
             $rsm->addScalarResult($field, $prop);
         }
 
-        $query = "SELECT * FROM ($this->sql) e";
+        $sql = "SELECT * FROM ($this->sql) e";
         if ($page != null) {
             $offset = 10 * (max(intval($page), 1) - 1);
-            $query .= " LIMIT 10 OFFSET $offset";
+            $sql .= " LIMIT 10 OFFSET $offset";
         }
 
-        return $app->em->createNativeQuery($query, $rsm)
-                        ->setParameters($this->paramseters)
-                        ->getResult();
+        $query = $app->em->createNativeQuery($sql, $rsm);
+        if (is_array($this->paramseters)) {
+            $query->setParameters($this->paramseters);
+        }
+        return $query->getResult();
     }
 
     public function getSingleResult() {
@@ -65,11 +71,13 @@ final class NativeQueryUtil {
             $rsm->addScalarResult($field, $prop);
         }
 
-        $query = "SELECT * FROM ($this->sql) e LIMIT 1";
+        $sql = "SELECT * FROM ($this->sql) e LIMIT 1";
 
-        return $app->em->createNativeQuery($query, $rsm)
-                        ->setParameters($this->paramseters)
-                        ->getSingleResult();
+        $query = $app->em->createNativeQuery($sql, $rsm);
+        if (is_array($this->paramseters)) {
+            $query->setParameters($this->paramseters);
+        }
+        return $query->getSingleResult();
     }
 
 }

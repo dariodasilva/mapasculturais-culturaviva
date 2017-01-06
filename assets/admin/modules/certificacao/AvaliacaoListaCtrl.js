@@ -19,6 +19,7 @@ function AvaliacaoListaCtrl($scope, $state, $http) {
     // Configuração da página
     $scope.page.title = 'Avaliações';
     $scope.page.subTitle = 'Listagem de Avaliações para Certificação de Inscrições';
+    $scope.page.titleClass = '';
     $scope.page.breadcrumb = [
         {
             title: 'Início',

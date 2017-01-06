@@ -19,6 +19,7 @@ function CertificadorListaCtrl($scope, $state, $http) {
     // Configuração da página
     $scope.page.title = 'Certificadores';
     $scope.page.subTitle = 'Listagem de Agentes de certificação';
+    $scope.page.titleClass = '';
     $scope.page.breadcrumb = [
         {
             title: 'Início',

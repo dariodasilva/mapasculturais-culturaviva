@@ -1,0 +1,63 @@
+/* global google */
+
+angular
+        .module('AppAdmin.controllers')
+        .controller('AvaliacaoFormularioCtrl', AvaliacaoFormularioCtrl);
+
+AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http'];
+
+/**
+ * Listagem de Inscrições disponíveis para Avaliação
+ *
+ * @param {type} $scope
+ * @param {type} $state
+ * @param {type} $http
+ * @returns {undefined}
+ */
+function AvaliacaoFormularioCtrl($scope, $state, $http) {
+
+    // Configuração da página
+    $scope.page.title = 'Avaliação do Ponto/Pontão de Cultura';
+    $scope.page.subTitle = '';
+    $scope.page.titleClass = '';
+    $scope.page.breadcrumb = [
+        {
+            title: 'Início',
+            sref: 'pagina.relatorios'
+        },
+        {
+            title: 'Avaliações',
+            sref: 'pagina.certificacao.lista'
+        }
+    ];
+
+    $scope.certificadores = null;
+    $scope.form = {};
+    $scope.certificadores = {};
+
+
+    $scope.criterio = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rhoncus commodo justo, ut ullamcorper nulla auctor eget. Quisque euismod feugiat placerat. Nunc cursus enim sed ipsum pharetra malesuada. Morbi egestas erat non magna pharetra tincidunt. Curabitur facilisis magna urna, ut suscipit velit vulputate vitae. Aenean sed massa molestie, condimentum ante vel, tincidunt tellus. Sed sagittis, justo quis condimentum tincidunt, mi enim feugiat mi, eu malesuada nunc nisl ut nisl.';
+    $scope.nomePonto = 'Lorem ipsum dolor sit amet,s';
+    $scope.nomeAgente = 'Alex Rodin de Sousa';
+    $scope.situacaoAvaliacao = 'Em Análise';
+    $scope.situacaoInscricao = 'Pendente';
+    $scope.simNao = [
+        {valor: true, label: 'Sim'},
+        {valor: false, label: 'Não'}
+    ];
+
+    $scope.botoes = [
+        // Botões adicionais para o formulário
+        {
+            title: 'Finalizar Avaliação',
+            disabled: true,
+            click: function () {
+                $scope.criterios.push({
+                    ordem: $scope.criterios.length + 100,
+                    descricao: ''
+                });
+            }
+        }
+    ];
+}
+
