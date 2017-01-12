@@ -338,6 +338,10 @@ h2 {
 
 }
 
+.list-group-item:last-child{
+    border-bottom: 0;
+}
+
 .list-view-pf-actions{
     margin: 10px 0;
 }

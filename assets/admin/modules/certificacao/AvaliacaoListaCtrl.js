@@ -2,9 +2,10 @@
 
 angular
         .module('AppAdmin.controllers')
-        .controller('AvaliacaoListaCtrl', AvaliacaoListaCtrl);
+        .controller('AvaliacaoListaCtrl', AvaliacaoListaCtrl)
+        .directive('avaliacaoListaCertificador', AvaliacaoListaCertificadorDirective);
 
-AvaliacaoListaCtrl.$inject = ['$scope', '$state', '$http'];
+AvaliacaoListaCtrl.$inject = ['$scope', '$state', '$http', 'UsuarioSrv'];
 
 /**
  * Listagem de Inscrições disponíveis para Avaliação
@@ -14,7 +15,8 @@ AvaliacaoListaCtrl.$inject = ['$scope', '$state', '$http'];
  * @param {type} $http
  * @returns {undefined}
  */
-function AvaliacaoListaCtrl($scope, $state, $http) {
+function AvaliacaoListaCtrl($scope, $state, $http, UsuarioSrv) {
+    console.log('$scope', $scope);
 
     // Configuração da página
     $scope.page.title = 'Avaliações';
@@ -35,5 +37,44 @@ function AvaliacaoListaCtrl($scope, $state, $http) {
     $http.get('/avaliacao/total').success(function (data) {
         $scope.total = data;
     });
+}
+
+function AvaliacaoListaCertificadorDirective() {
+    /**
+     * @directive AppAdmin.directives.certificadorListaTabela
+     *
+     * @description Componente reutilizável para exibir a tabela com os certificadores cadastrados
+     */
+    return {
+        restrict: 'E',
+        templateUrl: '/assets/modules/certificacao/templates/AvaliacaoListaCertificador.html',
+        scope: {
+            /**
+             * @description O identificador do certificador
+             */
+            certificadorId: '@',
+            /**
+             * @description O nome do certificador
+             */
+            certificadorNome: '@',
+            /**
+             * @description O tipo do certificador
+             */
+            certificadorTipo: '@',
+            /**
+             * @description Estado da avaliação
+             */
+            estadoAvaliacao: '@'
+        },
+        controller: Controller
+    };
+    
+    Controller.$inject = ['$scope', 'UsuarioSrv'];
+
+    function Controller($scope, UsuarioSrv) {
+        UsuarioSrv.obterUsuario().then(function (usuario) {
+            $scope.usuario = usuario;
+        });
+    }
 }
 

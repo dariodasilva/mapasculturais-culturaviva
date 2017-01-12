@@ -82,40 +82,68 @@ class Avaliacao extends \MapasCulturais\Controller {
         }
 
         $sql = "
+            WITH avaliacoes AS (
+                SELECT            
+                    avl.id,
+                    avl.inscricao_id,
+                    avl.certificador_id,
+                    cert.tipo AS certificador_tipo,
+                    cert.agente_id,
+                    agt.name AS certificador_nome,
+                    CASE
+                        WHEN avl.estado = ANY(ARRAY['D','I']) THEN 'F' ELSE estado
+                    END AS estado
+                FROM culturaviva.avaliacao avl
+                JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
+                JOIN agent agt ON agt.id = cert.agente_id
+                WHERE estado <> 'C'
+            )
             SELECT
-                avl.*,
-                cert.tipo AS certificador_tipo,
-                agt.name AS certificador_nome,
-                pnt.name AS ponto_nome,
-                tp.value AS ponto_tipo
-            FROM culturaviva.avaliacao avl
-            JOIN culturaviva.inscricao insc ON insc.id = avl.inscricao_id
-            JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
-            JOIN agent agt ON agt.id = cert.agente_id
+                insc.id,
+                insc.estado,
+                pnt.name                AS ponto_nome,
+                tp.value                AS ponto_tipo,   
+                avl_c.id                AS avaliacao_civil_id,
+                avl_c.estado            AS avaliacao_civil_estado,
+                avl_c.certificador_nome AS avaliacao_civil_certificador,
+                avl_p.id                AS avaliacao_publica_id,
+                avl_p.estado            AS avaliacao_publica_estado,
+                avl_p.certificador_nome AS avaliacao_publica_certificador,
+                avl_m.id                AS avaliacao_minerva_id,
+                avl_m.estado            AS avaliacao_minerva_estado,
+                avl_m.certificador_nome AS avaliacao_minerva_certificador
+            FROM culturaviva.inscricao insc
+            LEFT JOIN avaliacoes avl_c ON insc.id = avl_c.inscricao_id AND avl_c.certificador_tipo = 'C'
+            LEFT JOIN avaliacoes avl_p ON insc.id = avl_p.inscricao_id AND avl_p.certificador_tipo = 'P'
+            LEFT JOIN avaliacoes avl_m ON insc.id = avl_m.inscricao_id AND avl_m.certificador_tipo = 'm'
             JOIN agent pnt ON pnt.id = insc.agente_id
             JOIN user_meta tp ON tp.key = 'tipoPontoCulturaDesejado' AND tp.object_id = pnt.user_id
-            WHERE avl.estado <> 'C'
-            AND (:agenteId = 0 OR cert.agente_id = :agenteId)
-            AND (:estado = '' OR avl.estado = :estado OR (:estado = 'F' AND avl.estado = ANY(ARRAY['D','I'])))
-            AND (:nome = ''
+            WHERE insc.estado <> 'C'
+            AND (:agenteId = 0 OR COALESCE(avl_c.agente_id, avl_p.agente_id, avl_m.agente_id, 0) = :agenteId)
+            AND (:estado = '' OR :estado = ANY(ARRAY[avl_c.estado,avl_p.estado, avl_m.estado]))
+            AND (
+                :nome = ''
                 OR unaccent(lower(pnt.name)) LIKE unaccent(lower(:nome))
-                OR unaccent(lower(agt.name)) LIKE unaccent(lower(:nome)))
-            ORDER BY
-                avl.ts_atualizacao DESC,
-                insc.ts_criacao ASC";
+                OR unaccent(lower(avl_c.certificador_nome)) LIKE unaccent(lower(:nome))
+                OR unaccent(lower(avl_p.certificador_nome)) LIKE unaccent(lower(:nome))
+                OR unaccent(lower(avl_m.certificador_nome)) LIKE unaccent(lower(:nome))
+            )";
 
+        
         $campos = [
             'id',
-            'inscricao_id',
-            'certificador_id',
             'estado',
-            'ts_finalizacao',
-            'ts_criacao',
-            'ts_atualizacao',
-            'certificador_tipo',
-            'certificador_nome',
             'ponto_nome',
-            'ponto_tipo'
+            'ponto_tipo',
+            'avaliacao_civil_id',
+            'avaliacao_civil_estado',
+            'avaliacao_civil_certificador',
+            'avaliacao_publica_id',
+            'avaliacao_publica_estado',
+            'avaliacao_publica_certificador',
+            'avaliacao_minerva_id',
+            'avaliacao_minerva_estado',
+            'avaliacao_minerva_certificador'
         ];
 
         $parametros = [
@@ -128,60 +156,122 @@ class Avaliacao extends \MapasCulturais\Controller {
         $this->json((new NativeQueryUtil($sql, $campos, $parametros))->paginate($pagina));
     }
 
-    function GET_diligences() {
-        $userId = $this->getUser();
-        $diligences = App::i()->repo('\CulturaViva\Entities\Diligence')->getDiligences($userId);
-        if ($diligences) {
-            $this->json($diligences);
-        } else {
-            $this->json(['erro' => 'Nenhuma diligência encontrada.'], 400);
-        }
-    }
+    /**
+     * Obtém as informações de uma avaliação específica
+     */
+    function GET_obter() {
+        $this->requireAuthentication();
+        $app = App::i();
 
-    function GET_ponto() {
-        $this->render('ponto');
-    }
-
-    function GET_diligence() {
-        $userId = $this->getUser();
-        $diligence = reset(App::i()->repo('\CulturaViva\Entities\Diligence')->findBy([
-                    'id' => $this->getUrlData()['id'],
-                    'certifierId' => $userId
-        ]));
-
-        if ($diligence) {
-            $diligence->createdAt = $diligence->getCreatedAt();
-            $diligence->updatedAt = $diligence->getUpdatedAt();
-            $this->json($diligence);
-        } else {
-            $this->json(['erro' => 'Nenhuma diligência encontrada.'], 400);
-        }
-    }
-
-    function POST_index() {
-        $userId = $this->getUser();
-        $entity = reset(App::i()->repo('\CulturaViva\Entities\Diligence')->findBy([
-                    'id' => $this->data['id'],
-                    'certifierId' => $userId
-        ]));
-
-        if (isset($entity) && !in_array($entity, [Diligence::STATUS_CERTIFIED, Diligence::STATUS_NO_CERTIFIED])) {
-            $entity->updatedAt = date('Y-m-d H:i:s');
-            $entity->isRecognized = $this->data['isRecognized'] ? $this->data['isRecognized'] : null;
-            $entity->isExperienced = $this->data['isExperienced'] ? $this->data['isExperienced'] : null;
-            $entity->justification = $this->data['justification'];
-            $entity->status = Diligence::STATUS_UNDER_REVIEW;
-            if ($this->data['status'] == Diligence::STATUS_NO_CERTIFIED) {
-                $entity->status = Diligence::STATUS_NO_CERTIFIED;
-            }
-            if ($this->data['status'] == Diligence::STATUS_CERTIFIED) {
-                $entity->status = Diligence::STATUS_CERTIFIED;
-            }
-
-            $entity->save(true);
+        $agenteId = $app->user->profile->id;
+        if ($app->user->is('rcv_agente_area')) {
+            // Agente da área pode ver avaliações de todos os certificadores
+            $agenteId = 0;
         }
 
-        $this->render('index');
+        $avaliacaoId = $this->getUrlData()['id'];
+
+        $sql = "
+            SELECT
+                avl.*,
+                cert.agente_id,
+                cert.tipo           AS certificador_tipo,
+                agt.name            AS certificador_nome,
+                insc.estado         AS inscricao_estado,
+                insc.ts_criacao     AS inscricao_ts_criacao,
+                insc.ts_finalizacao AS inscricao_ts_finalizacao,
+                pnt.name            AS ponto_nome,
+                tp.value            AS ponto_tipo,
+                dsc.value           AS ponto_descricao
+            FROM culturaviva.avaliacao avl
+            JOIN culturaviva.certificador cert 
+                ON cert.id = avl.certificador_id
+            JOIN agent agt ON agt.id = cert.agente_id
+            JOIN culturaviva.inscricao insc 
+                ON insc.id = avl.inscricao_id
+            JOIN agent pnt 
+                ON pnt.id = insc.agente_id
+            JOIN user_meta tp
+                ON tp.key = 'tipoPontoCulturaDesejado' 
+                AND tp.object_id = pnt.user_id
+            LEFT JOIN user_meta dsc
+                ON dsc.key = 'shortDescription' 
+                AND tp.object_id = pnt.user_id
+            WHERE insc.estado <> 'C'
+            AND avl.id = :id
+            AND (:agenteId = 0 OR cert.agente_id = :agenteId)";
+
+
+
+
+        $parametros = [
+            'id' => $avaliacaoId,
+            'agenteId' => $agenteId
+        ];
+
+        $campos = [
+            'id',
+            'inscricao_id',
+            'certificador_id',
+            'estado',
+            'observacoes',
+            'ts_finalizacao',
+            'ts_criacao',
+            'ts_atualizacao',
+            'agente_id',
+            'certificador_tipo',
+            'certificador_nome',
+            'inscricao_estado',
+            'inscricao_ts_criacao',
+            'inscricao_ts_finalizacao',
+            'ponto_nome',
+            'ponto_tipo',
+            'ponto_descricao',
+        ];
+
+        $out = (new NativeQueryUtil($sql, $campos, $parametros))->getSingleResult();
+        if ($out != null) {
+            $out['criterios'] = $this->obterCriteriosAvaliacao($avaliacaoId);
+        }
+
+        $this->json($out);
+    }
+
+    /**
+     * Obtém todos os critérios de uma avaliação
+     * 
+     * @param type $avaliacaoId
+     * @return type
+     */
+    private function obterCriteriosAvaliacao($avaliacaoId) {
+        $sql = "
+            SELECT
+                crtr.id,
+                crtr.ordem,
+                crtr.descricao,
+                avct.aprovado   
+            FROM culturaviva.avaliacao avl
+            JOIN culturaviva.avaliacao_criterio avct
+                ON avct.avaliacao_id = avl.id
+                AND avct.inscricao_id = avl.inscricao_id
+            JOIN culturaviva.inscricao_criterio insct
+                ON insct.criterio_id = avct.criterio_id
+                AND insct.inscricao_id = avct.inscricao_id
+            JOIN culturaviva.criterio crtr 
+                ON crtr.id = insct.criterio_id
+            WHERE avl.id = :avaliacao";
+
+        $parametros = ['avaliacao' => $avaliacaoId];
+
+
+        $campos = [
+            'id',
+            'ordem',
+            'descricao',
+            'aprovado'
+        ];
+
+        return (new NativeQueryUtil($sql, $campos, $parametros))->getResult();
     }
 
 }

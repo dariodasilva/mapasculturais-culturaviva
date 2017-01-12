@@ -1,7 +1,7 @@
 <div ng-controller="ParametrosCtrl" ng-cloak>
     <tc-form on-save="salvar()" on-clear="limpar()" buttons="botoes" name="formCriterios">
         <div
-            ng-repeat="criterio in criterios"
+            ng-repeat="criterio in criterios | orderBy:'ordem'"
             >
             <tc-input-text
                 label="{{$index+1}}º Critério"

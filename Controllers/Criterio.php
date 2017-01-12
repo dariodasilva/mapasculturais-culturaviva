@@ -13,7 +13,9 @@ class Criterio extends \MapasCulturais\Controller {
      * Lista os critérios
      */
     function GET_listar() {
-        $criteriosAtivos = App::i()->repo('\CulturaViva\Entities\Criterio')->findBy(['ativo' => true]);
+        $criteriosAtivos = App::i()
+                ->repo('\CulturaViva\Entities\Criterio')
+                ->findBy(['ativo' => true], ['ordem' => 'ASC']);
         $this->json($criteriosAtivos);
     }
 
@@ -24,7 +26,6 @@ class Criterio extends \MapasCulturais\Controller {
         $this->requireAuthentication();
         $app = App::i();
 
-
         // Obtém os critérios salvos na base
         $salvos = App::i()->repo('\CulturaViva\Entities\Criterio')->findBy(['ativo' => true]);
         if ($salvos == null) {
@@ -32,53 +33,49 @@ class Criterio extends \MapasCulturais\Controller {
         }
 
         // Criterios da requisicao
-        $novos = json_decode($app->request()->getBody());
-        usort($novos, function ($a, $b) {
+        $aPersistir = json_decode($app->request()->getBody());
+        usort($aPersistir, function ($a, $b) {
             return $a->ordem - $b->ordem;
         });
-        for ($i = 0; $i < count($novos); $i++) {
-            $novos[$i]->ordem = $i + 1;
+        for ($i = 0, $l = count($aPersistir); $i < $l; $i++) {
+            $aPersistir[$i]->ordem = $i + 1;
         }
 
-        // Os critérios que serão persistidos
-        $aPersistir = [];
-
         // Os criterios que receberam alteração, devem ser inativados
-        $aInativar = array_udiff($salvos, $novos, function ($a, $b) {
-            if (!isset($a->id)) {
-                return 1;
-            }
-            if (!isset($b->id)) {
-                return -1;
-            }
-            var_dump($a);
-            var_dump($b);
-            //var_dump($a->id == $b->id && $a->ordem == $b->ordem && $a->descricao == $b->descricao);
-            //exit();
-            return ($a->id == $b->id && $a->ordem == $b->ordem && $a->descricao == $b->descricao) ? 0 : -1;
-        });
-        var_dump($aInativar);
-        exit;
+        $aInativar = [];
 
-        // Os critérios que não receberam alteração, serao ignorados
-        $aIgnorar = array_uintersect($novos, $salvos, function($novo, $salvo) {
-            if (!property_exists($novo, 'id') || !isset($novo->id)) {
-                return -1;
-            }
-            return ($novo->id == $salvo->id && $novo->ordem == $salvo->ordem && $novo->descricao == $salvo->descricao) ? 0 : -1;
-        });
+        for ($a = 0, $la = count($salvos); $a < $la; $a++) {
+            $salvo = $salvos[$a];
+            $existe = false;
+            for ($b = 0, $lb = count($aPersistir); $b < $lb; $b++) {
+                $novo = $aPersistir[$b];
+                if (!isset($novo->id)) {
+                    // Novo não possui id, nada a fazer, será salvo na base de dados
+                    continue;
+                }
 
-        // Registros que serão persistidos
-        $aPersistir = array_udiff($novos, $aIgnorar, function ($novo, $ignorar) {
-            if (!property_exists($novo, 'id') || !isset($novo->id)) {
-                return -1;
-            }
-            return ($novo->id == $ignorar->id && $novo->ordem == $ignorar->ordem && $novo->descricao == $ignorar->descricao) ? 0 : -1;
-        });
+                if ($salvo->id !== $novo->id) {
+                    // Não é o mesmo item
+                    continue;
+                }
 
-//        var_dump($aInativar,"dd");
-//        var_dump($aPersistir);
-//        return;
+                $existe = true;
+
+                if ($salvo->ordem != $novo->ordem || $salvo->descricao != $novo->descricao) {
+                    // Item sofreu modificação
+                    array_push($aInativar, $salvo);
+                } else {
+                    // Item já está salvo na base sem alteração, nao precisa modificação
+                    unset($aPersistir[$b]);
+                }
+                break;
+            }
+
+            if (!$existe) {
+                //Item foi removido da lista
+                array_push($aInativar, $salvo);
+            }
+        }
 
         $app->getEm()->transactional(function ($em) use ($aPersistir, $aInativar) {
             // Inativa todos os critérios atuais

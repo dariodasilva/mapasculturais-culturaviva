@@ -2,7 +2,7 @@
     <tc-form on-save="salvar()" buttons="botoes" name="formCriterios">
 
         <tc-input
-            ng-model="nomePonto"
+            ng-model="avaliacao.pontoNome"
             label="Nome do Ponto/Pontão de Cultura"
             col="4"
             readonly="true"
@@ -10,7 +10,7 @@
         </tc-input>
 
         <tc-input
-            ng-model="nomeAgente"
+            ng-model="avaliacao.certificadorNome"
             label="Nome do Agente Certificador responsável pela Avaliação"
             col="4"
             readonly="true"
@@ -35,7 +35,7 @@
 
         <tc-input-text
             label="Descrição do Ponto/Pontão de Cultura"
-            ng-model="criterio"            
+            ng-model="avaliacao.pontoDescricao"            
             disabled="true"
             rows="5"
             >
@@ -47,47 +47,28 @@
             </header>
         </div>
 
-        <div class="clearfix">
+        <div class="clearfix" ng-repeat="criterio in avaliacao.criterios | orderBy:'ordem'">
             <tc-input-text
-                label="1º Critério"
-                ng-model="criterio"            
+                label="{{$index}}º Critério"
+                ng-model="criterio.descricao"            
                 disabled="true"
                 rows="5"
                 >
             </tc-input-text>
             <tc-select
-                ng-model="dto.ativo"
+                ng-model="criterio.aprovado"
                 label="O cadastro do Ponto/Pontão de Cultura atende ao 1° Critério"
                 col-input="2"
                 field="label"
                 options="simNao"
                 >
             </tc-select>
+            <hr/>
         </div>
-        <hr/>
-        <div class="clearfix">
-            <tc-input-text
-                label="2º Critério"
-                ng-model="criterio"            
-                disabled="true"
-                rows="5"
-                >
-            </tc-input-text>
-            <tc-select
-                ng-model="dto.ativo"
-                label="O cadastro do Ponto/Pontão de Cultura atende ao 2° Critério"
-                col-input="2"
-                field="label"
-                options="simNao"
-                >
-            </tc-select>
-        </div>
-
-        <hr/>
 
         <tc-input-text
             label="Observações"
-            ng-model="criterio.descricao"            
+            ng-model="avaliacao.observacoes"            
             required="true"
             rows="8"
             >

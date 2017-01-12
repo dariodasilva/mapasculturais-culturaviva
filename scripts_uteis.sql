@@ -118,6 +118,23 @@ INSERT INTO culturaviva.avaliacao(inscricao_id, certificador_id, estado)
         'P' 
     );
 
+INSERT INTO culturaviva.avaliacao(inscricao_id, certificador_id, estado)
+    VALUES (
+        (
+            SELECT id 
+            FROM culturaviva.inscricao 
+            WHERE agente_id = (SELECT id FROM agent WHERE name = 'PontoCultura@local')
+        ), 
+        (
+            SELECT id 
+            FROM culturaviva.certificador 
+            WHERE agente_id = (SELECT id FROM agent WHERE name = 'AgentePublico@local')
+            AND ativo = true    
+            AND tipo = 'P'
+        ),
+        'P' 
+    );
+
 
 
 
@@ -223,53 +240,97 @@ AND cert.agente_id = :agenteId
 
 -- Listagem/Filtro de avaliações por status
 -- Ordena por atualizações mais recentes e inscrições mais antigas
+WITH avaliacoes AS (
+    SELECT            
+        avl.id,
+        avl.inscricao_id,
+        avl.certificador_id,
+        cert.tipo AS certificador_tipo,
+        cert.agente_id,
+        agt.name AS certificador_nome,
+        CASE
+            WHEN avl.estado = ANY(ARRAY['D','I']) THEN 'F' ELSE estado
+        END AS estado
+    FROM culturaviva.avaliacao avl
+    JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
+    JOIN agent agt ON agt.id = cert.agente_id
+    WHERE estado <> 'C'
+)
 SELECT
-    avl.*,
-    cert.tipo AS certificador_tipo,
-    agt.name AS certificador_nome,
-    pnt.name AS ponto_nome,
-    tp.value AS ponto_tipo    
-FROM culturaviva.avaliacao avl
-JOIN culturaviva.inscricao insc ON insc.id = avl.inscricao_id
-JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
-JOIN agent agt ON agt.id = cert.agente_id
+    insc.id,
+    insc.estado,
+    pnt.name                AS ponto_nome,
+    tp.value                AS ponto_tipo,   
+    avl_c.id                AS avaliacao_civil_id,
+    avl_c.estado            AS avaliacao_civil_estado,
+    avl_c.certificador_nome AS avaliacao_civil_certificador,
+    avl_p.id                AS avaliacao_publica_id,
+    avl_p.estado            AS avaliacao_publica_estado,
+    avl_p.certificador_nome AS avaliacao_publica_certificador,
+    avl_m.id                AS avaliacao_minerva_id,
+    avl_m.estado            AS avaliacao_minerva_estado,
+    avl_m.certificador_nome AS avaliacao_minerva_certificador
+FROM culturaviva.inscricao insc
+LEFT JOIN avaliacoes avl_c ON insc.id = avl_c.inscricao_id AND avl_c.certificador_tipo = 'C'
+LEFT JOIN avaliacoes avl_p ON insc.id = avl_p.inscricao_id AND avl_p.certificador_tipo = 'P'
+LEFT JOIN avaliacoes avl_m ON insc.id = avl_m.inscricao_id AND avl_m.certificador_tipo = 'm'
 JOIN agent pnt ON pnt.id = insc.agente_id
 JOIN user_meta tp ON tp.key = 'tipoPontoCulturaDesejado' AND tp.object_id = pnt.user_id
-WHERE avl.estado <> 'C'
-AND (:agenteId = 0 OR cert.agente_id = :agenteId)
-AND (:nome == '' OR unaccent(lower(pnt.name)) LIKE unaccent(lower(:nome)))
-ORDER BY 
-    avl.ts_atualizacao DESC,
-    insc.ts_criacao ASC
-    
-user_id
-rcv_tipo
-tipoPontoCulturaDesejado
-     'ponto' => 'Ponto',
-     'pontao' => 'Pontão'
+WHERE insc.estado <> 'C'
+/*AND (:agenteId = 0 OR (COALESCE(avl_c.agente_id, avl_p.agente_id, avl_m.agente_id, 0) = :agenteId)*/
+/*AND (
+    :estado = '' 
+    OR :estado = ANY(ARRAY[avl_c.estado,avl_p.estado, avl_m.estado])
+)*/
+/*AND (:nome == '' OR unaccent(lower(pnt.name)) LIKE unaccent(lower(:nome)))*/
+ORDER BY avl.ts_criacao ASC
 
 
 
+-- Obter detalhes de uma avaliação
+SELECT
+    avl.*,
+    cert.agente_id,
+    cert.tipo           AS certificador_tipo,
+    agt.name            AS certificador_nome,
+    insc.estado         AS inscricao_estado,
+    insc.ts_criacao     AS inscricao_ts_criacao,
+    insc.ts_finalizacao AS inscricao_ts_finalizacao,
+    pnt.name            AS ponto_nome,
+    tp.value            AS ponto_tipo,
+    dsc.value           AS ponto_descricao
+FROM culturaviva.avaliacao avl
+JOIN culturaviva.certificador cert 
+    ON cert.id = avl.certificador_id
+JOIN agent agt ON agt.id = cert.agente_id
+JOIN culturaviva.inscricao insc 
+    ON insc.id = avl.inscricao_id
+JOIN agent pnt 
+    ON pnt.id = insc.agente_id
+JOIN user_meta tp
+    ON tp.key = 'tipoPontoCulturaDesejado' 
+    AND tp.object_id = pnt.user_id
+LEFT JOIN user_meta dsc
+    ON dsc.key = 'shortDescription' 
+    AND tp.object_id = pnt.user_id
+WHERE insc.estado <> 'C'
+AND avl.id = 4;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Obter os critérios de uma avaliação
+SELECT
+    crtr.id,
+    crtr.ordem,
+    crtr.descricao,
+    avct.aprovado   
+FROM culturaviva.avaliacao avl
+JOIN culturaviva.avaliacao_criterio avct
+    ON avct.avaliacao_id = avl.id
+    AND avct.inscricao_id = avl.inscricao_id
+JOIN culturaviva.inscricao_criterio insct
+    ON insct.criterio_id = avct.criterio_id
+    AND insct.inscricao_id = avct.inscricao_id
+JOIN culturaviva.criterio crtr 
+    ON crtr.id = insct.criterio_id
+WHERE avl.id = 4

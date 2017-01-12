@@ -16,72 +16,49 @@
 
                         <div ng-if="ref.data.total > 0" style="margin-top: 20px;">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="avaliacao in ref.data.rows">
+                                <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="inscricao in ref.data.rows">
                                     <div class="card-pf card-pf-accented card-pf-aggregate-status">
                                         <h2 class="card-pf-title">
-                                            {{avaliacao.pontoNome}}
-                                            <p><small>({{avaliacao.pontoTipo}})</small></p>
+                                            {{inscricao.pontoNome}}
+                                            <p><small>({{inscricao.pontoTipo}})</small></p>
                                         </h2>
-                                        <div class="card-pf-body">
+                                        <div class="card-pf-body" style="padding-bottom: 0;">
                                             <p class="card-pf-aggregate-status-notifications">
                                                 <strong class="card-pf-aggregate-status-notification">
-                                                    # {{avaliacao.id}}
+                                                    # {{inscricao.id}}
                                                 </strong>
                                             </p>
 
-                                            <div class="list-group-item list-view-pf-stacked" style="border: 0">
-                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
-                                                    <div class="list-view-pf-main-info">
-                                                        <div class="list-view-pf-left">
-                                                            <span class="pficon pficon-ok list-view-pf-icon-md list-view-pf-icon-success"></span>
-                                                        </div>
-                                                        <div class="list-view-pf-body">
-                                                            <div class="list-view-pf-description text-left">
-                                                                <div class="list-group-item-heading">
-                                                                    Agente 001
-                                                                </div>
-                                                                <div class="list-group-item-text">
-                                                                    Sociedade Civil
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
-                                                    <div class="list-view-pf-main-info">
-                                                        <div class="list-view-pf-left">
-                                                            <span class="pficon pficon-error-circle-o list-view-pf-icon-md list-view-pf-icon-danger"></span>
-                                                        </div>
-                                                        <div class="list-view-pf-body">
-                                                            <div class="list-view-pf-description text-left">
-                                                                <div class="list-group-item-heading">
-                                                                    Agente 002
-                                                                </div>
-                                                                <div class="list-group-item-text">
-                                                                    Poder Publico
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a class="list-group-item" ui-sref="pagina.certificacao.formulario({id:1})">
-                                                    <div class="list-view-pf-main-info">
-                                                        <div class="list-view-pf-left">
-                                                            <span class="pficon pficon-info list-view-pf-icon-md list-view-pf-icon-info"></span>
-                                                        </div>
-                                                        <div class="list-view-pf-body">
-                                                            <div class="list-view-pf-description text-left">
-                                                                <div class="list-group-item-heading">
-                                                                    Agente 002
-                                                                </div>
-                                                                <div class="list-group-item-text">
-                                                                    Voto de Minerva
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                            <div 
+                                                class="list-group-item list-view-pf-stacked" 
+                                                style="border: 0; margin: 0 -10px; padding: 0;"
+                                                >
 
+                                                <avaliacao-lista-certificador
+                                                    certificador-tipo="Poder Publico"
+                                                    certificador-id="{{inscricao.avaliacaoPublicaId}}"
+                                                    estado-avaliacao="{{inscricao.avaliacaoPublicaEstado}}"
+                                                    certificador-nome="{{inscricao.avaliacaoPublicaCertificador}}"
+                                                    >                                                    
+                                                </avaliacao-lista-certificador>
+
+                                                <avaliacao-lista-certificador
+                                                    ng-if="inscricao.avaliacaoCivilId"
+                                                    certificador-tipo="Sociedade Civil"
+                                                    certificador-id="{{inscricao.avaliacaoCivilId}}"
+                                                    estado-avaliacao="{{inscricao.avaliacaoCivilEstado}}"
+                                                    certificador-nome="{{inscricao.avaliacaoCivilCertificador}}"
+                                                    >                                                    
+                                                </avaliacao-lista-certificador>
+                                                
+                                                <avaliacao-lista-certificador
+                                                    ng-if="inscricao.avaliacaoMinervaId"
+                                                    certificador-tipo="Voto de Minerva"
+                                                    certificador-id="{{inscricao.avaliacaoMinervaId}}"
+                                                    estado-avaliacao="{{inscricao.avaliacaoMinervaEstado}}"
+                                                    certificador-nome="{{inscricao.avaliacaoMinervaCertificador}}"
+                                                    >                                                    
+                                                </avaliacao-lista-certificador>
                                             </div>
                                         </div>
                                     </div>
