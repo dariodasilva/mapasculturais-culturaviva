@@ -11,9 +11,6 @@
 'use strict';
 
 angular.module('TcComponents')
-        .factory('TcNotitication', TcNotiticationService);
-
-angular.module('TcComponents')
         .directive('tcNotitication', TcNotiticationDirective);
 
 

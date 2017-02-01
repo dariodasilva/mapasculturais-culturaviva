@@ -2,13 +2,13 @@
 
 angular
         .module('AppAdmin', [
-            'ngRoute',
+            'ng',
             'ngMessages', 
             'ngSanitize',
             'ui.router',
-            'ui.bootstrap',
-            'patternfly',
-            'blockUI'
+            'ui.bootstrap',            
+            'blockUI',
+            'oc.lazyLoad'
         ])
         .config(AppAdminConfig)
         .run(AppAdminRun);

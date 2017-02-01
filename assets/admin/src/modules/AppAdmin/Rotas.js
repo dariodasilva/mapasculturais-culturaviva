@@ -118,7 +118,7 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
  * @returns {String}
  */
 function urlTemplate(page, module) {
-    return '/assets/modules/' + module + '/templates/' + page + '.html';
+    return 'modules/' + module + '/templates/' + page + '.html';
 }
 
 

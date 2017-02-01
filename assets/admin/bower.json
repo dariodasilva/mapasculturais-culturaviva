@@ -12,7 +12,8 @@
     "angular-block-ui": "0.2.x",
     "oclazyload": "^1.0.9",
     "bootstrap": "^3.3.7",
-    "angular-ui-bootstrap": "2.4.0",
+    "angular-bootstrap": "2.4.x",
+    "bootstrap-select": "1.10.x",
     "patternfly": "3.17.0"
   },
   "resolutions": {
