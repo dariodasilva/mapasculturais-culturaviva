@@ -14,6 +14,13 @@ module.exports = {
                 src: '*',
                 dest: '<%= distDir %>/vendor/fonts/',
                 filter: 'isFile'
+            },
+            {
+                expand: true,
+                cwd: '<%= srcDir %>/vendor/patternfly/dist/fonts/',
+                src: '*',
+                dest: '<%= distDir %>/vendor/fonts/',
+                filter: 'isFile'
             }
         ]
     }
