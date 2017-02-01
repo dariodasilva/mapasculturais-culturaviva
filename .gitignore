@@ -3,3 +3,5 @@ main.css.map
 
 .sass-cache
 /nbproject/private/
+/assets/admin/node_modules/
+/assets/admin/src/vendor/

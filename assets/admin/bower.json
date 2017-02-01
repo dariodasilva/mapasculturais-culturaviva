@@ -1,0 +1,12 @@
+{
+    "name": "rcv-admin",
+    "version": "1.0.0",
+    "description": "Plataforma da Rede Cultura Viva",
+    "homepage": "http://culturaviva.gov.br/",
+    "dependencies": {
+        "angular": "^1.6.1",
+        "angular-ui-router": "^0.3.2",
+        "oclazyload": "^1.0.9",
+        "bootstrap": "^3.3.7"
+    }
+}
