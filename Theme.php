@@ -180,92 +180,9 @@ class Theme extends BaseV1\Theme {
         $this->getAssetManager()->publishFolder('vendor/patternfly/fonts/', 'fonts');
 
 
-        // styles
-        $this->enqueueAll('rcv-admin', [
-            // Vendor
-            'vendor/angular-block-ui/angular-block-ui.min.css',
-            'vendor/bootstrap/css/bootstrap.min.css',
-            'vendor/bootstrap-select/bootstrap-select.min.css',
-            'vendor/patternfly/css/patternfly.min.css',
-            'vendor/patternfly/css/patternfly-additions.min.css',
-            'vendor/angular-patternfly/angular-patternfly.min.css',
-            'vendor/jquery.bootstrap-touchspin.min.css',
-            // App
-            'css/rcv-admin.css'
-                ], 'css');
-
-        $this->enqueueAll('rcv-admin', [
-            // Vendor
-            'vendor/jquery-2.1.4.min.js',
-            'vendor/angular-1.5.5/angular.min.js',
-            'vendor/angular-1.5.5/angular-route.min.js',
-            'vendor/angular-1.5.5/angular-sanitize.min.js',
-            'vendor/angular-1.5.5/angular-messages.min.js',
-            'vendor/angular-ui-router.min.js',
-            'vendor/bootstrap/js/bootstrap.min.js',
-            'vendor/patternfly/js/patternfly.min.js',
-            'vendor/angular-block-ui/angular-block-ui.min.js',
-            'vendor/angular-bootstrap/ui-bootstrap.min.js',
-            'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-            'vendor/bootstrap-select/bootstrap-select.min.js',
-            'vendor/angular-patternfly/angular-patternfly.min.js',
-            'vendor/jquery.bootstrap-touchspin.min.js',
-            // App
-            'admin/app.js',
-            'admin/routes.js',
-            // App:components
-            'admin/components/TcNotitication.js',
-            'admin/components/TcFormDirective.js',
-            'admin/components/TcBaseFieldDirective.js',
-            'admin/components/TcDebugDirective.js',
-            'admin/components/TcInputArrayDirective.js',
-            'admin/components/TcInputDirective.js',
-            'admin/components/TcInputNumberDirective.js',
-            'admin/components/TcInputSearchDirective.js',
-            'admin/components/TcInputTextDirective.js',
-            'admin/components/TcSelectDirective.js'
-                ], 'js');
-
         // App:components
         // Templates de componentes e controllers da aplicação certificação
-        $this->getAssetManager()->publishFolder('admin/components/templates/', 'components/templates');
-
-
-        // App:modules
-        $this->_addAdminAssetsModule('base', [
-            'AccessLevelDirective',
-            'BarraNavegacaoCtrl',
-            'PaginaCtrl',
-            'RBAC',
-            'UsuarioSrv',
-        ]);
-        $this->_addAdminAssetsModule('relatorios', ['RelatoriosInicioCtrl']);
-        $this->_addAdminAssetsModule('certificacao', [
-            'AvaliacaoListaCtrl',
-            'AvaliacaoListaTabelaDirective',
-            'AvaliacaoFormularioCtrl',
-        ]);
-        $this->_addAdminAssetsModule('configuracao', [
-            'CriteriosCtrl',
-            'CertificadorListaCtrl',
-            'CertificadorListaTabelaDirective',
-            'CertificadorFormularioCtrl'
-        ]);
-    }
-
-    /**
-     * Facilita a inclusão de dependencias de um módulo
-     *
-     * @param type $module
-     * @param Array $files
-     */
-    protected function _addAdminAssetsModule($module, $files) {
-        // App:modules
-        $modules = 'admin/modules';
-        $this->getAssetManager()->publishFolder("$modules/$module/templates/", "modules/$module/templates/");
-        foreach ($files as $controller) {
-            $this->enqueueScript('rcv-admin', "$module.$controller", "$modules/$module/$controller.js");
-        }
+        $this->getAssetManager()->publishFolder('admin/dist/', 'admin');
     }
 
     /**

@@ -2,8 +2,17 @@
 
 var rewriteModule = require('http-rewrite-middleware');
 
+var serveStatic = require('serve-static');
+
 module.exports = {
     development: {
+        proxies: [
+            {
+                context: '/',
+                host: 'localhost',
+                port: 8000
+            }
+        ],
         options: {
             port: '<%= connectPort %>',
             hostname: 'localhost',
@@ -14,14 +23,28 @@ module.exports = {
                 '<%= srcDir %>' // fonte
             ],
             middleware: function (connect, options, middlewares) {
-                // Faz redirect de arquivos SASS para o CSS compilado
-                middlewares.unshift(rewriteModule.getMiddleware([
+                var middlewares = [];
+                if (!Array.isArray(options.base)) {
+                    options.base = [options.base];
+                }
+
+                options.base.forEach(function (base) {
+                    // Serve static files.
+                    middlewares.push(serveStatic(base));
+                });
+
+                // Redirect SASS -> CSS
+                middlewares.push(rewriteModule.getMiddleware([
                     {
                         from: '^(.*).scss$',
                         to: '$1.css',
                         redirect: 'temporary' // 302 Redirect
                     }
                 ]));
+
+                // proxy
+                middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+                
                 return middlewares;
             }
         }
@@ -32,7 +55,12 @@ module.exports = {
             hostname: 'localhost',
             open: true,
             keepalive: true,
-            base: ['<%= distDir %>']
+            base: ['<%= distDir %>'],
+            middleware: function (connect, options, middlewares) {
+
+                // proxy
+                middlewares.unshift(require('grunt-connect-proxy/lib/utils').proxyRequest);
+            }
         }
     }
 };

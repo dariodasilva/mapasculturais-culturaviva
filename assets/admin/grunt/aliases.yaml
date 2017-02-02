@@ -2,6 +2,7 @@
 server:
     - 'sass:development'
     - 'includeSource:development'
+    - 'configureProxies:development'
     - 'connect:development'
     - 'watch'
 
