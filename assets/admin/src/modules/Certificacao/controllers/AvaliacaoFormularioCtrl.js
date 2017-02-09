@@ -37,31 +37,31 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
 
     var codigo = $state.params.id;
 
-    $http.get('/avaliacao/obter/' + codigo)
-            .success(function (avaliacao) {
-                $scope.avaliacao = avaliacao;
+    $http.get('/avaliacao/obter/' + codigo).then(function (response) {
+        var data = response.data;
+        $scope.avaliacao = data;
 
-                $scope.situacaoAvaliacao = {
-                    'P': 'Pendente',
-                    'A': 'Em Análise',
-                    'D': 'Deferido',
-                    'I': 'Indeferido'
-                }(avaliacao.estado);
+        $scope.situacaoAvaliacao = {
+            'P': 'Pendente',
+            'A': 'Em Análise',
+            'D': 'Deferido',
+            'I': 'Indeferido'
+        }(data.estado);
 
-                $scope.situacaoInscricao = {
-                    'P': 'Pendente',
-                    'C': 'Certificado',
-                    'N': 'Não Certificado',
-                    'R': 'Re-Submissão',
-                }(avaliacao.inscricaoEstado);
-            })
-            .error(function (error) {
-                var msg = 'Erro ao recuperar dados da Avaliação';
-                if (error && error.message) {
-                    msg = error.message;
-                }
-                $scope.$emit('msg', msg, null, 'error');
-            });
+        $scope.situacaoInscricao = {
+            'P': 'Pendente',
+            'C': 'Certificado',
+            'N': 'Não Certificado',
+            'R': 'Re-Submissão',
+        }(data.inscricaoEstado);
+    }, function (cause) {
+        var data = cause.data;
+        var msg = 'Erro ao recuperar dados da Avaliação';
+        if (data && data.message) {
+            msg = data.message;
+        }
+        $scope.$emit('msg', msg, null, 'error');
+    });
 
 
     $scope.criterio = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rhoncus commodo justo, ut ullamcorper nulla auctor eget. Quisque euismod feugiat placerat. Nunc cursus enim sed ipsum pharetra malesuada. Morbi egestas erat non magna pharetra tincidunt. Curabitur facilisis magna urna, ut suscipit velit vulputate vitae. Aenean sed massa molestie, condimentum ante vel, tincidunt tellus. Sed sagittis, justo quis condimentum tincidunt, mi enim feugiat mi, eu malesuada nunc nisl ut nisl.';

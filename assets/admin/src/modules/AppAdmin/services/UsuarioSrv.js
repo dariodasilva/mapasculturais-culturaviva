@@ -82,7 +82,7 @@ function UsuarioSrv($q, $http, $rootScope) {
                     promiseRequisicao.then(defered.resolve, defered.reject);
                 } else {
                     promiseRequisicao = defered.promise;
-                    $http.get('admin/user').then(function (response) {
+                    $http.get('/admin/user').then(function (response) {
                         user = response.data;
                         defered.resolve(user);
                         promiseRequisicao = null;

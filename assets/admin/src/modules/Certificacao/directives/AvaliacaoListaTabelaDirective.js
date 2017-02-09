@@ -47,8 +47,8 @@ function AvaliacaoListaTabelaDirective() {
                     nome: $scope.ref.texto,
                     estado: $scope.estado
                 }
-            }).success(function (result) {
-                $scope.ref.data = result;
+            }).then(function (response) {
+                $scope.ref.data = response.data;
             });
         };
 

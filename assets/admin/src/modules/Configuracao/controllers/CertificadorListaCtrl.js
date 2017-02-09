@@ -34,28 +34,28 @@ function CertificadorListaCtrl($scope, $state, $http) {
     $scope.form = {};
     $scope.certificadores = {};
 
-    $http.get('/certificador/listar').success(function (data) {
+    $http.get('/certificador/listar').then(function (response) {
         $scope.certificadores.civil = {
-            titular: data.filter(function (cert) {
+            titular: response.data.filter(function (cert) {
                 return cert.tipo === 'C' && cert.titular;
             }),
-            suplente: data.filter(function (cert) {
+            suplente: response.data.filter(function (cert) {
                 return cert.tipo === 'C' && !cert.titular;
             })
         };
         $scope.certificadores.publico = {
-            titular: data.filter(function (cert) {
+            titular: response.data.filter(function (cert) {
                 return cert.tipo === 'P' && cert.titular;
             }),
-            suplente: data.filter(function (cert) {
+            suplente: response.data.filter(function (cert) {
                 return cert.tipo === 'P' && !cert.titular;
             })
         };
         $scope.certificadores.minerva = {
-            titular: data.filter(function (cert) {
+            titular: response.data.filter(function (cert) {
                 return cert.tipo === 'M' && cert.titular;
             }),
-            suplente: data.filter(function (cert) {
+            suplente: response.data.filter(function (cert) {
                 return cert.tipo === 'M' && !cert.titular;
             })
         };

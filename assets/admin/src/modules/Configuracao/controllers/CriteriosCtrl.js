@@ -2,9 +2,9 @@
 
 angular
         .module('Configuracao')
-        .controller('ParametrosCtrl', ParametrosCtrl);
+        .controller('CriteriosCtrl', CriteriosCtrl);
 
-ParametrosCtrl.$inject = ['$scope', '$state', '$http'];
+CriteriosCtrl.$inject = ['$scope', '$state', '$http'];
 
 /**
  * Listagem de estabelecimentos
@@ -14,7 +14,7 @@ ParametrosCtrl.$inject = ['$scope', '$state', '$http'];
  * @param {type} $http
  * @returns {undefined}
  */
-function ParametrosCtrl($scope, $state, $http) {
+function CriteriosCtrl($scope, $state, $http) {
 
     // Configuração da página
     $scope.page.title = 'Critérios';
@@ -48,8 +48,8 @@ function ParametrosCtrl($scope, $state, $http) {
 
 
     // Obtém a lista de critérios existente
-    $http.get('/criterio/listar').success(function (data) {
-        $scope.criterios = data;
+    $http.get('/criterio/listar').then(function (response) {
+        $scope.criterios = response.data;
         if ($scope.criterios === null || $scope.criterios.length < 1) {
             // Não possui criterio cadastrados ainda
             $scope.criterios = [
@@ -68,7 +68,7 @@ function ParametrosCtrl($scope, $state, $http) {
      * @return {undefined}
      */
     $scope.salvar = function () {
-        $http.post('/criterio/salvar', $scope.criterios).success(function (data) {
+        $http.post('/criterio/salvar', $scope.criterios).then(function (response) {
             $scope.$emit('msg', 'Critérios de Avaliação salvos com sucesso', null, 'success', 'formCriterios');
             //$scope.criterios = data;
             //$scope.listaVazia = angular.copy($scope.criterios);

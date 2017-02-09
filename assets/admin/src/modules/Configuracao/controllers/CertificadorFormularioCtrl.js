@@ -124,43 +124,40 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
             })
         };
     } else {
-        $http.get('/certificador/obter/' + codigo)
-                .success(function (certificador) {
-                    $scope.dto = CertificadorFormularioCtrl.converterParaEscopo(certificador);
-                })
-                .error(function (error) {
-                    var msg = 'Erro ao recuperar dados do Agente de Certificação';
-                    if (error && error.message) {
-                        msg = error.message;
-                    }
-                    $scope.$emit('msg', msg, null, 'error');
-                });
+        $http.get('/certificador/obter/' + codigo).then(function (response) {
+            $scope.dto = CertificadorFormularioCtrl.converterParaEscopo(response.data);
+        }, function (response) {
+            var msg = 'Erro ao recuperar dados do Agente de Certificação';
+            if (response.data && response.data.message) {
+                msg = response.data.message;
+            }
+            $scope.$emit('msg', msg, null, 'error');
+        });
     }
 
 
     $scope.salvar = function () {
-        $http.post('/certificador/salvar', CertificadorFormularioCtrl.converterParaSalvar($scope.dto))
-                .success(function (certificador) {
-                    $scope.$emit('msgNextState', 'Agente de Certificação salvo com sucesso', null, 'success');
-                    if (novoRegistro) {
-                        $state.go('pagina.configuracao.certificador.formulario', {
-                            id: certificador.id
-                        }, {
-                            reload: true,
-                            inherit: true,
-                            notify: true
-                        });
-                    } else {
-                        $state.reload();
-                    }
-                })
-                .error(function (error) {
-                    var msg = 'Erro inesperado salvar dados';
-                    if (error && error.message) {
-                        msg = error.message;
-                    }
-                    $scope.$emit('msg', msg, null, 'error', 'formulario');
+        var dto = CertificadorFormularioCtrl.converterParaSalvar($scope.dto);
+        $http.post('/certificador/salvar', dto).then(function (response) {
+            $scope.$emit('msgNextState', 'Agente de Certificação salvo com sucesso', null, 'success');
+            if (novoRegistro) {
+                $state.go('pagina.configuracao.certificador.formulario', {
+                    id: response.data.id
+                }, {
+                    reload: true,
+                    inherit: true,
+                    notify: true
                 });
+            } else {
+                $state.reload();
+            }
+        }, function (response) {
+            var msg = 'Erro inesperado salvar dados';
+            if (response.data && response.data.message) {
+                msg = response.data.message;
+            }
+            $scope.$emit('msg', msg, null, 'error', 'formulario');
+        });
     };
 
 
@@ -178,12 +175,12 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
             params: {
                 nome: texto
             }
-        }).success(function (agentes) {
-            $scope.agentes = agentes;
-            if (!agentes || agentes.length < 1) {
+        }).then(function (response) {
+            $scope.agentes = response.data;
+            if (!response.data || response.data.length < 1) {
                 $scope.$emit('msg', 'Nenhum Agente encontrado com o nome informado', null, 'info', 'bag-filtro-agentes');
             }
-        }).error(function (error) {
+        }, function (error) {
             $scope.$emit('msg', 'Erro inesperado ao carregar a lista de Agentes', null, 'error', 'bag-filtro-agentes');
         });
     };

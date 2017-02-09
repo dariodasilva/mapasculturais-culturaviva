@@ -1,4 +1,4 @@
 'use strict';
 
 angular
-        .module('TcComponents', ['ui.bootstrap', 'patternfly']);
+        .module('TcComponents', ['ui.bootstrap']);

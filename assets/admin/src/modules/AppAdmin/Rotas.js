@@ -28,6 +28,9 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
                 templateUrl: urlTemplate('Pagina', 'AppAdmin'),
                 data: {
                     ACCESS_LEVEL: window.RBAC.ACCESS_LEVEL.AGENTES
+                },
+                resolve: {
+                    mdl: resolveModule('TcComponents')
                 }
             })
             /*----------------------------------------------------------------------------------------*/

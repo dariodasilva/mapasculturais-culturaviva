@@ -28,11 +28,6 @@ module.exports = {
                     options.base = [options.base];
                 }
 
-                options.base.forEach(function (base) {
-                    // Serve static files.
-                    middlewares.push(serveStatic(base));
-                });
-
                 // Redirect SASS -> CSS
                 middlewares.push(rewriteModule.getMiddleware([
                     {
@@ -42,9 +37,27 @@ module.exports = {
                     }
                 ]));
 
+                options.base.forEach(function (base) {
+                    // Serve static files.
+                    middlewares.push(['/admin', serveStatic(base)]);
+//                    var static = serveStatic(base);
+//                    middlewares.push(function (req, res, next) {
+//                        console.log(req.url);
+//                        if (req.url.indexOf('/admin') === 0) {
+//                            return static(req, res, function(){
+//                                return next();
+//                            });
+//                        }else{
+//                            return next();                            
+//                        }
+//                    });                    
+                });
+
+
+
                 // proxy
                 middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
-                
+
                 return middlewares;
             }
         }
