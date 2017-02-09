@@ -16,11 +16,31 @@ class Theme extends BaseV1\Theme {
 
     public function __construct(\MapasCulturais\AssetManager $asset_manager) {
         parent::__construct($asset_manager);
+        $app = App::i();
+        $view = $this;
+        $app->hook('mapasculturais.run:before', function() use($view) {
+            $view->initUsermeta();
+        });
 
         // @todo: Remover
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
+    }
+
+    function initUsermeta() {
+        $app = App::i();
+
+        if (!$app->user->is('guest')) {
+            $this->_usermeta = json_decode($app->user->redeCulturaViva);
+
+            if ($this->_usermeta) {
+                $this->_inscricao = $app->repo('Registration')->find($this->_usermeta->inscricao);
+                $this->_responsavel = $app->repo('Agent')->find($this->_usermeta->agenteIndividual);
+                $this->_entidade = $app->repo('Agent')->find($this->_usermeta->agenteEntidade);
+                $this->_ponto = $app->repo('Agent')->find($this->_usermeta->agentePonto);
+            }
+        }
     }
 
     protected static function _getTexts() {
@@ -56,16 +76,13 @@ class Theme extends BaseV1\Theme {
         $this->assetManager->publishAsset('img/icon-instagram.png', 'img/icon-instagram.png');
         $this->assetManager->publishAsset('img/icon-whatsapp.png', 'img/icon-whatsapp.png');
         $this->assetManager->publishAsset('img/icon-culturadigital.png', 'img/icon-culturadigital.png');
-        $this->assetManager->publishAsset('img/mock/responsavel.png', 'img/mock/responsavel.png');
-        $this->assetManager->publishAsset('img/mock/entidade.png', 'img/mock/entidade.png');
-        $this->assetManager->publishAsset('img/mock/mapa.png', 'img/mock/mapa.png');
-        $this->assetManager->publishAsset('img/mock/portfolio.png', 'img/mock/portfolio.png');
 
         $app->hook('GET(site.index):before', function() use ($app) {
             $app->redirect($app->createUrl('cadastro', 'index'));
         });
 
-        if ($redeCulturaViva = $this->_cadastro->getUsermeta()) {
+        $redeCulturaViva = $this->_cadastro->getUsermeta();
+        if ($redeCulturaViva) {
             $this->jsObject['redeCulturaViva'] = $redeCulturaViva;
             $inscricao = $this->_cadastro->getInscricao();
 
@@ -77,9 +94,22 @@ class Theme extends BaseV1\Theme {
         $this->assetManager->publishAsset('img/banner-home2.jpg', 'img/banner-home2.jpg');
         $this->assetManager->publishAsset('img/certificado.png', 'img/certificado.png');
 
-        $app->hook('view.render(site/search):before', function() {
+        $app->hook('view.render(site/search):before', function() use($app) {
+
+            $ids = $app->controller('agent')->apiQuery([
+                '@select' => 'id',
+                'rcv_tipo' => 'EQ(ponto)'
+            ]);
+
+            $ids = implode(
+                    ',', array_map(function($e) {
+                        return $e['id'];
+                    }, $ids)
+            );
+
             $this->jsObject['searchFilters'] = [
-                'agent' => ['rcv_tipo' => 'EQ(ponto)']
+                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
+                'event' => ['owner' => "IN($ids)"]
             ];
         });
 
@@ -168,44 +198,20 @@ class Theme extends BaseV1\Theme {
     }
 
     protected function _publishAssets() {
-
+        
     }
 
     /**
      * Adicionas os styles e scripts usados nas telas de administração
      */
     protected function _adminAssets() {
-        // fonts
-        $this->getAssetManager()->publishFolder('vendor/bootstrap/fonts/', 'fonts');
-        $this->getAssetManager()->publishFolder('vendor/patternfly/fonts/', 'fonts');
-
-
         // App:components
         // Templates de componentes e controllers da aplicação certificação
         $this->getAssetManager()->publishFolder('admin/dist/', 'admin');
     }
 
-    /**
-     * Facilitador para trabalhar com dependencias
-     *
-     * @param type $group
-     * @param array $filenames
-     * @param type $type
-     */
-    protected function enqueueAll($group, array $filenames = [], $type = 'js') {
-        if ($type === 'js') {
-            foreach ($filenames as $filename) {
-                $this->enqueueScript($group, basename($filename, ".js"), $filename);
-            }
-        } else if ($type === 'css') {
-            foreach ($filenames as $filename) {
-                $this->enqueueStyle($group, basename($filename, ".css"), $filename);
-            }
-        }
-    }
-
     function head() {
-        $assetsGroup = 'culturaviva';
+        $assetsGroup = null;
         if (in_array($this->controller->id, ['admin'])) {
             $assetsGroup = 'rcv-admin';
 
@@ -221,10 +227,16 @@ class Theme extends BaseV1\Theme {
         } else {
             // Não renderiza os estilos do MapasCulturais na tela de certificação, ele atrapalha toda personalização
             parent::head();
+
+            if ($this->controller->id === 'cadastro' || $this->controller->id == 'rede') {
+                $assetsGroup = 'culturaviva';
+            }
         }
 
-        $this->printStyles($assetsGroup);
-        $this->printScripts($assetsGroup);
+        if ($assetsGroup) {
+            $this->printStyles($assetsGroup);
+            $this->printScripts($assetsGroup);
+        }
     }
 
     public function addDocumentMetas() {
@@ -261,7 +273,7 @@ class Theme extends BaseV1\Theme {
 
         $metadata = [
             'MapasCulturais\Entities\User' => [
-                'redeCulturaViva' => [ 'private' => true, 'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição']
+                'redeCulturaViva' => ['private' => true, 'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição']
             ],
             'MapasCulturais\Entities\Space' => [
                 'En_Bairro' => [

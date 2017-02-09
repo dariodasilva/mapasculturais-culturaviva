@@ -641,6 +641,14 @@ class Cadastro extends \MapasCulturais\Controller{
             }
 
             $inscricao->send();
+            $app = \MapasCulturais\App::i();
+            $message = $app->renderMailerTemplate('cadastro_enviado', ['name' => $app->user->profile->name]);
+            $app->createAndSendMailMessage([
+                'from' => $app->config['mailer.from'],
+                'to' => $app->user->email,
+                'subject' => $message['title'],
+                'body' => $message['body']
+            ]);
 
         } else {
             $this->errorJson([
@@ -661,7 +669,7 @@ class Cadastro extends \MapasCulturais\Controller{
         }else{
 
             $ch = curl_init();
-            $header[] = 'Authorization: Basic M2JmNDEwMDkxYmRkZjVlMjA5MmJlODYyYWEyNWZlMzQ6MTIzNDU2';
+            $header[] = 'Authorization: Basic ' . $app->config['auth_api_cnpj'];
             curl_setopt($ch, CURLOPT_URL, $api_urlRF);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
