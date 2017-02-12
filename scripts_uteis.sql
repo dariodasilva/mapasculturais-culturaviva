@@ -18,8 +18,9 @@ INSERT INTO agent(user_id, type, name, create_timestamp, status)
 UPDATE usr SET profile_id = (SELECT id FROM agent WHERE name = 'AgenteArea@local') 
     WHERE email = 'AgenteArea@local';
 
-INSERT INTO role(usr_id, name)
-	SELECT id, 'rcv_agente_area' FROM usr WHERE usr.email = 'AgenteArea@local';
+INSERT INTO role(id, usr_id, name)
+	SELECT nextval('role_id_seq'), id, 'rcv_agente_area' 
+        FROM usr WHERE usr.email = 'AgenteArea@local';
     
     
 --------------------------------------------------------------------------------

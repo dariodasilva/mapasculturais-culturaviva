@@ -47,7 +47,7 @@ function AvaliacaoListaCertificadorDirective() {
      */
     return {
         restrict: 'E',
-        templateUrl: '/assets/modules/certificacao/templates/AvaliacaoListaCertificador.html',
+        templateUrl: 'modules/certificacao/templates/AvaliacaoListaCertificador.html',
         scope: {
             /**
              * @description O identificador do certificador

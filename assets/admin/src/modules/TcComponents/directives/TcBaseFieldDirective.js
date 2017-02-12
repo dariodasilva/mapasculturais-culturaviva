@@ -32,7 +32,7 @@ function TcBaseField() {
     return {
         transclude: true,
         scope: false,
-        templateUrl: '/assets/components/templates/TcBaseFieldDirective.html',
+        templateUrl: 'modules/TcComponents/templates/TcBaseFieldDirective.html',
         link: function ($scope) {
             $scope._formName = '_tc_base_field_form_' + $scope.tcInputName;
             $scope._errorMessages = (function (defMess, inhMess) {

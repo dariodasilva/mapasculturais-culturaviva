@@ -24,7 +24,7 @@ function TcSelectDirective($http) {
     return {
         restrict: 'E',
         require: ['^form', 'ngModel'],
-        templateUrl: '/assets/components/templates/TcSelectDirective.html',
+        templateUrl: 'modules/TcComponents//templates/TcSelectDirective.html',
         scope: {
             /**
              * @description Data bind para variável de escopo

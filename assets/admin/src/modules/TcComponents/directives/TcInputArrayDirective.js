@@ -22,7 +22,7 @@ angular
 function TcInputArrayDirective() {
     return {
         require: ['^form', 'ngModel'],
-        templateUrl: '/assets/components/templates/TcInputArrayDirective.html',
+        templateUrl: 'modules/TcComponents//templates/TcInputArrayDirective.html',
         scope: {
             /**
              * Permite a

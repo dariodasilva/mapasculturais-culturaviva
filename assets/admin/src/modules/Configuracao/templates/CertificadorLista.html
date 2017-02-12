@@ -1,12 +1,12 @@
 <div ng-controller="CertificadorListaCtrl" ng-cloak>
-    <tabset>
-        <tab>
-            <tab-heading>
+    <uib-tabset>
+        <uib-tab>
+            <uib-tab-heading>
                 <span class="hidden-xs">Poder</span> Público
                 <span class="badge">
                     {{certificadores.publico.titular.length|| 0}}-{{certificadores.publico.suplente.length|| 0}}
                 </span>
-            </tab-heading>
+            </uib-tab-heading>
 
             <header class="section-header ">
                 <h2>Titulares</h2>
@@ -25,15 +25,15 @@
                 descricao="Suplentes do Poder Público"
                 >
             </certificador-lista-tabela>
-        </tab>
+        </uib-tab>
 
-        <tab>
-            <tab-heading>
+        <uib-tab>
+            <uib-tab-heading>
                 <span class="hidden-xs">Sociedade</span> Civil
                 <span class="badge">
                     {{certificadores.civil.titular.length|| 0}}-{{certificadores.civil.suplente.length|| 0}}
                 </span>
-            </tab-heading>
+            </uib-tab-heading>
 
             <header class="section-header ">
                 <h2>Titulares</h2>
@@ -52,15 +52,15 @@
                 descricao="Suplentes da Sociedade Civil"
                 >
             </certificador-lista-tabela>
-        </tab>
+        </uib-tab>
 
-        <tab>
-            <tab-heading>
+        <uib-tab>
+            <uib-tab-heading>
                 <span class="hidden-xs">Voto de</span> Minerva
                 <span class="badge">
                     {{certificadores.minerva.titular.length|| 0}}-{{certificadores.minerva.suplente.length|| 0}}
                 </span>
-            </tab-heading>
+            </uib-tab-heading>
 
             <header class="section-header ">
                 <h2>Titulares</h2>
@@ -79,8 +79,8 @@
                 descricao="Suplentes com Voto de Minerva"
                 >
             </certificador-lista-tabela>
-        </tab>
-    </tabset>
+        </uib-tab>
+    </uib-tabset>
 
     <div class="row">
         <div class="form-buttons col-md-12">

@@ -13,7 +13,7 @@ function AvaliacaoListaTabelaDirective() {
      */
     return {
         restrict: 'E',
-        templateUrl: '/assets/modules/certificacao/templates/AvaliacaoListaTabela.html',
+        templateUrl: 'modules/certificacao/templates/AvaliacaoListaTabela.html',
         scope: {
             /**
              * @description Estado da avaliação, usado no filtro de pesquisa

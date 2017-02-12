@@ -27,7 +27,7 @@ function TcFormDirective($document) {
             onSaveLabel: '@',
             onClear: '&'
         },
-        templateUrl: '/assets/components/templates/TcFormDirective.html',
+        templateUrl: 'modules/TcComponents//templates/TcFormDirective.html',
         link: function ($scope, $el, $attrs) {
             var formName = $scope.name || 'form';
             $scope.formName = formName;
