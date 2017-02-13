@@ -39,22 +39,26 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
     var codigo = $state.params.id;
 
     $http.get('/avaliacao/obter/' + codigo).then(function (response) {
+        console.log(response);
         var data = response.data;
         $scope.avaliacao = data;
+        
+        // Usado pelos controllers filhos
+        $scope.agentId = data.agenteId;
 
         $scope.situacaoAvaliacao = {
             'P': 'Pendente',
             'A': 'Em Análise',
             'D': 'Deferido',
             'I': 'Indeferido'
-        }(data.estado);
+        }[data.estado];
 
         $scope.situacaoInscricao = {
             'P': 'Pendente',
             'C': 'Certificado',
             'N': 'Não Certificado',
             'R': 'Re-Submissão',
-        }(data.inscricaoEstado);
+        }[data.inscricaoEstado];
     }, function (cause) {
         var data = cause.data;
         var msg = 'Erro ao recuperar dados da Avaliação';

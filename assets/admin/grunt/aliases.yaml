@@ -3,6 +3,7 @@ server:
     - 'sass:development'
     - 'includeSource:development'
     - 'configureProxies:development'
+    - 'configureApimock:development'
     - 'connect:development'
     - 'watch'
 

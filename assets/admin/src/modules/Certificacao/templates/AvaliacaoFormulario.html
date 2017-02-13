@@ -74,12 +74,13 @@
             >
         </tc-input-text>
     </tc-form>
+    
 
     <header class="section-header ">
         <h2>Detalhes do cadastro do Ponto/Pontão de Cultura</h2>
     </header>
 
-    <uib-tabset ng-init="{ref_active:0}">
+    <uib-tabset ng-init="{ref_active:0}" ng-if="agentId">
         <uib-tab select="ref_active = 0">
             <uib-tab-heading>
                 <span class="glyphicon glyphicon-user"></span>
@@ -87,7 +88,7 @@
                 <span class="visible-md-inline-block visible-sm-inline-block">Responsável</span>
             </uib-tab-heading>
             
-            <ng-include src="'modules/Certificacao/templastes/TabResponsavel.html'"></ng-include>
+            <ng-include src="'modules/Certificacao/templates/TabResponsavel.html'"></ng-include>
             <img src="modules/AppAdmin/img/mock/responsavel.png" style="margin-top: 20px">
         </uib-tab>
 

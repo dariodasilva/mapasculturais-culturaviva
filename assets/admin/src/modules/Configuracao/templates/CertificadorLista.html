@@ -1,4 +1,4 @@
-<div ng-controller="CertificadorListaCtrl" ng-cloak>
+<div ng-controller="CertificadorListaCtrl" ng-cloak class="lista-certificadores">
     <uib-tabset>
         <uib-tab>
             <uib-tab-heading>
@@ -17,8 +17,8 @@
                 >
             </certificador-lista-tabela>
 
-            <header class="section-header ">
-                <h2>Suplentes</h2>
+            <header class="section-header row">
+                <h2 class="col-md-12">Suplentes</h2>
             </header>
             <certificador-lista-tabela
                 certificadores="certificadores.publico.suplente"
@@ -35,8 +35,8 @@
                 </span>
             </uib-tab-heading>
 
-            <header class="section-header ">
-                <h2>Titulares</h2>
+            <header class="section-header row">
+                <h2 class="col-md-12">Titulares</h2>
             </header>
             <certificador-lista-tabela
                 certificadores="certificadores.civil.titular"
@@ -44,8 +44,8 @@
                 >
             </certificador-lista-tabela>
 
-            <header class="section-header ">
-                <h2>Suplentes</h2>
+            <header class="section-header row">
+                <h2 class="col-md-12">Suplentes</h2>
             </header>
             <certificador-lista-tabela
                 certificadores="certificadores.civil.suplente"
@@ -62,8 +62,8 @@
                 </span>
             </uib-tab-heading>
 
-            <header class="section-header ">
-                <h2>Titulares</h2>
+            <header class="section-header row">
+                <h2 class="col-md-12">Titulares</h2>
             </header>
             <certificador-lista-tabela
                 certificadores="certificadores.minerva.titular"
@@ -71,8 +71,8 @@
                 >
             </certificador-lista-tabela>
 
-            <header class="section-header ">
-                <h2>Suplentes</h2>
+            <header class="section-header row">
+                <h2 class="col-md-12">Suplentes</h2>
             </header>
             <certificador-lista-tabela
                 certificadores="certificadores.minerva.suplente"

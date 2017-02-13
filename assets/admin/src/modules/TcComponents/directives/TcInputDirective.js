@@ -55,6 +55,10 @@ function TcInputDirective($http) {
              */
             col: '@',
             /**
+             * Permite adicionar um ícone no input
+             */
+            icon: '@',
+            /**
              * @description Determina o tamanho do grid do input
              *
              * @type Number

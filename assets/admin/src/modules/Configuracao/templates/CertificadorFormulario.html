@@ -17,15 +17,12 @@
 
         <tc-input
             ng-if="!ref.novoRegistro"
-            ng-value="dto.agenteNome"
+            ng-model="dto.agenteNome"
             label="Agente Certificador"
             col-input="4"
             readonly="true"
             >
         </tc-input>
-
-
-
 
         <tc-select
             ng-model="dto.tipo"
