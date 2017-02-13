@@ -25,7 +25,7 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
             /*----------------------------------------------------------------------------------------*/
             .state('pagina', {
                 abstract: true,
-                templateUrl: urlTemplate('Pagina', 'AppAdmin'),
+                templateUrl: templateURL('Pagina', 'AppAdmin'),
                 data: {
                     ACCESS_LEVEL: window.RBAC.ACCESS_LEVEL.AGENTES
                 },
@@ -38,7 +38,7 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
             /*----------------------------------------------------------------------------------------*/
             .state('pagina.relatorios', {
                 url: '/',
-                templateUrl: urlTemplate('Inicio', 'Relatorios'),
+                templateUrl: templateURL('Inicio', 'Relatorios'),
                 resolve: {
                     mdl: resolveModule('Relatorios')
                 }
@@ -58,11 +58,11 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
             })
             .state('pagina.certificacao.lista', {
                 url: '/',
-                templateUrl: urlTemplate('AvaliacaoLista', 'Certificacao')
+                templateUrl: templateURL('AvaliacaoLista', 'Certificacao')
             })
             .state('pagina.certificacao.formulario', {
                 url: '/formulario/:id',
-                templateUrl: urlTemplate('AvaliacaoFormulario', 'Certificacao')
+                templateUrl: templateURL('AvaliacaoFormulario', 'Certificacao')
             })
             /*----------------------------------------------------------------------------------------*/
             // Configurações
@@ -80,7 +80,7 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
             // Configurações::Criterios
             .state('pagina.configuracao.criterios', {
                 url: '/criterios',
-                templateUrl: urlTemplate('Criterios', 'Configuracao')
+                templateUrl: templateURL('Criterios', 'Configuracao')
             })
             // Configurações::Certificadores
             .state('pagina.configuracao.certificador', {
@@ -89,11 +89,11 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
             })
             .state('pagina.configuracao.certificador.lista', {
                 url: '/',
-                templateUrl: urlTemplate('CertificadorLista', 'Configuracao')
+                templateUrl: templateURL('CertificadorLista', 'Configuracao')
             })
             .state('pagina.configuracao.certificador.formulario', {
                 url: '/formulario/:id',
-                templateUrl: urlTemplate('CertificadorFormulario', 'Configuracao')
+                templateUrl: templateURL('CertificadorFormulario', 'Configuracao')
             })
 
             /*----------------------------------------------------------------------------------------*/
@@ -116,36 +116,36 @@ function AppConfigRoutas($stateProvider, $urlRouterProvider, $locationProvider) 
 /**
  * Facilitador de criação de endereços para templates
  *
- * @param {type} page
- * @param {type} module
+ * @param {type} pagina
+ * @param {type} modulo
  * @returns {String}
  */
-function urlTemplate(page, module) {
-    return 'modules/' + module + '/templates/' + page + '.html';
+function templateURL(pagina, modulo) {
+    return 'modules/' + modulo + '/templates/' + pagina + '.html';
 }
 
 
 
 /**
  * Faz a resolução para o módulo solicitado
- * 
- * @param {type} module
+ *
+ * @param {type} modulo
  * @returns {Array}
  */
-function resolveModule(module) {
+function resolveModule(modulo) {
     return [
         '$q', '$ocLazyLoad',
         function ($q, $ocLazyLoad) {
             if (window.__BUNDLED__MODULES__) {
                 return $ocLazyLoad.load({
-                    name: module,
-                    files: ['modules/' + module + '/' + module + '.bundle.min.js']
+                    name: modulo,
+                    files: ['modules/' + modulo + '/' + modulo + '.bundle.min.js']
                 });
             } else {
                 var deferred = $q.defer();
                 setTimeout(function () {
                     $ocLazyLoad.load({
-                        name: module
+                        name: modulo
                     });
                     deferred.resolve(true);
                 });

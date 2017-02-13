@@ -367,6 +367,11 @@ h2 {
     margin-bottom: 10px;
 }
 
+.row > .blank-slate-pf{
+    border-right: 0;
+    border-left: 0;
+}
+
 
 .card-heading-config{
     font-size: 16px;
@@ -374,4 +379,9 @@ h2 {
     top: 5px;
     position: absolute;
     right: 20px;
+}
+
+.popover.popover-lg {
+    max-width: 450px;
+    /*@todo: responsive*/
 }

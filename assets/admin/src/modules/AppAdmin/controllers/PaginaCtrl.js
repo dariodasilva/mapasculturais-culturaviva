@@ -13,10 +13,11 @@ PaginaCtrl.$inject = ['$scope', '$rootScope'];
  * @returns {undefined}
  */
 function PaginaCtrl($scope, $rootScope) {
-    $rootScope.page = {
-        title: 'Título da pagina',
-        subTitle: '',
-        titleClass: '',
+    $rootScope.pagina = {
+        titulo: 'Título da pagina',
+        subTitulo: '',
+        classTitulo: '',
+        ajudaTemplateUrl: '',
         breadcrumb: []
     };
 }

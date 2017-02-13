@@ -17,10 +17,11 @@ CertificadorListaCtrl.$inject = ['$scope', '$state', '$http'];
 function CertificadorListaCtrl($scope, $state, $http) {
 
     // Configuração da página
-    $scope.page.title = 'Certificadores';
-    $scope.page.subTitle = 'Listagem de Agentes de certificação';
-    $scope.page.titleClass = '';
-    $scope.page.breadcrumb = [
+    $scope.pagina.titulo = 'Certificadores';
+    $scope.pagina.subTitulo = 'Listagem de Agentes de certificação';
+    $scope.pagina.classTitulo = '';
+    $scope.pagina.ajudaTemplateUrl = '';
+    $scope.pagina.breadcrumb = [
         {
             title: 'Início',
             sref: 'pagina.relatorios'

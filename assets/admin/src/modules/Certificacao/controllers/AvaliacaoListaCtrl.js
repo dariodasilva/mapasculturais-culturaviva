@@ -19,10 +19,11 @@ function AvaliacaoListaCtrl($scope, $state, $http, UsuarioSrv) {
     console.log('$scope', $scope);
 
     // Configuração da página
-    $scope.page.title = 'Avaliações';
-    $scope.page.subTitle = 'Listagem de Avaliações para Certificação de Inscrições';
-    $scope.page.titleClass = '';
-    $scope.page.breadcrumb = [
+    $scope.pagina.titulo = 'Avaliações';
+    $scope.pagina.subTitulo = 'Listagem de Avaliações para Certificação de Inscrições';
+    $scope.pagina.classTitulo = '';
+    $scope.pagina.ajudaTemplateUrl = '';
+    $scope.pagina.breadcrumb = [
         {
             title: 'Início',
             sref: 'pagina.relatorios'
@@ -68,7 +69,7 @@ function AvaliacaoListaCertificadorDirective() {
         },
         controller: Controller
     };
-    
+
     Controller.$inject = ['$scope', 'UsuarioSrv'];
 
     function Controller($scope, UsuarioSrv) {

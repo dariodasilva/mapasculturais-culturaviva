@@ -63,7 +63,7 @@ CertificadorFormularioCtrl.converterParaEscopo = function (dto) {
 CertificadorFormularioCtrl.converterParaSalvar = function (dto) {
     return {
         id: dto.id,
-        agenteId: dto.agenteId,
+        agenteId: dto._agente.id,
         tipo: dto.tipo.codigo,
         titular: dto.titular.valor,
         ativo: dto.ativo.valor
@@ -85,10 +85,11 @@ function CertificadorFormularioCtrl($scope, $state, $http) {
     var novoRegistro = (!codigo || codigo === '');
 
     // Configuração da página
-    $scope.page.title = novoRegistro ? 'Cadastrar Agente de Certificação' : 'Editar Agente de Certificação';
-    $scope.page.subTitle = '';
-    $scope.page.titleClass = '';
-    $scope.page.breadcrumb = [
+    $scope.pagina.titulo = novoRegistro ? 'Cadastrar Agente de Certificação' : 'Editar Agente de Certificação';
+    $scope.pagina.subTitulo = '';
+    $scope.pagina.classTitulo = '';
+    $scope.pagina.ajudaTemplateUrl = '';
+    $scope.pagina.breadcrumb = [
         {
             title: 'Início',
             sref: 'pagina.relatorios'

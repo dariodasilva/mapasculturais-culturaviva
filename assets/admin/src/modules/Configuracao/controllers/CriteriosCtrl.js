@@ -17,10 +17,11 @@ CriteriosCtrl.$inject = ['$scope', '$state', '$http'];
 function CriteriosCtrl($scope, $state, $http) {
 
     // Configuração da página
-    $scope.page.title = 'Critérios';
-    $scope.page.subTitle = 'Critérios usados para avaliação de uma Inscrição';
-    $scope.page.titleClass = '';
-    $scope.page.breadcrumb = [
+    $scope.pagina.titulo = 'Critérios';
+    $scope.pagina.subTitulo = 'Critérios usados para avaliação de uma Inscrição';
+    $scope.pagina.classTitulo = '';
+    $scope.pagina.ajudaTemplateUrl = 'modules/Configuracao/templates/ajuda/CriteriosAjudaPagina.html';
+    $scope.pagina.breadcrumb = [
         {
             title: 'Início',
             sref: 'pagina.relatorios'
@@ -72,7 +73,7 @@ function CriteriosCtrl($scope, $state, $http) {
             $scope.$emit('msg', 'Critérios de Avaliação salvos com sucesso', null, 'success', 'formCriterios');
             //$scope.criterios = data;
             //$scope.listaVazia = angular.copy($scope.criterios);
-        }).error(function (error) {
+        },function (error) {
             $scope.$emit('msg', 'Erro inesperado ao salvar as Configurações', null, 'error', 'formCriterios');
             if (window.console && console.warn) {
                 console.warn(error);

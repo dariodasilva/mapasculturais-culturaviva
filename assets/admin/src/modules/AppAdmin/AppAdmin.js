@@ -3,10 +3,10 @@
 angular
         .module('AppAdmin', [
             'ng',
-            'ngMessages', 
+            'ngMessages',
             'ngSanitize',
             'ui.router',
-            'ui.bootstrap',            
+            'ui.bootstrap',
             'blockUI',
             'oc.lazyLoad'
         ])

@@ -17,10 +17,11 @@ AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http'];
 function AvaliacaoFormularioCtrl($scope, $state, $http) {
 
     // Configuração da página
-    $scope.page.title = 'Avaliação do Ponto/Pontão de Cultura';
-    $scope.page.subTitle = '';
-    $scope.page.titleClass = '';
-    $scope.page.breadcrumb = [
+    $scope.pagina.titulo = 'Avaliação do Ponto/Pontão de Cultura';
+    $scope.pagina.subTitulo = '';
+    $scope.pagina.classTitulo = '';
+    $scope.pagina.ajudaTemplateUrl = '';
+    $scope.pagina.breadcrumb = [
         {
             title: 'Início',
             sref: 'pagina.relatorios'
