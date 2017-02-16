@@ -1,18 +1,16 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- Schema
 ------------------------------------------------------------------------------------------------------------------------
-DROP SCHEMA culturaviva CASCADE;
+-- DROP SCHEMA culturaviva CASCADE;
 
 CREATE SCHEMA culturaviva;
-
-ALTER SCHEMA culturaviva OWNER TO vagrant;
 ------------------------------------------------------------------------------------------------------------------------
 
 
 ------------------------------------------------------------------------------------------------------------------------
 -- Critérios de Avaliação
 ------------------------------------------------------------------------------------------------------------------------
-CREATE SEQUENCE culturaviva.criterio_id_seq
+CREATE SEQUENCE  culturaviva.criterio_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -20,7 +18,7 @@ CREATE SEQUENCE culturaviva.criterio_id_seq
     CACHE 1;
 ALTER TABLE culturaviva.criterio_id_seq OWNER TO vagrant;
 
-CREATE TABLE culturaviva.criterio (
+CREATE TABLE  IF NOT EXISTS culturaviva.criterio (
     id          INTEGER DEFAULT nextval('culturaviva.criterio_id_seq'::regclass) NOT NULL,
     ordem       INTEGER NOT NULL,
     ativo       BOOLEAN NOT NULL,
@@ -46,7 +44,7 @@ COMMENT ON COLUMN culturaviva.criterio.ts_criacao   IS 'Quando o registro foi cr
 ------------------------------------------------------------------------------------------------------------------------
 -- Inscrições
 ------------------------------------------------------------------------------------------------------------------------
-CREATE SEQUENCE culturaviva.inscricao_id_seq
+CREATE SEQUENCE  culturaviva.inscricao_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -54,7 +52,7 @@ CREATE SEQUENCE culturaviva.inscricao_id_seq
     CACHE 1;
 ALTER TABLE culturaviva.inscricao_id_seq OWNER TO vagrant;
 
-CREATE TABLE culturaviva.inscricao (
+CREATE TABLE  IF NOT EXISTS culturaviva.inscricao (
     id              INTEGER DEFAULT nextval('culturaviva.inscricao_id_seq'::regclass) NOT NULL,
     agente_id       INTEGER NOT NULL,
     estado          CHAR NOT NULL DEFAULT 'P',
@@ -87,7 +85,7 @@ o estado da inscrição para "C - Certificado" ou "N - Não Certificado"';
 ------------------------------------------------------------------------------------------------------------------------
 -- Critérios de Avaliação da Inscrição
 ------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE culturaviva.inscricao_criterio (
+CREATE TABLE  IF NOT EXISTS culturaviva.inscricao_criterio (
     inscricao_id    INTEGER NOT NULL,
     criterio_id     INTEGER NOT NULL,
     ts_criacao      TIMESTAMP without time zone DEFAULT now() NOT NULL,
@@ -111,7 +109,7 @@ COMMENT ON COLUMN culturaviva.inscricao_criterio.ts_criacao     IS 'Quando o reg
 ------------------------------------------------------------------------------------------------------------------------
 -- Certificadores
 ------------------------------------------------------------------------------------------------------------------------
-CREATE SEQUENCE culturaviva.certificador_id_seq
+CREATE SEQUENCE  culturaviva.certificador_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -120,7 +118,7 @@ CREATE SEQUENCE culturaviva.certificador_id_seq
 ALTER TABLE culturaviva.certificador_id_seq OWNER TO vagrant;
 
 
-CREATE TABLE culturaviva.certificador (
+CREATE TABLE  IF NOT EXISTS culturaviva.certificador (
     id              INTEGER DEFAULT nextval('culturaviva.certificador_id_seq'::regclass) NOT NULL,
     agente_id       INTEGER NOT NULL,
     ativo           BOOLEAN NOT NULL DEFAULT TRUE,
@@ -156,7 +154,7 @@ COMMENT ON COLUMN culturaviva.certificador.ts_atualizacao   IS 'Quando o registr
 ------------------------------------------------------------------------------------------------------------------------
 -- Avaliações Pelos Certificadores
 ------------------------------------------------------------------------------------------------------------------------
-CREATE SEQUENCE culturaviva.avaliacao_id_seq
+CREATE SEQUENCE  culturaviva.avaliacao_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -164,7 +162,7 @@ CREATE SEQUENCE culturaviva.avaliacao_id_seq
     CACHE 1;
 ALTER TABLE culturaviva.avaliacao_id_seq OWNER TO vagrant;
 
-CREATE TABLE culturaviva.avaliacao (
+CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao (
     id              INTEGER DEFAULT nextval('culturaviva.avaliacao_id_seq'::regclass) NOT NULL,
     inscricao_id    INTEGER NOT NULL,
     certificador_id INTEGER NOT NULL,
@@ -233,7 +231,7 @@ CREATE TRIGGER culturaviva_avaliacao_tg_validacoes
 ------------------------------------------------------------------------------------------------------------------------
 -- Valores para os critérios de uma Avaliação
 ------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE culturaviva.avaliacao_criterio (
+CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao_criterio (
     avaliacao_id    INTEGER NOT NULL,
     inscricao_id    INTEGER NOT NULL,
     criterio_id     INTEGER NOT NULL,
