@@ -78,7 +78,8 @@ return [
     'rcv: create schema' => function() use($app, $conn) {        
         echo "Criando tabelas da Rede Cultura Viva";
         $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-schema.sql'));
-        echo "\n";
+    },
+    'rcv: create schema log' => function() use($app, $conn) {        
         echo "Criando tabelas de Log";
         $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-schema.sql'));
     },
