@@ -63,7 +63,7 @@ CertificadorFormularioCtrl.converterParaEscopo = function (dto) {
 CertificadorFormularioCtrl.converterParaSalvar = function (dto) {
     return {
         id: dto.id,
-        agenteId: dto._agente.id,
+        agenteId: dto.agenteId ? dto.agenteId : dto._agente.id,
         tipo: dto.tipo.codigo,
         titular: dto.titular.valor,
         ativo: dto.ativo.valor

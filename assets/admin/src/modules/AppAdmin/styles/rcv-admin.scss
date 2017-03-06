@@ -162,7 +162,7 @@ h2 {
 
 /*Block-ui, loading*/
 .block-ui-visible > .block-ui-container {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
     right: 0;
@@ -170,8 +170,8 @@ h2 {
 }
 
 .block-ui-visible > .block-ui-container > .block-ui-message-container{
-    position: fixed;
-    top: 200px;
+/*    position: fixed;
+    top: 200px;*/
 }
 
 .block-ui-overlay {

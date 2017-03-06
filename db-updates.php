@@ -75,12 +75,12 @@ return [
             WHERE s.is_verified = 't';"
         );
     },
-    'rcv: create schema' => function() use($app, $conn) {        
+    'rcv: create schema' => function() use($app, $conn) {
         echo "Criando tabelas da Rede Cultura Viva";
         $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-schema.sql'));
     },
-    'rcv: create schema log' => function() use($app, $conn) {        
+    'rcv: create schema log' => function() use($app, $conn) {
         echo "Criando tabelas de Log";
-        $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-schema.sql'));
+        $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva_log-schema.sql'));
     },
 ];
