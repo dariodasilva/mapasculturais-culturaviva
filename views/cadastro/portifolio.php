@@ -72,7 +72,7 @@
               <label class="colunm-50">
                   Precisa de ajuda para montar sua carta?
                   <br>
-                  <a href="<?php $this->asset('pdf/Carta_de_Apoio_da_Comunidade_à_Coletivo vs 3.pdf') ?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
+                  <a href="<?php $this->asset('pdf/carta_de_apoio_da_comunidade_a_coletivo_v_3.pdf') ?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
                 </label>
         </div>
       </div>
@@ -129,7 +129,7 @@
                 <p>
                     Precisa de um modelo de carta?
                     <br>
-                    <a href="<?php $this->asset('pdf/Modelos_de_Carta_de_Referência_.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                    <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
                 </p>
             </label>
         </div>

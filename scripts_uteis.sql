@@ -104,9 +104,41 @@ INSERT INTO user_meta(id, object_id, key, value)
     FROM usr WHERE usr.email = 'PontoCultura@local'
 ;
 
+-- Registra as inscrições dos pontos de cultura
+INSERT INTO culturaviva.inscricao(agente_id, estado)
+    SELECT
+        r.agent_id, 'P'
+    FROM registration r
+    LEFT JOIN culturaviva.inscricao insc
+            on insc.agente_id = r.agent_id
+    WHERE r.project_id = 1
+    AND r.status = 1
+    AND insc.id IS NULL AND (insc.estado = 'P' OR insc.estado is null);
+
+
+
+SELECT
+        insc.*
+FROM culturaviva.inscricao insc
+LEFT JOIN culturaviva.inscricao_criterio crit
+        on crit.inscricao_id = insc.id
+WHERE insc.estado = 'P'
+AND crit.inscricao_id IS NULL
+;
+
+
 -- Registra a inscrição do ponto de cultura
 INSERT INTO culturaviva.inscricao(agente_id, estado)
-    VALUES ((SELECT id FROM agent WHERE name = 'PontoCultura@local'), 'P');
+    SELECT
+        r.agent_id, 'P'
+FROM registration r
+LEFT JOIN culturaviva.inscricao insc
+        on insc.agente_id = r.agent_id
+WHERE r.project_id = 1
+AND r.status = 1
+AND insc.id IS NULL AND (insc.estado = 'P' OR insc.estado is null);
+
+DELETE FROM culturaviva.inscricao;
 
 -- Atribui avaliação para agente certificador (registrar pela interface)
 INSERT INTO culturaviva.avaliacao(inscricao_id, certificador_id, estado)
