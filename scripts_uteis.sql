@@ -115,6 +115,60 @@ INSERT INTO culturaviva.inscricao(agente_id, estado)
     AND r.status = 1
     AND insc.id IS NULL AND (insc.estado = 'P' OR insc.estado is null);
 
+-- Registra os criterios das inscrições
+INSERT INTO culturaviva.inscricao_criterio (criterio_id, inscricao_id)
+    SELECT
+            crit.id,
+            insc.id
+    FROM culturaviva.inscricao insc
+    JOIN culturaviva.criterio crit ON  crit.ativo = TRUE 
+    LEFT JOIN culturaviva.inscricao_criterio incrit
+            on incrit.inscricao_id = insc.id
+    WHERE insc.estado = 'P'
+    AND incrit.inscricao_id IS NULL;
+
+
+-- Associar avaliação a certificador
+-- Algoritmo
+    -- Obter quantidade de inscrições por certificador/TIPO
+    -- Inscrições que não possuem avaliação
+    SELECT
+        count(0) as total
+    FROM culturaviva.inscricao insc
+    LEFT JOIN culturaviva.avaliacao aval 
+        on aval.inscricao_id = insc.id
+    WHERE aval.inscricao_id IS NULL
+    AND insc.estado = ANY(ARRAY['P','R']);
+
+    -- Totais por tipo certificador
+    SELECT
+        count(CASE WHEN cert.tipo = 'C' THEN 1 ELSE 0 END) as total_civil,
+        count(CASE WHEN cert.tipo = 'P' THEN 1 ELSE 0 END) as total_publico
+    FROM culturaviva.certificador cert
+    WHERE cert.ativo = TRUE 
+    AND cert.titular = TRUE
+    AND cert.tipo = ANY(ARRAY['C','P']);
+
+    -- Obter totais de cada certificador ()
+    WITH cteTotalInscricoes AS (
+        SELECT
+            cert.id,
+            count(aval.inscricao_id) as total_inscricao
+        FROM culturaviva.certificador cert
+        JOIN culturaviva.avaliacao aval
+            ON aval.certificador_id = cert.id
+        WHERE cert.ativo = TRUE 
+        AND cert.titular = TRUE
+        AND cert.tipo = ANY(ARRAY['C','P'])
+        GROUP BY cert.id, aval.inscricao_id
+    )
+    SELECT 
+        * 
+    FROM cteTotalInscricoes e
+    WHERE e.total_inscricao < 4 --numeroMagico
+
+    -- Sortear as inscricoes entre os certificadores
+    -- for certificacoes 
 
 
 SELECT
