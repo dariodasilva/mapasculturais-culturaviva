@@ -39,10 +39,9 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
     var codigo = $state.params.id;
 
     $http.get('/avaliacao/obter/' + codigo).then(function (response) {
-        console.log(response);
         var data = response.data;
         $scope.avaliacao = data;
-        
+
         // Usado pelos controllers filhos
         $scope.agentId = data.agenteId;
 

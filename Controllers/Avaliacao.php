@@ -83,7 +83,7 @@ class Avaliacao extends \MapasCulturais\Controller {
 
         $sql = "
             WITH avaliacoes AS (
-                SELECT            
+                SELECT
                     avl.id,
                     avl.inscricao_id,
                     avl.certificador_id,
@@ -100,9 +100,11 @@ class Avaliacao extends \MapasCulturais\Controller {
             )
             SELECT
                 insc.id,
+                insc.agente_id,
                 insc.estado,
-                pnt.name                AS ponto_nome,
-                tp.value                AS ponto_tipo,   
+                ponto.name              AS ponto_nome,
+                entidade.name           AS entidade_nome,
+                tp.value                AS tipo_ponto_desejado,
                 avl_c.id                AS avaliacao_civil_id,
                 avl_c.estado            AS avaliacao_civil_estado,
                 avl_c.certificador_nome AS avaliacao_civil_certificador,
@@ -113,28 +115,50 @@ class Avaliacao extends \MapasCulturais\Controller {
                 avl_m.estado            AS avaliacao_minerva_estado,
                 avl_m.certificador_nome AS avaliacao_minerva_certificador
             FROM culturaviva.inscricao insc
-            LEFT JOIN avaliacoes avl_c ON insc.id = avl_c.inscricao_id AND avl_c.certificador_tipo = 'C'
-            LEFT JOIN avaliacoes avl_p ON insc.id = avl_p.inscricao_id AND avl_p.certificador_tipo = 'P'
-            LEFT JOIN avaliacoes avl_m ON insc.id = avl_m.inscricao_id AND avl_m.certificador_tipo = 'm'
-            JOIN agent pnt ON pnt.id = insc.agente_id
-            JOIN user_meta tp ON tp.key = 'tipoPontoCulturaDesejado' AND tp.object_id = pnt.user_id
+            JOIN registration reg
+                on reg.agent_id = insc.agente_id
+                AND reg.project_id = 1
+            join agent_relation rel_entidade
+                ON rel_entidade.object_id = reg.id
+                AND rel_entidade.type = 'entidade'
+                AND rel_entidade.object_type = 'MapasCulturais\Entities\Registration'
+            join agent_relation rel_ponto
+                ON rel_ponto.object_id = reg.id
+                AND rel_ponto.type = 'ponto'
+                AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
+            JOIN agent entidade ON entidade.id = rel_entidade.agent_id
+            JOIN agent ponto ON ponto.id = rel_ponto.agent_id
+            JOIN agent_meta tp
+                ON tp.key = 'tipoPontoCulturaDesejado'
+                AND tp.object_id = entidade.id
+            LEFT JOIN avaliacoes avl_c
+                ON insc.id = avl_c.inscricao_id
+                AND avl_c.certificador_tipo = 'C'
+            LEFT JOIN avaliacoes avl_p
+                ON insc.id = avl_p.inscricao_id
+                AND avl_p.certificador_tipo = 'P'
+            LEFT JOIN avaliacoes avl_m
+                ON insc.id = avl_m.inscricao_id
+                AND avl_m.certificador_tipo = 'm'
             WHERE insc.estado <> 'C'
             AND (:agenteId = 0 OR COALESCE(avl_c.agente_id, avl_p.agente_id, avl_m.agente_id, 0) = :agenteId)
             AND (:estado = '' OR :estado = ANY(ARRAY[avl_c.estado,avl_p.estado, avl_m.estado]))
             AND (
                 :nome = ''
-                OR unaccent(lower(pnt.name)) LIKE unaccent(lower(:nome))
+                OR unaccent(lower(ponto.name)) LIKE unaccent(lower(:nome))
+                OR unaccent(lower(entidade.name)) LIKE unaccent(lower(:nome))
                 OR unaccent(lower(avl_c.certificador_nome)) LIKE unaccent(lower(:nome))
                 OR unaccent(lower(avl_p.certificador_nome)) LIKE unaccent(lower(:nome))
                 OR unaccent(lower(avl_m.certificador_nome)) LIKE unaccent(lower(:nome))
             )";
 
-        
+
         $campos = [
             'id',
             'estado',
             'ponto_nome',
-            'ponto_tipo',
+            'entidade_nome',
+            'tipo_ponto_desejado',
             'avaliacao_civil_id',
             'avaliacao_civil_estado',
             'avaliacao_civil_certificador',
@@ -175,34 +199,42 @@ class Avaliacao extends \MapasCulturais\Controller {
             SELECT
                 avl.*,
                 cert.agente_id,
+                (cert.agente_id = :agenteId) AS autoriza_edicao,
                 cert.tipo           AS certificador_tipo,
                 agt.name            AS certificador_nome,
                 insc.estado         AS inscricao_estado,
                 insc.ts_criacao     AS inscricao_ts_criacao,
                 insc.ts_finalizacao AS inscricao_ts_finalizacao,
-                pnt.name            AS ponto_nome,
-                tp.value            AS ponto_tipo,
+                ponto.name          AS ponto_nome,
+                tp.value            AS ponto_cultura_desejado,
                 dsc.value           AS ponto_descricao
             FROM culturaviva.avaliacao avl
-            JOIN culturaviva.certificador cert 
+            JOIN culturaviva.certificador cert
                 ON cert.id = avl.certificador_id
             JOIN agent agt ON agt.id = cert.agente_id
-            JOIN culturaviva.inscricao insc 
+            JOIN culturaviva.inscricao insc
                 ON insc.id = avl.inscricao_id
-            JOIN agent pnt 
-                ON pnt.id = insc.agente_id
-            JOIN user_meta tp
-                ON tp.key = 'tipoPontoCulturaDesejado' 
-                AND tp.object_id = pnt.user_id
-            LEFT JOIN user_meta dsc
-                ON dsc.key = 'shortDescription' 
-                AND tp.object_id = pnt.user_id
+            JOIN registration reg
+                on reg.agent_id = insc.agente_id
+                AND reg.project_id = 1
+            join agent_relation rel_entidade
+                ON rel_entidade.object_id = reg.id
+                AND rel_entidade.type = 'entidade'
+                AND rel_entidade.object_type = 'MapasCulturais\Entities\Registration'
+            join agent_relation rel_ponto
+                ON rel_ponto.object_id = reg.id
+                AND rel_ponto.type = 'ponto'
+                AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
+            JOIN agent ponto ON ponto.id = rel_ponto.agent_id
+            JOIN agent_meta tp
+                ON tp.key = 'tipoPontoCulturaDesejado'
+                AND tp.object_id = rel_entidade.agent_id
+            LEFT JOIN agent_meta dsc
+                ON dsc.key = 'shortDescription'
+                AND tp.object_id = ponto.user_id
             WHERE insc.estado <> 'C'
             AND avl.id = :id
             AND (:agenteId = 0 OR cert.agente_id = :agenteId)";
-
-
-
 
         $parametros = [
             'id' => $avaliacaoId,
@@ -225,8 +257,9 @@ class Avaliacao extends \MapasCulturais\Controller {
             'inscricao_ts_criacao',
             'inscricao_ts_finalizacao',
             'ponto_nome',
-            'ponto_tipo',
+            'ponto_cultura_desejado',
             'ponto_descricao',
+            'autoriza_edicao',
         ];
 
         $out = (new NativeQueryUtil($sql, $campos, $parametros))->getSingleResult();
@@ -239,7 +272,7 @@ class Avaliacao extends \MapasCulturais\Controller {
 
     /**
      * Obtém todos os critérios de uma avaliação
-     * 
+     *
      * @param type $avaliacaoId
      * @return type
      */
@@ -249,16 +282,15 @@ class Avaliacao extends \MapasCulturais\Controller {
                 crtr.id,
                 crtr.ordem,
                 crtr.descricao,
-                avct.aprovado   
+                avct.aprovado
             FROM culturaviva.avaliacao avl
-            JOIN culturaviva.avaliacao_criterio avct
+            JOIN culturaviva.inscricao_criterio insct
+                ON insct.inscricao_id = avl.inscricao_id
+            JOIN culturaviva.criterio crtr
+                ON crtr.id = insct.criterio_id
+            LEFT JOIN culturaviva.avaliacao_criterio avct
                 ON avct.avaliacao_id = avl.id
                 AND avct.inscricao_id = avl.inscricao_id
-            JOIN culturaviva.inscricao_criterio insct
-                ON insct.criterio_id = avct.criterio_id
-                AND insct.inscricao_id = avct.inscricao_id
-            JOIN culturaviva.criterio crtr 
-                ON crtr.id = insct.criterio_id
             WHERE avl.id = :avaliacao";
 
         $parametros = ['avaliacao' => $avaliacaoId];

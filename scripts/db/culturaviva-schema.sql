@@ -226,7 +226,7 @@ CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao_criterio (
     avaliacao_id    INTEGER NOT NULL,
     inscricao_id    INTEGER NOT NULL,
     criterio_id     INTEGER NOT NULL,
-    aprovado        BOOLEAN NOT NULL,
+    aprovado        BOOLEAN NULL,
     CONSTRAINT avaliacao_criterio_pk PRIMARY KEY (avaliacao_id, inscricao_id, criterio_id),
     CONSTRAINT avaliacao_criterio_avaliacao_id_fk FOREIGN KEY (avaliacao_id)
         REFERENCES culturaviva.avaliacao (id)

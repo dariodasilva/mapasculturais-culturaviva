@@ -20,7 +20,17 @@
                                     <div class="card-pf card-pf-accented card-pf-aggregate-status">
                                         <h2 class="card-pf-title">
                                             {{inscricao.pontoNome}}
-                                            <p><small>({{inscricao.pontoTipo}})</small></p>
+                                            <p>
+                                                <small>
+                                                    <strong>
+                                                        {{inscricao.entidadeNome}}
+                                                    </strong>
+                                                </small>
+                                            </p>
+                                            <p>
+                                                <small>({{inscricao.tipoPontoDesejado}})</small>
+                                            </p>
+
                                         </h2>
                                         <div class="card-pf-body" style="padding-bottom: 0;">
                                             <p class="card-pf-aggregate-status-notifications">
@@ -29,8 +39,8 @@
                                                 </strong>
                                             </p>
 
-                                            <div 
-                                                class="list-group-item list-view-pf-stacked" 
+                                            <div
+                                                class="list-group-item list-view-pf-stacked"
                                                 style="border: 0; margin: 0 -10px; padding: 0;"
                                                 >
 
@@ -39,7 +49,7 @@
                                                     certificador-id="{{inscricao.avaliacaoPublicaId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoPublicaEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoPublicaCertificador}}"
-                                                    >                                                    
+                                                    >
                                                 </avaliacao-lista-certificador>
 
                                                 <avaliacao-lista-certificador
@@ -48,16 +58,16 @@
                                                     certificador-id="{{inscricao.avaliacaoCivilId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoCivilEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoCivilCertificador}}"
-                                                    >                                                    
+                                                    >
                                                 </avaliacao-lista-certificador>
-                                                
+
                                                 <avaliacao-lista-certificador
                                                     ng-if="inscricao.avaliacaoMinervaId"
                                                     certificador-tipo="Voto de Minerva"
                                                     certificador-id="{{inscricao.avaliacaoMinervaId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoMinervaEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoMinervaCertificador}}"
-                                                    >                                                    
+                                                    >
                                                 </avaliacao-lista-certificador>
                                             </div>
                                         </div>

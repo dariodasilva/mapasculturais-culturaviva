@@ -35,7 +35,7 @@
 
         <tc-input-text
             label="Descrição do Ponto/Pontão de Cultura"
-            ng-model="avaliacao.pontoDescricao"            
+            ng-model="avaliacao.pontoDescricao"
             disabled="true"
             rows="5"
             >
@@ -47,34 +47,41 @@
             </header>
         </div>
 
-        <div class="clearfix" ng-repeat="criterio in avaliacao.criterios | orderBy:'ordem'">
-            <tc-input-text
-                label="{{$index}}º Critério"
-                ng-model="criterio.descricao"            
-                disabled="true"
-                rows="5"
-                >
-            </tc-input-text>
-            <tc-select
-                ng-model="criterio.aprovado"
-                label="O cadastro do Ponto/Pontão de Cultura atende ao 1° Critério"
-                col-input="2"
-                field="label"
-                options="simNao"
-                >
-            </tc-select>
-            <hr/>
+        <div class="col-md-12">
+            <div class="row">
+                <div ng-repeat="criterio in avaliacao.criterios| orderBy:'ordem'" class="clearfix">
+                    <tc-input-text
+                        label="{{$index + 1}}º Critério"
+                        ng-model="criterio.descricao"
+                        disabled="true"
+                        rows="5"
+                        >
+                    </tc-input-text>
+                    <tc-select
+                        ng-model="criterio.aprovado"
+                        label="O cadastro do Ponto/Pontão de Cultura atende ao 1° Critério"
+                        col-input="2"
+                        field="label"
+                        options="simNao"
+                        disabled="!avaliacao.autorizaEdicao"
+                        >
+                    </tc-select>
+                    <hr style="clear: both;"/>
+                </div>
+            </div>
         </div>
+
 
         <tc-input-text
             label="Observações"
-            ng-model="avaliacao.observacoes"            
+            ng-model="avaliacao.observacoes"
             required="true"
             rows="8"
+            disabled="!avaliacao.autorizaEdicao"
             >
         </tc-input-text>
     </tc-form>
-    
+
 
     <header class="section-header ">
         <h2>Detalhes do cadastro do Ponto/Pontão de Cultura</h2>
@@ -87,7 +94,7 @@
                 <span class="visible-lg-inline-block">Informações do Responsável</span>
                 <span class="visible-md-inline-block visible-sm-inline-block">Responsável</span>
             </uib-tab-heading>
-            
+
             <ng-include src="'modules/Certificacao/templates/TabResponsavel.html'"></ng-include>
             <img src="modules/AppAdmin/img/mock/responsavel.png" style="margin-top: 20px">
         </uib-tab>

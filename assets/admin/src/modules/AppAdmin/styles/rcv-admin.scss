@@ -6,6 +6,10 @@ body {
     overflow-y: scroll;
 }
 
+.h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small{
+    font-size: 70%;
+}
+
 h2 {
     font-weight: 500;
     font-size: 18px;
@@ -170,8 +174,8 @@ h2 {
 }
 
 .block-ui-visible > .block-ui-container > .block-ui-message-container{
-/*    position: fixed;
-    top: 200px;*/
+    /*    position: fixed;
+        top: 200px;*/
 }
 
 .block-ui-overlay {
