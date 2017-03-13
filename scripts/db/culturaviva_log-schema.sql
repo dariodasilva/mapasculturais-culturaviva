@@ -17,11 +17,9 @@ log_spid    Process ID do processo do servidor anexado à sessão atual. (Você 
 ------------------------------------------------------------------------------------------------------------------------
 -- Schema
 ------------------------------------------------------------------------------------------------------------------------
-DROP SCHEMA IF EXISTS culturaviva_log CASCADE;
+-- DROP SCHEMA IF EXISTS culturaviva_log CASCADE;
 
-CREATE SCHEMA culturaviva_log;
-
-ALTER SCHEMA culturaviva_log OWNER TO vagrant;
+CREATE SCHEMA IF NOT EXISTS culturaviva_log;
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -41,7 +39,6 @@ CREATE TABLE culturaviva_log.criterio (
     descricao   TEXT,
     ts_criacao  TIMESTAMP without time zone
 );
-ALTER TABLE culturaviva_log.criterio OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.criterio IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.criterio.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.criterio.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -85,7 +82,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.criterio_fn_tg() RETURNS TRIGGER AS $
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.criterio_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.criterio_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.criterio';
 
 -- trigger
@@ -112,7 +108,6 @@ CREATE TABLE culturaviva_log.inscricao (
     ts_criacao      TIMESTAMP without time zone,
     ts_finalizacao  TIMESTAMP without time zone
 );
-ALTER TABLE culturaviva_log.inscricao OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.inscricao IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.inscricao.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.inscricao.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -156,7 +151,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_fn_tg() RETURNS TRIGGER AS 
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.inscricao_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.inscricao_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.inscricao';
 
 -- trigger
@@ -181,7 +175,6 @@ CREATE TABLE culturaviva_log.inscricao_criterio (
     criterio_id     INTEGER,
     ts_criacao      TIMESTAMP without time zone
 );
-ALTER TABLE culturaviva_log.inscricao_criterio OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.inscricao_criterio IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.inscricao_criterio.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.inscricao_criterio.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -225,7 +218,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_criterio_fn_tg() RETURNS TR
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.inscricao_criterio_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.inscricao_criterio_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.inscricao_criterio';
 
 -- trigger
@@ -254,7 +246,6 @@ CREATE TABLE culturaviva_log.certificador (
     ts_criacao      TIMESTAMP without time zone,
     ts_atualizacao  TIMESTAMP without time zone
 );
-ALTER TABLE culturaviva_log.certificador OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.certificador IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.certificador.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.certificador.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -298,7 +289,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.certificador_fn_tg() RETURNS TRIGGER 
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.certificador_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.certificador_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.certificador';
 
 -- trigger
@@ -328,7 +318,6 @@ CREATE TABLE culturaviva_log.avaliacao (
     ts_criacao      TIMESTAMP without time zone,
     ts_atualizacao  TIMESTAMP without time zone
 );
-ALTER TABLE culturaviva_log.avaliacao OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.avaliacao IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.avaliacao.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.avaliacao.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -372,7 +361,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_fn_tg() RETURNS TRIGGER AS 
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.avaliacao_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.avaliacao_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.avaliacao';
 
 -- trigger
@@ -398,7 +386,6 @@ CREATE TABLE culturaviva_log.avaliacao_criterio (
     criterio_id     INTEGER,
     aprovado        BOOLEAN
 );
-ALTER TABLE culturaviva_log.avaliacao_criterio OWNER TO vagrant;
 COMMENT ON TABLE culturaviva_log.avaliacao_criterio IS 'Log de Auditoria da tabela culturaviva.criterio';
 COMMENT ON COLUMN culturaviva_log.avaliacao_criterio.log_ts       IS 'Data de gravação do registro de auditoria, ou seja, quando a modificação foi realizada na tabela auditada.';
 COMMENT ON COLUMN culturaviva_log.avaliacao_criterio.log_tp       IS 'Tipo da alteração realizada, podendo ser I (INSERT), U (UPDATE) ou D (DELETE).';
@@ -442,7 +429,6 @@ CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() RETURNS TR
         RETURN vRecord;
     END;
 $BODY$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER COST 100;
-ALTER FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() OWNER TO vagrant;
 COMMENT ON FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() IS 'Função para Log de Auditoria da tabela culturaviva.avaliacao_criterio';
 
 -- trigger

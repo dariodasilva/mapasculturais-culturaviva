@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- DROP SCHEMA culturaviva CASCADE;
 
-CREATE SCHEMA culturaviva;
+CREATE SCHEMA IF NOT EXISTS culturaviva;
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -16,7 +16,6 @@ CREATE SEQUENCE  culturaviva.criterio_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE culturaviva.criterio_id_seq OWNER TO vagrant;
 
 CREATE TABLE  IF NOT EXISTS culturaviva.criterio (
     id          INTEGER DEFAULT nextval('culturaviva.criterio_id_seq'::regclass) NOT NULL,
@@ -26,7 +25,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.criterio (
     ts_criacao  TIMESTAMP without time zone DEFAULT now() NOT NULL,
     CONSTRAINT criterio_pk PRIMARY KEY (id)
 );
-ALTER TABLE culturaviva.criterio OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.criterio IS 'Registra os Critérios usados para avaliação de uma Inscrição
 
@@ -50,7 +48,6 @@ CREATE SEQUENCE  culturaviva.inscricao_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE culturaviva.inscricao_id_seq OWNER TO vagrant;
 
 CREATE TABLE  IF NOT EXISTS culturaviva.inscricao (
     id              INTEGER DEFAULT nextval('culturaviva.inscricao_id_seq'::regclass) NOT NULL,
@@ -64,7 +61,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.inscricao (
         REFERENCES agent (id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE culturaviva.inscricao OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.inscricao IS 'Registra as Inscrições originadas pelo cadastro feito pelo Pontão/Ponto de Cultura';
 COMMENT ON COLUMN culturaviva.inscricao.id              IS 'Identificador da Inscrição';
@@ -97,7 +93,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.inscricao_criterio (
         REFERENCES culturaviva.criterio (id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE culturaviva.inscricao_criterio OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.inscricao_criterio IS 'Registra os critérios de avaliação de uma inscrição';
 COMMENT ON COLUMN culturaviva.inscricao_criterio.inscricao_id   IS 'Referencia para a Incrição do Pontao/Ponto de Cultura';
@@ -115,7 +110,6 @@ CREATE SEQUENCE  culturaviva.certificador_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE culturaviva.certificador_id_seq OWNER TO vagrant;
 
 
 CREATE TABLE  IF NOT EXISTS culturaviva.certificador (
@@ -133,7 +127,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.certificador (
         REFERENCES agent (id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE culturaviva.certificador OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.certificador IS 'Registra os Agentes Certificadores do sistema';
 COMMENT ON COLUMN culturaviva.certificador.id               IS 'Identificador do certificador';
@@ -160,7 +153,6 @@ CREATE SEQUENCE  culturaviva.avaliacao_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-ALTER TABLE culturaviva.avaliacao_id_seq OWNER TO vagrant;
 
 CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao (
     id              INTEGER DEFAULT nextval('culturaviva.avaliacao_id_seq'::regclass) NOT NULL,
@@ -181,7 +173,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao (
         REFERENCES culturaviva.certificador (id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE culturaviva.avaliacao OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.avaliacao IS 'Registra as avaliações feitas pelos certificadores sobre as Inscrições';
 COMMENT ON COLUMN culturaviva.avaliacao.id              IS 'Identificador da avaliação';
@@ -244,7 +235,6 @@ CREATE TABLE  IF NOT EXISTS culturaviva.avaliacao_criterio (
         REFERENCES culturaviva.inscricao_criterio (inscricao_id, criterio_id)
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE culturaviva.avaliacao_criterio OWNER TO vagrant;
 
 COMMENT ON TABLE culturaviva.avaliacao_criterio IS 'Registra os valores para os Critérios de uma Inscrição Avaliados por um Certificador';
 COMMENT ON COLUMN culturaviva.avaliacao_criterio.avaliacao_id   IS 'Referencia para a Avaliação da Inscrição';

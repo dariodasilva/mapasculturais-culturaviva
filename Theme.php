@@ -198,7 +198,7 @@ class Theme extends BaseV1\Theme {
     }
 
     protected function _publishAssets() {
-        
+
     }
 
     /**
@@ -273,7 +273,10 @@ class Theme extends BaseV1\Theme {
 
         $metadata = [
             'MapasCulturais\Entities\User' => [
-                'redeCulturaViva' => ['private' => true, 'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição']
+                'redeCulturaViva' => [
+                    //'private' => true,
+                    'label' => 'Id do Agente, Agente Coletivo e Registro da inscrição'
+                ]
             ],
             'MapasCulturais\Entities\Space' => [
                 'En_Bairro' => [
