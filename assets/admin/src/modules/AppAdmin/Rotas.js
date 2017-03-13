@@ -139,7 +139,7 @@ function resolveModule(modulo) {
             if (window.__BUNDLED__MODULES__) {
                 return $ocLazyLoad.load({
                     name: modulo,
-                    files: ['/assets/admin/modules/' + modulo + '/' + modulo + '.bundle.min.js']
+                    files: ['/assets/rcv/admin/modules/' + modulo + '/' + modulo + '.bundle.min.js']
                 });
             } else {
                 var deferred = $q.defer();
