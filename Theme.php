@@ -95,10 +95,9 @@ class Theme extends BaseV1\Theme {
         $this->assetManager->publishAsset('img/certificado.png', 'img/certificado.png');
 
         $app->hook('view.render(site/search):before', function() use($app) {
-
             $ids = $app->controller('agent')->apiQuery([
                 '@select' => 'id',
-                'rcv_tipo' => 'EQ(ponto)'
+                '_rcv_tipo' => 'EQ(ponto)'
             ]);
 
             $ids = implode(
@@ -108,7 +107,7 @@ class Theme extends BaseV1\Theme {
             );
 
             $this->jsObject['searchFilters'] = [
-                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
+                'agent' => ['_rcv_tipo' => 'EQ(ponto)'],
                 'event' => ['owner' => "IN($ids)"]
             ];
         });
