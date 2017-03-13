@@ -24,7 +24,7 @@ function TcInputTextDirective() {
     return {
         restrict: 'E',
         require: ['^form', 'ngModel'],
-        templateUrl: 'modules/TcComponents//templates/TcInputTextDirective.html',
+        templateUrl: 'modules/TcComponents/templates/TcInputTextDirective.html',
         scope: {
             /**
              * Permite a

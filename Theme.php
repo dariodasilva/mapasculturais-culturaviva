@@ -23,9 +23,9 @@ class Theme extends BaseV1\Theme {
         });
 
         // @todo: Remover
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
+//        ini_set('display_errors', 1);
+//        ini_set('display_startup_errors', 1);
+//        error_reporting(E_ALL);
     }
 
     function initUsermeta() {
@@ -134,6 +134,16 @@ class Theme extends BaseV1\Theme {
             $this->transform('avatarBig');
         });
 
+        $app->hook('view.render(admin/<<*>>):before', function() use($app) {
+            if ($this->controller->id === 'admin') {
+                $this->setLayout('clear');
+            }
+        });
+
+
+
+
+
         /** DESABILITANDO ROTAS  * */
         return;
         if (!$app->user->is('admin') && !$app->user->is('guest')) {
@@ -213,17 +223,7 @@ class Theme extends BaseV1\Theme {
     function head() {
         $assetsGroup = null;
         if (in_array($this->controller->id, ['admin'])) {
-            $assetsGroup = 'rcv-admin';
-
-            //
-            $app = App::i();
-            $app->applyHook('mapasculturais.head');
-            $this->printDocumentMeta();
-
-            //
-            $app->applyHook('mapasculturais.styles');
-            $this->_printJsObject();
-            $app->applyHook('mapasculturais.scripts');
+            // faz nada
         } else {
             // Não renderiza os estilos do MapasCulturais na tela de certificação, ele atrapalha toda personalização
             parent::head();

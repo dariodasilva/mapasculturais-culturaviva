@@ -41,6 +41,15 @@ function AvaliacaoListaCtrl($scope, $state, $http, UsuarioSrv) {
 }
 
 function AvaliacaoListaCertificadorDirective() {
+
+    Controller.$inject = ['$scope', 'UsuarioSrv'];
+
+    function Controller($scope, UsuarioSrv) {
+        UsuarioSrv.obterUsuario().then(function (usuario) {
+            $scope.usuario = usuario;
+        });
+    }
+
     /**
      * @directive AppAdmin.directives.certificadorListaTabela
      *
@@ -48,8 +57,12 @@ function AvaliacaoListaCertificadorDirective() {
      */
     return {
         restrict: 'E',
-        templateUrl: 'modules/certificacao/templates/AvaliacaoListaCertificador.html',
+        templateUrl: 'modules/Certificacao/templates/AvaliacaoListaCertificador.html',
         scope: {
+            /**
+             * @description O identificador do certificador
+             */
+            avaliacaoId: '@',
             /**
              * @description O identificador do certificador
              */
@@ -70,12 +83,6 @@ function AvaliacaoListaCertificadorDirective() {
         controller: Controller
     };
 
-    Controller.$inject = ['$scope', 'UsuarioSrv'];
 
-    function Controller($scope, UsuarioSrv) {
-        UsuarioSrv.obterUsuario().then(function (usuario) {
-            $scope.usuario = usuario;
-        });
-    }
 }
 

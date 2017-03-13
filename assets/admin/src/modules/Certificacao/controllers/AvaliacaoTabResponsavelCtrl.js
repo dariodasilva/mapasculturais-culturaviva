@@ -2,15 +2,15 @@
 
 angular
         .module('Certificacao')
-        .controller('AvaliacaoTabResponsibleCtrl', AvaliacaoTabResponsibleCtrl);
+        .controller('AvaliacaoTabResponsavelCtrl', AvaliacaoTabResponsavelCtrl);
 
-AvaliacaoTabResponsibleCtrl.$inject = ['$scope', 'Entity', 'estadosBrasil'];
+AvaliacaoTabResponsavelCtrl.$inject = ['$scope', 'Entity', 'estadosBrasil'];
 
-function AvaliacaoTabResponsibleCtrl($scope, Entity, estadosBrasil) {
+function AvaliacaoTabResponsavelCtrl($scope, Entity, estadosBrasil) {
 
     var params = {
         // Ver AvaliacaoFormularioCtrl.js
-        'id': $scope.agentId,
+        'id': $scope.avaliacao.responsavelId,
         '@select': [
             'id',
             'rcv_tipo',

@@ -31,7 +31,7 @@ function TcInputSearchDirective() {
              */
             onSubmit: '&'
         },
-        templateUrl: 'modules/TcComponents//templates/TcInputSearchDirective.html',
+        templateUrl: 'modules/TcComponents/templates/TcInputSearchDirective.html',
         link: function ($scope, $el, $attrs) {
 
             $scope.inputName = '_tc_input_search_' + $attrs['ngModel'].replace(/[^a-z0-9]/ig, '_') + '_' + (+new Date);

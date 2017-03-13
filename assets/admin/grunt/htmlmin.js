@@ -3,7 +3,8 @@
 module.exports = {
     options: {
         removeComments: true,
-        collapseWhitespace: true
+        collapseWhitespace: true,
+        collapseBooleanAttributes:false
     },
     dist: {
         files: {

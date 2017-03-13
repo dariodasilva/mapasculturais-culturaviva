@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="culturaviva.avaliacao_criterio")
+ * @ORM\entity(repositoryClass="MapasCulturais\Repository")
  */
 class AvaliacaoCriterio extends \MapasCulturais\Entity {
 

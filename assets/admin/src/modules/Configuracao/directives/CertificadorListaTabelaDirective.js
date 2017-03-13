@@ -13,7 +13,7 @@ function CertificadorListaTabelaDirective() {
      */
     return {
         restrict: 'E',
-        templateUrl: 'modules/configuracao/templates/CertificadorListaTabela.html',
+        templateUrl: 'modules/Configuracao/templates/CertificadorListaTabela.html',
         scope: {
             /**
              * @description Lista de certificadores desta tabela

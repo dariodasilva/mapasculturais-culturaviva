@@ -23,5 +23,13 @@ module.exports = {
                 filter: 'isFile'
             }
         ]
+    },
+    dist_index: {
+        files: [
+            {
+                src: '<%= distDir %>/index.html',
+                dest: '<%= distDir %>/../../../views/admin/index.php'
+            }
+        ]
     }
 };

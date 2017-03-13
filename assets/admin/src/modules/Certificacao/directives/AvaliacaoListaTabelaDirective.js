@@ -6,26 +6,6 @@ angular
 
 
 function AvaliacaoListaTabelaDirective() {
-    /**
-     * @directive AppAdmin.directives.certificadorListaTabela
-     *
-     * @description Componente reutilizável para exibir a tabela com os certificadores cadastrados
-     */
-    return {
-        restrict: 'E',
-        templateUrl: 'modules/certificacao/templates/AvaliacaoListaTabela.html',
-        scope: {
-            /**
-             * @description Estado da avaliação, usado no filtro de pesquisa
-             */
-            estado: '@',
-            /**
-             * @description Descrição para o tipo de avaliação
-             */
-            descricao: '@'
-        },
-        controller: Controller
-    };
 
     Controller.$inject = ['$scope', '$http'];
     function Controller($scope, $http) {
@@ -54,4 +34,25 @@ function AvaliacaoListaTabelaDirective() {
 
         $scope.$watch('ref.pagina', $scope.filtrarAvaliacoes);
     }
+
+    /**
+     * @directive AppAdmin.directives.certificadorListaTabela
+     *
+     * @description Componente reutilizável para exibir a tabela com os certificadores cadastrados
+     */
+    return {
+        restrict: 'E',
+        templateUrl: 'modules/Certificacao/templates/AvaliacaoListaTabela.html',
+        scope: {
+            /**
+             * @description Estado da avaliação, usado no filtro de pesquisa
+             */
+            estado: '@',
+            /**
+             * @description Descrição para o tipo de avaliação
+             */
+            descricao: '@'
+        },
+        controller: Controller
+    };
 }

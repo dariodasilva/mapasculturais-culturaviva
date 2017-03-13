@@ -14,6 +14,7 @@ $config['mailer.templates'] = array_merge($config['mailer.templates'],
 );
 
 return [
+    'app.log.apiDql' => true,
     'app.siteName' => 'Rede Cultura Viva',
     'app.siteDescription' => '',
     'rcv.apiCNPJ' => 'http://culturaviva.gov.br/wp-admin/admin-ajax.php',

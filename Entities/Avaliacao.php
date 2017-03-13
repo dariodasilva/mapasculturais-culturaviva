@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="culturaviva.avaliacao")
- * @ORM\entity(repositoryClass="CulturaViva\Repositories\AvaliacaoRepository")
+ * @ORM\entity(repositoryClass="MapasCulturais\Repository")
  */
 class Avaliacao extends \MapasCulturais\Entity {
 
@@ -56,21 +56,11 @@ class Avaliacao extends \MapasCulturais\Entity {
     /**
      * Referencia para a Incrição do Pontao/Ponto de Cultura
      *
-     * @ORM\ManyToOne(targetEntity="CulturaViva\Entities\Inscricao")
-     * @ORM\JoinColumn(name="inscricao_id", referencedColumnName="id")
+     * @ORM\Column(name="inscricao_id", type="integer", nullable=false)
      *
-     * @var \CulturaViva\Entities\Inscricao
+     * @var integer
      */
-    protected $inscricao;
-
-    /**
-     * Os Valores para os Critérios de Avaliação desta Inscrição
-     *
-     * @OneToMany(targetEntity="AvaliacaoCriterio", mappedBy="avaliacaoId", orphanRemoval=true)
-     *
-     * @var \CulturaViva\Entities\AvaliacaoCriterio[] Valores para os Critérios da Avaliação
-     */
-    protected $criterios;
+    protected $inscricaoId;
 
     /**
      * Referência para o Certificador responsável

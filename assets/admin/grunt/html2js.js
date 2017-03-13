@@ -7,12 +7,10 @@ module.exports = {
         singleModule: true,
         existingModule: true,
         htmlmin: {
-            collapseBooleanAttributes: true,
+            collapseBooleanAttributes: false,
             collapseWhitespace: true,
             removeAttributeQuotes: false,
             removeComments: true,
-            removeEmptyAttributes: true,
-            removeRedundantAttributes: true,
             removeScriptTypeAttributes: true,
             removeStyleLinkTypeAttributes: true
         }

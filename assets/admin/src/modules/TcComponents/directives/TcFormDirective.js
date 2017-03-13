@@ -22,12 +22,13 @@ function TcFormDirective($document) {
         scope: {
             name: '@',
             buttons: '=',
+            hideButtons: '=',
             onSubmit: '&',
             onSave: '&',
             onSaveLabel: '@',
             onClear: '&'
         },
-        templateUrl: 'modules/TcComponents//templates/TcFormDirective.html',
+        templateUrl: 'modules/TcComponents/templates/TcFormDirective.html',
         link: function ($scope, $el, $attrs) {
             var formName = $scope.name || 'form';
             $scope.formName = formName;
@@ -46,7 +47,7 @@ function TcFormDirective($document) {
             if (!$attrs.hasOwnProperty('onSubmit')) {
                 $scope.onSubmit = null;
             }
-            
+
             if (!$attrs.hasOwnProperty('buttons')) {
                 $scope.buttons = null;
             }
@@ -135,7 +136,6 @@ function TcFormButton() {
             $scope.submit = function () {
                 parent.submit();
             };
-            console.log($el, parent, ctrl);
         }
     };
 }

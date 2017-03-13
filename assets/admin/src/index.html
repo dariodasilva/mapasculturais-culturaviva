@@ -10,16 +10,20 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
         <title>Rede Cultura Viva</title>
+        <!-- build:template:dist
+            <base href="/admin" />
+        /build -->
 
 
+        <!-- build:css /assets/admin/vendor/styles/vendor.min.css -->
         <!-- concat:css[:dist_vendor_css] vendor/styles/vendor.min.css -->
         <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="vendor/angular-block-ui/dist/angular-block-ui.min.css"/>
         <link rel="stylesheet" href="vendor/patternfly/dist/css/patternfly.min.css"/>
         <link rel="stylesheet" href="vendor/patternfly/dist/css/patternfly-additions.min.css"/>
-        <link rel="stylesheet" href="vendor/angular-patternfly/dist/styles/angular-patternfly.min.css"/>
         <!--vendor/bootstrap-select/bootstrap-select.min.css-->
         <!-- /concat -->
+        <!-- /build -->
 
         <!-- build:remove -->
         <!--All styles are added automatically by the includeSource task-->
@@ -34,8 +38,9 @@
         <![endif]-->
     </head>
     <body>
-        <div ui-view></div>        
+        <div ui-view></div>
 
+        <!-- build:js /assets/admin/vendor/vendor.min.js -->
         <!-- concat:js[:dist_vendor_js] vendor/vendor.min.js -->
         <script src="vendor/jquery/dist/jquery.min.js"></script>
         <script src="vendor/angular/angular.min.js"></script>
@@ -51,8 +56,9 @@
         <script src="vendor/oclazyload/dist/ocLazyLoad.min.js"></script>
         <!--vendor/jquery.bootstrap-touchspin.min.js-->
         <!-- /concat -->
+        <!-- /build -->
 
-        <!-- build:js modules/AppAdmin/AppAdmin.bundle.min.js -->
+        <!-- build:js /assets/admin/modules/AppAdmin/AppAdmin.bundle.min.js -->
         <!--All js are added automatically by the includeSource task-->
         <!-- include: "type": "js", "files": "modules/**/*.js", "ordering": "top-down" -->
         <!-- /build -->

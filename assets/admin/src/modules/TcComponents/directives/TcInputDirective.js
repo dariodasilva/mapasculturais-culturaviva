@@ -24,7 +24,7 @@ function TcInputDirective($http) {
     return {
         restrict: 'E',
         require: ['^form', 'ngModel'],
-        templateUrl: 'modules/TcComponents//templates/TcInputDirective.html',
+        templateUrl: 'modules/TcComponents/templates/TcInputDirective.html',
         scope: {
             /**
              * @description Data bind para variável de escopo

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="culturaviva.inscricao")
+ * @ORM\entity(repositoryClass="MapasCulturais\Repository")
  */
 class Inscricao extends \MapasCulturais\Entity {
 
@@ -91,23 +92,6 @@ class Inscricao extends \MapasCulturais\Entity {
      */
     protected $tsFinalizacao;
 
-    /**
-     * Os Critérios de Avaliação desta Inscrição
-     *
-     * @ManyToMany(targetEntity="\CulturaViva\Entities\Criterio",  fetch="EAGER")
-     * @JoinTable(
-     *      name="inscricao_criterio",
-     *      joinColumns={
-     *          @JoinColumn(name="inscricao_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *          @JoinColumn(name="criterio_id", referencedColumnName="id")
-     *      }
-     * )
-     *
-     * @var \CulturaViva\Entities\Criterio[] Critérios de Avaliação da Inscrição
-     */
-    protected $criterios;
 
     //============================================================= //
     // The following lines ara used by MapasCulturais hook system.

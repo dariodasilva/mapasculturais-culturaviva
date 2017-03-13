@@ -285,6 +285,9 @@ class Cadastro extends \MapasCulturais\Controller{
 
         $app = App::i();
 
+//        var_dump($app->user);
+//        exit(0);
+
         if(!$app->user->redeCulturaViva){
             $app->redirect($app->createUrl('rede', 'entrada'), 307);
         }

@@ -46,7 +46,8 @@
 
                                                 <avaliacao-lista-certificador
                                                     certificador-tipo="Poder Publico"
-                                                    certificador-id="{{inscricao.avaliacaoPublicaId}}"
+                                                    avaliacao-id="{{inscricao.avaliacaoPublicaId}}"
+                                                    certificador-id="{{inscricao.avaliacaoPublicaCertificadorId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoPublicaEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoPublicaCertificador}}"
                                                     >
@@ -55,7 +56,8 @@
                                                 <avaliacao-lista-certificador
                                                     ng-if="inscricao.avaliacaoCivilId"
                                                     certificador-tipo="Sociedade Civil"
-                                                    certificador-id="{{inscricao.avaliacaoCivilId}}"
+                                                    avaliacao-id="{{inscricao.avaliacaoCivilId}}"
+                                                    certificador-id="{{inscricao.avaliacaoCivilCertificadorId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoCivilEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoCivilCertificador}}"
                                                     >
@@ -64,7 +66,8 @@
                                                 <avaliacao-lista-certificador
                                                     ng-if="inscricao.avaliacaoMinervaId"
                                                     certificador-tipo="Voto de Minerva"
-                                                    certificador-id="{{inscricao.avaliacaoMinervaId}}"
+                                                    avaliacao-id="{{inscricao.avaliacaoMinervaId}}"
+                                                    certificador-id="{{inscricao.avaliacaoMinervaCertificadorId}}"
                                                     estado-avaliacao="{{inscricao.avaliacaoMinervaEstado}}"
                                                     certificador-nome="{{inscricao.avaliacaoMinervaCertificador}}"
                                                     >

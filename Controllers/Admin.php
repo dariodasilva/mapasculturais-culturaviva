@@ -36,6 +36,7 @@ class Admin extends \MapasCulturais\Controller {
 
         $this->json([
             'id' => $usuario->id,
+            'agentId' => $usuario->profile->id,
             'name' => $usuario->profile ? $usuario->profile->name : null,
             'roles' => $roles
         ]);

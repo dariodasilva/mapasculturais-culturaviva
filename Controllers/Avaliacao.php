@@ -2,6 +2,8 @@
 
 namespace CulturaViva\Controllers;
 
+use CulturaViva\Entities\Avaliacao as AvaliacaoEntity;
+use CulturaViva\Entities\AvaliacaoCriterio as AvaliacaoCriterioEntity;
 use CulturaViva\Util\NativeQueryUtil;
 use MapasCulturais\App;
 
@@ -108,12 +110,15 @@ class Avaliacao extends \MapasCulturais\Controller {
                 avl_c.id                AS avaliacao_civil_id,
                 avl_c.estado            AS avaliacao_civil_estado,
                 avl_c.certificador_nome AS avaliacao_civil_certificador,
+                avl_c.agente_id         AS avaliacao_civil_certificador_id,
                 avl_p.id                AS avaliacao_publica_id,
                 avl_p.estado            AS avaliacao_publica_estado,
                 avl_p.certificador_nome AS avaliacao_publica_certificador,
+                avl_p.agente_id         AS avaliacao_publica_certificador_id,
                 avl_m.id                AS avaliacao_minerva_id,
                 avl_m.estado            AS avaliacao_minerva_estado,
-                avl_m.certificador_nome AS avaliacao_minerva_certificador
+                avl_m.certificador_nome AS avaliacao_minerva_certificador,
+                avl_m.agente_id         AS avaliacao_minerva_certificador_id
             FROM culturaviva.inscricao insc
             JOIN registration reg
                 on reg.agent_id = insc.agente_id
@@ -141,7 +146,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 ON insc.id = avl_m.inscricao_id
                 AND avl_m.certificador_tipo = 'm'
             WHERE insc.estado <> 'C'
-            AND (:agenteId = 0 OR COALESCE(avl_c.agente_id, avl_p.agente_id, avl_m.agente_id, 0) = :agenteId)
+            AND (:agenteId = 0 OR avl_c.agente_id = :agenteId OR avl_p.agente_id = :agenteId OR avl_m.agente_id = :agenteId)
             AND (:estado = '' OR :estado = ANY(ARRAY[avl_c.estado,avl_p.estado, avl_m.estado]))
             AND (
                 :nome = ''
@@ -162,12 +167,15 @@ class Avaliacao extends \MapasCulturais\Controller {
             'avaliacao_civil_id',
             'avaliacao_civil_estado',
             'avaliacao_civil_certificador',
+            'avaliacao_civil_certificador_id',
             'avaliacao_publica_id',
             'avaliacao_publica_estado',
             'avaliacao_publica_certificador',
+            'avaliacao_publica_certificador_id',
             'avaliacao_minerva_id',
             'avaliacao_minerva_estado',
-            'avaliacao_minerva_certificador'
+            'avaliacao_minerva_certificador',
+            'avaliacao_minerva_certificador_id',
         ];
 
         $parametros = [
@@ -198,20 +206,24 @@ class Avaliacao extends \MapasCulturais\Controller {
         $sql = "
             SELECT
                 avl.*,
-                cert.agente_id,
+                cert.agente_id      AS certificador_agente_id,
                 (cert.agente_id = :agenteId) AS autoriza_edicao,
                 cert.tipo           AS certificador_tipo,
-                agt.name            AS certificador_nome,
+                certificador.name   AS certificador_nome,
                 insc.estado         AS inscricao_estado,
                 insc.ts_criacao     AS inscricao_ts_criacao,
                 insc.ts_finalizacao AS inscricao_ts_finalizacao,
+                insc.agente_id      AS responsavel_id,
+                entidade.id         AS entidade_id,
+                entidade.name       AS entidade_nome,
+                ponto.id            AS ponto_id,
                 ponto.name          AS ponto_nome,
                 tp.value            AS ponto_cultura_desejado,
                 dsc.value           AS ponto_descricao
             FROM culturaviva.avaliacao avl
             JOIN culturaviva.certificador cert
                 ON cert.id = avl.certificador_id
-            JOIN agent agt ON agt.id = cert.agente_id
+            JOIN agent certificador ON certificador.id = cert.agente_id
             JOIN culturaviva.inscricao insc
                 ON insc.id = avl.inscricao_id
             JOIN registration reg
@@ -226,12 +238,13 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND rel_ponto.type = 'ponto'
                 AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
             JOIN agent ponto ON ponto.id = rel_ponto.agent_id
+            JOIN agent entidade ON entidade.id = rel_entidade.agent_id
             JOIN agent_meta tp
                 ON tp.key = 'tipoPontoCulturaDesejado'
-                AND tp.object_id = rel_entidade.agent_id
+                AND tp.object_id = entidade.id
             LEFT JOIN agent_meta dsc
                 ON dsc.key = 'shortDescription'
-                AND tp.object_id = ponto.user_id
+                AND dsc.object_id = ponto.id
             WHERE insc.estado <> 'C'
             AND avl.id = :id
             AND (:agenteId = 0 OR cert.agente_id = :agenteId)";
@@ -250,12 +263,16 @@ class Avaliacao extends \MapasCulturais\Controller {
             'ts_finalizacao',
             'ts_criacao',
             'ts_atualizacao',
-            'agente_id',
+            'certificador_agente_id',
             'certificador_tipo',
             'certificador_nome',
             'inscricao_estado',
             'inscricao_ts_criacao',
             'inscricao_ts_finalizacao',
+            'responsavel_id',
+            'entidade_id',
+            'entidade_nome',
+            'ponto_id',
             'ponto_nome',
             'ponto_cultura_desejado',
             'ponto_descricao',
@@ -268,6 +285,77 @@ class Avaliacao extends \MapasCulturais\Controller {
         }
 
         $this->json($out);
+    }
+
+    /**
+     * Permite salvar avaliações
+     *
+     * Somente usuários com perfil AGENTE DA AREA pode fazer alterações nos certificadores
+     *
+     * @see CulturaViva\Entities\Certifier
+     */
+    function POST_salvar() {
+        $this->requireAuthentication();
+        $app = App::i();
+
+        $data = json_decode($app->request()->getBody());
+
+        $avaliacao = App::i()->repo('\CulturaViva\Entities\Avaliacao')->find($data->id);
+        if (!isset($avaliacao) || empty($avaliacao)) {
+            return $this->json([ "message" => 'Avaliação não encontrada'], 400);
+        }
+
+        // Validação de consistencia
+        $estadosPermiteEdicao = [AvaliacaoEntity::ST_PENDENTE, AvaliacaoEntity::ST_EM_ANALISE];
+        if (!in_array($avaliacao->estado, $estadosPermiteEdicao)) {
+            return $this->json([ "message" => 'O estado da avaliação não permite alterações'], 400);
+        }
+
+        // Atualiza avaliação
+        $avaliacao->tsAtualizacao = date('Y-m-d H:i:s');
+        $avaliacao->estado = AvaliacaoEntity::ST_EM_ANALISE;
+        if (isset($data->observacoes) && !empty($data->observacoes)) {
+            $avaliacao->observacoes = $data->observacoes;
+        }
+
+        $aPersistir = array();
+        if (isset($data->criterios) && !empty($data->criterios)) {
+            foreach ($data->criterios as $criterio) {
+                // Salva detalhes do certificador
+                $criterioEntity = null;
+                if (isset($data->id)) {
+                    $criterioEntity = App::i()
+                            ->repo('\CulturaViva\Entities\AvaliacaoCriterio')
+                            ->find([
+                                'criterioId' => $criterio->id,
+                                'avaliacaoId' => $avaliacao->id,
+                                'inscricaoId' => $avaliacao->inscricaoId,
+                            ]);
+                }
+
+                if (!$criterioEntity) {
+                    $criterioEntity = new AvaliacaoCriterioEntity();
+                    $criterioEntity->criterioId = $criterio->id;
+                    $criterioEntity->avaliacaoId = $avaliacao->id;
+                    $criterioEntity->inscricaoId = $avaliacao->inscricaoId;
+                }
+
+                // Permite alterar apenas status e grupo do certificador
+                $criterioEntity->aprovado = $criterio->aprovado ? 't' : 'f';
+                array_push($aPersistir, $criterioEntity);
+            }
+        }
+
+
+        $app->getEm()->transactional(function ($em) use ($aPersistir, $avaliacao) {
+             // Salva os itens
+            foreach ($aPersistir as $entity) {
+                $em->persist($entity);
+            }
+            $em->persist($avaliacao);
+        });
+
+        $this->json(null);
     }
 
     /**
@@ -291,6 +379,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             LEFT JOIN culturaviva.avaliacao_criterio avct
                 ON avct.avaliacao_id = avl.id
                 AND avct.inscricao_id = avl.inscricao_id
+                AND avct.criterio_id = insct.criterio_id
             WHERE avl.id = :avaliacao";
 
         $parametros = ['avaliacao' => $avaliacaoId];
