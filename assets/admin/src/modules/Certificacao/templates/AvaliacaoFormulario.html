@@ -49,7 +49,7 @@
 
         <div class="clearfix" ng-repeat="criterio in avaliacao.criterios | orderBy:'ordem'">
             <tc-input-text
-                label="{{$index}}º Critério"
+                label="{{$index+1}}º Critério"
                 ng-model="criterio.descricao"            
                 disabled="true"
                 rows="5"
@@ -57,12 +57,13 @@
             </tc-input-text>
             <tc-select
                 ng-model="criterio.aprovado"
-                label="O cadastro do Ponto/Pontão de Cultura atende ao 1° Critério"
+                label="O cadastro do Ponto/Pontão de Cultura atende ao {{$index+1}}° Critério"
                 col-input="2"
                 field="label"
                 options="simNao"
                 >
             </tc-select>
+            <div class="clearfix"></div>
             <hr/>
         </div>
 
@@ -89,7 +90,6 @@
             </uib-tab-heading>
             
             <ng-include src="'modules/Certificacao/templates/TabResponsavel.html'"></ng-include>
-            <img src="modules/AppAdmin/img/mock/responsavel.png" style="margin-top: 20px">
         </uib-tab>
 
         <uib-tab select="ref_active = 1">

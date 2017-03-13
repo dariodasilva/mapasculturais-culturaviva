@@ -101,6 +101,36 @@ INSERT INTO user_meta(id, object_id, key, value)
 INSERT INTO culturaviva.inscricao(agente_id, estado)
     VALUES ((SELECT id FROM agent WHERE name = 'PontoCultura@local'), 'P');
 
+-- Atribuição de critérios das inscrições
+INSERT INTO culturaviva.inscricao_criterio(inscricao_id, criterio_id)    
+    SELECT
+        i.id,
+        c.id 
+    FROM culturaviva.inscricao i
+    JOIN culturaviva.criterio  c
+        ON c.ativo = true
+    LEFT JOIN culturaviva.inscricao_criterio ic
+        ON ic.inscricao_id = i.id
+        AND ic.criterio_id = c.id
+    WHERE ic.inscricao_id IS NULL
+    ;
+
+-- Atribuição de critérios das avaliações
+INSERT INTO culturaviva.avaliacao_criterio(inscricao_id, avaliacao_id, criterio_id)    
+    SELECT
+        ic.inscricao_id,
+        a.id,
+        ic.criterio_id
+    FROM culturaviva.inscricao_criterio ic
+    JOIN culturaviva.avaliacao a 
+        ON a.inscricao_id = ic.inscricao_id
+    LEFT JOIN culturaviva.avaliacao_criterio ac
+        ON ac.inscricao_id = ic.inscricao_id
+        AND ac.criterio_id = ic.criterio_id
+        AND ac.avaliacao_id = a.id
+    WHERE ac.inscricao_id IS NULL;
+
+
 -- Atribui avaliação para agente certificador (registrar pela interface)
 INSERT INTO culturaviva.avaliacao(inscricao_id, certificador_id, estado)
     VALUES (

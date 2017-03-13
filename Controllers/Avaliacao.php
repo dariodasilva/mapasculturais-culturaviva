@@ -129,7 +129,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 OR unaccent(lower(avl_m.certificador_nome)) LIKE unaccent(lower(:nome))
             )";
 
-        
+
         $campos = [
             'id',
             'estado',
@@ -238,6 +238,34 @@ class Avaliacao extends \MapasCulturais\Controller {
     }
 
     /**
+     * Permite salvar avaliações
+     *
+     * Somente usuários com perfil AGENTE DA AREA pode fazer alterações nos certificadores
+     *
+     * @see CulturaViva\Entities\Certifier
+     */
+    function POST_salvar() {
+        $this->requireAuthentication();
+        $app = App::i();
+
+        $data = json_decode($app->request()->getBody());
+
+        // Verifica se já existe cadastro do mesmo agente como certificador do mesmo tipo
+        $criteriosAvaliacao = App::i()->repo('\CulturaViva\Entities\AvaliacaoCriterio')->findBy([
+            'avaliacaoId' => $data.id
+        ]);
+        if ($criteriosAvaliacao) {
+            foreach ($criteriosAvaliacao as $criterioAvaliacao) {
+                $criterioAvaliacao->tsAtualizacao = date('Y-m-d H:i:s');
+                
+                $criterioAvaliacao->save();
+            }
+        }
+
+        $app->em->flush();
+    }
+
+    /**
      * Obtém todos os critérios de uma avaliação
      * 
      * @param type $avaliacaoId
@@ -251,14 +279,13 @@ class Avaliacao extends \MapasCulturais\Controller {
                 crtr.descricao,
                 avct.aprovado   
             FROM culturaviva.avaliacao avl
-            JOIN culturaviva.avaliacao_criterio avct
-                ON avct.avaliacao_id = avl.id
-                AND avct.inscricao_id = avl.inscricao_id
             JOIN culturaviva.inscricao_criterio insct
-                ON insct.criterio_id = avct.criterio_id
-                AND insct.inscricao_id = avct.inscricao_id
+                ON insct.inscricao_id = avl.inscricao_id
             JOIN culturaviva.criterio crtr 
                 ON crtr.id = insct.criterio_id
+            LEFT JOIN culturaviva.avaliacao_criterio avct
+                ON avct.avaliacao_id = avl.id
+                AND avct.inscricao_id = avl.inscricao_id            
             WHERE avl.id = :avaliacao";
 
         $parametros = ['avaliacao' => $avaliacaoId];

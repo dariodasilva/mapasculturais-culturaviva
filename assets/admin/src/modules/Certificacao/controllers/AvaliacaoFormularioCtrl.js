@@ -39,10 +39,10 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
     var codigo = $state.params.id;
 
     $http.get('/avaliacao/obter/' + codigo).then(function (response) {
-        console.log(response);
+        console.log(response.data);
         var data = response.data;
         $scope.avaliacao = data;
-        
+
         // Usado pelos controllers filhos
         $scope.agentId = data.agenteId;
 
@@ -79,18 +79,74 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
         {valor: false, label: 'Não'}
     ];
 
+    var botao = {
+        title: '...',
+        disabled: true,
+        click: function () {
+            $scope.criterios.push({
+                ordem: $scope.criterios.length + 100,
+                descricao: ''
+            });
+        }
+    };
+
+//    setTimeout(function () {
+//        botao.title = "lba";
+//        $scope.$digest();
+//    }, 2000);
     $scope.botoes = [
         // Botões adicionais para o formulário
-        {
-            title: 'Finalizar Avaliação',
-            disabled: true,
-            click: function () {
-                $scope.criterios.push({
-                    ordem: $scope.criterios.length + 100,
-                    descricao: ''
-                });
-            }
-        }
+        botao
     ];
+
+
+    $scope.permiteDeferir = false;
+    $scope.permiteIndeferir = false;
+
+    $scope.$watch('avaliacao.criterios', function (old, nue) {
+        if (old === nue) {
+            return;
+        }
+
+        $scope.permiteDeferir = true;
+        $scope.permiteIndeferir = false;
+        var botaoBloqueado = false;
+
+        for (var a = 0, l = $scope.avaliacao.criterios.length; a < l; a++) {
+            var criterio = $scope.avaliacao.criterios[a];
+            if (criterio.aprovado === undefined || criterio.aprovado === null) {
+                botaoBloqueado = true;
+                break;
+            }
+
+            if (criterio.aprovado.valor === true && $scope.permiteIndeferir) {
+                $scope.permiteDeferir = false;
+            } else if (criterio.aprovado.valor === false) {
+                $scope.permiteIndeferir = true;
+                $scope.permiteDeferir = false;
+            }
+            console.log(criterio.aprovado);
+        }
+
+        botao.disabled = botaoBloqueado;
+        if (botaoBloqueado) {
+            botao.title = "...";
+            botao.class = "btn-default";
+        } else if ($scope.permiteDeferir) {
+            botao.title = "Deferir";
+            botao.disabled = botaoBloqueado;
+            botao.class = "btn-success";
+        } else if ($scope.permiteIndeferir) {
+            botao.title = "Indeferir";
+            botao.class = "btn-danger";
+        }
+
+        // criterio.aprovado
+        // criterio.aprovado
+    }, true);
+    
+    $scope.salvar = function(){
+        
+    }
 }
 
