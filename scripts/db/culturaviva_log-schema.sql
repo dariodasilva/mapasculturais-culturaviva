@@ -49,7 +49,7 @@ COMMENT ON COLUMN culturaviva_log.criterio.log_spid     IS 'Process ID do proces
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -118,7 +118,7 @@ COMMENT ON COLUMN culturaviva_log.inscricao.log_spid     IS 'Process ID do proce
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -185,7 +185,7 @@ COMMENT ON COLUMN culturaviva_log.inscricao_criterio.log_spid     IS 'Process ID
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -256,7 +256,7 @@ COMMENT ON COLUMN culturaviva_log.certificador.log_spid     IS 'Process ID do pr
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.certificador_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -328,7 +328,7 @@ COMMENT ON COLUMN culturaviva_log.avaliacao.log_spid     IS 'Process ID do proce
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -396,7 +396,7 @@ COMMENT ON COLUMN culturaviva_log.avaliacao_criterio.log_spid     IS 'Process ID
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(15);
+        vlog_client VARCHAR(21);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
