@@ -2,16 +2,40 @@
     <div class="card-pf-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                    <tc-input-search
-                        on-submit="filtrar(ref.filtrarTexto)"
-                        ng-model="ref.filtrarTexto"
-                        placeholder="Filtrar registros"
+                <div class="row" ng-form>                    
+                    <tc-input
+                        ng-model="ref.filtrarTexto"                            
+                        label="Nome"
+                        col="4"
                         >
-                    </tc-input-search>
+                    </tc-input>
+
+                    <tc-select
+                        ng-model="ref.filtrarUf"
+                        label="UF Entidade"
+                        col="4"
+                        field="label"
+                        options="estadosBrasil"
+                        >
+                    </tc-select>
+
+                    <tc-input
+                        ng-model="ref.filtrarMunicipio"                            
+                        label="Município Entidade"
+                        col="4"
+                        >
+                    </tc-input>
+                    
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-primary" ng-click="filtrar()" type="button">
+                            Filtrar
+                        </button>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <hr/>
 
                     <div class="col-md-12">
-                        <br />
                         <tc-notitication id="bag-filtro-agentes"></tc-notitication>
 
                         <div ng-if="ref.data.total > 0" style="margin-top: 20px;">

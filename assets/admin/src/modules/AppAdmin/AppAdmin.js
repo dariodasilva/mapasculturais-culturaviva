@@ -27,7 +27,7 @@ function AppAdminConfig(blockUIConfig) {
      * BlockUI
      *----------------------------------------------------------------------------------------*/
     blockUIConfig.message = 'Carregando...';
-    blockUIConfig.delay = 20;
+    blockUIConfig.delay = 100;
     blockUIConfig.autoInjectBodyBlock = false;
     blockUIConfig.template = [
         '<div class="block-ui-overlay"></div>',
@@ -64,6 +64,12 @@ function AppAdminRun($q, $rootScope, $state, $document, UsuarioSrv) {
     $rootScope.$on('$stateChangeSuccess', function () {
         // Ao mudar de state, rola para o topo da página
         $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
+    });
+
+    $rootScope.$on('scrollToTop', function () {
+        setTimeout(function () {
+            $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
+        });
     });
 
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {

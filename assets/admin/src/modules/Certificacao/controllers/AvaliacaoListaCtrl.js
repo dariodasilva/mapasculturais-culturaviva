@@ -16,7 +16,6 @@ AvaliacaoListaCtrl.$inject = ['$scope', '$state', '$http', 'UsuarioSrv'];
  * @returns {undefined}
  */
 function AvaliacaoListaCtrl($scope, $state, $http, UsuarioSrv) {
-    console.log('$scope', $scope);
 
     // Configuração da página
     $scope.pagina.titulo = 'Avaliações';

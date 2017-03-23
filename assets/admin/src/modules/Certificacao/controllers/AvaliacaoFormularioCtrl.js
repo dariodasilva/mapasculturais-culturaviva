@@ -187,6 +187,8 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
             estado: estado
         }).then(function (response) {
             $scope.$emit('msgNextState', 'Dados da avaliação salvo com sucesso', null, 'success');
+            //$scope.$emit('scrollToTop');
+            $state.reload();
         }, function (response) {
             var msg = 'Erro inesperado salvar dados';
             if (response.data && response.data.message) {

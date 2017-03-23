@@ -130,6 +130,12 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND rel_ponto.type = 'ponto'
                 AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
             JOIN agent entidade ON entidade.id = rel_entidade.agent_id
+            JOIN agent_meta ent_meta_uf 
+                ON  ent_meta_uf.object_id = entidade.id
+                AND ent_meta_uf.key = 'geoEstado'
+            JOIN agent_meta ent_meta_municipio
+                ON  ent_meta_municipio.object_id = entidade.id
+                AND ent_meta_municipio.key = 'geoMunicipio'
             JOIN agent ponto ON ponto.id = rel_ponto.agent_id
             JOIN agent_meta tp
                 ON tp.key = 'tipoPontoCulturaDesejado'
@@ -145,7 +151,11 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND avl_m.certificador_tipo = 'm'
             WHERE insc.estado <> 'C'
             AND (:agenteId = 0 OR avl_c.agente_id = :agenteId OR avl_p.agente_id = :agenteId OR avl_m.agente_id = :agenteId)
-            AND (:estado = '' OR :estado = ANY(ARRAY[avl_c.estado,avl_p.estado, avl_m.estado]))
+            AND (
+                :estado = '' 
+                OR :estado = ANY(ARRAY[avl_c.estado, avl_p.estado, avl_m.estado])
+                OR (:estado = 'F' AND (ARRAY['D', 'I']::varchar[] && ARRAY[avl_c.estado, avl_p.estado, avl_m.estado]::varchar[]))
+            )
             AND (
                 :nome = ''
                 OR unaccent(lower(ponto.name)) LIKE unaccent(lower(:nome))
@@ -153,7 +163,11 @@ class Avaliacao extends \MapasCulturais\Controller {
                 OR unaccent(lower(avl_c.certificador_nome)) LIKE unaccent(lower(:nome))
                 OR unaccent(lower(avl_p.certificador_nome)) LIKE unaccent(lower(:nome))
                 OR unaccent(lower(avl_m.certificador_nome)) LIKE unaccent(lower(:nome))
-            )";
+            )
+            AND (:uf = '' OR ent_meta_uf.value = :uf)
+            AND (:municipio = '' 
+                OR unaccent(lower(ent_meta_municipio.value)) LIKE unaccent(lower(:municipio)))
+            ";
 
 
         $campos = [
@@ -179,7 +193,9 @@ class Avaliacao extends \MapasCulturais\Controller {
         $parametros = [
             'agenteId' => $agenteId,
             'estado' => isset($this->data['estado']) ? $this->data['estado'] : '',
-            'nome' => isset($this->data['nome']) ? "%{$this->data['nome']}%" : ''
+            'nome' => isset($this->data['nome']) ? "%{$this->data['nome']}%" : '',
+            'uf' => isset($this->data['uf']) ? $this->data['uf'] : '',
+            'municipio' => isset($this->data['municipio']) ? "%{$this->data['municipio']}%" : ''
         ];
 
         $pagina = isset($this->data['pagina']) ? intval($this->data['pagina']) : 1;
@@ -299,13 +315,13 @@ class Avaliacao extends \MapasCulturais\Controller {
 
         $avaliacao = App::i()->repo('\CulturaViva\Entities\Avaliacao')->find($data->id);
         if (!isset($avaliacao) || empty($avaliacao)) {
-            return $this->json([ "message" => 'Avaliação não encontrada'], 400);
+            return $this->json(["message" => 'Avaliação não encontrada'], 400);
         }
 
         // Validação de consistencia
         $estadosPermiteEdicao = [AvaliacaoEntity::ST_PENDENTE, AvaliacaoEntity::ST_EM_ANALISE];
         if (!in_array($avaliacao->estado, $estadosPermiteEdicao)) {
-            return $this->json([ "message" => 'O estado da avaliação não permite alterações'], 400);
+            return $this->json(["message" => 'O estado da avaliação não permite alterações'], 400);
         }
 
         // Atualiza avaliação
