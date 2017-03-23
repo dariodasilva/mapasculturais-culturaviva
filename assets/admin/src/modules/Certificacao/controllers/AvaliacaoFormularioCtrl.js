@@ -16,6 +16,16 @@ AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http'];
  */
 function AvaliacaoFormularioCtrl($scope, $state, $http) {
 
+    /**
+     * Indica que o Certificador finalizou a análise da Inscrição como DEFERIDO
+     */
+    var ST_DEFERIDO = 'D';
+
+    /**
+     * Indica que o Certificador finalizou a análise da Inscrição como INDEFERIDO
+     */
+    var ST_INDEFERIDO = 'I';
+
     // Configuração da página
     $scope.pagina.titulo = 'Avaliação do Ponto/Pontão de Cultura';
     $scope.pagina.subTitulo = '';
@@ -66,9 +76,9 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
         }[data.inscricaoEstado];
 
         angular.forEach($scope.avaliacao.criterios, function (criterio) {
-            if(criterio.aprovado){
+            if (criterio.aprovado) {
                 criterio.aprovado = $scope.simNao[0];
-            }else{
+            } else {
                 criterio.aprovado = $scope.simNao[1];
             }
         })
@@ -82,14 +92,11 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
     });
 
 
-    var botao = {
+    var botaoDeferirIndeferir = {
         title: '...',
         disabled: true,
         click: function () {
-            $scope.criterios.push({
-                ordem: $scope.criterios.length + 100,
-                descricao: ''
-            });
+            salvar(botaoDeferirIndeferir.estadoAcao);
         }
     };
 
@@ -99,7 +106,7 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
 //    }, 2000);
     $scope.botoes = [
         // Botões adicionais para o formulário
-        botao
+        botaoDeferirIndeferir
     ];
 
 
@@ -131,25 +138,35 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
             console.log(criterio.aprovado);
         }
 
-        botao.disabled = botaoBloqueado;
+        botaoDeferirIndeferir.disabled = botaoBloqueado;
         if (botaoBloqueado) {
-            botao.title = "...";
-            botao.class = "btn-default";
+            botaoDeferirIndeferir.title = "...";
+            botaoDeferirIndeferir.class = "btn-default";
         } else if ($scope.permiteDeferir) {
-            botao.title = "Deferir";
-            botao.disabled = botaoBloqueado;
-            botao.class = "btn-success";
+            botaoDeferirIndeferir.title = "Deferir";
+            botaoDeferirIndeferir.disabled = botaoBloqueado;
+            botaoDeferirIndeferir.estadoAcao = ST_DEFERIDO;
+            botaoDeferirIndeferir.class = "btn-success";
         } else if ($scope.permiteIndeferir) {
-            botao.title = "Indeferir";
-            botao.class = "btn-danger";
+            botaoDeferirIndeferir.title = "Indeferir";
+            botaoDeferirIndeferir.class = "btn-danger";
+            botaoDeferirIndeferir.estadoAcao = ST_INDEFERIDO;
         }
 
-        botao.disabled = true;
         // criterio.aprovado
         // criterio.aprovado
     }, true);
 
-    $scope.salvar = function () {
+    $scope.salvar = function (estado) {
+        salvar();
+    };
+
+    /**
+     *
+     * @param {type} estado
+     * @returns {undefined}
+     */
+    function salvar(estado) {
         var criterios = [];
         for (var a = 0, l = $scope.avaliacao.criterios.length; a < l; a++) {
             var criterio = $scope.avaliacao.criterios[a];
@@ -166,7 +183,8 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
         $http.post('/avaliacao/salvar', {
             id: $scope.avaliacao.id,
             observacoes: $scope.avaliacao.observacoes,
-            criterios: criterios
+            criterios: criterios,
+            estado: estado
         }).then(function (response) {
             $scope.$emit('msgNextState', 'Dados da avaliação salvo com sucesso', null, 'success');
         }, function (response) {
@@ -176,6 +194,6 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
             }
             $scope.$emit('msg', msg, null, 'error', 'formulario');
         });
-    };
+    }
 }
 

@@ -9,8 +9,8 @@ module.exports = {
         proxies: [
             {
                 context: '/',
-                host: 'localhost',
-                port: 8000
+                host: 'local.culturaviva.gov.br',
+                port: 80
             }
         ],
         apimock: {

@@ -92,9 +92,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                     cert.tipo AS certificador_tipo,
                     cert.agente_id,
                     agt.name AS certificador_nome,
-                    CASE
-                        WHEN avl.estado = ANY(ARRAY['D','I']) THEN 'F' ELSE estado
-                    END AS estado
+                    avl.estado
                 FROM culturaviva.avaliacao avl
                 JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
                 JOIN agent agt ON agt.id = cert.agente_id
@@ -207,7 +205,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             SELECT
                 avl.*,
                 cert.agente_id      AS certificador_agente_id,
-                (cert.agente_id = :agenteId) AS autoriza_edicao,
+                (cert.agente_id = :agenteId AND avl.estado = ANY(ARRAY['P','A'])) AS autoriza_edicao,
                 cert.tipo           AS certificador_tipo,
                 certificador.name   AS certificador_nome,
                 insc.estado         AS inscricao_estado,
@@ -246,8 +244,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 ON dsc.key = 'shortDescription'
                 AND dsc.object_id = ponto.id
             WHERE insc.estado <> 'C'
-            AND avl.id = :id
-            AND (:agenteId = 0 OR cert.agente_id = :agenteId)";
+            AND avl.id = :id";
 
         $parametros = [
             'id' => $avaliacaoId,
@@ -313,7 +310,7 @@ class Avaliacao extends \MapasCulturais\Controller {
 
         // Atualiza avaliação
         $avaliacao->tsAtualizacao = date('Y-m-d H:i:s');
-        $avaliacao->estado = AvaliacaoEntity::ST_EM_ANALISE;
+        $avaliacao->estado = isset($data->estado) ? $data->estado : AvaliacaoEntity::ST_EM_ANALISE;
         if (isset($data->observacoes) && !empty($data->observacoes)) {
             $avaliacao->observacoes = $data->observacoes;
         }
@@ -327,10 +324,10 @@ class Avaliacao extends \MapasCulturais\Controller {
                     $criterioEntity = App::i()
                             ->repo('\CulturaViva\Entities\AvaliacaoCriterio')
                             ->find([
-                                'criterioId' => $criterio->id,
-                                'avaliacaoId' => $avaliacao->id,
-                                'inscricaoId' => $avaliacao->inscricaoId,
-                            ]);
+                        'criterioId' => $criterio->id,
+                        'avaliacaoId' => $avaliacao->id,
+                        'inscricaoId' => $avaliacao->inscricaoId,
+                    ]);
                 }
 
                 if (!$criterioEntity) {
@@ -348,7 +345,7 @@ class Avaliacao extends \MapasCulturais\Controller {
 
 
         $app->getEm()->transactional(function ($em) use ($aPersistir, $avaliacao) {
-             // Salva os itens
+            // Salva os itens
             foreach ($aPersistir as $entity) {
                 $em->persist($entity);
             }

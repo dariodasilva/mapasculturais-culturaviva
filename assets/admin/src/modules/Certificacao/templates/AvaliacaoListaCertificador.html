@@ -1,7 +1,6 @@
 <div>
     <a
         class="list-group-item"
-        ng-if="certificadorId == usuario.agentId || usuario.roles.indexOf('rcv_agente_area') >= 0"
         ui-sref="pagina.certificacao.formulario({id:avaliacaoId})"
         title="Avaliação {{({'P':'Pendente', 'A': 'Em Análise', 'D':'Deferido','I':'Indeferido'}[estadoAvaliacao])}}"
         >
@@ -24,28 +23,4 @@
             </div>
         </div>
     </a>
-    <div
-        class="list-group-item"
-        ng-if="certificadorId != usuario.agentId && usuario.roles.indexOf('rcv_agente_area') < 0"
-        title="Avaliação {{({'P':'Pendente', 'A': 'Em Análise', 'D':'Deferido','I':'Indeferido'}[estadoAvaliacao])}}"
-        >
-        <div class="list-view-pf-main-info" style="padding: 0;">
-            <div class="list-view-pf-left">
-                <span ng-show="estadoAvaliacao == 'P'" class="pficon list-view-pf-icon-md list-view-pf-icon-warning pficon-warning-triangle-o"></span>
-                <span ng-show="estadoAvaliacao == 'A'" class="pficon list-view-pf-icon-md list-view-pf-icon-info pficon-info"></span>
-                <span ng-show="estadoAvaliacao == 'D'" class="pficon list-view-pf-icon-md pficon-ok list-view-pf-icon-success"></span>
-                <span ng-show="estadoAvaliacao == 'I'" class="pficon list-view-pf-icon-md pficon-error-circle-o list-view-pf-icon-danger"></span>
-            </div>
-            <div class="list-view-pf-body">
-                <div class="list-view-pf-description text-left">
-                    <div class="list-group-item-heading">
-                        {{certificadorNome}}
-                    </div>
-                    <div class="list-group-item-text">
-                        {{certificadorTipo}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
