@@ -97,7 +97,7 @@ class Theme extends BaseV1\Theme {
         $app->hook('view.render(site/search):before', function() use($app) {
             $ids = $app->controller('agent')->apiQuery([
                 '@select' => 'id',
-                '_rcv_tipo' => 'EQ(ponto)'
+                'rcv_tipo' => 'EQ(ponto)'
             ]);
 
             $ids = implode(
@@ -107,7 +107,7 @@ class Theme extends BaseV1\Theme {
             );
 
             $this->jsObject['searchFilters'] = [
-                'agent' => ['_rcv_tipo' => 'EQ(ponto)'],
+                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
                 'event' => ['owner' => "IN($ids)"]
             ];
         });
