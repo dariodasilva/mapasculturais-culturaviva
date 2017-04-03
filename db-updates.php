@@ -17,7 +17,6 @@ return [
         $project->type = 9;
         $project->save(true);
     },
-
     'recreate agent metadata rcv_tipo' => function() use($conn) {
         $conn->executeQuery("DELETE FROM agent_meta WHERE key = 'rcv_tipo'");
         $rs = $conn->fetchAll("SELECT * FROM user_meta WHERE key = 'redeCulturaViva'");
@@ -30,7 +29,7 @@ return [
             $conn->executeQuery("INSERT INTO agent_meta (object_id, key, value) VALUES ('{$ids->agentePonto}', 'rcv_tipo', 'ponto')");
         }
     },
-    'rcv: add default seal' => function() use($app, $conn){
+    'rcv: add default seal' => function() use($app, $conn) {
         $agent_id = $app->config['rcv.admin'];
         echo "criando selo \"Ponto de Cultura\" to user $agent_id'";
         $conn->executeQuery("
@@ -56,6 +55,7 @@ return [
                     WHERE s.is_verified = 't'
                 )"
         );
+
         // Insert new default seals to agent with rcv_tipo = 'ponto'
         $conn->executeQuery("
             INSERT INTO seal_relation
@@ -74,5 +74,13 @@ return [
                     AND sm.value = 'ponto'
             WHERE s.is_verified = 't';"
         );
-    }
+    },
+    'rcv: create schema' => function() use($app, $conn) {
+        echo "Criando tabelas da Rede Cultura Viva";
+        $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-schema.sql'));
+    },
+    'rcv: create schema log' => function() use($app, $conn) {
+        echo "Criando tabelas de Log";
+        $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva_log-schema.sql'));
+    },
 ];
