@@ -539,7 +539,7 @@
             var params = {
                 'id': agent_id,
                 '@select': 'id',
-                '@files':'(portifolio,gallery,carta1,carta2,ata):url',
+                '@files':'(portifolio,gallery,carta1,carta2,ata):id,url',
                 '@permissions': 'view'
             };
 
@@ -654,7 +654,7 @@
                            'geoMunicipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,'+
                            'flickr,youtube,mesmoEndereco,shortDescription',
 
-                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):url',
+                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
 
