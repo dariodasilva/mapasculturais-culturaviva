@@ -538,7 +538,8 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,files',
+                '@select': 'id',
+                '@files':'(portifolio,gallery,carta1,carta2,ata):url',
                 '@permissions': 'view'
             };
 
@@ -552,7 +553,13 @@
             $scope.agent_entidade = Entity.get(params_entidade);
             $scope.agent = Entity.get(params);
             $scope.agent.$promise.then(function(){
-                $scope.agent.files.gallery = $scope.agent.files.gallery || [];
+                $scope.agent.files = {
+                    'portifolio': $scope.agent['@files:portifolio'],
+                    'gallery': $scope.agent['@files:gallery'],
+                    'carta1': $scope.agent['@files:carta1'],
+                    'carta2': $scope.agent['@files:carta2'],
+                    'ata': $scope.agent['@files:ata'],
+                };
             });
 
             $scope.config = {
@@ -671,7 +678,7 @@
                 'id': agent_id,
                 '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,site,facebook,twitter,googleplus,telegram,whatsapp,'+
                 'culturadigital,diaspora,instagram,flickr,youtube,atividadesEmRealizacaoLink',
-                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig,cartasRecomendacao):url',
+                '@files':'(portifolio,gallery,carta1,carta2,ata):url',
                 '@permissions': 'view'
             };
 

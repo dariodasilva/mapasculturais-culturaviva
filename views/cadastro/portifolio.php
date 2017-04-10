@@ -105,7 +105,7 @@
                       <img ng-if="agent.files.carta2" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
                   </div>
               </div>
-              <a ng-if="agent.files.carta2" href="{{agent.files.portifolio.url}}" target="_blank">{{agent.files.carta2.name}}</a>
+              <a ng-if="agent.files.carta2" href="{{agent.files.carta2.url}}" target="_blank">{{agent.files.carta2.name}}</a>
               <div class="progress row" ng-show="f.progress >= 0">
                   <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
               </div>
@@ -214,7 +214,7 @@
             <p class="espacoleft">Inclua no máximo 10 arquivos, no formato JPG ou PNG com até 1MB</p>
             <div class="img_updade file-item" ng-repeat="f in agent.files.gallery">
                 <a class="exclui" ng-click="deleteFile(f)" title="Excluir arquivo">x</a>
-                <img src="{{f.files.avatarBig.url}}" width="160" height="138">
+                <img src="{{f.url}}" width="160" height="138">
             </div>
             <div class="img_updade file-item">
                 <div type="file" ngf-select="uploadFile($file, 'gallery')" accept="config.image.validation" ngf-max-size="config.image.maxUploadSize" title="Clique para incluir uma foto">
