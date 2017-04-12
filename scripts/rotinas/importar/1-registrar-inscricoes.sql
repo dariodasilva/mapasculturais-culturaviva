@@ -1,5 +1,5 @@
-/*
- Registra as inscricoes dos pontos de cultura
+/**
+ * Registra as inscricoes dos pontos de cultura
  */
 INSERT INTO culturaviva.inscricao(agente_id, estado)
 SELECT
