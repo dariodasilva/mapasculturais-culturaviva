@@ -86,7 +86,7 @@
     <div class="form form-opcional">
         <h4>Informações Opcionais</h4>
         <div class="row">
-            <div class="img_updade" ng-controller="ImageUploadCtrl">
+            <div class="img_updade" ng-controller="ImageUploadCtrl" ng-init="init('responsavel')">
                 <div class="file-item">
                     <a ng-if="agent.files.avatar" class="exclui" ng-click="deleteFile(agent.files.avatar)" title="Excluir arquivo">x</a>
                     <div type="file" ngf-select="uploadFile($file, 'avatar')" accept="config.image.validation" ngf-max-size="config.image.maxUploadSize" title="{{agent.files.avatar ? 'Clique para alterar a foto' : 'Clique para incluir uma foto'}}">
