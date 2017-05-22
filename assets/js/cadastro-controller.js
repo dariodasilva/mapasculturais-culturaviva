@@ -320,7 +320,7 @@
         };
 
     function extendController($scope, $timeout, Entity, agent_id, $http){
-
+        
         $scope.messages = {
             status: null,
             text: '',
@@ -528,14 +528,14 @@
         }]);
 
 
-    // TODO: Tranforma em diretiva
+       // TODO: Tranforma em diretiva
      app.controller('ImageUploadCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', '$http',
         function ImageUploadCtrl($scope, Entity, MapasCulturais, Upload, $timeout, $http) {
 
-           
+
             var agent_id;
             $scope.init = function(rcv_tipo){
-                
+
                 if(rcv_tipo === 'responsavel'){
                     agent_id = MapasCulturais.redeCulturaViva.agenteIndividual;
                 }else if(rcv_tipo === 'entidade'){
@@ -543,32 +543,21 @@
                 } else{
                     agent_id = MapasCulturais.redeCulturaViva.agentePonto;
                 }
-                
+
                 var params = {
-                'id': agent_id,
-                '@select': 'id',
-                '@files':'(portifolio,gallery,carta1,carta2,ata):id,url,group',
-                '@permissions': 'view'
-            };
-
-            var params_entidade = {
-                'id': agent_id_entidade,
-                '@select': 'id,tipoOrganizacao',
-                '@permissions': 'view'
-            };
-
-            $scope.errozao = true ;
-            $scope.agent_entidade = Entity.get(params_entidade);
-            $scope.agent = Entity.get(params);
-            $scope.agent.$promise.then(function(){
-                $scope.agent.files = {
-                    'portifolio': $scope.agent['@files:portifolio'],
-                    'gallery': $scope.agent['@files:gallery'] || [],
-                    'carta1': $scope.agent['@files:carta1'],
-                    'carta2': $scope.agent['@files:carta2'],
-                    'ata': $scope.agent['@files:ata'],
+                    'id': agent_id,
+                    '@select': 'id,files',
+                    '@version': '1', // @todo: refatorar para nova versão da api
+                    '@permissions': 'view'
                 };
-            });
+
+
+                $scope.agent = Entity.get(params);
+                $scope.agent.$promise.then(function(){
+                    $scope.agent.files.gallery = $scope.agent.files.gallery || [];
+                });
+
+            };
 
             $scope.config = {
                 images: {
@@ -602,7 +591,7 @@
             };
 
             $scope.uploadFile = function(file, group) {
-                if(file.$error==="maxSize"){
+                if(file && file.$error==="maxSize"){
                   showErro($scope.errozao)
                 }
                 $scope.f = file;
@@ -632,6 +621,7 @@
                         $timeout(function(){
                             $scope.f = 0;
                         }, 1500);
+
                     }, function (response) {
                         if (response.status > 0)
                             $scope.errorMsg = response.status + ': ' + response.data;
@@ -1013,6 +1003,7 @@
                 $scope.showInvalid($scope.agent.rcv_tipo, 'form_entityContact');
               }
             });
+
 
         }
   ]);
