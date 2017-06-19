@@ -50,7 +50,7 @@
                 <p>Precisa de ajuda para montar seu portfólio?
                     <i class='hltip' title='Um portifólio é um relatório das atividades desenvolvidas pelo Ponto de Cultura com imagens, vídeos e outros itens que comprovem a sua existência'>?</i>
                     <br>
-                    <a href="http://docs.cultura.gov.br/products/files/doceditor.aspx?fileid=138&doc=NEQxOFBKRmNORzhYaVJ1NGNZUC8xNG1EMC9WaWgvRkFqbGc0MlhOV3BVZz0_IjEzOCI1" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
+                    <a href="<?php $this->asset('pdf/modelos_de_portfolio.docx')?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
                 </p>
             </label>
       </div>
