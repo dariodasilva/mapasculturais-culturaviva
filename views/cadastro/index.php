@@ -255,6 +255,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                        ng-model="agent.termos_de_uso"
                        ng-true-value="1"
                        ng-false-value="0"
+                       ng-checked="agent.termos_de_uso === '1'"
                        ng-change="save_field('termos_de_uso')"> Aceito os <a href="/termos-de-uso-e-privacidade/" style="color:#FFF"> Termos de Uso e Privacidade</a> e o <a href="/termo-de-adesao/" style="color:#FFF">Termo de Adesão à Política Nacional de Cultura Viva </a>
               </p>
               <p style="font-weight:bold""color:red">
@@ -263,6 +264,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                        ng-model="agent.info_verdadeira"
                        ng-true-value="1"
                        ng-false-value="0"
+                       ng-checked="agent.info_verdadeira === '1'"
                        ng-change="save_field('info_verdadeira')"> Declaro que as informações prestadas são verdadeiras, assumindo inteira responsabilidade pelas mesmas.
               </p>
             </label>

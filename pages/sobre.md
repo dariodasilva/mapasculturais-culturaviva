@@ -1,12 +1,12 @@
 # Sobre {{dict: site: name}} {#title}
 
-Em julho de 2013, agentes culturais de vários países da América Latina e do Brasil se reuniram para discutir a criação de uma ferramenta de mapeamento de iniciativas culturais e gestão cultural. Desse encontro surgiram as bases para a criação de Mapas Culturais, um software livre que permite o aprimoramento da gestão cultural dos municípios e estados, e que em Sobral leva o nome de Sobral Cultura.
+A Rede Cultura Viva é o conjunto de Pontos e Pontões de Cultura, organizações governamentais e não governamentais, lideranças, gestores, coletivos, grupos, povos e comunidades tradicionais, iniciativas urbanas e rurais, movimentos artísticos, culturais e socioeducativo, coletivos e redes, que atuam pela promoção e fortalecimento da cultura.
 
-Sobral Cultura é uma plataforma colaborativa que reúne informações sobre agentes, espaços, eventos e projetos culturais, fornecendo ao poder público uma radiografia da área de cultura e ao cidadão um mapa de espaços e eventos culturais do estado. A plataforma está alinhada ao Sistema Nacional de Informação e Indicadores Culturais do Ministério da Cultura (SNIIC) e contribui para a realização de alguns dos objetivos do Plano Nacional de Cultura.
+A Plataforma Rede Cultura Viva é a ferramenta de implementação do Cadastro Nacional de Pontos e Pontões de Cultura, instrumento da Política Nacional de Cultura Viva, instituída pela Lei nº 13.018/2014 e regulamentada pela Instrução Normativa MinC nº 08 de 11 de maio de 2016. A gestão da Plataforma é realizada por meio de Comissão de Gestão Compartilhada com composição paritária entre administração pública e sociedade civil.
 
-O Instituto TIM, em parceria com uma série de Secretarias de Cultura, tem atuado pela implementação de Mapas Culturais na gestão pública das cidades e estados. A plataforma já está em uso, por exemplo, no município de São Paulo (<a href="http://spcultura.prefeitura.sp.gov.br/">http://spcultura.prefeitura.sp.gov.br/</a>). Sendo Sobral o segundo município do Brasil a implementar a ferramenta na gestão pública da cultura.
+Os dados estão integrados com o <a href="http://mapas.cultura.gov.br/">Mapa da Cultura</a>, sendo assim, todos os Pontos e Pontões de Cultura cadastrados na Rede Cultura Viva ou no Mapa da Cultura aparecem nas duas instalações, em tempo real.
 
-Você encontra mais informações sobre a ferramenta Mapas Culturais no site do <a href="http://institutotim.org.br/project/mapas-culturais/">Instituto TIM</a>.
+A plataforma foi desenvolvida pelo Ministério da Cultura com apoio do Hacklab e em parceria do Instituto TIM. Você encontra mais informações sobre a ferramenta Mapas Culturais no site do <a href="http://institutotim.org.br/project/mapas-culturais/">Instituto TIM</a>.
 
 <h2>Realização</h2>
 <img class="alignleft" src="/assets/img/instituto-tim-white.png" alt="Insituto TIM" />

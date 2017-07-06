@@ -13,7 +13,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 
   #label_cnpj{
     color: #fbed1d;
-    font-size:
   }
 
   #btn_nao{
@@ -69,6 +68,13 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             </div>
             <div class="colunm-full js-com-cnpj esconde">
                     <input type="hidden" name="comCNPJ" value="true"/>
+                    <div class="cnpj-form">
+                        <form>
+                            <label>CNPJ*</label>
+                            <input type="text" name="CNPJ" ui-mask="99.999.999/9999-99" ng-model="data.cnpj" ng-change="data.naoEncontrouCNPJ = false" />
+                            <input ng-hide="data.naoEncontrouCNPJ" type="submit" class="btn" value="OK" ng-click="consultaCNPJ()" ng-disabled="data.buscandoCNPJ">
+                        </form>
+                    </div>
                     <div class="clear"></div>
                     <div ng-show="data.naoEncontrouCNPJ" class="resposta-cnpj">
                         <p>Não encontramos seu CNPJ em nossa base de dados. Isso quer dizer que você ainda não é um Ponto ou Pontão de Cultura certificado, mas basta continuar para fazer sua autodeclaração e entrar na Rede Cultura Viva.</p>

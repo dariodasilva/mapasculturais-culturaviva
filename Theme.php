@@ -95,20 +95,9 @@ class Theme extends BaseV1\Theme {
         $this->assetManager->publishAsset('img/certificado.png', 'img/certificado.png');
 
         $app->hook('view.render(site/search):before', function() use($app) {
-            $ids = $app->controller('agent')->apiQuery([
-                '@select' => 'id',
-                '_rcv_tipo' => 'EQ(ponto)'
-            ]);
-
-            $ids = implode(
-                    ',', array_map(function($e) {
-                        return $e['id'];
-                    }, $ids)
-            );
-
             $this->jsObject['searchFilters'] = [
-                'agent' => ['_rcv_tipo' => 'EQ(ponto)'],
-                'event' => ['owner' => "IN($ids)"]
+                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
+                'event' => ['subsite' => "NULL()"]
             ];
         });
 
@@ -201,7 +190,7 @@ class Theme extends BaseV1\Theme {
         $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
         $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
         $this->enqueueScript('vendor', 'google-maps-api', 'http://maps.google.com/maps/api/js?v=3.2&sensor=false');
-        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.min.js');
+        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
         $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
         $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
     }

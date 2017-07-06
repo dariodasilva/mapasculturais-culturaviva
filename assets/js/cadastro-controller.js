@@ -320,7 +320,7 @@
         };
 
     function extendController($scope, $timeout, Entity, agent_id, $http){
-
+        
         $scope.messages = {
             status: null,
             text: '',
@@ -528,32 +528,36 @@
         }]);
 
 
-    // TODO: Tranforma em diretiva
+       // TODO: Tranforma em diretiva
      app.controller('ImageUploadCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', '$http',
         function ImageUploadCtrl($scope, Entity, MapasCulturais, Upload, $timeout, $http) {
 
-            // FIXME passar como parametro para generalizar
-            var agent_id = MapasCulturais.redeCulturaViva.agentePonto;
-            var agent_id_entidade = MapasCulturais.redeCulturaViva.agenteEntidade;
 
-            var params = {
-                'id': agent_id,
-                '@select': 'id,files',
-                '@permissions': 'view'
+            var agent_id;
+            $scope.init = function(rcv_tipo){
+
+                if(rcv_tipo === 'responsavel'){
+                    agent_id = MapasCulturais.redeCulturaViva.agenteIndividual;
+                }else if(rcv_tipo === 'entidade'){
+                    agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
+                } else{
+                    agent_id = MapasCulturais.redeCulturaViva.agentePonto;
+                }
+
+                var params = {
+                    'id': agent_id,
+                    '@select': 'id,files',
+                    '@version': '1', // @todo: refatorar para nova versão da api
+                    '@permissions': 'view'
+                };
+
+
+                $scope.agent = Entity.get(params);
+                $scope.agent.$promise.then(function(){
+                    $scope.agent.files.gallery = $scope.agent.files.gallery || [];
+                });
+
             };
-
-            var params_entidade = {
-                'id': agent_id_entidade,
-                '@select': 'id,tipoOrganizacao',
-                '@permissions': 'view'
-            };
-
-            $scope.errozao = true ;
-            $scope.agent_entidade = Entity.get(params_entidade);
-            $scope.agent = Entity.get(params);
-            $scope.agent.$promise.then(function(){
-                $scope.agent.files.gallery = $scope.agent.files.gallery || [];
-            });
 
             $scope.config = {
                 images: {
@@ -587,7 +591,7 @@
             };
 
             $scope.uploadFile = function(file, group) {
-                if(file.$error==="maxSize"){
+                if(file && file.$error==="maxSize"){
                   showErro($scope.errozao)
                 }
                 $scope.f = file;
@@ -617,6 +621,7 @@
                         $timeout(function(){
                             $scope.f = 0;
                         }, 1500);
+
                     }, function (response) {
                         if (response.status > 0)
                             $scope.errorMsg = response.status + ': ' + response.data;
@@ -647,7 +652,7 @@
                            'geoMunicipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,'+
                            'flickr,youtube,mesmoEndereco,shortDescription',
 
-                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):url',
+                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
 
@@ -666,12 +671,26 @@
         function PortifolioCtrl($scope, Entity, MapasCulturais, Upload, $timeout, geocoder, cepcoder, $location, $http)
         {
             var agent_id = MapasCulturais.redeCulturaViva.agentePonto;
+            var agent_id_entidade = MapasCulturais.redeCulturaViva.agenteEntidade;
+            var agent_id_ponto = MapasCulturais.redeCulturaViva.agentePonto;
 
             var params = {
                 'id': agent_id,
                 '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,site,facebook,twitter,googleplus,telegram,whatsapp,'+
                 'culturadigital,diaspora,instagram,flickr,youtube,atividadesEmRealizacaoLink',
-                '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig,cartasRecomendacao):url',
+                '@files':'(portifolio,gallery,carta1,carta2,ata):url',
+                '@permissions': 'view'
+            };
+
+	    var params_entidade = {
+                'id': agent_id_entidade,
+                '@select': 'id,tipoOrganizacao',
+                '@permissions': 'view'
+            };
+
+            var params_ponto = {
+                'id': agent_id_ponto,
+                '@select': 'id,homologado_rcv',
                 '@permissions': 'view'
             };
 
@@ -682,6 +701,10 @@
                 $scope.showInvalid($scope.agent.rcv_tipo, 'form_portifolio');
               }
             });
+            
+
+            $scope.agent_entidade = Entity.get(params_entidade);
+            $scope.agent_ponto = Entity.get(params_ponto);
         }
     ]);
 
@@ -981,6 +1004,7 @@
               }
             });
 
+
         }
   ]);
 
@@ -1089,10 +1113,12 @@
             naoEncontrouCNPJ: false,
             encontrouCNPJ: false,
             cnpj: null,
-            comCNPJ: false
+            comCNPJ: false,
+            buscandoCNPJ: false
         };
         extendController($scope, $timeout);
-        var consultaCNPJ = function(){
+        $scope.consultaCNPJ = function(){
+            $scope.data.buscandoCNPJ = true;
             $scope.messages.show('enviando', "Procurando CNPJ em nossa base");
             $http.get(MapasCulturais.apiCNPJ + '?action=get_cultura&cnpj=' + $scope.data.cnpj).
                 success(function success(data){
@@ -1123,7 +1149,7 @@
                       scope: $scope
                     });
                 }else{
-                    consultaCNPJ();
+                    $scope.consultaCNPJ();
                 }
 
              }).error(function errorCallback (erro){
@@ -1137,6 +1163,7 @@
                     ngDialog.open({
                       template: 'modalFinsLucrativos',
                       scope: $scope
+
                     });
                 }
              });
@@ -1167,6 +1194,7 @@
                     }).
                     error(function(){
                         $scope.messages.show('erro', "Um erro inesperado aconteceu");
+                        $scope.data.buscandoCNPJ = false;
                     });
         };
     }]);
