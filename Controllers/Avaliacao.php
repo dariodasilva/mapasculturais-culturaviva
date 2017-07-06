@@ -259,7 +259,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             LEFT JOIN agent_meta dsc
                 ON dsc.key = 'shortDescription'
                 AND dsc.object_id = ponto.id
-            WHERE insc.estado <> 'C'
+            WHERE 1=1
             AND avl.id = :id";
 
         $parametros = [
