@@ -40,7 +40,7 @@ function importar() {
     $conn = $app->em->getConnection();
 
 
-    // 1º Passo: REGISTRO DE INSCRIÇÕES    
+    // 1º Passo: REGISTRO DE INSCRIÇÕES
     print("Registra as inscricoes dos pontos de cultura\n");
     $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
 
@@ -73,16 +73,66 @@ function importar() {
     $conn->executeQuery(loadScript('8-atualizar-inscricoes-avaliadas.sql'));
 
     print("Atualiando inscrições certificadas\n");
-    // @TODO: API de selos
 
-    print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
-    notificarCertificacoesDeferidas($app, $conn);
-    notificarCertificacoesIndeferidas($app, $conn);
+    // Marca agentes como verificados
+    $conn->executeQuery("
+    UPDATE agent SET is_verified=TRUE
+    WHERE agent.id IN (
+        SELECT ponto.id
+        FROM culturaviva.inscricao insc
+        JOIN registration reg
+            ON reg.agent_id = insc.agente_id
+            AND reg.project_id = 1
+        JOIN agent_relation rel_ponto
+            ON rel_ponto.object_id = reg.id
+            AND rel_ponto.type = 'ponto'
+        AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
+        JOIN agent ponto
+            ON ponto.id = rel_ponto.agent_id
+            AND ponto.is_verified = FALSE
+        WHERE insc.estado = 'C'
+        AND not exists (
+            SELECT
+                    *
+            FROM seal_relation
+            WHERE seal_id = 1
+            AND agent_id = ponto.id
+        )
+    )");
+
+    $agent_id = $app->config['rcv.admin'];
+    $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
+
+    $conn->executeQuery("
+        INSERT INTO seal_relation
+        SELECT
+            nextval('seal_relation_id_seq'),
+            $seal_id,
+            a.id,
+            CURRENT_TIMESTAMP,
+            1,
+            'MapasCulturais\Entities\Agent',
+            $agent_id
+        FROM agent a
+        JOIN agent_meta am
+            ON am.object_id = a.id
+            AND am.key = 'rcv_tipo'
+            AND am.value = 'ponto'
+        WHERE a.is_verified = 't'
+        AND NOT EXISTS (
+                SELECT * FROM seal_relation
+                WHERE object_id = a.id
+        )");
+
+
+    //print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
+    //notificarCertificacoesDeferidas($app, $conn);
+    //notificarCertificacoesIndeferidas($app, $conn);
 }
 
 /**
  * Associa avaliações para certificadores da sociedade civil para inscrições que ainda não possuem
- * 
+ *
  * @param type $conn
  * @param type $filtro
  * @return type
@@ -175,14 +225,15 @@ function notificarCertificacoesDeferidas($app, $conn) {
             $message = $app->renderMailerTemplate('cadastro_enviado', [
                 'name' => 'x'
             ]);
-            $app->createAndSendMailMessage([
+            $dadosEmail = [
                 'from' => $app->config['mailer.from'],
                 'to' => $emailEntidade,
                 'subject' => $message['title'],
                 'body' => $message['body']
-            ]);
+            ];
+            print_r($dadosEmail);
+            //$app->createAndSendMailMessage($dadosEmail);
             exit(0);
-            
         } catch (Exception $ex) {
             // faz nada
             print_r($ex);

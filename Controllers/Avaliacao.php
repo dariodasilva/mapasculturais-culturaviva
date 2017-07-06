@@ -130,7 +130,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND rel_ponto.type = 'ponto'
                 AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
             JOIN agent entidade ON entidade.id = rel_entidade.agent_id
-            JOIN agent_meta ent_meta_uf 
+            JOIN agent_meta ent_meta_uf
                 ON  ent_meta_uf.object_id = entidade.id
                 AND ent_meta_uf.key = 'geoEstado'
             JOIN agent_meta ent_meta_municipio
@@ -148,11 +148,11 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND avl_p.certificador_tipo = 'P'
             LEFT JOIN avaliacoes avl_m
                 ON insc.id = avl_m.inscricao_id
-                AND avl_m.certificador_tipo = 'm'
-            WHERE insc.estado <> 'C'
+                AND avl_m.certificador_tipo = 'M'
+            WHERE 1=1
             AND (:agenteId = 0 OR avl_c.agente_id = :agenteId OR avl_p.agente_id = :agenteId OR avl_m.agente_id = :agenteId)
             AND (
-                :estado = '' 
+                :estado = ''
                 OR :estado = ANY(ARRAY[avl_c.estado, avl_p.estado, avl_m.estado])
                 OR (:estado = 'F' AND (ARRAY['D', 'I']::varchar[] && ARRAY[avl_c.estado, avl_p.estado, avl_m.estado]::varchar[]))
             )
@@ -165,7 +165,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 OR unaccent(lower(avl_m.certificador_nome)) LIKE unaccent(lower(:nome))
             )
             AND (:uf = '' OR ent_meta_uf.value = :uf)
-            AND (:municipio = '' 
+            AND (:municipio = ''
                 OR unaccent(lower(ent_meta_municipio.value)) LIKE unaccent(lower(:municipio)))
             ";
 
