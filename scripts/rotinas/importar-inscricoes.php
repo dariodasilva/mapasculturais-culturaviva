@@ -40,41 +40,114 @@ function importar() {
     $conn = $app->em->getConnection();
 
 
-
-    print("1   - Registra as inscricoes dos pontos de cultura\n");
+    // 1º Passo: REGISTRO DE INSCRIÇÕES
+    print("Registra as inscricoes dos pontos de cultura\n");
     $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
 
-    print("2   - Registra os criterios das inscricoes\n");
-    $conn->executeQuery(loadScript('2-registrar-criterios-inscricoes.sql'));
+    print("Remover critérios inativos de inscrições não finaliadas\n");
+    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
+    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_B.sql'));
 
-    print("3   - Associar avaliacao a certificador\n");
-    $totalInscricoes = $conn->fetchColumn(loadScript('3-obter-total-inscricoes.sql'));
+    print("Registrar os critérios das inscrições\n");
+    $conn->executeQuery(loadScript('3-incluir-criterios-inscricoes.sql'));
 
-    print("3.1 - Total de inscricoes nao associadas a avaliacao: $totalInscricoes\n");
 
-    print("3.3 - Obter inscricoes sem avaliacao:\n");
+
+    // 2º Passo: DISTRIBUIR AVALIAÇÕES
+    print("Remover avaliações avaliadores inativos:\n");
+    $conn->executeQuery(loadScript('4-remover-avaliacoes-avaliador-inativo.sql'));
+
+    print("Distribuir avaliações para Representantes da Sociedade Civil\n");
     inserirAvaliacaoCertificador($conn, ['tipo' => 'C']);
+
+    print("Distribuir avaliações para Representantes do Poder Publico\n");
     inserirAvaliacaoCertificador($conn, ['tipo' => 'P']);
+
+
+    // 3º Passo: DISTRIBUIR VOTOS DE MINERVA
+    print("Distribuir avaliações para Certificadores com Voto de Minerva\n");
+    inserirAvaliacaoMinerva($conn);
+
+    // 4º Passo: DEFERIMENTO E INDEFERIMENTO DE INSCRIÇÕES (CERTIFICAÇÃO)
+    print("Atualiando inscrições avaliadas\n");
+    $conn->executeQuery(loadScript('8-atualizar-inscricoes-avaliadas.sql'));
+
+    print("Atualiando inscrições certificadas\n");
+
+    // Marca agentes como verificados
+    $conn->executeQuery("
+    UPDATE agent SET is_verified=TRUE
+    WHERE agent.id IN (
+        SELECT ponto.id
+        FROM culturaviva.inscricao insc
+        JOIN registration reg
+            ON reg.agent_id = insc.agente_id
+            AND reg.project_id = 1
+        JOIN agent_relation rel_ponto
+            ON rel_ponto.object_id = reg.id
+            AND rel_ponto.type = 'ponto'
+        AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
+        JOIN agent ponto
+            ON ponto.id = rel_ponto.agent_id
+            AND ponto.is_verified = FALSE
+        WHERE insc.estado = 'C'
+        AND not exists (
+            SELECT
+                    *
+            FROM seal_relation
+            WHERE seal_id = 1
+            AND agent_id = ponto.id
+        )
+    )");
+
+    $agent_id = $app->config['rcv.admin'];
+    $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
+
+    $conn->executeQuery("
+        INSERT INTO seal_relation
+        SELECT
+            nextval('seal_relation_id_seq'),
+            $seal_id,
+            a.id,
+            CURRENT_TIMESTAMP,
+            1,
+            'MapasCulturais\Entities\Agent',
+            $agent_id
+        FROM agent a
+        JOIN agent_meta am
+            ON am.object_id = a.id
+            AND am.key = 'rcv_tipo'
+            AND am.value = 'ponto'
+        WHERE a.is_verified = 't'
+        AND NOT EXISTS (
+                SELECT * FROM seal_relation
+                WHERE object_id = a.id
+        )");
+
+
+    //print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
+    //notificarCertificacoesDeferidas($app, $conn);
+    //notificarCertificacoesIndeferidas($app, $conn);
 }
 
 /**
  * Associa avaliações para certificadores da sociedade civil para inscrições que ainda não possuem
  *
  * @param type $conn
- * @param Array $filtro
+ * @param type $filtro
  * @return type
  */
 function inserirAvaliacaoCertificador($conn, $filtro) {
-    print("         - Distribuindo avaliacoes para certificadores do tipo: \"" . $filtro['tipo'] . "\"\n");
-
-    $inscricoes = $conn->fetchAll(loadScript('3.3-obter-inscricoes-sem-avaliacao.sql'), $filtro);
+    $inscricoes = $conn->fetchAll(loadScript('5-obter-inscricoes-sem-avaliacao.sql'), $filtro);
     if (!isset($inscricoes) || empty($inscricoes)) {
-        return print("         - Nao existem INSCRICOES para distribuir\n");
+        // Nao existem INSCRICOES para distribuir
+        return;
     }
 
-    $certificadores = $conn->fetchAll(loadScript('3.2-obter-avaliadores.sql'), $filtro);
+    $certificadores = $conn->fetchAll(loadScript('6-obter-certificadores-por-tipo.sql'), $filtro);
     if (!isset($certificadores) || empty($certificadores)) {
-        return print("         - Nao existem AVALIADORES para o tipo\n");
+        // Nao existem AVALIADORES para o tipo
+        return;
     }
 
     $inscricao = current($inscricoes);
@@ -84,7 +157,7 @@ function inserirAvaliacaoCertificador($conn, $filtro) {
         }
         foreach ($certificadores as $certificador) {
 
-            $conn->executeQuery("INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado) VALUES (?, ?, ?)",[
+            $conn->executeQuery("INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado) VALUES (?, ?, ?)", [
                 $inscricao['id'], $certificador['id'], 'P'
             ]);
 
@@ -94,6 +167,87 @@ function inserirAvaliacaoCertificador($conn, $filtro) {
             }
         }
     }
+}
+
+function inserirAvaliacaoMinerva($conn) {
+    $inscricoes = $conn->fetchAll(loadScript('7-obter-inscricoes-avaliacoes-conflitantes.sql'));
+    if (!isset($inscricoes) || empty($inscricoes)) {
+        // Nao existem INSCRICOES para distribuir
+        return;
+    }
+
+    $certificadores = $conn->fetchAll(loadScript('6-obter-certificadores-por-tipo.sql'), ['tipo' => 'M']);
+    if (!isset($certificadores) || empty($certificadores)) {
+        // Nao existem AVALIADORES para o tipo
+        return;
+    }
+
+    $inscricao = current($inscricoes);
+    while (true) {
+        if ($inscricao === false) {
+            break;
+        }
+        foreach ($certificadores as $certificador) {
+
+            $conn->executeQuery("INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado) VALUES (?, ?, ?)", [
+                $inscricao['id'],
+                $certificador['id'],
+                'P'
+            ]);
+
+            $inscricao = next($inscricoes);
+            if ($inscricao === false) {
+                break;
+            }
+        }
+    }
+}
+
+function notificarCertificacoesDeferidas($app, $conn) {
+    print("Notificando via e-mail as inscrições Deferidas\n");
+
+    $registros = $conn->fetchAll(loadScript('9-obter-inscricoes-certificadas.sql'));
+    if (!isset($registros) || empty($registros)) {
+        // Nao existem INSCRICOES para distribuir
+        return;
+    }
+
+    $registro = current($registros);
+    while (true) {
+        if ($registro === false) {
+            break;
+        }
+
+        try {
+            $json = json_decode($registro['agents_data']);
+            $emailEntidade = $json->entidade->emailPrivado;
+//            print_r($json, $emailEntidade);
+            $message = $app->renderMailerTemplate('cadastro_enviado', [
+                'name' => 'x'
+            ]);
+            $dadosEmail = [
+                'from' => $app->config['mailer.from'],
+                'to' => $emailEntidade,
+                'subject' => $message['title'],
+                'body' => $message['body']
+            ];
+            print_r($dadosEmail);
+            //$app->createAndSendMailMessage($dadosEmail);
+            exit(0);
+        } catch (Exception $ex) {
+            // faz nada
+            print_r($ex);
+        }
+
+        $registro = next($registros);
+        if ($registro === false) {
+            break;
+        }
+    }
+}
+
+function notificarCertificacoesIndeferidas($app, $conn) {
+    print("Notificando via e-mail as inscrições Indeferidas\n");
 }
 
 importar();

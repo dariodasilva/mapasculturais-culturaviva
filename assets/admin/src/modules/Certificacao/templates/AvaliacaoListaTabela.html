@@ -2,9 +2,9 @@
     <div class="card-pf-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row" ng-form>                    
+                <div class="row" ng-form>
                     <tc-input
-                        ng-model="ref.filtrarTexto"                            
+                        ng-model="ref.filtrarTexto"
                         label="Nome"
                         col="4"
                         >
@@ -20,12 +20,12 @@
                     </tc-select>
 
                     <tc-input
-                        ng-model="ref.filtrarMunicipio"                            
+                        ng-model="ref.filtrarMunicipio"
                         label="Município Entidade"
                         col="4"
                         >
                     </tc-input>
-                    
+
                     <div class="col-md-12 text-right">
                         <button class="btn btn-primary" ng-click="filtrar()" type="button">
                             Filtrar
@@ -42,6 +42,12 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="inscricao in ref.data.rows">
                                     <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                                        <i
+                                            ng-if="inscricao.estado === 'C'"
+                                            class="glyphicon glyphicon-certificate ponto-certificado"
+                                            title="Entidade certificada"
+                                            >
+                                        </i>
                                         <h2 class="card-pf-title">
                                             {{inscricao.pontoNome}}
                                             <p>
@@ -52,9 +58,8 @@
                                                 </small>
                                             </p>
                                             <p>
-                                                <small>({{inscricao.tipoPontoDesejado}})</small>
+                                                <small>tipo: <strong>{{inscricao.tipoPontoDesejado}}</strong></small>
                                             </p>
-
                                         </h2>
                                         <div class="card-pf-body" style="padding-bottom: 0;">
                                             <p class="card-pf-aggregate-status-notifications">

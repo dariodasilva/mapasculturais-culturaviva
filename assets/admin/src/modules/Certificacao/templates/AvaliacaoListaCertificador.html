@@ -2,8 +2,7 @@
     <a
         class="list-group-item"
         ui-sref="pagina.certificacao.formulario({id:avaliacaoId})"
-        title="Avaliação {{({'P':'Pendente', 'A': 'Em Análise', 'D':'Deferido','I':'Indeferido'}[estadoAvaliacao])}}"
-        ng-class="{active: certificadorId == usuario.agentId}"
+        ng-class="{'active-cert': certificadorId == usuario.agentId}"
         >
         <div class="list-view-pf-main-info" style="padding: 0;">
             <div class="list-view-pf-left">
@@ -18,7 +17,10 @@
                         {{certificadorNome}}
                     </div>
                     <div class="list-group-item-text">
-                        {{certificadorTipo}}
+                        <small>perfil: <strong>{{certificadorTipo}}</strong></small>
+                    </div>
+                    <div class="list-group-item-text">
+                        <small>estado: <strong>{{({'P':'Pendente', 'A': 'Em Análise', 'D':'Deferido','I':'Indeferido'}[estadoAvaliacao])}}</strong></small>
                     </div>
                 </div>
             </div>
