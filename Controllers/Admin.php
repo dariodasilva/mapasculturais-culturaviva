@@ -47,4 +47,13 @@ class Admin extends \MapasCulturais\Controller {
         $this->render('cadastro');
     }
 
+    function GET_entidade() {
+        $_user = App::i()->repo('User')->find($this->getUrlData()['id']);
+        if ($_user) {
+            $this->json($_user);
+        } else {
+            $this->json(['erro' => "usuario nao encontrado"], 400);
+        }
+    }
+
 }

@@ -123,7 +123,7 @@ class Theme extends BaseV1\Theme {
         });
 
         $app->hook('view.render(admin/<<*>>):before', function() use($app) {
-            if ($this->controller->id === 'admin') {
+            if ($this->controller->id === 'admin' && $this->controller->action == 'index') {
                 $this->setLayout('clear');
             }
         });
@@ -210,13 +210,13 @@ class Theme extends BaseV1\Theme {
 
     function head() {
         $assetsGroup = null;
-        if (in_array($this->controller->id, ['admin'])) {
+        if ($this->controller->id == 'admin' && $this->controller->action == 'index') {
             // faz nada
         } else {
             // Não renderiza os estilos do MapasCulturais na tela de certificação, ele atrapalha toda personalização
             parent::head();
 
-            if ($this->controller->id === 'cadastro' || $this->controller->id == 'rede') {
+            if ($this->controller->id === 'cadastro' || $this->controller->id == 'rede' || $this->controller->id == 'admin') {
                 $assetsGroup = 'culturaviva';
             }
         }
