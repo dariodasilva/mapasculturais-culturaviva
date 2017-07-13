@@ -30,7 +30,7 @@ CREATE SCHEMA IF NOT EXISTS culturaviva_log;
 CREATE TABLE culturaviva_log.criterio (
     log_ts      TIMESTAMP without time zone,
     log_tp      CHAR,
-    log_client  VARCHAR(21),
+    log_client  VARCHAR(50),
     log_user    VARCHAR(50),
     log_spid    int4,
     id          INTEGER NOT NULL,
@@ -49,7 +49,7 @@ COMMENT ON COLUMN culturaviva_log.criterio.log_spid     IS 'Process ID do proces
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -99,7 +99,7 @@ COMMENT ON TRIGGER culturaviva_criterio_log_tg ON culturaviva.criterio IS 'Trigg
 CREATE TABLE culturaviva_log.inscricao (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
-    log_client      VARCHAR(21),
+    log_client      VARCHAR(50),
     log_user        VARCHAR(50),
     log_spid        int4,
     id              INTEGER,
@@ -118,7 +118,7 @@ COMMENT ON COLUMN culturaviva_log.inscricao.log_spid     IS 'Process ID do proce
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -168,7 +168,7 @@ COMMENT ON TRIGGER culturaviva_inscricao_log_tg ON culturaviva.inscricao IS 'Tri
 CREATE TABLE culturaviva_log.inscricao_criterio (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
-    log_client      VARCHAR(21),
+    log_client      VARCHAR(50),
     log_user        VARCHAR(50),
     log_spid        int4,
     inscricao_id    INTEGER,
@@ -185,7 +185,7 @@ COMMENT ON COLUMN culturaviva_log.inscricao_criterio.log_spid     IS 'Process ID
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.inscricao_criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -235,7 +235,7 @@ COMMENT ON TRIGGER culturaviva_inscricao_criterio_log_tg ON culturaviva.inscrica
 CREATE TABLE culturaviva_log.certificador (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
-    log_client      VARCHAR(21),
+    log_client      VARCHAR(50),
     log_user        VARCHAR(50),
     log_spid        int4,
     id              INTEGER,
@@ -256,7 +256,7 @@ COMMENT ON COLUMN culturaviva_log.certificador.log_spid     IS 'Process ID do pr
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.certificador_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -306,7 +306,7 @@ COMMENT ON TRIGGER culturaviva_certificador_log_tg ON culturaviva.certificador I
 CREATE TABLE culturaviva_log.avaliacao (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
-    log_client      VARCHAR(21),
+    log_client      VARCHAR(50),
     log_user        VARCHAR(50),
     log_spid        int4,
     id              INTEGER,
@@ -328,7 +328,7 @@ COMMENT ON COLUMN culturaviva_log.avaliacao.log_spid     IS 'Process ID do proce
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN
@@ -378,7 +378,7 @@ COMMENT ON TRIGGER culturaviva_avaliacao_log_tg ON culturaviva.avaliacao IS 'Tri
 CREATE TABLE culturaviva_log.avaliacao_criterio (
     log_ts          TIMESTAMP without time zone,
     log_tp          CHAR,
-    log_client      VARCHAR(21),
+    log_client      VARCHAR(50),
     log_user        VARCHAR(50),
     log_spid        int4,
     avaliacao_id    INTEGER,
@@ -396,7 +396,7 @@ COMMENT ON COLUMN culturaviva_log.avaliacao_criterio.log_spid     IS 'Process ID
 -- function
 CREATE OR REPLACE FUNCTION culturaviva_log.avaliacao_criterio_fn_tg() RETURNS TRIGGER AS $BODY$
     DECLARE
-        vlog_client VARCHAR(21);
+        vlog_client VARCHAR(50);
         vRecord     RECORD;
         vAction     CHAR;
     BEGIN

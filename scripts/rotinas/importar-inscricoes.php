@@ -221,8 +221,8 @@ function notificarCertificacoesDeferidas($app, $conn) {
         try {
             $json = json_decode($registro['agents_data']);
             $emailEntidade = $json->entidade->emailPrivado;
-//            print_r($json, $emailEntidade);
-            $message = $app->renderMailerTemplate('cadastro_enviado', [
+
+            $message = $app->renderMailerTemplate('certificacao_deferido', [
                 'name' => 'x'
             ]);
             $dadosEmail = [
