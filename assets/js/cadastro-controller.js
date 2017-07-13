@@ -320,7 +320,7 @@
         };
 
     function extendController($scope, $timeout, Entity, agent_id, $http){
-        
+
         $scope.messages = {
             status: null,
             text: '',
@@ -701,7 +701,7 @@
                 $scope.showInvalid($scope.agent.rcv_tipo, 'form_portifolio');
               }
             });
-            
+
 
             $scope.agent_entidade = Entity.get(params_entidade);
             $scope.agent_ponto = Entity.get(params_ponto);
@@ -1241,7 +1241,7 @@
         $scope.termos = termos;
         var url = document.URL;
         var posicao = url.slice(url.lastIndexOf("/") + 1);
-        $http.get(MapasCulturais.createUrl('admin','user') + posicao)
+        $http.get(MapasCulturais.createUrl('admin','entidade') + posicao)
             .success(function(data){
 		        var rcv = JSON.parse(data.redeCulturaViva);
                 var responsavel = {

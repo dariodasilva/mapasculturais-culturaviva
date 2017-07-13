@@ -102,8 +102,11 @@ class Avaliacao extends \MapasCulturais\Controller {
                 insc.id,
                 insc.agente_id,
                 insc.estado,
+                usuario.id              AS usuario_id,
                 ponto.name              AS ponto_nome,
+                ponto.id                AS ponto_id,
                 entidade.name           AS entidade_nome,
+                entidade.id             AS entidade_id,
                 tp.value                AS tipo_ponto_desejado,
                 avl_c.id                AS avaliacao_civil_id,
                 avl_c.estado            AS avaliacao_civil_estado,
@@ -118,14 +121,16 @@ class Avaliacao extends \MapasCulturais\Controller {
                 avl_m.certificador_nome AS avaliacao_minerva_certificador,
                 avl_m.agente_id         AS avaliacao_minerva_certificador_id
             FROM culturaviva.inscricao insc
+            JOIN agent agente ON agente.id = insc.agente_id
+            JOIN usr usuario ON usuario.id = agente.user_id
             JOIN registration reg
                 on reg.agent_id = insc.agente_id
                 AND reg.project_id = 1
-            join agent_relation rel_entidade
+            JOIN agent_relation rel_entidade
                 ON rel_entidade.object_id = reg.id
                 AND rel_entidade.type = 'entidade'
                 AND rel_entidade.object_type = 'MapasCulturais\Entities\Registration'
-            join agent_relation rel_ponto
+            JOIN agent_relation rel_ponto
                 ON rel_ponto.object_id = reg.id
                 AND rel_ponto.type = 'ponto'
                 AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
@@ -172,9 +177,13 @@ class Avaliacao extends \MapasCulturais\Controller {
 
         $campos = [
             'id',
+            'agente_id',
+            'usuario_id',
             'estado',
             'ponto_nome',
+            'ponto_id',
             'entidade_nome',
+            'entidade_id',
             'tipo_ponto_desejado',
             'avaliacao_civil_id',
             'avaliacao_civil_estado',
@@ -220,6 +229,7 @@ class Avaliacao extends \MapasCulturais\Controller {
         $sql = "
             SELECT
                 avl.*,
+                usuario.id          AS usuario_id,
                 cert.agente_id      AS certificador_agente_id,
                 (cert.agente_id = :agenteId AND avl.estado = ANY(ARRAY['P','A'])) AS autoriza_edicao,
                 cert.tipo           AS certificador_tipo,
@@ -240,6 +250,8 @@ class Avaliacao extends \MapasCulturais\Controller {
             JOIN agent certificador ON certificador.id = cert.agente_id
             JOIN culturaviva.inscricao insc
                 ON insc.id = avl.inscricao_id
+            JOIN agent agente ON agente.id = insc.agente_id
+            JOIN usr usuario ON usuario.id = agente.user_id
             JOIN registration reg
                 on reg.agent_id = insc.agente_id
                 AND reg.project_id = 1
@@ -270,6 +282,7 @@ class Avaliacao extends \MapasCulturais\Controller {
         $campos = [
             'id',
             'inscricao_id',
+            'usuario_id',
             'certificador_id',
             'estado',
             'observacoes',

@@ -114,16 +114,26 @@
             <ng-include ng-if="ref_active === 2" src="'modules/Certificacao/templates/TabPonto.html'"></ng-include>
         </uib-tab>
 
-        <!--
+
         <uib-tab select="ref_active = 3">
             <uib-tab-heading>
                 <span class="glyphicon glyphicon-paperclip"></span>
-                <span class="visible-lg-inline-block">Portfólio e Anexos</span>
-                <span class="visible-md-inline-block visible-sm-inline-block">Portfólio</span>
+                <span class="visible-lg-inline-block">Formulário de Cadastro</span>
+                <span class="visible-md-inline-block visible-sm-inline-block">Cadastro</span>
             </uib-tab-heading>
 
-            <img src="modules/AppAdmin/img/mock/portfolio.png" style="margin-top: 20px">
+            <div class="blank-slate-pf" >
+                <p>
+                    <a
+                        class="btn btn-primary"
+                        ng-href="/admin/cadastro/{{avaliacao.usuarioId}}"
+                        target="_blank"
+                        > Clique Aqui
+                    </a>
+                    para visualizar o formulário de cadastro
+                </p>
+            </div>
         </uib-tab>
-        -->
+
     </uib-tabset>
 </div>
