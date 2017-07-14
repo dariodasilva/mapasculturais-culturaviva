@@ -21,7 +21,7 @@ function AvaliacaoListaCtrl($scope, $state, $http, UsuarioSrv) {
     $scope.pagina.titulo = 'Avaliações';
     $scope.pagina.subTitulo = 'Listagem de Avaliações para Certificação de Inscrições';
     $scope.pagina.classTitulo = '';
-    $scope.pagina.ajudaTemplateUrl = '';
+    $scope.pagina.ajudaTemplateUrl = 'modules/Certificacao/templates/ajuda/AvaliacaoListaPagina.html';
     $scope.pagina.breadcrumb = [
         {
             title: 'Início',
