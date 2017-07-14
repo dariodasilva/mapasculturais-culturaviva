@@ -115,7 +115,8 @@
                                 </div>
                             </div>
 
-                            <pagination
+                            <ul
+                                uib-pagination
                                 total-items="ref.data.total"
                                 ng-model="ref.pagina"
                                 class="pagination-sm"
@@ -124,7 +125,7 @@
                                 previous-text="&laquo;"
                                 next-text="&raquo;"
                                 >
-                            </pagination>
+                            </ul>
                         </div>
 
                         <div class="blank-slate-pf" ng-show="ref.data.total < 1" style="margin-top: 20px;">
