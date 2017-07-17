@@ -30,8 +30,8 @@ return [
             $conn->executeQuery("INSERT INTO agent_meta (object_id, key, value) VALUES ('{$ids->agentePonto}', 'rcv_tipo', 'ponto')");
         }
     },
-            
-            
+
+
     'migra avatar dos pontos para o agente responsável' => function() use($app, $conn) {
         $umeta = $conn->fetchAll("SELECT value FROM user_meta WHERE key = 'redeCulturaViva';");
 
@@ -97,11 +97,11 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
             $obj = json_decode($meta['value']);
 
             $avatar = $conn->fetchAssoc("
-                SELECT 
-                    * 
-                FROM 
-                    file 
-                WHERE 
+                SELECT
+                    *
+                FROM
+                    file
+                WHERE
                     object_type = 'MapasCulturais\Entities\Agent' AND
                     object_id = {$obj->agentePonto} AND
                     grp = 'avatar'
@@ -110,11 +110,11 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
 //                var_dump($avatar);
                 $fid = $avatar['id'];
                 $thumbs = $conn->fetchAll("
-                    SELECT 
-                        * 
-                    FROM 
-                        file 
-                    WHERE 
+                    SELECT
+                        *
+                    FROM
+                        file
+                    WHERE
                         object_type = 'MapasCulturais\Entities\Agent' AND
                         object_id = {$obj->agentePonto} AND
                         parent_id = {$fid}
@@ -184,5 +184,9 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
         echo "Criando tabelas de Log";
         $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva_log-schema.sql'));
     },
+    'rcv: atualizacao schema' => function() use($app, $conn) {
+        echo "Atualizando as tabelas de certificação da Rede Cultura Viva";
+        $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-update-schema-1.sql'));
+    },
 ];
-        
+
