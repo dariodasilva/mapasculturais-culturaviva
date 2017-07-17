@@ -6,7 +6,7 @@ SELECT
         crit.id,
         insc.id
 FROM culturaviva.inscricao insc
-JOIN culturaviva.criterio crit 
+JOIN culturaviva.criterio crit
 	ON  crit.ativo = TRUE
 LEFT JOIN culturaviva.inscricao_criterio incrit
         ON incrit.inscricao_id = insc.id

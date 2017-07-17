@@ -52,7 +52,6 @@ function importar() {
     $conn->executeQuery(loadScript('3-incluir-criterios-inscricoes.sql'));
 
 
-
     // 2º Passo: DISTRIBUIR AVALIAÇÕES
     print("Remover avaliações avaliadores inativos:\n");
     $conn->executeQuery(loadScript('4-remover-avaliacoes-avaliador-inativo.sql'));
@@ -112,7 +111,9 @@ function importar() {
             CURRENT_TIMESTAMP,
             1,
             'MapasCulturais\Entities\Agent',
-            $agent_id
+            $agent_id,
+            $agent_id,
+            CURRENT_TIMESTAMP
         FROM agent a
         JOIN agent_meta am
             ON am.object_id = a.id
@@ -138,7 +139,7 @@ function importar() {
  * @return type
  */
 function inserirAvaliacaoCertificador($conn, $filtro) {
-    $inscricoes = $conn->fetchAll(loadScript('5-obter-inscricoes-sem-avaliacao.sql'), $filtro);
+    $inscricoes = $conn->fetchAll(loadScript('5-obter-inscricoes-para-distribuir.sql'), $filtro);
     if (!isset($inscricoes) || empty($inscricoes)) {
         // Nao existem INSCRICOES para distribuir
         return;
@@ -150,25 +151,65 @@ function inserirAvaliacaoCertificador($conn, $filtro) {
         return;
     }
 
-    $inscricao = current($inscricoes);
-    while (true) {
-        if ($inscricao === false) {
-            break;
+    $totalCertificadores = count($certificadores);
+
+    // Relação para novos certificadores e inscrições
+    $certInscric = [];
+    foreach ($inscricoes as $index => $inscricao) {
+
+        $idx = $index % $totalCertificadores;
+        if (!isset($certInscric[$idx])) {
+            $certInscric[$idx] = [];
         }
-        foreach ($certificadores as $certificador) {
+        array_push($certInscric[$idx], $inscricao['id']);
+    }
 
-            $conn->executeQuery("INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado) VALUES (?, ?, ?)", [
-                $inscricao['id'], $certificador['id'], 'P'
-            ]);
 
-            $inscricao = next($inscricoes);
-            if ($inscricao === false) {
-                break;
-            }
+
+    foreach ($certificadores as $index => $certificador) {
+        $idCertificador = $certificador['id'];
+        if(!isset($certInscric[$index])){
+            continue;
+        }
+        foreach ($certInscric[$index] as $idInscricao) {
+            // Cancela as avaliações atuais associados a outro certificador
+            $conn->executeQuery(
+                    "UPDATE culturaviva.avaliacao SET estado = 'C'
+                    WHERE inscricao_id = ?
+                    AND certificador_id <> ?
+                    AND estado = 'P'
+                    AND EXISTS(
+                        SELECT aval.id
+                        FROM culturaviva.avaliacao aval
+                        JOIN culturaviva.certificador cert
+                                on cert.id = aval.certificador_id
+                                AND cert.tipo = 'P'
+                        WHERE aval.estado = 'P'
+                        AND aval.inscricao_id = ?
+                    )
+                ", [ $idInscricao, $idCertificador, $idInscricao]);
+
+            // Registra avaliação com o certificador atual
+            $conn->executeQuery(
+                    "INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado)
+                    SELECT $idInscricao, $idCertificador, 'P'
+                    WHERE NOT EXISTS (
+                        SELECT aval.id
+                        FROM culturaviva.avaliacao aval
+                        WHERE inscricao_id = $idInscricao
+                        and certificador_id = $idCertificador
+                        AND estado = 'P'
+                    )");
         }
     }
 }
 
+/**
+ * @todo Executar mesmo processo anterior
+ *
+ * @param type $conn
+ * @return type
+ */
 function inserirAvaliacaoMinerva($conn) {
     $inscricoes = $conn->fetchAll(loadScript('7-obter-inscricoes-avaliacoes-conflitantes.sql'));
     if (!isset($inscricoes) || empty($inscricoes)) {

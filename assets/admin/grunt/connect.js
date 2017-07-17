@@ -13,10 +13,6 @@ module.exports = {
                 port: 80
             }
         ],
-        apimock: {
-            url: '/api',
-            dir: 'apimock/api'
-        },
         options: {
             port: '<%= connectPort %>',
             hostname: 'localhost',
@@ -58,8 +54,6 @@ module.exports = {
 //                    });
                 });
 
-
-                //middlewares.push(require('grunt-connect-apimock/lib/apimock').mockRequest);
 
                 // proxy
                 middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);

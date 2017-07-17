@@ -1,8 +1,32 @@
 <div>
+    <div class="list-group-item" ng-if="!certificadorId">
+        <div class="list-view-pf-main-info" style="padding: 0;">
+            <div class="list-view-pf-body">
+                <div class="list-view-pf-description text-left">
+                    <div class="list-group-item-heading text-center text-danger">
+                        CERTIFICADOR NÃO DEFINIDO
+                    </div>
+                    <div class="list-group-item-text">
+                        <small>perfil: <strong>{{certificadorTipo}}</strong></small>
+                    </div>
+                    <div class="list-group-item-text">
+                        <p>
+                            Ainda não foi feito a distribuição de avaliação para o certificador com este perfil.
+                        </p>
+                        <p>
+                            Certifique-se que exista certificador <strong>ATIVO</strong> e <strong>TITULAR</strong>
+                            cadastrado com este perfil e aguarde a execução da rotina de distribuição.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <a
         class="list-group-item"
         ui-sref="pagina.certificacao.formulario({id:avaliacaoId})"
         ng-class="{'active-cert': certificadorId == usuario.agentId}"
+        ng-if="certificadorId"
         >
         <div class="list-view-pf-main-info" style="padding: 0;">
             <div class="list-view-pf-left">
