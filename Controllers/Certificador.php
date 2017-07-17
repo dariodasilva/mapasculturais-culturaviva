@@ -170,8 +170,7 @@ class Certificador extends \MapasCulturais\Controller {
             }
         }
 
-
-        $certificador->save();
+        $certificador->save(true);
 
         //-------------------------------------------
         // Faz a manutenção das permissões do usuario
@@ -209,28 +208,26 @@ class Certificador extends \MapasCulturais\Controller {
         $this->requireAuthentication();
         $app = App::i();
 
-        $nome = $this->data['nome'];
+        $searchQuery = trim($app->request()->get('nome', ''));
+        if ($searchQuery !== '') {
+            $searchQuery = '%' . $searchQuery . '%';
+        }
 
-        // Agente, diferente do usuario atual
-        $query = 'SELECT
+        $users = $app->em->getConnection()->fetchAll("
+                SELECT
                     a.id,
-                    a.userId,
+                    u.id as \"userId\",
                     a.name
-                FROM \MapasCulturais\Entities\Agent a
-                JOIN a.user u
-                WHERE a.user <> :usuario
-                AND unaccent(lower(a.name)) LIKE unaccent(lower(:nome))
-                ';
+                FROM
+                    usr u
+                    JOIN agent a ON a.id = u.profile_id
+                WHERE (? = '' OR u.email ILIKE ? OR a.name ILIKE ?)
+                ORDER BY email
+                LIMIT 10", [
+            $searchQuery, $searchQuery, $searchQuery
+        ]);
 
-        $agents = $app->em->createQuery($query)
-                ->setParameters([
-                    'usuario' => $app->user,
-                    'nome' => "%$nome%"
-                ])
-                ->setMaxResults(10)
-                ->getResult();
-
-        $this->json($agents);
+        $this->json($users);
     }
 
 }

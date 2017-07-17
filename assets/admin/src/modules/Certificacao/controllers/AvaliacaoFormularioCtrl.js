@@ -76,9 +76,9 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
         }[data.inscricaoEstado];
 
         angular.forEach($scope.avaliacao.criterios, function (criterio) {
-            if (criterio.aprovado) {
+            if (criterio.aprovado === true) {
                 criterio.aprovado = $scope.simNao[0];
-            } else {
+            } else if (criterio.aprovado === false){
                 criterio.aprovado = $scope.simNao[1];
             }
         })
