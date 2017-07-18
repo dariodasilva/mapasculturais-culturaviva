@@ -33,12 +33,12 @@ class Criterio extends \MapasCulturais\Controller {
         }
 
         // Criterios da requisicao
-        $aPersistir = json_decode($app->request()->getBody());
+        $aPersistir = json_decode($app->request()->getBody(), true);
         usort($aPersistir, function ($a, $b) {
-            return $a->ordem - $b->ordem;
+            return $a['ordem'] - $b['ordem'];
         });
         for ($i = 0, $l = count($aPersistir); $i < $l; $i++) {
-            $aPersistir[$i]->ordem = $i + 1;
+            $aPersistir[$i]['ordem'] = $i + 1;
         }
 
         // Os criterios que receberam alteração, devem ser inativados
@@ -88,8 +88,8 @@ class Criterio extends \MapasCulturais\Controller {
             foreach ($aPersistir as $cData) {
                 $criterio = new \CulturaViva\Entities\Criterio();
                 $criterio->ativo = 't';
-                $criterio->ordem = $cData->ordem;
-                $criterio->descricao = $cData->descricao;
+                $criterio->ordem = $cData['ordem'];
+                $criterio->descricao = $cData['descricao'];
                 $criterio->tsCriacao = new \DateTime(date('Y-m-d H:i:s'));
                 $em->persist($criterio);
             }
