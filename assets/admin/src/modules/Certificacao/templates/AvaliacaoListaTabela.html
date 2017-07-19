@@ -39,8 +39,12 @@
                         <tc-notitication id="bag-filtro-agentes"></tc-notitication>
 
                         <div ng-if="ref.data.total > 0" style="margin-top: 20px;">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="inscricao in ref.data.rows">
+                            <div
+                                class="row"
+                                ng-repeat="rows in ref.data.chunk"
+                                style="margin-bottom: 30px; border-bottom: 1px solid #efefef;"
+                                >
+                                <div ng-repeat="inscricao in rows" class="col-xs-12 col-md-4">
                                     <div class="card-pf card-pf-accented card-pf-aggregate-status">
                                         <a
                                             ng-if="inscricao.estado === 'C'"

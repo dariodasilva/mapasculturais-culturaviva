@@ -183,7 +183,7 @@ function inserirAvaliacaoCertificador($conn, $filtro) {
                         FROM culturaviva.avaliacao aval
                         JOIN culturaviva.certificador cert
                                 on cert.id = aval.certificador_id
-                                AND cert.tipo = 'P'
+                                AND cert.tipo = '{$filtro['tipo']}'
                         WHERE aval.estado = 'P'
                         AND aval.inscricao_id = ?
                     )
