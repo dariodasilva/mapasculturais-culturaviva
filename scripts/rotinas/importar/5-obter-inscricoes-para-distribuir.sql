@@ -26,3 +26,4 @@ AND (
         AND aval.inscricao_id = insc.id
     )
 )
+ORDER BY insc.id
