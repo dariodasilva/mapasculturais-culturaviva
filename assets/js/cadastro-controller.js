@@ -1283,6 +1283,7 @@
                                 'formador1_bio,formador1_facebook,formador1_twitter,formador1_google,espacoAprendizagem1_atuacao,espacoAprendizagem1_tipo,' +
                                 'espacoAprendizagem1_desc,metodologia1_nome,metodologia1_desc,metodologia1_necessidades,metodologia1_capacidade,' +
                                 'metodologia1_cargaHoraria,metodologia1_certificacao,homologado_rcv',
+                    '@files':   '(portifolio,gallery,carta1,carta2,ata):url',
                     '@permissions': 'view'
                 };
 
