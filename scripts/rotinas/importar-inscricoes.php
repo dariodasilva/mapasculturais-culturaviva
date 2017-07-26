@@ -168,38 +168,46 @@ function inserirAvaliacaoCertificador($conn, $filtro) {
 
     foreach ($certificadores as $index => $certificador) {
         $idCertificador = $certificador['id'];
-        if(!isset($certInscric[$index])){
+        if (!isset($certInscric[$index])) {
             continue;
         }
+
         foreach ($certInscric[$index] as $idInscricao) {
+
+            // Já possui avaliação deste certificador com o perfil informado para a inscrição?
+            $existe = $conn->fetchColumn(
+                    "SELECT count(0)
+                    FROM culturaviva.avaliacao aval
+                    JOIN culturaviva.certificador cert
+                        ON cert.id = aval.certificador_id
+                        AND cert.tipo = '{$filtro['tipo']}'
+                    WHERE aval.estado <> 'C'
+                    AND aval.inscricao_id = ?
+                    AND aval.certificador_id = ?
+                    ", [ $idInscricao, $idCertificador]);
+
+            if ($existe > 0) {
+                continue;
+            }
+
             // Cancela as avaliações atuais associados a outro certificador
             $conn->executeQuery(
                     "UPDATE culturaviva.avaliacao SET estado = 'C'
-                    WHERE inscricao_id = ?
-                    AND certificador_id <> ?
-                    AND estado = 'P'
-                    AND EXISTS(
+                    WHERE id IN(
                         SELECT aval.id
                         FROM culturaviva.avaliacao aval
                         JOIN culturaviva.certificador cert
-                                on cert.id = aval.certificador_id
-                                AND cert.tipo = '{$filtro['tipo']}'
-                        WHERE aval.estado = 'P'
+                            ON cert.id = aval.certificador_id
+                            AND cert.tipo = '{$filtro['tipo']}'
+                        WHERE aval.estado <> 'C'
                         AND aval.inscricao_id = ?
                     )
-                ", [ $idInscricao, $idCertificador, $idInscricao]);
+                    ", [ $idInscricao]);
 
             // Registra avaliação com o certificador atual
             $conn->executeQuery(
                     "INSERT INTO culturaviva.avaliacao (inscricao_id, certificador_id, estado)
-                    SELECT $idInscricao, $idCertificador, 'P'
-                    WHERE NOT EXISTS (
-                        SELECT aval.id
-                        FROM culturaviva.avaliacao aval
-                        WHERE inscricao_id = $idInscricao
-                        and certificador_id = $idCertificador
-                        AND estado = 'P'
-                    )");
+                    SELECT $idInscricao, $idCertificador, 'P'");
         }
     }
 }
