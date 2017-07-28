@@ -119,7 +119,8 @@ function importar() {
             ON am.object_id = a.id
             AND am.key = 'rcv_tipo'
             AND am.value = 'ponto'
-        WHERE NOT EXISTS (
+        WHERE a.is_verified = 't'
+            NOT EXISTS (
                 SELECT * FROM seal_relation
                 WHERE object_id = a.id
                 AND seal_id = $seal_id
