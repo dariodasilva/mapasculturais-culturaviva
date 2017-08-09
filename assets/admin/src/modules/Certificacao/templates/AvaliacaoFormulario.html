@@ -74,6 +74,7 @@
             ng-model="avaliacao.observacoes"
             rows="8"
             disabled="!avaliacao.autorizaEdicao"
+            ng-required="indeferido()"
             >
         </tc-input-text>
     </tc-form>

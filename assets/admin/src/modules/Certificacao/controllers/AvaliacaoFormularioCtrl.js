@@ -4,7 +4,7 @@ angular
         .module('Certificacao')
         .controller('AvaliacaoFormularioCtrl', AvaliacaoFormularioCtrl);
 
-AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http'];
+AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http', '$window'];
 
 /**
  * Listagem de Inscrições disponíveis para Avaliação
@@ -14,7 +14,7 @@ AvaliacaoFormularioCtrl.$inject = ['$scope', '$state', '$http'];
  * @param {type} $http
  * @returns {undefined}
  */
-function AvaliacaoFormularioCtrl($scope, $state, $http) {
+function AvaliacaoFormularioCtrl($scope, $state, $http, $window) {
 
     /**
      * Indica que o Certificador finalizou a análise da Inscrição como DEFERIDO
@@ -96,7 +96,7 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
         title: '...',
         disabled: true,
         click: function () {
-            salvar(botaoDeferirIndeferir.estadoAcao);
+            submit(botaoDeferirIndeferir.estadoAcao);
         }
     };
 
@@ -135,7 +135,6 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
                 $scope.permiteIndeferir = true;
                 $scope.permiteDeferir = false;
             }
-            console.log(criterio.aprovado);
         }
 
         botaoDeferirIndeferir.disabled = botaoBloqueado;
@@ -160,6 +159,16 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
     $scope.salvar = function (estado) {
         salvar();
     };
+
+    function submit(estado){
+        var formName = 'formCriterios'
+        if($scope[formName].isValid()){
+            salvar(estado);
+        } else {
+            $scope.$emit('msg', 'Existem erros no preenchimento do formulário', null, 'error', formName);
+            $window.scrollTo(0,0);
+        }
+    }
 
     /**
      *
@@ -197,5 +206,11 @@ function AvaliacaoFormularioCtrl($scope, $state, $http) {
             $scope.$emit('msg', msg, null, 'error', 'formulario');
         });
     }
+
+    $scope.indeferido = function(){
+        if($scope.avaliacao != undefined){
+            return $scope.avaliacao.criterios.some(function(c) { return c.aprovado.valor === false; }) ? true : false;
+        }
+    };
 }
 
