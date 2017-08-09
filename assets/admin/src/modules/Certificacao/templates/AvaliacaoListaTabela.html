@@ -86,6 +86,7 @@
                                                 >
 
                                                 <avaliacao-lista-certificador
+                                                    ng-hide="usuario.roles.indexOf('rcv_certificador_civil') > -1"
                                                     certificador-tipo="Poder Publico"
                                                     avaliacao-id="{{inscricao.avaliacaoPublicaId}}"
                                                     certificador-id="{{inscricao.avaliacaoPublicaCertificadorId}}"
@@ -96,6 +97,7 @@
 
                                                 <avaliacao-lista-certificador
                                                     ng-if="inscricao.avaliacaoCivilId"
+                                                    ng-hide="usuario.roles.indexOf('rcv_certificador_publico') > -1"
                                                     certificador-tipo="Sociedade Civil"
                                                     avaliacao-id="{{inscricao.avaliacaoCivilId}}"
                                                     certificador-id="{{inscricao.avaliacaoCivilCertificadorId}}"

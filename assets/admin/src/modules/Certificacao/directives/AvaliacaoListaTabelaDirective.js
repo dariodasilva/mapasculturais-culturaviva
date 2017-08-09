@@ -9,8 +9,8 @@ AvaliacaoListaTabelaDirective.$inject = ['estadosBrasil'];
 
 function AvaliacaoListaTabelaDirective(estadosBrasil) {
 
-    Controller.$inject = ['$scope', '$http'];
-    function Controller($scope, $http) {
+    Controller.$inject = ['$scope', '$http', 'UsuarioSrv'];
+    function Controller($scope, $http, UsuarioSrv) {
         $scope.ref = {
             filtrarTexto: null,
             filtrarUf: null,
@@ -19,6 +19,8 @@ function AvaliacaoListaTabelaDirective(estadosBrasil) {
             pagina: 1,
             data: null
         };
+
+        UsuarioSrv.obterUsuario().then(function (usuario){$scope.usuario = usuario;});
 
         $scope.estadosBrasil = (function () {
             var out = [];
