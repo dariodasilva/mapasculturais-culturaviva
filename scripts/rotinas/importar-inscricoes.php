@@ -127,9 +127,9 @@ function importar() {
         )");
 
 
-    //print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
-    //notificarCertificacoesDeferidas($app, $conn);
-    //notificarCertificacoesIndeferidas($app, $conn);
+    print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
+    notificarCertificacoesDeferidas($app, $conn);
+    notificarCertificacoesIndeferidas($app, $conn);
 }
 
 /**
@@ -281,12 +281,10 @@ function notificarCertificacoesDeferidas($app, $conn) {
                 'subject' => $message['title'],
                 'body' => $message['body']
             ];
-            print_r($dadosEmail);
-            //$app->createAndSendMailMessage($dadosEmail);
-            exit(0);
+            $app->createAndSendMailMessage($dadosEmail);
         } catch (Exception $ex) {
             // faz nada
-            print_r($ex);
+            print($ex);
         }
 
         $registro = next($registros);
@@ -298,6 +296,59 @@ function notificarCertificacoesDeferidas($app, $conn) {
 
 function notificarCertificacoesIndeferidas($app, $conn) {
     print("Notificando via e-mail as inscrições Indeferidas\n");
+
+    $registros = $conn->fetchAll(loadScript('10-obter-inscricoes-indeferidas.sql'));
+    if (!isset($registros) || empty($registros)) {
+        // Nao existem INSCRICOES para distribuir
+        return;
+    }
+
+    $registro = current($registros);
+    while (true) {
+        if ($registro === false) {
+            break;
+        }
+
+        try {
+            $json = json_decode($registro['agents_data']);
+            $emailEntidade = $json->entidade->emailPrivado;
+
+            $avaliacoes = $conn->fetchAll(
+                "SELECT id,certificador_id,estado,observacoes
+                FROM culturaviva.avaliacao
+                WHERE estado='I' AND inscricao_id=?"
+                ,[$registro['id']]);
+            
+            foreach($avaliacoes as &$avaliacao){
+                $avaliacao['criterios'] = $conn->fetchAll(
+                    "SELECT ac.aprovado,c.descricao
+                    FROM culturaviva.avaliacao_criterio ac
+                    JOIN culturaviva.criterio c ON ac.criterio_id = c.id
+                    WHERE ac.avaliacao_id=?"
+                    ,[$avaliacao['id']]
+                );
+            }
+
+            $message = $app->renderMailerTemplate('certificacao_indeferido', [
+                'avaliacoes' => $avaliacoes
+            ]);
+            $dadosEmail = [
+                'from' => $app->config['mailer.from'],
+                'to' => $emailEntidade,
+                'subject' => $message['title'],
+                'body' => $message['body']
+            ];
+            $app->createAndSendMailMessage($dadosEmail);
+        } catch (Exception $ex) {
+            // faz nada
+            print($ex);
+        }
+
+        $registro = next($registros);
+        if ($registro === false) {
+            break;
+        }
+    }
 }
 
 importar();

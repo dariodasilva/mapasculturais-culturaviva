@@ -9,7 +9,15 @@ $config['mailer.templates'] = array_merge($config['mailer.templates'],
         'cadastro_enviado' => [
             'title' => "Cadastro enviado com Sucesso!",
             'template' => 'cadastro_enviado.html'
-        ]
+        ],
+        'certificacao_deferido' => [
+            'title' => "Certificação Rede Cultura Viva",
+            'template' => 'certificacao_deferido.html'
+        ],
+        'certificacao_indeferido' => [
+            'title' => "Certificação Rede Cultura Viva",
+            'template' => 'certificacao_indeferido.html'
+        ],
     ]
 );
 
