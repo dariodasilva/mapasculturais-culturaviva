@@ -44,7 +44,7 @@ function importar() {
     print("Registra as inscricoes dos pontos de cultura\n");
     $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
 
-    print("Remover critérios inativos de inscrições não finaliadas\n");
+    print("Remover critérios inativos de inscrições não finalizadas\n");
     $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
     $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_B.sql'));
 
@@ -127,7 +127,7 @@ function importar() {
         )");
 
 
-    print("Notificando via e-mail as entidades com inscrições finaliadas (Deferidas e Indeferidas)\n");
+    print("Notificando via e-mail as entidades com inscrições finalizadas (Deferidas e Indeferidas)\n");
     notificarCertificacoesDeferidas($app, $conn);
     notificarCertificacoesIndeferidas($app, $conn);
 }
@@ -271,13 +271,15 @@ function notificarCertificacoesDeferidas($app, $conn) {
         try {
             $json = json_decode($registro['agents_data']);
             $emailEntidade = $json->entidade->emailPrivado;
+            $emailResponsavel = $json->owner->emailPrivado;
 
             $message = $app->renderMailerTemplate('certificacao_deferido', [
                 'name' => 'x'
             ]);
             $dadosEmail = [
                 'from' => $app->config['mailer.from'],
-                'to' => $emailEntidade,
+                'to' => $emailResponsavel,
+                'cc' => $emailEntidade,
                 'subject' => $message['title'],
                 'body' => $message['body']
             ];
@@ -312,6 +314,7 @@ function notificarCertificacoesIndeferidas($app, $conn) {
         try {
             $json = json_decode($registro['agents_data']);
             $emailEntidade = $json->entidade->emailPrivado;
+            $emailResponsavel = $json->owner->emailPrivado;
 
             $avaliacoes = $conn->fetchAll(
                 "SELECT id,certificador_id,estado,observacoes
@@ -334,7 +337,8 @@ function notificarCertificacoesIndeferidas($app, $conn) {
             ]);
             $dadosEmail = [
                 'from' => $app->config['mailer.from'],
-                'to' => $emailEntidade,
+                'to' => $emailResponsavel,
+                'cc' => $emailEntidade,
                 'subject' => $message['title'],
                 'body' => $message['body']
             ];

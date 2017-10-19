@@ -11,11 +11,11 @@ $config['mailer.templates'] = array_merge($config['mailer.templates'],
             'template' => 'cadastro_enviado.html'
         ],
         'certificacao_deferido' => [
-            'title' => "Certificação Rede Cultura Viva",
+            'title' => "Aviso de habilitação do cadastro na plataforma cultura viva - MinC",
             'template' => 'certificacao_deferido.html'
         ],
         'certificacao_indeferido' => [
-            'title' => "Certificação Rede Cultura Viva",
+            'title' => "Aviso de inabilitação do cadastro na plataforma cultura viva - MinC",
             'template' => 'certificacao_indeferido.html'
         ],
     ]
