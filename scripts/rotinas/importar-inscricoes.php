@@ -41,8 +41,8 @@ function importar() {
 
 
     // 1º Passo: REGISTRO DE INSCRIÇÕES
-    print("Registra as inscricoes dos pontos de cultura\n");
-    $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
+    // print("Registra as inscricoes dos pontos de cultura\n");
+    // $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
 
     print("Remover critérios inativos de inscrições não finalizadas\n");
     $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
@@ -128,8 +128,8 @@ function importar() {
 
 
     print("Notificando via e-mail as entidades com inscrições finalizadas (Deferidas e Indeferidas)\n");
-    notificarCertificacoesDeferidas($app, $conn);
-    notificarCertificacoesIndeferidas($app, $conn);
+    // notificarCertificacoesDeferidas($app, $conn);
+    // notificarCertificacoesIndeferidas($app, $conn);
 }
 
 /**
