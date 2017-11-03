@@ -41,8 +41,8 @@ function importar() {
 
 
     // 1º Passo: REGISTRO DE INSCRIÇÕES
-    // print("Registra as inscricoes dos pontos de cultura\n");
-    // $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
+    print("Registra as inscricoes dos pontos de cultura\n");
+    $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
 
     print("Remover critérios inativos de inscrições não finalizadas\n");
     $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
@@ -75,21 +75,23 @@ function importar() {
 
     // Marca agentes como verificados
     $conn->executeQuery("
-    UPDATE agent SET is_verified=TRUE
-    WHERE agent.id IN (
-        SELECT ponto.id
-        FROM culturaviva.inscricao insc
-        JOIN registration reg
-            ON reg.agent_id = insc.agente_id
-            AND reg.project_id = 1
-        JOIN agent_relation rel_ponto
-            ON rel_ponto.object_id = reg.id
-            AND rel_ponto.type = 'ponto'
+    INSERT INTO agent_meta (object_id,key,value)
+    SELECT
+        ponto.id,
+        'homologado_rcv',
+        1
+    FROM culturaviva.inscricao insc
+    JOIN registration reg
+        ON reg.agent_id = insc.agente_id
+        AND reg.project_id = 1
+        AND reg.status = 1
+    JOIN agent_relation rel_ponto
+        ON rel_ponto.object_id = reg.id
+        AND rel_ponto.type = 'ponto'
         AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
-        JOIN agent ponto
-            ON ponto.id = rel_ponto.agent_id
-            AND ponto.is_verified = FALSE
-        WHERE insc.estado = 'C'
+    JOIN agent ponto
+        ON ponto.id = rel_ponto.agent_id
+    WHERE insc.estado = 'C'
         AND not exists (
             SELECT
                     *
@@ -97,7 +99,16 @@ function importar() {
             WHERE seal_id = 1
             AND agent_id = ponto.id
         )
-    )");
+        AND not exists (
+            SELECT
+                    *
+            FROM agent_meta am
+            JOIN agent a
+                ON a.id = am.object_id
+                AND key = 'homologado_rcv'
+            WHERE a.user_id = ponto.user_id
+        )
+    ");
 
     $agent_id = $app->config['rcv.admin'];
     $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
@@ -128,8 +139,8 @@ function importar() {
 
 
     print("Notificando via e-mail as entidades com inscrições finalizadas (Deferidas e Indeferidas)\n");
-    // notificarCertificacoesDeferidas($app, $conn);
-    // notificarCertificacoesIndeferidas($app, $conn);
+    notificarCertificacoesDeferidas($app, $conn);
+    notificarCertificacoesIndeferidas($app, $conn);
 }
 
 /**
