@@ -39,41 +39,16 @@ function importar() {
     $app = MapasCulturais\App::i();
     $conn = $app->em->getConnection();
 
+    // 1º Passo: DEFERIMENTO E INDEFERIMENTO DE INSCRIÇÕES (CERTIFICAÇÃO)
+    print("Atualizando inscrições avaliadas\n");
+    $conn->exec(loadScript('8-atualizar-inscricoes-avaliadas.sql'));
 
-    // 1º Passo: REGISTRO DE INSCRIÇÕES
-    print("Registra as inscricoes dos pontos de cultura\n");
-    $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
-
-    print("Remover critérios inativos de inscrições não finalizadas\n");
-    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
-    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_B.sql'));
-
-    print("Registrar os critérios das inscrições\n");
-    $conn->executeQuery(loadScript('3-incluir-criterios-inscricoes.sql'));
-
-
-    // 2º Passo: DISTRIBUIR AVALIAÇÕES
-    print("Remover avaliações avaliadores inativos:\n");
-    $conn->executeQuery(loadScript('4-remover-avaliacoes-avaliador-inativo.sql'));
-
-    print("Distribuir avaliações para Representantes da Sociedade Civil\n");
-    inserirAvaliacaoCertificador($conn, ['tipo' => 'C']);
-
-    print("Distribuir avaliações para Representantes do Poder Publico\n");
-    inserirAvaliacaoCertificador($conn, ['tipo' => 'P']);
-
-
-    // 3º Passo: DISTRIBUIR VOTOS DE MINERVA
-    print("Distribuir avaliações para Certificadores com Voto de Minerva\n");
-    inserirAvaliacaoMinerva($conn);
-
-    // 4º Passo: DEFERIMENTO E INDEFERIMENTO DE INSCRIÇÕES (CERTIFICAÇÃO)
-    print("Atualiando inscrições avaliadas\n");
-    $conn->executeQuery(loadScript('8-atualizar-inscricoes-avaliadas.sql'));
-
-    print("Atualiando inscrições certificadas\n");
+    print("Atualizando inscrições certificadas\n");
 
     // Marca agentes como verificados
+    $agent_id = $app->config['rcv.admin'];
+    $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
+
     $conn->executeQuery("
     INSERT INTO agent_meta (object_id,key,value)
     SELECT
@@ -96,7 +71,7 @@ function importar() {
             SELECT
                     *
             FROM seal_relation
-            WHERE seal_id = 1
+            WHERE seal_id = $seal_id
             AND agent_id = ponto.id
         )
         AND not exists (
@@ -109,9 +84,6 @@ function importar() {
             WHERE a.user_id = ponto.user_id
         )
     ");
-
-    $agent_id = $app->config['rcv.admin'];
-    $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
 
     $conn->executeQuery("
         INSERT INTO seal_relation
@@ -136,6 +108,37 @@ function importar() {
                 WHERE object_id = a.id
                 AND seal_id = $seal_id
         )");
+
+
+    // 2º Passo: REGISTRO DE INSCRIÇÕES
+    print("Registra as inscricoes dos pontos de cultura\n");
+    $conn->executeQuery(loadScript('1-registrar-inscricoes.sql'));
+
+    print("Registra as ressubmissões dos pontos de cultura\n");
+    $conn->executeQuery(loadScript('11-registrar-ressubmissoes.sql'));
+
+    print("Remover critérios inativos de inscrições não finalizadas\n");
+    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_A.sql'));
+    $conn->executeQuery(loadScript('2-remover-criterios-inscricoes_B.sql'));
+
+    print("Registrar os critérios das inscrições\n");
+    $conn->executeQuery(loadScript('3-incluir-criterios-inscricoes.sql'));
+
+
+    // 3º Passo: DISTRIBUIR AVALIAÇÕES
+    print("Remover avaliações avaliadores inativos:\n");
+    $conn->executeQuery(loadScript('4-remover-avaliacoes-avaliador-inativo.sql'));
+
+    print("Distribuir avaliações para Representantes da Sociedade Civil\n");
+    inserirAvaliacaoCertificador($conn, ['tipo' => 'C']);
+
+    print("Distribuir avaliações para Representantes do Poder Publico\n");
+    inserirAvaliacaoCertificador($conn, ['tipo' => 'P']);
+
+
+    // 4º Passo: DISTRIBUIR VOTOS DE MINERVA
+    print("Distribuir avaliações para Certificadores com Voto de Minerva\n");
+    inserirAvaliacaoMinerva($conn);
 
 
     print("Notificando via e-mail as entidades com inscrições finalizadas (Deferidas e Indeferidas)\n");

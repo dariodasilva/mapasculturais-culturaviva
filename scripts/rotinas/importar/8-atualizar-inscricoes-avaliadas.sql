@@ -7,7 +7,7 @@ SELECT
         'C'::CHAR AS estado
 INTO TEMP TABLE deferidas
 FROM culturaviva.inscricao insc
-WHERE insc.estado = ANY(ARRAY['P','R'])
+WHERE insc.estado = ANY(ARRAY['P','R','C'])
 AND (
 	SELECT COUNT(0)
         FROM culturaviva.avaliacao av
@@ -21,7 +21,7 @@ SELECT
         'N'::CHAR AS estado
 INTO TEMP TABLE indeferidas
 FROM culturaviva.inscricao insc
-WHERE insc.estado = ANY(ARRAY['P','R'])
+WHERE insc.estado = ANY(ARRAY['P','R','N'])
 AND (
         SELECT COUNT(0)
         FROM culturaviva.avaliacao av
@@ -38,7 +38,7 @@ SELECT * INTO TEMP TABLE todas FROM (
 UPDATE culturaviva.inscricao SET
     estado = e.estado,
     ts_finalizacao = CURRENT_TIMESTAMP
-FROM ( SELECT id, estado FROM todas ) AS e
+FROM ( SELECT id, estado FROM todas WHERE estado NOT IN ('C','N') ) AS e
 WHERE culturaviva.inscricao.id = e.id;
 
 UPDATE registration SET
@@ -50,5 +50,3 @@ UPDATE registration SET
     )
 FROM ( SELECT agente, estado FROM todas ) AS e
 WHERE registration.agent_id = e.agente AND registration.status = 1 AND project_id = 1;
-
-
