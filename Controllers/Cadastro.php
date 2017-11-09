@@ -510,6 +510,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $user = $app->user;
 
             $user->profile->rcv_tipo = 'responsavel';
+            $user->profile->status = \MapasCulturais\Entities\Agent::STATUS_ENABLED;
             $user->profile->save(true);
 
             $project = $app->repo('Project')->find($app->config['redeCulturaViva.projectId']); //By(['owner' => 1], ['id' => 'asc'], 1);
