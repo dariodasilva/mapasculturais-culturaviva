@@ -11,6 +11,11 @@ LEFT JOIN culturaviva.inscricao insc
 WHERE r.project_id = 1
 AND r.status = 1
 AND insc.estado = 'N'
+AND NOT EXISTS (
+	SELECT id
+	FROM culturaviva.inscricao
+	WHERE agente_id = r.agent_id AND estado = 'R'
+)
 AND r.agent_id NOT IN (
 	SELECT parent_id
 	FROM agent a

@@ -48,5 +48,5 @@ UPDATE registration SET
 	        WHEN e.estado = 'N' THEN 3
 	    END
     )
-FROM ( SELECT agente, estado FROM todas ) AS e
+FROM ( SELECT agente, estado FROM todas WHERE agente <> 17569 AND estado <> 'N'  ) AS e
 WHERE registration.agent_id = e.agente AND registration.status = 1 AND project_id = 1;
