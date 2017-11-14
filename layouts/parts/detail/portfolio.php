@@ -1,8 +1,11 @@
 <div  >
     <div class="form">
-        <h4>Informações Obrigatórias</h4>
         <div class="row">
-            <span class="destaque">Portfólio</span>
+            <span><b> * Campos Obrigatórios </b></span>
+        </div>
+        <!-- <h4>Informações Obrigatórias</h4> -->
+        <div class="row">
+            <span class="destaque">Portfólio*</span>
                 <div class="colunm1">
                     <a ng-if="ponto['@files:portifolio'].url" href="{{ponto['@files:portifolio'].url}}" target="_blank">Baixar Arquivo</a>
                     <a ng-if="ponto.atividadesEmRealizacaoLink" href="{{ponto.atividadesEmRealizacaoLink}}" target="_blank">{{ponto.atividadesEmRealizacaoLink}}</a>
@@ -19,11 +22,11 @@
           </div>
         </div>
 
+        <!-- <div class="row"> -->
+            <!-- <h4>Cartas de Reconhecimento</h4> -->
+        <!-- </div> -->
         <div class="row">
-            <h4>Cartas de Reconhecimento</h4>
-        </div>
-        <div class="row">
-            <span class="destaque">Cartas de Reconhecimento</span>
+            <span class="destaque">Cartas de Reconhecimento*</span>
             <div class="colunm1">
               <a ng-if="ponto['@files:carta1'].url" href="{{ponto['@files:carta1'].url}}" target="_blank">Baixar primeira carta</a>
               <span ng-if="!ponto['@files:carta1'].url"><b>Não informado</b></span>
@@ -36,7 +39,7 @@
         <div class="clear"></div>
     </div>
     <div class="form form-opcional">
-        <h4>Informações Opcionais</h4>
+        <!-- <h4>Informações Opcionais</h4> -->
         <div class="row">
             <span class="destaque destaque-conecte">Redes sociais:</span>
         </div>
@@ -98,10 +101,10 @@
         <div class="row">
             <span class="destaque">Fotos de Divulgação do Ponto de Cultura</span>
             <div class="colunm1">
-                <div class="img_updade file-item" ng-repeat="f in ponto.files.gallery">
-                    <img src="{{f.files.avatarBig.url}}" width="160" height="138">
+                <div class="img_updade file-item" ng-repeat="f in ponto['@files:gallery']">
+                    <img src="{{f.url}}" width="160" height="138">
                 </div>
-                <span ng-if="!ponto.files.gallery"><b>Não informado</b></span>
+                <span ng-if="!ponto['@files:gallery']"><b>Não informado</b></span>
             </div>
         </div>
     </div>

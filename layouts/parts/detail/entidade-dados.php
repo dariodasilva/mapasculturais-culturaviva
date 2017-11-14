@@ -1,14 +1,17 @@
 <div  >
     <div class="form">
-        <h4>Informações Obrigatórias</h4>
+        <div class="row">
+            <span><b> * Campos Obrigatórios </b></span>
+        </div>
+        <!-- <h4>Informações Obrigatórias</h4> -->
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Tipo de organização</span>
+                <span class="destaque">Tipo de organização*</span>
                 <span><b>{{entidade.tipoOrganizacao}}</b></span>
                 <span ng-if="!entidade.tipoOrganizacao"><b>Não informado</b></span>
             </label>
             <label class="colunm-50" ng-show="entidade.tipoOrganizacao">
-                <span class="destaque">Quero ser</span>
+                <span class="destaque">Quero ser*</span>
                 <span><b>{{entidade.tipoPontoCulturaDesejado}}</b></span>
                 <span ng-if="!entidade.tipoPontoCulturaDesejado"><b>Não informado</b></span>
             </label>
@@ -18,7 +21,7 @@
         <div ng-show="entidade.tipoOrganizacao==='coletivo'">
             <div class="row">
                 <label class="colunm-50">
-                    <span class="destaque">Nome do Coletivo Cultural</span>
+                    <span class="destaque">Nome do Coletivo Cultural*</span>
                     <span><b>{{entidade.name}}</b></span>
                     <span ng-if="!entidade.name"><b>Não informado</b></span>
                 </label>
@@ -30,7 +33,7 @@
             <div ng-show="entidade.tipoOrganizacao==='entidade'">
                 <div class="row">
                     <label class="colunm-50">
-                        <span class="destaque"><b>CNPJ da Entidade</b></span>
+                        <span class="destaque"><b>CNPJ da Entidade*</b></span>
                         <span><b>{{entidade.cnpj}}</b></span>
                     <label class="colunm-50">
                         <span class="destaque">Nome da Razão Social da Entidade*</span>
@@ -42,13 +45,13 @@
                 <div class="clear"></div>
                 <div class="row">
                     <label class="colunm-50">
-                        <span class="destaque">Nome do Representante Legal</span>
+                        <span class="destaque">Nome do Representante Legal*</span>
                         <span><b>{{entidade.representanteLegal}}</b></span>
                         <span ng-if="!entidade.representanteLegal"><b>Não informado</b></span>
                     </label>
 
                     <label class="colunm-50">
-                        <span class="destaque">Nome Fantasia</span>
+                        <span class="destaque">Nome Fantasia*</span>
                         <span><b>{{entidade.name}}</b></span>
                         <span ng-if="!entidade.name"><b>Não informado</b></span>
                     </label>
@@ -74,13 +77,13 @@
 
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Nome do Responsável pela Entidade/Coletivo</span>
+                <span class="destaque">Nome do Responsável pela Entidade/Coletivo*</span>
                 <span><b>{{entidade.responsavel_nome}}</b></span>
                 <span ng-if="!entidade.responsavel_nome"><b>Não informado</b></span>
             </label>
 
             <label class="colunm2">
-                <span>Cargo do Responsável</span>
+                <span>Cargo do Responsável*</span>
                 <span><b>{{entidade.responsavel_cargo}}</b></span>
                 <span ng-if="!entidade.responsavel_cargo"><b>Não informado</b></span>
             </label>
@@ -88,13 +91,13 @@
         <div class="clear"></div>
         <div class="row">
             <label class="colunm1">
-                <span>Email do Responsável</span>
+                <span>Email do Responsável*</span>
                 <span><b>{{entidade.responsavel_email}}</b></span>
                 <span ng-if="!entidade.responsavel_email"><b>Não informado</b></span>
             </label>
 
             <label class="colunm2">
-                <span>Telefone do Responsável</span>
+                <span>Telefone do Responsável*</span>
                 <span><b>{{entidade.responsavel_telefone}}</b></span>
                 <span ng-if="!entidade.responsavel_telefone"><b>Não informado</b></span>
             </label>
@@ -108,7 +111,7 @@
 
         <div class="row">
             <label class="colunm-full">
-                <span class="destaque">Email institucional da Entidade/Coletivo</span>
+                <span class="destaque">Email institucional da Entidade/Coletivo*</span>
                 <span><b>{{entidade.emailPrivado}}</b></span>
                 <span ng-if="!entidade.emailPrivado"><b>Não informado</b></span>
             </label>
@@ -116,7 +119,7 @@
         <div class="clear"></div>
         <div class="row">
             <label class="colunm05">
-                <span>Telefone institucional da Entidade/Coletivo</span>
+                <span>Telefone institucional da Entidade/Coletivo*</span>
                 <span><b>{{entidade.telefone1}}</b></span>
                 <span ng-if="!entidade.telefone1"><b>Não informado</b></span>
             </label>
@@ -145,13 +148,13 @@
 
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Endereço da Entidade/Coletivo</span>
+                <span class="destaque">Endereço da Entidade/Coletivo*</span>
             </label>
         </div>
         <div class="clear"></div>
         <div class="row">
           <label class="colunm05">
-            <span>País</span>
+            <span>País*</span>
             <span><b>{{entidade.pais}}</b></span>
             <span ng-if="!entidade.pais"><b>Não informado</b></span>
           </label>
