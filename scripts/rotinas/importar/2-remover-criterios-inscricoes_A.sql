@@ -13,5 +13,5 @@ WHERE (criterio_id, inscricao_id) IN (
 	JOIN culturaviva.criterio crit 
 		ON crit.id = incrit.criterio_id
 		AND crit.ativo = FALSE
-	WHERE insc.estado = 'P'
+	WHERE insc.estado = ANY(ARRAY['P'::text, 'R'::text])
 );

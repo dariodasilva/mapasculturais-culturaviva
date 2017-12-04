@@ -11,5 +11,5 @@ JOIN culturaviva.criterio crit
 LEFT JOIN culturaviva.inscricao_criterio incrit
         ON incrit.inscricao_id = insc.id
 	AND incrit.criterio_id = crit.id
-WHERE insc.estado = 'P'
+WHERE insc.estado = ANY(ARRAY['P'::text, 'R'::text])
 AND incrit.inscricao_id IS NULL;
