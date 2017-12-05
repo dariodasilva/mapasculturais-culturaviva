@@ -152,7 +152,7 @@ $this->includeAngularEntityAssets($entity);
         <?php $this->part('related-agents.php', array('entity'=>$entity)); ?>
     <!-- Related Agents END -->
 
-    <?php if(count($entity->spaces) > 0): ?>
+    <?php if(is_array($entity->spaces) && count($entity->spaces) > 0): ?>
     <div class="widget">
         <h3><?php $this->dict('entities: Spaces of the agent') ?></h3>
         <ul class="widget-list js-slimScroll">
