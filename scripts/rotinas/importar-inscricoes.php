@@ -50,8 +50,9 @@ function importar() {
     $seal_id = $conn->fetchColumn("SELECT id FROM seal WHERE agent_id = $agent_id and name = 'Ponto de Cultura'");
 
     $conn->executeQuery("
-    INSERT INTO agent_meta (object_id,key,value)
+    INSERT INTO agent_meta (id,object_id,key,value)
     SELECT
+        nextval('agent_meta_id_seq'),
         ponto.id,
         'homologado_rcv',
         1
@@ -59,7 +60,7 @@ function importar() {
     JOIN registration reg
         ON reg.agent_id = insc.agente_id
         AND reg.project_id = 1
-        AND reg.status = 1
+        AND reg.status = 10
     JOIN agent_relation rel_ponto
         ON rel_ponto.object_id = reg.id
         AND rel_ponto.type = 'ponto'
