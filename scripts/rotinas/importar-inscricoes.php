@@ -103,7 +103,11 @@ function importar() {
             ON am.object_id = a.id
             AND am.key = 'rcv_tipo'
             AND am.value = 'ponto'
-        WHERE a.is_verified = 't' AND
+        WHERE EXISTS (
+                SELECT * FROM agent_meta
+                WHERE object_id = am.object_id
+                AND key = 'homologado_rcv'
+            ) AND
             NOT EXISTS (
                 SELECT * FROM seal_relation
                 WHERE object_id = a.id
