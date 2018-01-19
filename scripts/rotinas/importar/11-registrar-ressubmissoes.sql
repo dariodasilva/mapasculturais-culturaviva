@@ -8,7 +8,7 @@ SELECT
 FROM registration r
 LEFT JOIN culturaviva.inscricao insc
     ON insc.agente_id = r.agent_id
-WHERE r.project_id = 1
+WHERE r.opportunity_id = 1
 AND r.status = 1
 AND insc.estado = 'N'
 AND NOT EXISTS (

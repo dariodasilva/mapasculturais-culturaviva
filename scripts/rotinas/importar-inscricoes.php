@@ -59,7 +59,7 @@ function importar() {
     FROM culturaviva.inscricao insc
     JOIN registration reg
         ON reg.agent_id = insc.agente_id
-        AND reg.project_id = 1
+        AND reg.opportunity_id = 1
         AND reg.status = 10
     JOIN agent_relation rel_ponto
         ON rel_ponto.object_id = reg.id

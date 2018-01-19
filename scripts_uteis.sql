@@ -111,7 +111,7 @@ INSERT INTO culturaviva.inscricao(agente_id, estado)
     FROM registration r
     LEFT JOIN culturaviva.inscricao insc
             on insc.agente_id = r.agent_id
-    WHERE r.project_id = 1
+    WHERE r.opportunity_id = 1
     AND r.status = 1
     AND insc.id IS NULL AND (insc.estado = 'P' OR insc.estado is null);
 
@@ -188,7 +188,7 @@ INSERT INTO culturaviva.inscricao(agente_id, estado)
 FROM registration r
 LEFT JOIN culturaviva.inscricao insc
         on insc.agente_id = r.agent_id
-WHERE r.project_id = 1
+WHERE r.opportunity_id = 1
 AND r.status = 1
 AND insc.id IS NULL AND (insc.estado = 'P' OR insc.estado is null);
 

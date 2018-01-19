@@ -129,7 +129,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             JOIN usr usuario ON usuario.id = agente.user_id
             JOIN registration reg
                 on reg.agent_id = insc.agente_id
-                AND reg.project_id = 1
+                AND reg.opportunity_id = 1
                 AND reg.status = 1
             JOIN agent_relation rel_entidade
                 ON rel_entidade.object_id = reg.id
@@ -259,7 +259,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             JOIN usr usuario ON usuario.id = agente.user_id
             JOIN registration reg
                 on reg.agent_id = insc.agente_id
-                AND reg.project_id = 1
+                AND reg.opportunity_id = 1
             join agent_relation rel_entidade
                 ON rel_entidade.object_id = reg.id
                 AND rel_entidade.type = 'entidade'
