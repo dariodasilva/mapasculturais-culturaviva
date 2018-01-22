@@ -27,8 +27,8 @@ return [
     'app.siteDescription' => '',
     'rcv.apiCNPJ' => 'http://culturaviva.gov.br/wp-admin/admin-ajax.php',
     'rcv.apiCNPJRF' => 'http://sistemasweb.cultura.gov.br/minc-pessoa/servicos/pessoa_juridica/consultar/',
-    //'rcv.apiHeader' => 'http://culturaviva.gov.br/wp-admin/admin-ajax.php',
-    'rcv.apiHeader' => 'http://dev.culturaviva.gov.br/wp-admin/admin-ajax.php',
+    'rcv.apiHeader' => 'http://culturaviva.gov.br/wp-admin/admin-ajax.php',
+//  'rcv.apiHeader' => 'http://dev.culturaviva.gov.br/wp-admin/admin-ajax.php',
     // desabilitando as divisões geográficas porque não foram importados os shapefiles
     'app.geoDivisionsHierarchy' => [],
 
