@@ -513,7 +513,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $user->profile->status = \MapasCulturais\Entities\Agent::STATUS_ENABLED;
             $user->profile->save(true);
 
-            $project = $app->repo('Project')->find($app->config['redeCulturaViva.projectId']); //By(['owner' => 1], ['id' => 'asc'], 1);
+            $opportunity = $app->repo('Opportunity')->find($app->config['redeCulturaViva.projectId']); //By(['owner' => 1], ['id' => 'asc'], 1);
             //
             // define o agente padrão (profile) como rascunho
             $app->disableAccessControl(); // não sei se é necessário desabilitar
@@ -551,9 +551,10 @@ class Cadastro extends \MapasCulturais\Controller{
             // relaciona o agente responsável, que é o proprietário da inscrição
             $registration = new \MapasCulturais\Entities\Registration;
             $registration->owner = $user->profile;
-            $registration->project = $project;
+            $registration->opportunity = $opportunity;
 
             // inserir que as inscricoes online estao ativadas
+
             $registration->save(true);
 
             $user->redeCulturaViva = json_encode([
