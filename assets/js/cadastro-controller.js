@@ -547,14 +547,16 @@
                 var params = {
                     'id': agent_id,
                     '@select': 'id,files',
-                    '@version': '1', // @todo: refatorar para nova versão da api
-                    '@permissions': 'view'
+                    // '@version': '1', // @todo: refatorar para nova versão da api
+                    '@permissions': 'view',
+                    '@files': '(avatar,avatar.avatarSmall,downloads,gallery,ata,portifolio):url'
                 };
 
 
                 $scope.agent = Entity.get(params);
+
                 $scope.agent.$promise.then(function(){
-                    $scope.agent.files.gallery = $scope.agent.files.gallery || [];
+                    $scope.agent = {files: {gallery: $scope.agent["@files:gallery"] || []} };
                 });
 
             };
