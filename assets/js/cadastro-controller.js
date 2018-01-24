@@ -532,7 +532,6 @@
      app.controller('ImageUploadCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', '$http',
         function ImageUploadCtrl($scope, Entity, MapasCulturais, Upload, $timeout, $http) {
 
-
             var agent_id;
             $scope.init = function(rcv_tipo){
 
@@ -547,16 +546,28 @@
                 var params = {
                     'id': agent_id,
                     '@select': 'id,files',
-                    // '@version': '1', // @todo: refatorar para nova versão da api
                     '@permissions': 'view',
-                    '@files': '(avatar,avatar.avatarSmall,downloads,gallery,ata,portifolio):url'
+                    '@files': '(avatar,avatar.avatarSmall,avatar.avatarMedium,avatar.avatarBig,gallery,ata,portifolio,carta1,carta2):url'
                 };
 
 
                 $scope.agent = Entity.get(params);
-
                 $scope.agent.$promise.then(function(){
-                    $scope.agent = {files: {gallery: $scope.agent["@files:gallery"] || []} };
+                    $scope.agent.files = {
+                        'portifolio': $scope.agent['@files:portifolio'],
+                        'gallery': $scope.agent['@files:gallery'] || [],
+                        'carta1': $scope.agent['@files:carta1'] || [],
+                        'carta2': $scope.agent['@files:carta2'] || [],
+                        'ata': $scope.agent['@files:ata'] || [],
+                        'avatar': {
+                            url: $scope.agent['@files:avatar'].url || [],
+                            files: {
+                                avatarSmall: $scope.agent['@files:avatar.avatarSmall'] || [],
+                                avatarMedium: $scope.agent['@files:avatar.avatarMedium'] || [],
+                                avatarBig: $scope.agent['@files:avatar.avatarBig'] || [],
+                            },
+                        },
+                    };
                 });
 
             };
