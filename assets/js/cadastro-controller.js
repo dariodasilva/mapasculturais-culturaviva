@@ -547,29 +547,49 @@
                     'id': agent_id,
                     '@select': 'id,files',
                     '@permissions': 'view',
-                    '@files': '(avatar,avatar.avatarSmall,avatar.avatarMedium,avatar.avatarBig,gallery,ata,portifolio,carta1,carta2):url'
+                    '@files': '(avatar,avatar.avatarSmall,avatar.avatarMedium,avatar.avatarBig,gallery,ata,portifolio,carta1,carta2):url,id,name'
                 };
 
 
                 $scope.agent = Entity.get(params);
                 $scope.agent.$promise.then(function(){
                     $scope.agent.files = {
-                        'portifolio': $scope.agent['@files:portifolio'],
-                        'gallery': $scope.agent['@files:gallery'] || [],
-                        'carta1': $scope.agent['@files:carta1'] || [],
-                        'carta2': $scope.agent['@files:carta2'] || [],
-                        'ata': $scope.agent['@files:ata'] || [],
-                        'avatar': {
-                            url: $scope.agent['@files:avatar'].url || [],
-                            files: {
-                                avatarSmall: $scope.agent['@files:avatar.avatarSmall'] || [],
-                                avatarMedium: $scope.agent['@files:avatar.avatarMedium'] || [],
-                                avatarBig: $scope.agent['@files:avatar.avatarBig'] || [],
-                            },
-                        },
+                        'portifolio': $scope.agent['@files:portifolio'] || null,
+                        'ata': $scope.agent['@files:ata'] || null,
                     };
-                });
 
+                    if($scope.agent['@files:avatar']){
+                        $scope.agent.files = {
+                            avatar:{
+                                id: $scope.agent['@files:avatar'].id,
+                                url: $scope.agent['@files:avatar'].url,
+                                group: 'avatar',
+                                files: {
+                                    avatarSmall: $scope.agent['@files:avatar.avatarSmall'],
+                                    avatarMedium: $scope.agent['@files:avatar.avatarMedium'],
+                                    avatarBig: $scope.agent['@files:avatar.avatarBig'],
+                                },
+                            },
+                        };
+                    }
+
+                    if($scope.agent['@files:gallery']){
+                        $scope.agent.files.gallery = $scope.agent['@files:gallery'] ;
+                        $scope.agent.files.gallery.forEach(function(value, key){
+                            $scope.agent.files.gallery[key].group = 'gallery';
+                        });
+                    }
+
+                    if($scope.agent['@files:carta1']){
+                        $scope.agent.files.carta1 = $scope.agent['@files:carta1'];
+                    }
+
+                    if($scope.agent['@files:carta2']){
+                        $scope.agent.files.carta1 = $scope.agent['@files:carta1'];
+                    }
+
+
+                });
             };
 
             $scope.config = {
@@ -584,17 +604,18 @@
             };
 
             $scope.deleteFile = function(file){
-
                 $http.delete(MapasCulturais.createUrl('file','single',[file.id])).then(function(){
                     if(file.group === 'gallery'){
                         $scope.agent.files.gallery.forEach(function(f, index){
+
                             if(file.id === f.id){
                                 $scope.agent.files.gallery.splice(index,1);
                             }
                         });
                     }else{
-                        $scope.agent.files[file.group] = null;
+                        delete $scope.agent.files[file.group];
                     }
+
                 }, function(a,b,c){
                     console.log('não foi possível apagar a imagem', a,b,c);
                 });
