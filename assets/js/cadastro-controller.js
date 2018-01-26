@@ -573,6 +573,7 @@
                         };
                     }
 
+                    $scope.agent.files.gallery = [];
                     if($scope.agent['@files:gallery']){
                         $scope.agent.files.gallery = $scope.agent['@files:gallery'] ;
                         $scope.agent.files.gallery.forEach(function(value, key){
