@@ -553,10 +553,6 @@
 
                 $scope.agent = Entity.get(params);
                 $scope.agent.$promise.then(function(){
-                    $scope.agent.files = {
-                        'portifolio': $scope.agent['@files:portifolio'] || null,
-                        'ata': $scope.agent['@files:ata'] || null,
-                    };
 
                     if($scope.agent['@files:avatar']){
                         $scope.agent.files = {
@@ -580,13 +576,25 @@
                             $scope.agent.files.gallery[key].group = 'gallery';
                         });
                     }
-
-                    if($scope.agent['@files:carta1']){
+                    if($scope.agent['@files:carta1']) {
                         $scope.agent.files.carta1 = $scope.agent['@files:carta1'];
+                        $scope.agent.files.carta1.name = $scope.agent['@files:carta1'].name;
+                        $scope.agent.files.carta1.group = 'carta1';
                     }
-
                     if($scope.agent['@files:carta2']){
-                        $scope.agent.files.carta1 = $scope.agent['@files:carta1'];
+                        $scope.agent.files.carta2 = $scope.agent['@files:carta2'];
+                        $scope.agent.files.carta2.name = $scope.agent['@files:carta2'].name;
+                        $scope.agent.files.carta2.group = 'carta2';
+                    }
+                    if($scope.agent['@files:portifolio']){
+                        $scope.agent.files.portifolio = $scope.agent['@files:portifolio'];
+                        $scope.agent.files.portifolio.name = $scope.agent['@files:portifolio'].name;
+                        $scope.agent.files.portifolio.group = 'portifolio';
+                    }
+                    if($scope.agent['@files:ata']){
+                        $scope.agent.files.ata = $scope.agent['@files:ata'];
+                        $scope.agent.files.ata.name = $scope.agent['@files:ata'].name;
+                        $scope.agent.files.ata.group = 'ata';
                     }
 
 

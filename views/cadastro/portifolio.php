@@ -28,7 +28,7 @@
                       <span id="msg_errorBox" ng-hide=errozao>Arquivos devem possuir no máximo 20MB</span>
                   </div>
                 </div>
-                <a ng-if="agent.files.portifolio" href="{{agent.files.portifolio.url}}" target="_blank">Baixar Arquivo</a>
+                <a ng-if="agent.files.portifolio" href="{{agent.files.portifolio.url}}" target="_blank">{{agent.files.portifolio.name}}</a>
                 <div class="progress row" ng-show="f.progress >= 0">
                     <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
                 </div>
@@ -65,7 +65,7 @@
                     <img ng-if="agent.files.ata" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
                   </div>
             </div>
-            <a ng-if="agent.files.ata" href="{{agent.files.ata.url}}" target="_blank">Baixar Arquivo</a>
+            <a ng-if="agent.files.ata" href="{{agent.files.ata.url}}" target="_blank">{{agent.files.ata.name}}</a>
             <div class="progress row" ng-show="f.progress >= 0">
                 <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
             </div>
