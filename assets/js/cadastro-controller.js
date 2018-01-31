@@ -542,7 +542,7 @@
                 } else{
                     agent_id = MapasCulturais.redeCulturaViva.agentePonto;
                 }
-
+                //@TODO refatorar todo esse método
                 var params = {
                     'id': agent_id,
                     '@select': 'id,files',
@@ -553,7 +553,6 @@
 
                 $scope.agent = Entity.get(params);
                 $scope.agent.$promise.then(function(){
-
                     if($scope.agent['@files:avatar']){
                         $scope.agent.files = {
                             avatar:{
@@ -648,12 +647,16 @@
 
                     file.upload.then(function (response) {
                         if (response.data.error) {
-                            alert(response.data.data.portifolio);
+                            alert(response.data.data);
                             return;
                         }
                         if (group === 'gallery') {
                             $scope.agent.files.gallery.push(response.data.gallery[0]);
-                        } else {
+                        }else if(group === 'avatar'){
+                            $scope.agent.files = {avatar:{}};
+                            $scope.agent.files[group] = response.data[group];
+
+                        }else {
                             $scope.agent.files[group] = response.data[group];
                         }
 
