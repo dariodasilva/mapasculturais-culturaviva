@@ -60,6 +60,14 @@ function AvaliacaoListaTabelaDirective(estadosBrasil) {
             });
         };
 
+        $scope.redistribuir = function () {
+            if(confirm("Tem certeza que deseja executar a rotina de distribuição e certificação? Esta ação não pode ser desfeita.")){
+                $http.get('/avaliacao/distribuir').then(function (response) {
+                    $scope.filtrar();
+                });
+            }
+        };
+
         $scope.$watch('ref.pagina', $scope.filtrarAvaliacoes);
     }
 

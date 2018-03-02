@@ -36,6 +36,9 @@
                     <hr/>
 
                     <div class="col-md-12">
+                        <button class="btn btn-danger" ng-click="redistribuir()" type="button" access-level="AGENTE_AREA">
+                            Executar redistribuição e certificação
+                        </button>
                         <tc-notitication id="bag-filtro-agentes"></tc-notitication>
 
                         <div ng-if="ref.data.total > 0" style="margin-top: 20px;">

@@ -52,3 +52,4 @@ UPDATE registration SET
     )
 FROM ( SELECT agente, estado FROM todas ) AS e
 WHERE registration.agent_id = e.agente AND registration.status = 1 AND opportunity_id = 1;
+DROP TABLE IF EXISTS deferidas, indeferidas, todas;

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../../../../../protected/application/bootstrap.php';
+require_once __DIR__ . '/../../../../../../protected/application/bootstrap.php';
 
 // Remove timeout de execução do script
 set_time_limit(0);
@@ -340,7 +340,7 @@ function notificarCertificacoesIndeferidas($app, $conn) {
                 FROM culturaviva.avaliacao
                 WHERE estado='I' AND inscricao_id=?"
                 ,[$registro['id']]);
-            
+
             foreach($avaliacoes as &$avaliacao){
                 $avaliacao['criterios'] = $conn->fetchAll(
                     "SELECT ac.aprovado,c.descricao
