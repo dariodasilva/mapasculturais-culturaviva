@@ -96,7 +96,7 @@ class Theme extends BaseV1\Theme {
 
         $app->hook('view.render(site/search):before', function() use($app) {
             $this->jsObject['searchFilters'] = [
-                'agent' => ['rcv_tipo' => 'EQ(ponto)'],
+                'agent' => ['rcv_tipo' => 'EQ(ponto)','homologado_rcv' => 'EQ(1)'],
                 'event' => ['subsite' => "NULL()"]
             ];
         });
@@ -126,6 +126,10 @@ class Theme extends BaseV1\Theme {
             if ($this->controller->id === 'admin' && $this->controller->action == 'index') {
                 $this->setLayout('clear');
             }
+        });
+
+        $app->hook('search.filters', function(&$filters) use($app) {
+            unset($filters['agent']['verificados']);
         });
 
 
