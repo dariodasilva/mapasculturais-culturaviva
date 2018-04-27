@@ -647,7 +647,12 @@
 
                     file.upload.then(function (response) {
                         if (response.data.error) {
-                            alert(response.data.data);
+                            if(typeof response.data.data["0"].error === "undefined"){
+                                alert(response.data.data+". Verifique a extensão do arquivo.");
+                                return;
+                            }
+
+                            alert(response.data.data["0"].error);
                             return;
                         }
                         if (group === 'gallery') {
