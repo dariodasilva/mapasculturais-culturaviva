@@ -566,6 +566,8 @@
                                 },
                             },
                         };
+                    }else{
+                        $scope.agent.files = {};
                     }
 
                     $scope.agent.files.gallery = [];
