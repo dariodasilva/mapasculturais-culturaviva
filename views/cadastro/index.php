@@ -3,18 +3,18 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 ?>
 <style>
   a{
-    color: #078979;
+      color: #078979;
   }
   a:hover{
-    color: #078979;
+      color: #078979;
   }
   #selo-index{
-  margin-left: 750px;
-  margin-top: -213px;
+      margin-left: 874px;
+      margin-top: -198px;
   }
   #selo-img{
-    height: 180px;
-    width:auto;
+      height: 180px;
+      width:auto;
   }
   canvas{
       width: 10px;
@@ -37,8 +37,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         7. Economia Viva
         8. Formação
 -->
-        <article>
-            <h2>Seja bem-vindo(a) <br>à Rede Cultura Viva</h2>
+        <article id="box-saudacao">
+            <h2>Seja bem-vindo(a)à Rede Cultura Viva</h2>
             <p>Esta é a página do seu Ponto de Cultura. Apenas você tem acesso a ela.</p>
             <p>Fique a vontade para ir preenchendo as sessões. Você não precisa fazer tudo agora! Quando sua página estiver completa clique em "Enviar".</p>
             <p>Depois, seu ponto poderá criar eventos, projetos e usar a plataforma para se manter em contato com o Ministério da Cultura.</p>
