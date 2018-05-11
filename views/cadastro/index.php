@@ -8,8 +8,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   a:hover{color: #078979;
   }
   #selo-index{
-      margin-left: 874px;
-      margin-top: -198px;
+      margin-left: 760px;
+      margin-top: -191px;
   }
   #selo-img{
     height: 180px;
