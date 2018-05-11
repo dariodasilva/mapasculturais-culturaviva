@@ -15,10 +15,6 @@ article .entry-footer{
 header.site-header {
   background: #1e3365;
 }
-header.site-header>div.container {
-  background: url(http://culturaviva.gov.br/wp-content/uploads/2017/10/bg-header.png) right bottom no-repeat;
-  background-size: 55%;
-}
 header.site-header .service-bar-container {
   background: #0d1f4a !important;
 }
@@ -601,4 +597,8 @@ span.btn_mais {
   color: #fff !important;
   background: #000000;
   text-decoration: none;
+}
+
+.icon-home:before {
+  content: "e" !important;
 }
