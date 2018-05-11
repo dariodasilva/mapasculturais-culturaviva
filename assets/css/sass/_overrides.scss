@@ -89,3 +89,7 @@ body {
         background-image: url(../img/verified-icon-active.png);
     }
 }
+
+#mc-entity-layers div.label, #mc-entity-layers .btn-map{
+    display: none;
+}
