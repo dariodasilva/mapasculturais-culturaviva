@@ -573,3 +573,32 @@ span.btn_mais {
   margin-right: 0px !important;
   margin-left: 0px !important;
 }
+
+.tag-clear {
+  color: #fff !important;
+  background: #000000 !important;
+}
+
+.tag, .tag-selected :hover {
+  display: inline-block;
+  margin-right: .25rem;
+  margin-bottom: .25rem;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  border-radius: 2px;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: .7rem;
+  line-height: 1.5rem;
+  font-weight: normal;
+  color: #000000;
+  text-transform: uppercase;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  cursor: pointer;
+}
+
+.tag:hover, .tag-selected:hover {
+  color: #fff !important;
+  background: #000000;
+  text-decoration: none;
+}
