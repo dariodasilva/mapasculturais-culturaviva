@@ -3,18 +3,17 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 ?>
 <style>
   a{
-      color: #078979;
+    color: #078979;
   }
-  a:hover{
-      color: #078979;
+  a:hover{color: #078979;
   }
   #selo-index{
       margin-left: 874px;
       margin-top: -198px;
   }
   #selo-img{
-      height: 180px;
-      width:auto;
+    height: 180px;
+    width:auto;
   }
   canvas{
       width: 10px;
@@ -463,13 +462,14 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             }else{
                 doc.setFontSize(15);
             }
-            doc.addImage(dataUrl,'png',0,0,1754,1241);
+            doc.addImage(dataUrl,'png',0,0,1754,1239);
             doc.setFontType("bold");
             doc.text(window.name, 770, 395);
             doc.setFontSize(30);
             doc.text(window.url,570,1225);
             var dataURLQR = qr.children[0].toDataURL('image/png');
-            doc.addImage(dataURLQR,'png',667,1014,177,177);
+            console.log(dataURLQR);
+            doc.addImage(dataURLQR,'png',659,996,200,199);
             doc.save('Certificado.pdf');
         });
     };
