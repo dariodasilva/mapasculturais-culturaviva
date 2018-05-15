@@ -37,7 +37,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         8. Formação
 -->
         <article id="box-saudacao">
-            <h2>Seja bem-vindo(a)à Rede Cultura Viva</h2>
+            <h2>Seja bem-vindo(a) à Rede Cultura Viva</h2>
             <p>Esta é a página do seu Ponto de Cultura. Apenas você tem acesso a ela.</p>
             <p>Fique a vontade para ir preenchendo as sessões. Você não precisa fazer tudo agora! Quando sua página estiver completa clique em "Enviar".</p>
             <p>Depois, seu ponto poderá criar eventos, projetos e usar a plataforma para se manter em contato com o Ministério da Cultura.</p>
