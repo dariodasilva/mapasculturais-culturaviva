@@ -5,12 +5,11 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   a{
     color: #078979;
   }
-  a:hover{
-    color: #078979;
+  a:hover{color: #078979;
   }
   #selo-index{
-  margin-left: 750px;
-  margin-top: -213px;
+      margin-left: 760px;
+      margin-top: -191px;
   }
   #selo-img{
     height: 180px;
@@ -37,8 +36,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         7. Economia Viva
         8. Formação
 -->
-        <article>
-            <h2>Seja bem-vindo(a) <br>à Rede Cultura Viva</h2>
+        <article id="box-saudacao">
+            <h2>Seja bem-vindo(a) à Rede Cultura Viva</h2>
             <p>Esta é a página do seu Ponto de Cultura. Apenas você tem acesso a ela.</p>
             <p>Fique a vontade para ir preenchendo as sessões. Você não precisa fazer tudo agora! Quando sua página estiver completa clique em "Enviar".</p>
             <p>Depois, seu ponto poderá criar eventos, projetos e usar a plataforma para se manter em contato com o Ministério da Cultura.</p>
@@ -463,13 +462,14 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             }else{
                 doc.setFontSize(15);
             }
-            doc.addImage(dataUrl,'png',0,0,1754,1241);
+            doc.addImage(dataUrl,'png',0,0,1754,1239);
             doc.setFontType("bold");
             doc.text(window.name, 770, 395);
             doc.setFontSize(30);
             doc.text(window.url,570,1225);
             var dataURLQR = qr.children[0].toDataURL('image/png');
-            doc.addImage(dataURLQR,'png',667,1014,177,177);
+            console.log(dataURLQR);
+            doc.addImage(dataURLQR,'png',659,996,200,199);
             doc.save('Certificado.pdf');
         });
     };

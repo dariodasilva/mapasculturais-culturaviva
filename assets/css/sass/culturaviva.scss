@@ -13,9 +13,9 @@
   src: url("../fonts/DroidSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DroidSans-Bold-webfont.woff") format("woff"), url("../fonts/DroidSans-Bold-webfont.ttf") format("truetype"), url("../fonts/DroidSans-Bold-webfont.svg#DroidSans") format("svg");
 }
 
-body{
-    background: url("../img/bg.png"), linear-gradient(to right, #075579 0%, #078979 51%, #075579 100%);
-}
+//body{
+//    background: url("../img/bg.png"), linear-gradient(to right, #075579 0%, #078979 51%, #075579 100%);
+//}
 
 .clear{
     clear:both;
@@ -603,7 +603,7 @@ section{
         margin-top: 100px;
 
         h2{
-            color:#fbed1d;
+            color:#fff !important;
             text-align:center;
             margin-top: 50px;
             font-family: #base-font-DroidSans;
@@ -1191,7 +1191,7 @@ section{
                 text-align:center;
                 font-size: 11px;
                 line-height: 15px;
-                background: url("../img/bg.png"), linear-gradient(to right, #075579 0%, #078979 51%, #075579 100%);
+                //background: url("../img/bg.png"), linear-gradient(to right, #075579 0%, #078979 51%, #075579 100%);
                 padding-right:5px;
             }
         }

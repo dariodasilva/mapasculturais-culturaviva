@@ -992,7 +992,7 @@ class Theme extends BaseV1\Theme {
 
         $taxonomies = [
             // Atuação e Articulação
-            'area' => 'São as áreas do Ponto/Pontão de Cultura',
+//            'area' => 'São as áreas do Ponto/Pontão de Cultura',
             'contemplado_edital' => 'Editais do Ministério da Cultura em que foi contemplado',
             'acao_estruturante' => 'Ações Estruturantes',
             'publico_participante' => 'Públicos que participam das ações',

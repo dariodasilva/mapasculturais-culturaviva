@@ -6,7 +6,6 @@
 //## just before the new rules, document the name of the Sass partial
 //## where the original styles leave, group them per folder and keep
 //## them in the same order as the original styles are imported to the main.scss.
-
 //
 // application/
 // --------------------------------------------------
@@ -44,7 +43,7 @@ body {
 
 // Section
 #main-section {
-    margin-top: 0;
+    margin-top: 2 !important;
 }
 
 body {
@@ -89,4 +88,8 @@ body {
     &.selected {
         background-image: url(../img/verified-icon-active.png);
     }
+}
+
+#mc-entity-layers div.label, #mc-entity-layers .btn-map{
+    display: none;
 }
