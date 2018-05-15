@@ -14,7 +14,6 @@
     }
 
     $(document).ready(function() {
-        $('html').hide();
 
         var deviceAgent = navigator.userAgent.toLowerCase();
 
@@ -533,10 +532,10 @@
                     $menu.on('click', function (e) {
                         e.preventDefault();
                         var ready = 0;
-
+                        
                         $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_lc + '"></iframe>');
                         $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_mapas + '"></iframe>');
-
+                        
                         setTimeout(function(){
                             document.location = '/';
                         },2000);
@@ -554,7 +553,7 @@
                 action: 'get_footer'
             }
         }).done(function(_r) {
-           $('#main-footer').html(_r);
+            $('#main-footer').html(_r);
         });
 
     });
