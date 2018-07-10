@@ -317,3 +317,17 @@ vagrant reload
 ```
 
 Pronto, basta acessar [http://localhost:8001](http://localhost:8001) no seu navegador e utilizar a ferramenta.
+
+
+## Configurando o projeto **Cultura Viva** em um ambiente Saas do **Mapas Culturais**
+
+Caso queira utilizar o **Mapas Culturais** como saas e ter o projeto **Cultura Viva** na mesma instalação, deve ser feita a alteração no arquivo `config.php` do **Mapas Culturais** para adicionar as configurações específicas do projeto **Cultura Viva**, por exemplo:
+
+```php
+$domain = @$_SERVER['HTTP_HOST'];
+if ($domain == 'redeculturaviva.com.br'){
+    $config['themes.active'] = 'CulturaViva';
+    $assets_path = BASE_PATH . 'assets/rcv/';
+}
+```
+Onde `redeculturaviva.com.br` é o dominio de acesso ao projeto **Cultura Viva**.
