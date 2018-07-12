@@ -14,22 +14,23 @@
     <div class="form">
         <h4>Informações Obrigatórias</h4>
         <div class="row">
-            <label class="colunm1">
-                <span class="destaque">Tipo de organização*</span>
-                <select name="tipoOrganizacao"
-                        ng-change="save_field('tipoOrganizacao')"
-                        ng-model="agent.tipoOrganizacao">
-                    <option value="coletivo">Coletivo Cultural (CPF)</option>
-                    <option value="entidade">Entidade (CNPJ)</option>
-                </select>
-            </label>
-            <label class="colunm-50" ng-show="agent.tipoOrganizacao">
+            <label class="colunm1" ng-show="agent.tipoOrganizacao">
                 <span class="destaque">Quero ser*</span>
                 <select name="tipoPontoCulturaDesejado"
                         ng-change="save_field('tipoPontoCulturaDesejado')"
                         ng-model="agent.tipoPontoCulturaDesejado">
                     <option value="ponto">Ponto de Cultura</option>
                     <option value="pontao">Pontão de Cultura</option>
+                </select>
+            </label>
+            <label class="colunm-50">
+                <span class="destaque">Tipo de organização*</span>
+                <select name="tipoOrganizacao"
+                        ng-change="save_field('tipoOrganizacao')"
+                        ng-model="agent.tipoOrganizacao"
+                        ng-disabled="agent.tipoPontoCulturaDesejado == 'pontao'">
+                    <option ng-if="agent.tipoPontoCulturaDesejado != 'pontao'" value="coletivo">Coletivo Cultural (CPF)</option>
+                    <option value="entidade">Entidade (CNPJ)</option>
                 </select>
             </label>
         </div>

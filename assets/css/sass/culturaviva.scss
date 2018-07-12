@@ -25,6 +25,11 @@
     background:transparent;
 }
 
+select:disabled{
+    background: #DDD;
+    color: #adadad;
+}
+
 section{
     max-width:960px;
     width:100%;
