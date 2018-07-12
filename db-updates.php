@@ -188,5 +188,41 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
         echo "Atualizando as tabelas de certificação da Rede Cultura Viva";
         $conn->executeUpdate(file_get_contents(__DIR__ . '/scripts/db/culturaviva-update-schema-1.sql'));
     },
+
+    'rcv: remove unneeded evaluations' => function() use($app, $conn) {
+        // Apagar registros na tabela inscricao nos seguintes casos:
+        // Inscrição com agente que não possui registration
+        // Inscrição com estado 'P' ou 'R' e registration com status 0 ou 10
+        $insc_id = $conn->query("
+            SELECT
+                i.id
+            FROM
+                culturaviva.inscricao i
+            LEFT JOIN
+                registration r ON i.agente_id = r.agent_id
+            WHERE
+                i.estado IN ('P','R')
+                AND (r.status in (0,10) AND r.opportunity_id = 1)
+                OR r.id is null;"
+        )->fetchAll(\PDO::FETCH_COLUMN);
+
+        $insc_str = implode(',',$insc_id);
+
+        $avl_id = $conn->fetchAll("
+            SELECT
+                a.id
+            FROM
+                culturaviva.avaliacao a
+            WHERE
+                a.inscricao_id IN ({$insc_str})");
+
+        return false;
+        // Inscrição feitas pelo subsite do Mapas Culturais (não possuem agent_relation)
+
+        // Apagar os registros na tabela avaliacao_criterio
+        // Apagar os registros na tabela avaliacao
+        // Apagar os registros na tabela inscricao_criterio
+        // Apagar os registros na tabela inscricao
+    }
 ];
 
