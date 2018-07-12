@@ -102,7 +102,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 JOIN agent agt ON agt.id = cert.agente_id
                 WHERE estado <> 'C'
             )
-            SELECT
+            SELECT DISTINCT ON (insc.agente_id)
                 insc.id,
                 insc.agente_id,
                 insc.estado,
@@ -177,7 +177,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             AND (:uf = '' OR ent_meta_uf.value = :uf)
             AND (:municipio = ''
                 OR unaccent(lower(ent_meta_municipio.value)) LIKE unaccent(lower(:municipio)))
-            ";
+            ORDER BY insc.agente_id, ts_criacao DESC";
 
 
         $campos = [
