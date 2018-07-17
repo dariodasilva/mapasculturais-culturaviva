@@ -102,7 +102,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 JOIN agent agt ON agt.id = cert.agente_id
                 WHERE estado <> 'C'
             )
-            SELECT DISTINCT ON (insc.agente_id)
+            SELECT
                 insc.id,
                 insc.agente_id,
                 insc.estado,
@@ -147,7 +147,7 @@ class Avaliacao extends \MapasCulturais\Controller {
                 ON  ent_meta_municipio.object_id = entidade.id
                 AND ent_meta_municipio.key = 'geoMunicipio'
             JOIN agent ponto ON ponto.id = rel_ponto.agent_id
-            JOIN agent_meta tp
+            LEFT JOIN agent_meta tp
                 ON tp.key = 'tipoPontoCulturaDesejado'
                 AND tp.object_id = entidade.id
             LEFT JOIN avaliacoes avl_c
