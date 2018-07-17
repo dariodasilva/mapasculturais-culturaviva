@@ -105,16 +105,6 @@ class Cadastro extends \MapasCulturais\Controller{
             'tem_sede',
             'pais',
             'location', // ponto no mapa
-
-
-            //portifólio
-
-            //'atividadesEmRealizacao'
-	    //'atividadesEmRealizacaoLink'
-
-
-//            'atividadesEmRealizacao'
-
         ];
 
         if($agent->pais === 'Brasil'){
@@ -203,6 +193,7 @@ class Cadastro extends \MapasCulturais\Controller{
         $agent = $this->getEntidade();
 
         $required_properties = [
+            'tipoPontoCulturaDesejado',
             'tipoOrganizacao',
             'responsavel_nome',
             'responsavel_cargo',
@@ -211,8 +202,6 @@ class Cadastro extends \MapasCulturais\Controller{
             'emailPrivado',
             'telefone1',
             'pais',
-
-          //'foiFomentado'
         ];
 
         if($agent->pais === 'Brasil'){
@@ -228,36 +217,6 @@ class Cadastro extends \MapasCulturais\Controller{
             $required_properties[] = 'cnpj';
             $required_properties[] = 'representanteLegal';
         }
-
-
-        /*if($agent->foiFomentado){
-            $required_properties[] = 'tipoFomento';
-            if($agent->tipoFomento === 'outros'){
-                $required_properties[] = 'tipoFomentoOutros';
-            }
-
-            $required_properties[] = 'tipoReconhecimento';
-            $required_properties[] = 'edital_num';
-            $required_properties[] = 'edital_ano';
-            $required_properties[] = 'edital_projeto_nome';
-            $required_properties[] = 'edital_localRealizacao';
-            $required_properties[] = 'edital_proponente';
-            $required_properties[] = 'edital_projeto_resumo';
-            $required_properties[] = 'edital_projeto_etapa';
-
-            if($agent->edital_projeto_etapa === 'executado'){
-                $required_properties[] = 'edital_prestacaoContas_envio';
-
-
-                if($agent->edital_prestacaoContas_envio === 'enviada'){
-                    $required_properties[] = 'edital_prestacaoContas_status';
-                }
-            }
-
-            $required_properties[] = 'edital_projeto_vigencia_inicio';
-            $required_properties[] = 'edital_projeto_vigencia_fim';
-
-        }*/
 
         return $required_properties;
     }
