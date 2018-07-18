@@ -48,12 +48,8 @@ class Avaliacao extends \MapasCulturais\Controller {
                 count(CASE WHEN avl.estado = 'P' THEN 1 END) as pendentes,
                 count(CASE WHEN avl.estado = 'A' THEN 1 END) as em_analise,
                 count(CASE WHEN avl.estado = ANY(ARRAY['D','I']) THEN 1 END) as finalizadas
-            FROM culturaviva.certificador cert
-            JOIN (
-                    SELECT DISTINCT ON (inscricao_id) *
-                    FROM culturaviva.avaliacao
-                    ORDER BY inscricao_id,ts_criacao DESC
-                ) avl ON cert.id = avl.certificador_id
+            FROM culturaviva.avaliacao avl
+            JOIN culturaviva.certificador cert ON cert.id = avl.certificador_id
             WHERE avl.estado <> 'C'
             AND (:agenteId = 0 OR cert.agente_id = :agenteId)";
 

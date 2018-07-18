@@ -199,30 +199,79 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
             FROM
                 culturaviva.inscricao i
             LEFT JOIN
-                registration r ON i.agente_id = r.agent_id
+                (
+                    SELECT DISTINCT ON(agent_id) *
+                    FROM registration
+                    WHERE subsite_id is null
+                    ORDER BY agent_id, status desc
+                ) r ON i.agente_id = r.agent_id AND r.opportunity_id = 1
             WHERE
                 i.estado IN ('P','R')
-                AND (r.status in (0,10) AND r.opportunity_id = 1)
-                OR r.id is null;"
+                AND r.status in (0,10)
+                OR r.id is null
+            ORDER BY
+                i.agente_id"
         )->fetchAll(\PDO::FETCH_COLUMN);
 
-        $insc_str = implode(',',$insc_id);
+        $insc_id = implode(',', $insc_id);
 
-        $avl_id = $conn->fetchAll("
-            SELECT
-                a.id
-            FROM
-                culturaviva.avaliacao a
-            WHERE
-                a.inscricao_id IN ({$insc_str})");
-
-        return false;
+        // Mudar o status na tabela registration para -10
         // Inscrição feitas pelo subsite do Mapas Culturais (não possuem agent_relation)
+        $subsite_id = $conn->query("
+            SELECT
+                r.id
+            FROM
+                culturaviva.inscricao i
+            LEFT JOIN
+                registration r ON i.agente_id = r.agent_id AND r.opportunity_id = 1
+            WHERE
+                i.estado IN ('P','R')
+                AND r.subsite_id=4"
+        )->fetchAll(\PDO::FETCH_COLUMN);
 
-        // Apagar os registros na tabela avaliacao_criterio
-        // Apagar os registros na tabela avaliacao
-        // Apagar os registros na tabela inscricao_criterio
-        // Apagar os registros na tabela inscricao
+        $subsite_id = implode(",", $subsite_id);
+
+        $conn->beginTransaction();
+
+        try {
+            $conn->executeQuery("
+                DELETE FROM
+                    culturaviva.avaliacao_criterio
+                WHERE inscricao_id IN ({$insc_id})"
+            );
+
+            $conn->executeQuery("
+                DELETE FROM
+                    culturaviva.inscricao_criterio
+                WHERE inscricao_id IN ({$insc_id})"
+            );
+
+            $conn->executeQuery("
+                DELETE FROM
+                    culturaviva.avaliacao
+                WHERE inscricao_id IN ({$insc_id})"
+            );
+
+            $conn->executeQuery("
+                DELETE FROM
+                    culturaviva.inscricao
+                WHERE id IN ({$insc_id})"
+            );
+
+            $conn->executeQuery("
+                UPDATE
+                    registration
+                SET
+                    status=-10
+                WHERE
+                    id IN ({$subsite_id})"
+                );
+
+            $conn->commit();
+        } catch (Exception $e) {
+            $conn->rollBack();
+            throw $e;
+        }
     }
 ];
 
