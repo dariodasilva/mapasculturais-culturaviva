@@ -13,7 +13,7 @@
     <article class="points_culture">
         <div class="row">
             <h1>Somos todos<br />Pontos de Cultura</h1>
-            <p>O reconhecimento e a autodeclaração de entidades e coletivos culturais como Pontos e Pontões de Cultura são uma revindicação histórica dos fazedores de cultura do Brasil e agora é possível a partir da Rede Cultura Viva. A potência da cultura brasileira vai além do que é fomentado pelo Estado. A sociedade criou formas sustentávris próprias, colaborativas e inventivas. É preciso lutar por mais investimentos na cultura, mas também reconhecer e valorizar os processos culturais desenvolvidos de forma autônoma pela sociedade civil.</p>
+            <p>O reconhecimento e a certificação simplficada de entidades e coletivos culturais como Pontos e Pontões de Cultura são uma revindicação histórica dos fazedores de cultura do Brasil e agora é possível a partir da Rede Cultura Viva. A potência da cultura brasileira vai além do que é fomentado pelo Estado. A sociedade criou formas sustentávris próprias, colaborativas e inventivas. É preciso lutar por mais investimentos na cultura, mas também reconhecer e valorizar os processos culturais desenvolvidos de forma autônoma pela sociedade civil.</p>
         </div>
         <div class="row box-faq">
             <div class="colunm box oquee">
