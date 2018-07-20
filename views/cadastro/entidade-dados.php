@@ -291,7 +291,7 @@
           </label>
             <label class="colunm2" ng-if="agent.pais === 'Brasil'">
                 <span class="destaque">Estado*</span>
-                <select name="geoEstado" ng-blur="save_field('geoEstado')" ng-model="agent.geoEstado">
+                <select name="En_Estado" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado">
                     <option value="AC">Acre</option>              <option value="AL">Alagoas</option>
                     <option value="AP">Amapá</option>             <option value="AM">Amazonas</option>
                     <option value="BA">Bahia</option>             <option value="CE">Ceará</option>
@@ -311,11 +311,11 @@
             </label>
             <label class="colunm2" ng-if="agent.pais !== 'Brasil'">
                 <span class="destaque">Estado</span>
-                <input name="geoEstado" type="text" ng-blur="save_field('geoEstado')" ng-model="agent.geoEstado"/>
+                <input name="En_Estado" type="text" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado"/>
             </label>
             <label class="colunm2">
                 <span class="destaque">{{agent.pais == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
-                <input name="geoMunicipio" type="text" ng-blur="save_field('geoMunicipio')" ng-model="agent.geoMunicipio"/>
+                <input name="En_Municipio" type="text" ng-blur="save_field('En_Municipio')" ng-model="agent.En_Municipio"/>
             </label>
             <label class="colunm2">
                 <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>

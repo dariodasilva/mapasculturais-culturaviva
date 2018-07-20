@@ -614,7 +614,7 @@ class Theme extends BaseV1\Theme {
                     },
                 ],
                 // @TODO: comentar quando importar os shapefiles
-                'geoEstado' => [
+                'En_Estado' => [
                     'label' => 'Estado',
 //                  'required' => true,
                     'private' => function() {
@@ -628,7 +628,7 @@ class Theme extends BaseV1\Theme {
                         return !$this->publicLocation;
                     }
                 ],
-                'geoMunicipio' => [
+                'En_Municipio' => [
                     'label' => 'Município',
 //                  'required' => true,
                     'private' => function() {

@@ -22,8 +22,8 @@ function AvaliacaoTabPontoCtrl($scope, Entity, estadosBrasil) {
             'sede_realizaAtividades',
             'mesmoEndereco',
             'pais',
-            'geoEstado',
-            'geoMunicipio',
+            'En_Estado',
+            'En_Municipio',
             'En_Bairro',
             'En_Num',
             'En_Nome_Logradouro',
@@ -51,8 +51,8 @@ function AvaliacaoTabPontoCtrl($scope, Entity, estadosBrasil) {
             '0': 'Não',
         }[$scope.agent.sede_realizaAtividades];
 
-        if ($scope.agent.pais === 'Brasil' && $scope.agent.geoEstado) {
-            $scope.agent._geoEstadoTexto = estadosBrasil[$scope.agent.geoEstado];
+        if ($scope.agent.pais === 'Brasil' && $scope.agent.En_Estado) {
+            $scope.agent._geoEstadoTexto = estadosBrasil[$scope.agent.En_Estado];
         }
     });
 }

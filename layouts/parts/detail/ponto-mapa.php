@@ -63,14 +63,14 @@
             </label>
             <label class="colunm2" ng-show="agent.pais==='Brasil'">
                 <span>Estado</span>
-                <span><b>{{ponto.geoEstado}}</b></span>
-                <span ng-if="!ponto.geoEstado"><b>Não informado</b></span>
+                <span><b>{{ponto.En_Estado}}</b></span>
+                <span ng-if="!ponto.En_Estado"><b>Não informado</b></span>
             </label>
 
             <label class="colunm3">
                 <span>Cidade</span>
-                <span><b>{{ponto.geoMunicipio}}</b></span>
-                <span ng-if="!ponto.geoMunicipio"><b>Não informado</b></span>
+                <span><b>{{ponto.En_Municipio}}</b></span>
+                <span ng-if="!ponto.En_Municipio"><b>Não informado</b></span>
             </label>
         </div>
 

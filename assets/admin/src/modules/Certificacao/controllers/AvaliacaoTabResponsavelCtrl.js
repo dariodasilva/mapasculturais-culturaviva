@@ -21,7 +21,7 @@ function AvaliacaoTabResponsavelCtrl($scope, Entity, estadosBrasil) {
             'relacaoPonto',
             'pais',
             'cpf',
-            'geoEstado',
+            'En_Estado',
             'terms',
             'emailPrivado',
             'telefone1',
@@ -29,7 +29,7 @@ function AvaliacaoTabResponsavelCtrl($scope, Entity, estadosBrasil) {
             'telefone2',
             'telefone2_operadora',
             'nomeCompleto',
-            'geoMunicipio',
+            'En_Municipio',
             'facebook',
             'twitter',
             'googleplus',
@@ -56,8 +56,8 @@ function AvaliacaoTabResponsavelCtrl($scope, Entity, estadosBrasil) {
             'parceiro': 'Parceiro do Ponto/Pontão e está ajudando a cadastrar'
         }[$scope.agent.relacaoPonto];
 
-        if ($scope.agent.pais === 'Brasil' && $scope.agent.geoEstado) {
-            $scope.agent._geoEstadoTexto = estadosBrasil[$scope.agent.geoEstado];
+        if ($scope.agent.pais === 'Brasil' && $scope.agent.En_Estado) {
+            $scope.agent._geoEstadoTexto = estadosBrasil[$scope.agent.En_Estado];
         }
     });
 }
