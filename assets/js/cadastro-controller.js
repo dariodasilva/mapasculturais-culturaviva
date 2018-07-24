@@ -854,14 +854,39 @@
 
                             var string = (addr.logradouro ? addr.logradouro+', ':'') +
                                          (addr.bairro ? addr.bairro+', ':'') +
-                                         (addr.localidade ? addr.localidade+', ':'') +
-                                         (addr.uf ? addr.uf+' - ':'');
+                                         (addr.cidade ? addr.cidade+', ':'') +
+                                         (addr.estado ? addr.estado+' - ':'') + 
+                                         ($scope.agent.pais ? $scope.agent.pais:'');
 
                         }
 
                         return geocoder.code(string);
 
                     }).then(function(point){
+                        point.zoom = 14;
+                        $scope.markers.main = point;
+                    })['catch'](function(){
+                        $scope.markers.main = undefined;
+                    }).finally(function(){
+                        $scope.cepcoder.busy = false;
+                    });
+                }
+            };
+
+            $scope.endcoder = {
+                busy: false,
+                code: function(){
+                    $scope.cepcoder.busy = true;
+                    var string = ($scope.agent.En_Nome_Logradouro ? $scope.agent.En_Nome_Logradouro + ', ':'') +
+                        ($scope.agent.En_Bairro ? $scope.agent.En_Bairro       + ', ':  '') +
+                        ($scope.agent.geoMunicipio ? $scope.agent.geoMunicipio + ', ':  '') +
+                        ($scope.agent.geoEstado ? $scope.agent.geoEstado       + ' - ': '') +
+                        ($scope.agent.pais ? $scope.agent.pais : '');
+
+                    console.log(string);
+                    console.log(geocoder.code(string));
+                    geocoder.code(string).then(function(point){
+                        console.log(point);
                         point.zoom = 14;
                         $scope.markers.main = point;
                     })['catch'](function(){
