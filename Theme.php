@@ -179,6 +179,8 @@ class Theme extends BaseV1\Theme {
     }
 
     protected function _enqueueScripts() {
+        $app = App::i();
+
         $this->enqueueScript('culturaviva', 'angular-resource', 'vendor/angular-resource.js');
         $this->enqueueScript('culturaviva', 'angular-messages', 'vendor/angular-1.5.5/angular-messages.min.js');
         $this->enqueueScript('culturaviva', 'ui-mask', 'vendor/mask.js');
@@ -193,7 +195,7 @@ class Theme extends BaseV1\Theme {
 
         $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
         $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
-        $this->enqueueScript('vendor', 'google-maps-api', 'http://maps.google.com/maps/api/js?v=3.2&sensor=false');
+        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['google.apiKey']);
         $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
         $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
         $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
