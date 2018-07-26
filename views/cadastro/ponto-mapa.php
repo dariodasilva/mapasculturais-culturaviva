@@ -220,7 +220,7 @@ border-color: gray;
 
             <label ng-if="agent.pais === 'Brasil'" class="colunm2">
                 <span class="destaque">Estado*</span>
-                <select name="geoEstado" ng-blur="save_field('geoEstado')" ng-model="agent.geoEstado">
+                <select name="En_Estado" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado">
                     <option value="AC">Acre</option>              <option value="AL">Alagoas</option>
                     <option value="AP">Amapá</option>             <option value="AM">Amazonas</option>
                     <option value="BA">Bahia</option>             <option value="CE">Ceará</option>
@@ -244,18 +244,18 @@ border-color: gray;
 
             <label class="colunm2" ng-if="agent.pais !== 'Brasil'">
                 <span class="destaque">Estado</span>
-                <input name="geoEstado" type="text" ng-blur="save_field('geoEstado')" ng-model="agent.geoEstado"/>
+                <input name="En_Estado" type="text" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado"/>
             </label>
 
             <label class="colunm2" ng-class="{busy: cidadecoder.busy}"  ng-if="agent.pais !== 'Brasil'">
                 <span class="destaque">Cidade*</span>
-                <input type="text" name="geoMunicipio" ng-blur="save_field('geoMunicipio'); cidadecoder.code(agent.geoMunicipio, agent.pais)" ng-model="agent.geoMunicipio"/>
+                <input type="text" name="En_Municipio" ng-blur="save_field('En_Municipio'); cidadecoder.code(agent.En_Municipio, agent.pais)" ng-model="agent.En_Municipio"/>
                 <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
             </label>
 
             <label class="colunm2"  ng-if="agent.pais === 'Brasil'">
                 <span class="destaque">Cidade*</span>
-                <input type="text" name="geoMunicipio" ng-blur="save_field('geoMunicipio')" ng-model="agent.geoMunicipio"/>
+                <input type="text" name="En_Municipio" ng-blur="save_field('En_Municipio')" ng-model="agent.En_Municipio"/>
                 <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
             </label>
 

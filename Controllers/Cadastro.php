@@ -118,14 +118,14 @@ class Cadastro extends \MapasCulturais\Controller{
         ];
 
         if($agent->pais === 'Brasil'){
-            $required_properties[] = 'geoEstado';
-            $required_properties[] = 'geoMunicipio';
+            $required_properties[] = 'En_Estado';
+            $required_properties[] = 'En_Municipio';
             $required_properties[] = 'En_Bairro';
             $required_properties[] = 'En_Nome_Logradouro';
             $required_properties[] = 'En_Num';
             $required_properties[] = 'cep';
         }else{
-            $required_properties[] = 'geoMunicipio';
+            $required_properties[] = 'En_Municipio';
         }
 
         if($entidadeAgent->tipoPontoCulturaDesejado === "pontao"){
@@ -216,8 +216,8 @@ class Cadastro extends \MapasCulturais\Controller{
         ];
 
         if($agent->pais === 'Brasil'){
-            $required_properties[] = 'geoEstado';
-            $required_properties[] = 'geoMunicipio';
+            $required_properties[] = 'En_Estado';
+            $required_properties[] = 'En_Municipio';
             $required_properties[] = 'En_Bairro';
             $required_properties[] = 'En_Nome_Logradouro';
             $required_properties[] = 'En_Num';
@@ -403,8 +403,8 @@ class Cadastro extends \MapasCulturais\Controller{
             $entidade->En_Bairro           = $d->En_Bairro;
             $entidade->cep                 = $d->End_CEP;
             $entidade->endereco            = $d->En_Endereco_Original;
-            $entidade->geoEstado           = $d->Sg_UF;
-            $entidade->geoMunicipio        = $d->Nm_Municipio;
+            $entidade->En_Estado           = $d->Sg_UF;
+            $entidade->En_Municipio        = $d->Nm_Municipio;
             $entidade->pais                = $d->pais;
 
             $entidade->emailPrivado        = $d->Ee_email1;
@@ -428,8 +428,8 @@ class Cadastro extends \MapasCulturais\Controller{
             $ponto->En_Bairro           = $d->En_Bairro;
             $ponto->cep                 = $d->End_CEP;
             $ponto->endereco            = $d->En_Endereco_Original;
-            $ponto->geoEstado           = $d->Sg_UF;
-            $ponto->geoMunicipio        = $d->Nm_Municipio;
+            $ponto->En_Estado           = $d->Sg_UF;
+            $ponto->En_Municipio        = $d->Nm_Municipio;
             $ponto->pais                = $d->pais;
 
             $ponto->emailPrivado        = $d->Ee_email1;
@@ -628,13 +628,13 @@ class Cadastro extends \MapasCulturais\Controller{
                 $espaco->shortDescription = $ponto->shortDescription;
                 $espaco->longDescription = $ponto->longDescription;
                 $espaco->location = $ponto->location;
-                $espaco->geoEstado = $ponto->geoEstado;
-                $espaco->geoMunicipio = $ponto->geoMunicipio;
+                $espaco->En_Estado = $ponto->En_Estado;
+                $espaco->En_Municipio = $ponto->En_Municipio;
                 $espaco->En_Bairro = $ponto->En_Bairro;
                 $espaco->En_Num = $ponto->En_Num;
                 $espaco->En_Nome_Logradouro = $ponto->En_Nome_Logradouro;
                 $espaco->En_Complemento = $ponto->En_Complemento;
-                $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->geoMunicipio}, {$espaco->geoEstado}";
+                $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
                 //$espaco->terms = $ponto->terms;
 
                 $espaco->save(true);

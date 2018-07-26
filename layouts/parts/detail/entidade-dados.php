@@ -160,13 +160,13 @@
           </label>
             <label class="colunm05" ng-show="entidade.pais==='Brasil'">
                 <span>Estado</span>
-                <span><b>{{entidade.geoEstado}}</b></span>
-                <span ng-if="!entidade.geoEstado"><b>Não informado</b></span>
+                <span><b>{{entidade.En_Estado}}</b></span>
+                <span ng-if="!entidade.En_Estado"><b>Não informado</b></span>
             </label>
             <label class="colunm2">
                 <span>Cidade</span>
-                <span><b>{{entidade.geoMunicipio}}</b></span>
-                <span ng-if="!entidade.geoMunicipio"><b>Não informado</b></span>
+                <span><b>{{entidade.En_Municipio}}</b></span>
+                <span ng-if="!entidade.En_Municipio"><b>Não informado</b></span>
             </label>
             <label class="colunm3">
                 <span>Bairro</span>

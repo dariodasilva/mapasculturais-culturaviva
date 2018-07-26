@@ -17,8 +17,8 @@
                         "responsavel_email",
                         "responsavel_cargo",
                         "responsavel_telefone",
-                        "geoEstado",
-                        "geoMunicipio",
+                        "En_Estado",
+                        "En_Municipio",
                         "pais",
                         "En_Bairro",
                         "En_Num",
@@ -32,8 +32,8 @@
                         "shortDescription",
                         "cep",
                         "tem_sede",
-                        "geoEstado",
-                        "geoMunicipio",
+                        "En_Estado",
+                        "En_Municipio",
                         "En_Bairro",
                         "pais",
                         "En_Nome_Logradouro",
@@ -447,9 +447,9 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,singleUrl,name,rg,rg_orgao,relacaoPonto,cpf,geoEstado,terms,'+
+                '@select': 'id,singleUrl,name,rg,rg_orgao,relacaoPonto,cpf,En_Estado,terms,'+
                            'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,'+
-                           'geoMunicipio,facebook,twitter,googleplus,mesmoEndereco,shortDescription,' +
+                           'En_Municipio,facebook,twitter,googleplus,mesmoEndereco,shortDescription,' +
                            'termos_de_uso,info_verdadeira,obs',
                 '@permissions': 'view'
             };
@@ -703,9 +703,9 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,geoEstado,terms,'+
+                '@select': 'id,rcv_tipo,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,'+
                            'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,nomeCompleto,'+
-                           'geoMunicipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,'+
+                           'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,'+
                            'flickr,youtube,mesmoEndereco,shortDescription',
 
                 '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
@@ -773,7 +773,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,geoEstado,geoMunicipio,'+
+                '@select': 'id,rcv_tipo,terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,En_Estado,En_Municipio,'+
                     'En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,localRealizacao_estado,localRealizacao_cidade,'+
                     'localRealizacao_cidade,localRealizacao_espaco,location',
                 '@files':'(avatar.avatarBig,portifolio,gallery.avatarBig):url',
@@ -806,8 +806,8 @@
             $scope.cidadecoder = {
                 busy: false,
                 code: function(cidade, pais){
-                    $scope.agent.geoMunicipio = cidade;
-                    $scope.save_field('geoMunicipio');
+                    $scope.agent.En_Municipio = cidade;
+                    $scope.save_field('En_Municipio');
                     $scope.cidadecoder.busy = true;
                     cidadecoder.code(cidade, pais).then(function(res){
                         var addr = res.data[0];
@@ -837,11 +837,11 @@
                     cepcoder.code(cep).then(function(res){
                         var addr = res.data;
                         if(addr){
-                            $scope.agent.geoEstado = addr.estado;
-                            $scope.save_field('geoEstado');
+                            $scope.agent.En_Estado = addr.estado;
+                            $scope.save_field('En_Estado');
 
-                            $scope.agent.geoMunicipio = addr.cidade;
-                            $scope.save_field('geoMunicipio');
+                            $scope.agent.En_Municipio = addr.cidade;
+                            $scope.save_field('En_Municipio');
 
                             $scope.agent.En_Bairro = addr.bairro;
                             $scope.save_field('En_Bairro');
@@ -879,8 +879,8 @@
                     $scope.cepcoder.busy = true;
                     var string = ($scope.agent.En_Nome_Logradouro ? $scope.agent.En_Nome_Logradouro + ', ':'') +
                         ($scope.agent.En_Bairro ? $scope.agent.En_Bairro       + ', ':  '') +
-                        ($scope.agent.geoMunicipio ? $scope.agent.geoMunicipio + ', ':  '') +
-                        ($scope.agent.geoEstado ? $scope.agent.geoEstado       + ' - ': '') +
+                        ($scope.agent.En_Municipio ? $scope.agent.En_Municipio + ', ':  '') +
+                        ($scope.agent.En_Estado ? $scope.agent.En_Estado       + ' - ': '') +
                         ($scope.agent.pais ? $scope.agent.pais : '');
 
                     console.log(string);
@@ -1000,7 +1000,7 @@
                     'tipoPontoCulturaDesejado,tipoOrganizacao,responsavel_operadora,responsavel_operadora2,' +
                     'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
                     'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,' +
-                    'geoEstado,geoMunicipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento',
+                    'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento',
 
                 '@permissions': 'view'
             };
@@ -1093,7 +1093,7 @@
       function($scope, Entity, MapasCulturais, $timeout, $location, $http, $q){
           var agenteRes = [];
           var paramsFiltroResponsavel={
-              '@select': 'id,user.id,parent.id,status,cnpj,name,rcv_tipo,cpf,nomeCompleto,emailPrivado,geoEstado,homologado_rcv',
+              '@select': 'id,user.id,parent.id,status,cnpj,name,rcv_tipo,cpf,nomeCompleto,emailPrivado,En_Estado,homologado_rcv',
               'rcv_tipo': 'OR(EQ(responsavel),EQ(ponto),EQ(entidade))'
           };
           $http.get("/api/agent/find",{
@@ -1109,7 +1109,7 @@
                     agenteTodos.forEach(function(data){
                            if((respons.id === data.parent.id) && (data.rcv_tipo === "ponto")){
                                   respons.name = data.name;
-                                  respons.geoEstado = data.geoEstado;
+                                  respons.En_Estado = data.En_Estado;
                                   respons.homologado_rcv = data.homologado_rcv;
                             }
                             if((respons.id === data.parent.id) && (data.rcv_tipo === "entidade")){
@@ -1327,9 +1327,9 @@
 		        var rcv = JSON.parse(data.redeCulturaViva);
                 var responsavel = {
                     'id': rcv.agenteIndividual,
-                    '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,geoEstado,terms,'+
+                    '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,'+
                                'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,'+
-                               'geoMunicipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,mesmoEndereco,shortDescription',
+                               'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,mesmoEndereco,shortDescription',
                     '@permissions': 'view'
                 };
                 var entidade = {
@@ -1338,7 +1338,7 @@
                                 'tipoPontoCulturaDesejado,tipoOrganizacao,' +
                                 'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
                                 'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,' +
-                                'geoEstado,geoMunicipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
+                                'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
                                 'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
                                 'edital_ano,edital_projeto_nome,edital_localRealizacao,edital_projeto_etapa,' +
                                 'edital_proponente,edital_projeto_resumo,edital_prestacaoContas_envio,' +
@@ -1350,7 +1350,7 @@
                 var ponto = {
                     'id': rcv.agentePonto,
                     '@select':  'id,rcv_tipo,files,longDescription,atividadesEmRealizacaoLink,site,facebook,twitter,googleplus,flickr,diaspora,youtube,instagram,culturadigital,atividadesEmRealizacaoLink,' +
-                                'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,geoEstado,geoMunicipio,'+
+                                'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,En_Estado,En_Municipio,'+
                                 'En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,localRealizacao_estado,localRealizacao_cidade,'+
                                 'localRealizacao_cidade,localRealizacao_espaco,location,' +
 		                        'participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico,' +
