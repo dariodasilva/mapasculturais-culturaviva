@@ -195,7 +195,7 @@ class Theme extends BaseV1\Theme {
 
         $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
         $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
-        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['google.apiKey']);
+        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['app.googleApiKey']);
         $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
         $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
         $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
