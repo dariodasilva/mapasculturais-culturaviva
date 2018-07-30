@@ -261,7 +261,7 @@ border-color: gray;
 
             <label class="colunm3">
                 <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                <input type="text" name="En_Bairro" ng-blur="save_field('En_Bairro')" ng-model="agent.En_Bairro"/>
+                <input type="text" name="En_Bairro" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
                 <span class="error" ng-repeat="error in errors.bairro">{{ error }}</span>
             </label>
         </div>
@@ -272,7 +272,7 @@ border-color: gray;
 
             <label class="colunm1" style="width:413px;">
                 <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
-                <input type="text" name="En_Nome_Logradouro" ng-blur="save_field('En_Nome_Logradouro')" ng-model="agent.En_Nome_Logradouro"/>
+                <input type="text" name="En_Nome_Logradouro" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
                 <span class="error" ng-repeat="error in errors.rua">{{ error }}</span>
             </label>
 
