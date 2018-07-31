@@ -32,8 +32,8 @@ function AvaliacaoTabEntidadeCtrl($scope, Entity, estadosBrasil) {
            'responsavel_cargo',
            'responsavel_telefone',
            'responsavel_telefone2',
-           'geoEstado',
-           'geoMunicipio',
+           'En_Estado',
+           'En_Municipio',
            'pais',
            'En_Bairro',
            'En_Num',
@@ -57,8 +57,8 @@ function AvaliacaoTabEntidadeCtrl($scope, Entity, estadosBrasil) {
             'pontao': 'Pontão de Cultura',
         }[$scope.agent.tipoPontoCulturaDesejado];
 
-        if ($scope.agent.pais === 'Brasil' && $scope.agent.geoEstado) {
-            $scope.agent._geoEstadoTexto = estadosBrasil[$scope.agent.geoEstado];
+        if ($scope.agent.pais === 'Brasil' && $scope.agent.En_Estado) {
+            $scope.agent._En_EstadoTexto = estadosBrasil[$scope.agent.En_Estado];
         }
     });
 }

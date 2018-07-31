@@ -95,13 +95,13 @@
             </label>
             <label class="colunm2" ng-show="responsavel.pais==='Brasil'">
                   <span>Estado</span>
-                  <span><b>{{responsavel.geoEstado}}</b></span>
-                  <span ng-if="!responsavel.geoEstado"><b>Não informado</b></span>
+                  <span><b>{{responsavel.En_Estado}}</b></span>
+                  <span ng-if="!responsavel.En_Estado"><b>Não informado</b></span>
             </label>
             <label class="colunm3">
                 <span>Cidade</span>
-                <span><b>{{responsavel.geoMunicipio}}</b></span>
-                <span ng-if="!responsavel.geoMunicipio"><b>Não informado</b></span>
+                <span><b>{{responsavel.En_Municipio}}</b></span>
+                <span ng-if="!responsavel.En_Municipio"><b>Não informado</b></span>
             </label>
         </div>
         <div class="clear"></div>

@@ -138,10 +138,10 @@ class Avaliacao extends \MapasCulturais\Controller {
             JOIN agent entidade ON entidade.id = rel_entidade.agent_id
             JOIN agent_meta ent_meta_uf
                 ON  ent_meta_uf.object_id = entidade.id
-                AND ent_meta_uf.key = 'geoEstado'
+                AND ent_meta_uf.key = 'En_Estado'
             JOIN agent_meta ent_meta_municipio
                 ON  ent_meta_municipio.object_id = entidade.id
-                AND ent_meta_municipio.key = 'geoMunicipio'
+                AND ent_meta_municipio.key = 'En_Municipio'
             JOIN agent ponto ON ponto.id = rel_ponto.agent_id
             LEFT JOIN agent_meta tp
                 ON tp.key = 'tipoPontoCulturaDesejado'

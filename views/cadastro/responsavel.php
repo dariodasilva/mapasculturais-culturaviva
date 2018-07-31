@@ -201,7 +201,7 @@
             </label>
               <label class="colunm05" ng-show="agent.pais==='Brasil'">
                   <span class="destaque">Estado</span>
-                  <select name="geoEstado" ng-blur="save_field('geoEstado')" ng-model="agent.geoEstado">
+                  <select name="En_Estado" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado">
                       <option value="AC">Acre</option>              <option value="AL">Alagoas</option>
                       <option value="AP">Amapá</option>             <option value="AM">Amazonas</option>
                       <option value="BA">Bahia</option>             <option value="CE">Ceará</option>
@@ -221,7 +221,7 @@
             </label>
             <label class="cidade">
                 <span class="destaque">Cidade</span>
-                <input type="text" ng-blur="save_field('geoMunicipio')" ng-model="agent.geoMunicipio"/>
+                <input type="text" ng-blur="save_field('En_Municipio')" ng-model="agent.En_Municipio"/>
             </label>
             <div class="clear"></div>
         </div>
