@@ -499,6 +499,8 @@
             var $r = $(_r);
             $r.find('a').css( "font-weight", 'normal');
             $r.find('.menu').removeClass('menu');
+            $r.filter("script[src*='get-site-header-styles.js']").removeAttr('src');
+            $r.find('[class=dropdown-toggle][title="Sobre"]').next().andSelf().wrapAll('<div class="dropdown"></div>');
             $('#main-header').prepend($r);
             $('#header-search-row').css('z-index',1000);
             var ind = 0;
@@ -523,7 +525,7 @@
 
 
                 if (COOKIES['mapasculturais.uid'] && COOKIES['mapasculturais.uid'] > 0) {
-                    var $menu = $('#primary-menu .menu-item:last');
+                    var $menu = $('#main-navbar > ul .menu-item:last');
                     var $a = $menu.find('a');
 
                     $menu.attr('onclick', '');
@@ -531,15 +533,15 @@
                     $a.attr('href', '#');
                     $menu.on('click', function (e) {
                         e.preventDefault();
-                        var ready = 0;
-                        
-                        $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_lc + '"></iframe>');
-                        $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_mapas + '"></iframe>');
-                        
-                        setTimeout(function(){
-                            document.location = '/';
-                        },2000);
-                        return false;
+                            var ready = 0;
+                            
+                            $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_lc + '"></iframe>');
+                            $('body').append('<iframe style="position:fixed; top:-10000px;" src="' + _url_logout_mapas + '"></iframe>');
+                            
+                            setTimeout(function(){
+                                document.location = '/';
+                            },2000);
+                            return false;
                     });
                 }
             })(jQuery);

@@ -199,6 +199,7 @@ class Theme extends BaseV1\Theme {
         $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
         $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
         $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
+        $this->enqueueScript('vendor', 'dropdown', 'vendor/dropdown.js');
     }
 
     protected function _publishAssets() {
