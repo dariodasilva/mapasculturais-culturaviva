@@ -425,52 +425,11 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 
     </section>
 </div>
-<div style="margin-top:-50px; margin-right: 300px; font-size: 35px" ng-controller="layoutPDFCtrl">
-    <div ng-show="show" style="float:right;">
-        <a id="download">Baixar Certificado</a>
+<div class="page-base-form" ng-controller="layoutPDFCtrl">
+    <p ng-show="data.statusInscricao === 10">
+        <a id="download" ng-click="createPdf()">Visualizar Certificado</a>
         <div ng-hide="urlQRCODE.length != 0">
             <qr text="urlQRCODE" id="qrcode"></qr>
         </div>
-    </div>
+    </p>
 </div>
-<script type="text/javascript">
-    var qr = document.getElementById('qrcode');
-    function convertImgToBase64(callback){
-        var img = new Image();
-        img.onload = function(){
-            var canvas = document.createElement('CANVAS');
-            var ctx = canvas.getContext('2d');
-            canvas.height = 1241;
-            canvas.width = 1754;
-            ctx.drawImage(this, 0, 0);
-            var dataURL = canvas.toDataURL('image/png');
-            callback(dataURL);
-            canvas = null;
-        };
-        img.src = '/assets/rcv/img/certificado.png';
-    }
-
-    var button = document.getElementById("download");
-
-    button.onclick = function(){
-        convertImgToBase64(function(dataUrl){
-            var doc = new jsPDF('landscape','pt',[1754,1241]);
-            if(window.name.length < 40){
-                doc.setFontSize(40);
-            }else if(window.name.length < 70){
-                doc.setFontSize(20);
-            }else{
-                doc.setFontSize(15);
-            }
-            doc.addImage(dataUrl,'png',0,0,1754,1239);
-            doc.setFontType("bold");
-            doc.text(window.name, 770, 395);
-            doc.setFontSize(30);
-            doc.text(window.url,570,1225);
-            var dataURLQR = qr.children[0].toDataURL('image/png');
-            console.log(dataURLQR);
-            doc.addImage(dataURLQR,'png',659,996,200,199);
-            doc.save('Certificado.pdf');
-        });
-    };
-</script>

@@ -181,6 +181,14 @@ class Theme extends BaseV1\Theme {
     protected function _enqueueScripts() {
         $app = App::i();
 
+        $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
+        $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
+        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['app.googleApiKey']);
+        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
+        $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
+        $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
+        $this->enqueueScript('vendor', 'dropdown', 'vendor/dropdown.js');
+
         $this->enqueueScript('culturaviva', 'angular-resource', 'vendor/angular-resource.js');
         $this->enqueueScript('culturaviva', 'angular-messages', 'vendor/angular-1.5.5/angular-messages.min.js');
         $this->enqueueScript('culturaviva', 'ui-mask', 'vendor/mask.js');
@@ -192,14 +200,6 @@ class Theme extends BaseV1\Theme {
 
         $this->enqueueScript('culturaviva', 'cadastro-culturaviva', 'js/culturaviva.js');
         $this->enqueueScript('culturaviva', 'FileSaver', 'js/FileSaver.min.js');
-
-        $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
-        $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
-        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['app.googleApiKey']);
-        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
-        $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
-        $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
-        $this->enqueueScript('vendor', 'dropdown', 'vendor/dropdown.js');
     }
 
     protected function _publishAssets() {
