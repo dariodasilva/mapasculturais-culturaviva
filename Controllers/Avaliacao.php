@@ -136,12 +136,12 @@ class Avaliacao extends \MapasCulturais\Controller {
                 AND rel_ponto.type = 'ponto'
                 AND rel_ponto.object_type = 'MapasCulturais\Entities\Registration'
             JOIN agent entidade ON entidade.id = rel_entidade.agent_id
-            JOIN agent_meta ent_meta_uf
+            LEFT JOIN agent_meta ent_meta_uf
                 ON  ent_meta_uf.object_id = entidade.id
-                AND ent_meta_uf.key = 'En_Estado'
-            JOIN agent_meta ent_meta_municipio
+                AND ent_meta_uf.key = 'geoEstado'
+            LEFT JOIN agent_meta ent_meta_municipio
                 ON  ent_meta_municipio.object_id = entidade.id
-                AND ent_meta_municipio.key = 'En_Municipio'
+                AND ent_meta_municipio.key = 'geoMunicipio'
             JOIN agent ponto ON ponto.id = rel_ponto.agent_id
             LEFT JOIN agent_meta tp
                 ON tp.key = 'tipoPontoCulturaDesejado'
