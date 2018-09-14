@@ -1440,9 +1440,9 @@
 
                     doc.setFontType("bold");
                     doc.setTextColor("#FFFFFF");
-                    doc.setFontSize(30);
+                    doc.setFontSize(35);
                     var text = "O Ministério da Cultura, por meio da Secretaria da Diversidade Cultural, reconhece o coletivo/entidade\n\n" +
-                    $scope.ponto.name + "\n\n" +
+                    "\n\n" +
                     "como Ponto de Cultura a partir dos critérios estabelecidos na Lei Cultura Viva (13.018/2014).\n\n" +
                     "Este certificado comprova que a iniciativa desenvolve e articula atividades culturais em sua comunidade, " +
                     "e contribui para o acesso, a proteção e a promoção dos direitos, da cidadania e da diversidade cultural no Brasil."
@@ -1450,8 +1450,13 @@
                     var text = doc.splitTextToSize(text, 1090)
                     doc.text(text, 490, 290, '', '', 'center');
 
-                    doc.text(MapasCulturais.createUrl('agent', 'single', [ponto.id]), 570, 1225);
+                    var name = doc.splitTextToSize($scope.ponto.name, 1400)
+                    doc.setFontSize(25);
+                    doc.text(name, 490, 410);
+
                     var dataURLQR = qr.children[0].toDataURL('image/png');
+                    doc.setFontSize(20);
+                    doc.text(MapasCulturais.createUrl('agent', 'single', [ponto.id]), 630, 1225);
                     doc.addImage(dataURLQR, 'png', 659, 996, 200, 199);
 
                     doc.save('Certificado.pdf');
