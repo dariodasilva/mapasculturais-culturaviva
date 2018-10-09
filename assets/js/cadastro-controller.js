@@ -1220,6 +1220,7 @@
         };
 
         $scope.validaCNPJ = function () {
+            $scope.messages.show('enviando', "Validando CNPJ");
             $http.get(MapasCulturais.createUrl('cadastro', 'validaCNPJ'), {
                 params: {
                     cnpj: $scope.data.cnpj
@@ -1233,7 +1234,7 @@
                         scope: $scope
                     });
                 } else {
-                    $scope.consultaCNPJ();
+                    $scope.registrar();
                 }
 
             }).error(function errorCallback(erro) {

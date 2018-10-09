@@ -31,7 +31,7 @@
          * var headerHeight inicializa com valor padrão 111, logo após a janela se carregada por completo
          * o valor pode mudar
          */
-        var headerHeight = 111;
+        var headerHeight = 197;
 
         var header_animation_status = 0;
 
@@ -129,16 +129,7 @@
             if ($('#editable-entity:visible').length) {
                 $editableEntity = $('#editable-entity');
 
-                var _editableTop  = headerHeight;
-
-                if ( $(window).scrollTop() - headerHeight >= 0 ) {
-                    _editableTop = 0;
-                } else {
-                    _editableTop = headerHeight - $(window).scrollTop();
-                }
-
-                $editableEntity.css('top', _editableTop);
-
+                $editableEntity.css('top', newHeaderTop + headerHeight);
 
                 //Sugestão de colocar o logo e outras coisas na edit bar:
                 // if scrolltop > x
