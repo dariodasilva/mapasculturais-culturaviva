@@ -613,7 +613,7 @@ class Cadastro extends \MapasCulturais\Controller{
                 'subject' => $message['title'],
                 'body' => $message['body']
             ]);
-
+            $this->json($inscricao);
         } else {
             $this->errorJson([
                 'responsavel' => $erros_responsavel,

@@ -478,6 +478,7 @@
             $scope.enviar = function () {
                 $http.post(MapasCulturais.createUrl('cadastro', 'enviar')).
                 success(function successCallback(response) {
+                    $scope.data.statusInscricao = 1;
                     $scope.data.validationErrors = null;
                     if ($scope.data.statusInscricao == 0) {
                         ngDialog.open({
