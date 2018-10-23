@@ -97,8 +97,8 @@ class Cadastro extends \MapasCulturais\Controller{
      * @return array
      */
     function getPontoRequiredProperties(){
-	     $agent = $this->getPonto();
-       $entidadeAgent = $this->getEntidade();
+	    $agent = $this->getPonto();
+        $entidadeAgent = $this->getEntidade();
         $required_properties = [
             'name',
             'shortDescription',
@@ -137,8 +137,8 @@ class Cadastro extends \MapasCulturais\Controller{
             }
         }
 
-  	return $required_properties;
-      }
+  	    return $required_properties;
+    }
 
     /**
     * Taxonomias obrigatórias do Ponto
@@ -174,10 +174,13 @@ class Cadastro extends \MapasCulturais\Controller{
         $required_files = [];
 
         $required_files = [
-            'portifolio',
             'carta1',
             'carta2',
         ];
+
+        if(is_null($agent->atividadesEmRealizacaoLink) || $agent->atividadesEmRealizacaoLink === ''){
+            $required_files[] = 'portifolio';
+        }
 
         if ($agentEntidade->tipoOrganizacao === 'coletivo') {
           $required_files [] = 'ata';
