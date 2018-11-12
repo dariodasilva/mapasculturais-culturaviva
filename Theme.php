@@ -1023,4 +1023,28 @@ class Theme extends BaseV1\Theme {
         }
     }
 
+    function _getFilters()
+    {
+        $filters = parent::_getFilters();
+
+        $terms = App::i()->repo('Term')->getTermsAsString('publico_participante');
+
+        $filters['agent']['publico_participante'] =
+        [
+            'label' => 'Público Alvo',
+            'placeholder' => 'Selecione o público alvo',
+            'type' => 'term',
+            'filter' => [
+                'param' => 'publico_participante',
+                'value' => 'IN({val})'
+            ],
+        ];
+
+        foreach($terms as $t)
+            $filters['agent']['publico_participante']['options'][] = ['value' => $t, 'label' => $t];
+
+        App::i()->applyHookBoundTo($this, 'search.filters', [&$filters]);
+        return $filters;
+    }
+
 }
