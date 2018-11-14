@@ -620,7 +620,36 @@ class Theme extends BaseV1\Theme {
 //                  'required' => true,
                     'private' => function() {
                         return !$this->publicLocation;
-                    }
+                    },
+                    'options' => [
+                        'AC' => 'Acre',
+                        'AL' => 'Alagoas',
+                        'AP' => 'Amapá',
+                        'AM' => 'Amazonas',
+                        'BA' => 'Bahia',
+                        'CE' => 'Ceará',
+                        'DF' => 'Distrito Federal',
+                        'ES' => 'Espírito Santo',
+                        'GO' => 'Goiás',
+                        'MA' => 'Maranhão',
+                        'MT' => 'Mato Grosso',
+                        'MS' => 'Mato Grosso do Sul',
+                        'MG' => 'Minas Gerais',
+                        'PA' => 'Pará',
+                        'PB' => 'Paraíba',
+                        'PR' => 'Paraná',
+                        'PE' => 'Pernambuco',
+                        'PI' => 'Piauí',
+                        'RJ' => 'Rio de Janeiro',
+                        'RN' => 'Rio Grande do Norte',
+                        'RS' => 'Rio Grande do Sul',
+                        'RO' => 'Rondônia',
+                        'RR' => 'Roraima',
+                        'SC' => 'Santa Catarina',
+                        'SP' => 'São Paulo',
+                        'SE' => 'Sergipe',
+                        'TO' => 'Tocantins',
+                    ]
                 ],
                 'pais' => [
                     'label' => 'Pais',
@@ -1027,6 +1056,37 @@ class Theme extends BaseV1\Theme {
     {
         $filters = parent::_getFilters();
 
+        // $filters['agent']['tipoPontoCulturaDesejado'] = [
+        //     'label' => 'Tipo do Ponto',
+        //     'placeholder' => 'Todos',
+        //     'fieldType' => 'singleselect',
+        //     'filter' => [
+        //         'param' => 'tipoPontoCulturaDesejado',
+        //         'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
+        //     ]
+        // ];
+
+        $filters['agent']['En_Estado'] = [
+            'fieldType' => 'checklist',
+            'label' => 'Estado',
+            'placeholder' => 'Selecione os Estados',
+            'filter' => [
+                'param' => 'En_Estado',
+                'value' => 'IN({val})'
+            ],
+        ];
+
+        $filters['agent']['En_Municipio'] = [
+            'fieldType' => 'text',
+            'label' => 'Município',
+            'isArray' => false,
+            'placeholder' => 'Pesquisar por Município',
+            'filter' => [
+                'param' => 'En_Municipio',
+                'value' => 'ILIKE(*{val}*)'
+            ]
+        ];
+
         $terms = App::i()->repo('Term')->getTermsAsString('publico_participante');
 
         $filters['agent']['publico_participante'] =
@@ -1034,6 +1094,7 @@ class Theme extends BaseV1\Theme {
             'label' => 'Público Alvo',
             'placeholder' => 'Selecione o público alvo',
             'type' => 'term',
+            'isInline' => false,
             'filter' => [
                 'param' => 'publico_participante',
                 'value' => 'IN({val})'
