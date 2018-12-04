@@ -276,7 +276,7 @@ class Avaliacao extends \MapasCulturais\Controller {
             AND avl.id = :id";
 
         $parametros = [
-            'id' => $avaliacaoId, soccer /
+            'id' => $avaliacaoId,
             'agenteId' => $agenteId
         ];
 
