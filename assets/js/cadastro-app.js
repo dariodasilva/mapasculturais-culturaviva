@@ -40,5 +40,4 @@
                 closeByEscape: true,
             });
         }]);
-
 })(angular);

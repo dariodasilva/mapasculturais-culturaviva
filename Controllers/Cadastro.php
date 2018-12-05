@@ -681,5 +681,4 @@ class Cadastro extends \MapasCulturais\Controller{
             $this->Json($f["naturezaJuridica"]["cdNaturezaJuridica"]);
         }
     }
-
 }

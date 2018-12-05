@@ -352,6 +352,11 @@ class Theme extends BaseV1\Theme {
 //                  'required' => true,
                     'private' => true
                 ],
+                'responsavel_cpf' => [
+                    'label' => 'CPF responsável',
+//                  'required' => true,
+                    'private' => true
+                ],
                 'telefone1' => [
                     'label' => 'Telefone',
 //                  'required' => true,
@@ -387,11 +392,60 @@ class Theme extends BaseV1\Theme {
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
+                        'estadual' => 'Estadual',
+                        'municipal' => 'Municipal',
+                        'intermunicipal' => 'Intermunicipal',
+                        'nao' => 'Não'
+                    )
+                ],
+                'redePertencente' => [
+                    'label' => 'Pertence ou pertenceu a alguma rede?',
+//                  'required' => true,
+                    'private' => true,
+                    'type' => 'select',
+                    'options' => array(
                         'ponto' => 'Ponto',
                         'pontao' => 'Pontão'
                     )
                 ],
+                'esferaFomento' => [
+                    'label' => 'Qual esfera do fomento?',
+//                  'required' => true,
+                    'private' => true,
+                    'type' => 'select',
+                    'options' => array(
+                        'municipal' => 'Municipal',
+                        'estadual' => 'Estadual',
+                        'federal' => 'federal'
+                    )
+                ],
                 'tipoOrganizacao' => [
+                    'label' => 'Deseja ser',
+//                  'required' => true,
+                    'private' => true,
+                    'type' => 'select',
+                    'options' => array(
+                        'entidade' => 'Entidade',
+                        'coletivo' => 'Coletivo',
+                        'pontao' => 'Pontão'
+                    )
+                ],
+                'mesmoEndereco' => [
+                    'label' => 'O endereço da unidade é o mesmo do ponto ou pontão?',
+//                  'required' => true,
+                    'private' => true,
+                    'type' => 'select',
+                    'options' => array(
+                        'sim' => 'Sim',
+                        'nao' => 'Não'
+                    )
+                ],
+                'nomePonto' => [
+                    'label' => 'Nome ponto',
+//                  'required' => true,
+                    'private' => true,
+                ],
+                /*'tipoOrganizacao' => [
                     'label' => 'Tipo de Organização',
 //                  'required' => true,
                     'private' => true,
@@ -400,7 +454,7 @@ class Theme extends BaseV1\Theme {
                         'coletivo' => 'Coletivo Cultural',
                         'entidade' => 'Entidade Cultural'
                     )
-                ],
+                ],*/
                 'cnpj' => [
                     'label' => 'CNPJ',
 //                  'required' => true,
@@ -665,6 +719,85 @@ class Theme extends BaseV1\Theme {
                         return !$this->publicLocation;
                     }
                 ],
+                'En_BairroPontaPontao' => [
+                    'label' => 'Bairro',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+                ],
+                'En_NumPontaPontao' => [
+                    'label' => 'Número',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+                ],
+                'En_Nome_LogradouroPontaPontao' => [
+                    'label' => 'Logradouro',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+                ],
+                'En_ComplementoPontaPontao' => [
+                    'label' => 'Complemento',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    },
+                ],
+                // @TODO: comentar quando importar os shapefiles
+                'En_EstadoPontaPontao' => [
+                    'label' => 'Estado',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    },
+                    'options' => [
+                        'AC' => 'Acre',
+                        'AL' => 'Alagoas',
+                        'AP' => 'Amapá',
+                        'AM' => 'Amazonas',
+                        'BA' => 'Bahia',
+                        'CE' => 'Ceará',
+                        'DF' => 'Distrito Federal',
+                        'ES' => 'Espírito Santo',
+                        'GO' => 'Goiás',
+                        'MA' => 'Maranhão',
+                        'MT' => 'Mato Grosso',
+                        'MS' => 'Mato Grosso do Sul',
+                        'MG' => 'Minas Gerais',
+                        'PA' => 'Pará',
+                        'PB' => 'Paraíba',
+                        'PR' => 'Paraná',
+                        'PE' => 'Pernambuco',
+                        'PI' => 'Piauí',
+                        'RJ' => 'Rio de Janeiro',
+                        'RN' => 'Rio Grande do Norte',
+                        'RS' => 'Rio Grande do Sul',
+                        'RO' => 'Rondônia',
+                        'RR' => 'Roraima',
+                        'SC' => 'Santa Catarina',
+                        'SP' => 'São Paulo',
+                        'SE' => 'Sergipe',
+                        'TO' => 'Tocantins',
+                    ]
+                ],
+                'paisPontaPontao' => [
+                    'label' => 'Pais',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+                ],
+                'En_MunicipioPontaPontao' => [
+                    'label' => 'Município',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+                ],
                 // Seu Ponto no Mapa
                 'mesmoEndereco' => [
                     'label' => 'Mesmo Endereco',
@@ -684,6 +817,16 @@ class Theme extends BaseV1\Theme {
                     'required' => false
                 ],
                 'cep' => [
+                    'label' => 'CEP',
+//                  'required' => true,
+                    'private' => function() {
+                        return !$this->publicLocation;
+                    }
+//                    'validations' => array(
+//                        'v::regex("#^\d\d\d\d\d-\d\d\d$#")' => 'Use cep no formato 99999-999'
+//                    )
+                ],
+                'cepPontaPontao' => [
                     'label' => 'CEP',
 //                  'required' => true,
                     'private' => function() {
@@ -753,6 +896,16 @@ class Theme extends BaseV1\Theme {
                 ],
                 'parceriaPoderPublico' => [
                     'label' => '',
+                    'required' => false,
+                    'private' => true
+                ],
+                'fomentoPublico' => [
+                    'label' => 'Possui fomento público?',
+                    'required' => false,
+                    'private' => true
+                ],
+                'parceriaPrivada' => [
+                    'label' => 'Possui parceria privada?',
                     'required' => false,
                     'private' => true
                 ],

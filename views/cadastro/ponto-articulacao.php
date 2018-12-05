@@ -1,7 +1,7 @@
 <?php
     $this->bodyProperties['ng-app'] = "culturaviva";
     $this->layout = 'cadastro';
-    $this->cadastroTitle = '6. Atuação e Articulação';
+    $this->cadastroTitle = '4. Atuação e Articulação';
     $this->cadastroText = 'Queremos entender melhor quais são as atividades realizadas pelo seu Ponto e quem é o público que as frequenta';
     $this->cadastroIcon = 'icon-chat';
     $this->cadastroPageClass = 'ponto-mais page-base-form';
@@ -12,14 +12,14 @@
 <form name="form_pontoArticulacao" ng-controller="PontoArticulacaoCtrl">
     <?php $this->part('messages'); ?>
     <div class="form">
-        <h4>Informações Opcionais</h4>
-        <div class="row">
+        <h4>Informações Obrigatórias</h4>
+        <!--<div class="row">
             <div class="colunm-full">
                 <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Em qual edital do Ministério da Cultura  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado? <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
                 <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Em qual edital do Ministério da Cultura  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado?* <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
             </div>
             <taxonomy-checkboxes taxonomy="contemplado_edital" entity="agent" terms="termos.contemplado_edital"></taxonomy-checkboxes>
-        </div>
+        </div>-->
         <div class="row">
             <div class="colunm-full">
                 <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Quais são as ações estruturantes do Ponto/Pontão de Cultura? <i class="hltip" title="Refere-se às áreas da cultura nas quais o Ponto/Pontão atua.">?</i><br>(Pode escolher mais de uma opção) </span>
@@ -124,9 +124,57 @@
                 <!-- textarea></textarea -->
             </label>
             <div class="colunm-full" ng-show="agent.parceriaPoderPublico">
+                <span class="destaque">Recebe ou recebeu fomento?*</span>
+                <label class="colunm1">
+                    <input type="radio"
+                           name="fomentoPublico"
+                           ng-value="0"
+                           ng-change="save_field('fomentoPublico')"
+                           ng-model="agent.fomentoPublico"> Não
+                </label>
+                <label class="colunm2">
+                    <input type="radio"
+                           name="fomentoPublico"
+                           ng-value="1"
+                           ng-change="save_field('fomentoPublico')"
+                           ng-model="agent.fomentoPublico">  Sim
+                </label>
+            </div>
+
+            <div class="colunm-full" ng-show="agent.fomentoPublico">
+                <span class="destaque">
+                    Qual esfera do fomento?*
+                </span>
+                <select name="esferaFomento"
+                        ng-change="save_field('esferaFomento')"
+                        ng-model="agent.esferaFomento" required>
+                    <option value="municipal">Municipal</option>
+                    <option value="estadual">Estadual</option>
+                    <option value="federal">Federal</option>
+                </select>
+            </div>
+
+            <div class="colunm-full">
+                <span class="destaque">Possui parceria com iniciativa privada?*</span>
+                <label class="colunm1">
+                    <input type="radio"
+                           name="parceriaPrivada"
+                           ng-value="0"
+                           ng-change="save_field('parceriaPrivada')"
+                           ng-model="agent.parceriaPrivada"> Não
+                </label>
+                <label class="colunm2">
+                    <input type="radio"
+                           name="parceriaPrivada"
+                           ng-value="1"
+                           ng-change="save_field('parceriaPrivada')"
+                           ng-model="agent.parceriaPrivada">  Sim
+                </label>
+            </div>
+            <!--<div class="colunm-full" ng-show="agent.parceriaPoderPublico">
                 <span class="destaque">Quais?*
                 <input name="simPoderPublico" class="colunm1" type="text" ng-blur="save_field('simPoderPublico')" ng-model="agent.simPoderPublico" /></span>
-            </div>
+            </div>-->
         </div>
     </div>
 </form>

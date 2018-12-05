@@ -71,8 +71,29 @@
         }
         setInterval(slide,6000);
 
+        /*$(".btn_continuar").click(function () {
+            var goto = $(this).data('path');
+            var inputs = document.querySelectorAll("input:required");
+            var selects = document.querySelectorAll("select:required");
+
+            if(!are_there_empty(inputs) && !are_there_empty(selects))
+            {
+                window.location = goto;
+            }else{
+                alert("Aida há campos a serem preenchidos!");
+            }
+        });
+
+        function are_there_empty(nodelist) {
+            for(var i = 0; i < nodelist.length; i++)
+            {
+                if(nodelist[i].value == '' || nodelist[i].value == '? object:null ?')
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        };*/
     });
-
-
-
 })(jQuery);

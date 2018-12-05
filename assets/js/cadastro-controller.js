@@ -1,5 +1,6 @@
 (function (angular) {
     'use strict';
+
     var app = angular.module('culturaviva.controllers', []);
 
     var agentsPontoDados = ["name",
@@ -363,9 +364,11 @@
             $scope.save_field = function save_field(field) {
                 var validaLink = "http://";
                 var flag = false;
+
                 if (field === "tipoPontoCulturaDesejado" && $scope.agent[field] == 'pontao') {
                     $scope.agent['tipoOrganizacao'] = 'entidade';
                 }
+
                 if ((field === "atividadesEmRealizacaoLink") && ($scope.agent[field] !== "")) {
                     if ($scope.agent[field].indexOf("http://") !== -1) {
                         flag = true;
@@ -376,6 +379,7 @@
                         $scope.agent[field] = validaLink + $scope.agent[field];
                     }
                 }
+
                 if (angular.equals($scope.agent[field], $scope.originalAgent[field])) {
                     return;
                 }
@@ -384,12 +388,12 @@
 
                 var agent_update = {};
                 agent_update[field] = $scope.agent[field];
-                $scope.messages.show('enviando', 'salvando alterações');
+                $scope.messages.show('enviando', 'Salvando alterações');
 
                 Entity.patch({
                     'id': agent_id
                 }, agent_update, function (agent) {
-                    $scope.messages.show('sucesso', 'alterações salvas');
+                    $scope.messages.show('sucesso', 'Alterações salvas');
                 }, function (error) {
                     try {
                         $scope.messages.show('erro', error.data.data[field].toString());
@@ -398,7 +402,6 @@
                     }
                 });
             };
-
         }
 
         $scope.showInvalid = function (agentTipo, nomeForm) {
@@ -532,7 +535,6 @@
             };
         }
     ]);
-
 
     // TODO: Tranforma em diretiva
     app.controller('ImageUploadCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', '$http',
@@ -698,7 +700,6 @@
         }
     ]);
 
-
     // Controller do 'Informações do responsável'
     app.controller('ResponsibleCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', '$location', '$http',
         function ResponsibleCtrl($scope, Entity, MapasCulturais, Upload, $timeout, $location, $http) {
@@ -711,7 +712,6 @@
                     'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,nomeCompleto,' +
                     'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,' +
                     'flickr,youtube,mesmoEndereco,shortDescription',
-
                 '@files': '(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
@@ -723,7 +723,6 @@
                     $scope.showInvalid($scope.agent.rcv_tipo, 'form_responsavel');
                 }
             });
-
         }
     ]);
 
@@ -769,6 +768,88 @@
 
 
     // Controller do 'Seu ponto no Mapa'
+    app.controller('EntityCtrl', ['$scope', '$timeout', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
+        function ($scope, $timeout, Entity, MapasCulturais, $location, $http, ngDialog) {
+            var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
+
+
+            var params = {
+                'id': agent_id,
+
+                '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
+                    'tipoPontoCulturaDesejado,tipoOrganizacao,responsavel_operadora,responsavel_operadora2,' +
+                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
+                    'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
+                    'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
+                    'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
+                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location',
+
+                '@permissions': 'view'
+            };
+
+            $scope.markers = {};
+            $scope.agent = Entity.get(params, function (agent) {
+                $scope.markers.main = {
+                    lat: agent.location.latitude,
+                    lng: agent.location.longitude,
+                    message: agent.endereco
+                };
+
+                extendController($scope, $timeout, Entity, agent_id, $http);
+
+                if ($location.search().invalid === '1') {
+                    $scope.showInvalid($scope.agent.rcv_tipo, 'form_entity');
+                }
+            });
+
+            $scope.closeAll = function () {
+                ngDialog.close();
+            };
+
+            extendController($scope, $timeout, Entity, agent_id, $http);
+            $scope.validaCNPJ = function () {
+                if ($scope.agent.cnpj.length === 0) {
+                    $scope.agent.cnpj = null;
+                    $scope.save_field('cnpj');
+                } else {
+                    $http.get(MapasCulturais.createUrl('cadastro', 'validaCNPJ'), {
+                        params: {
+                            cnpj: $scope.agent.cnpj
+                        }
+                    }).
+                    success(function successCallback(sucesso) {
+                        if (sucesso.cdNaturezaJuridica.indexOf("1") === 0) {
+                            $scope.natuJuridica = sucesso.dsNaturezaJuridica;
+                            ngDialog.open({
+                                template: 'modalNJ',
+                                scope: $scope
+                            });
+                        }
+                        if ((sucesso.cdNaturezaJuridica.indexOf("3") === 0) || (sucesso.cdNaturezaJuridica === "2143")) {
+                            $scope.save_field('cnpj');
+                            $scope.messages.show('sucesso', 'alterações salvas');
+                        }
+
+                    }).error(function errorCallback(erro) {
+                        if (erro.data === "CNPJ invalido") {
+                            ngDialog.open({
+                                template: 'modalCNPJInvalido',
+                                scope: $scope
+                            });
+
+                        } else if (erro.data === "CNPJ com fins lucrativos") {
+                            ngDialog.open({
+                                template: 'modalFinsLucrativos',
+                                scope: $scope
+                            });
+                        }
+                    });
+                }
+            };
+
+        }
+    ]);
+
     app.controller('PointCtrl', ['$scope', 'Entity', 'MapasCulturais', 'Upload', '$timeout', 'geocoder', 'cepcoder', '$location', '$http', 'cidadecoder',
         function PointCtrl($scope, Entity, MapasCulturais, Upload, $timeout, geocoder, cepcoder, $location, $http, cidadecoder) {
             var agent_id = MapasCulturais.redeCulturaViva.agentePonto;
@@ -906,7 +987,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
+                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
                 '@permissions': 'view'
             };
 
@@ -981,79 +1062,6 @@
                     $scope.showInvalid($scope.agent.rcv_tipo, 'form_pontoFormacao');
                 }
             });
-
-        }
-    ]);
-
-    app.controller('EntityCtrl', ['$scope', '$timeout', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
-        function ($scope, $timeout, Entity, MapasCulturais, $location, $http, ngDialog) {
-            var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
-
-
-            var params = {
-                'id': agent_id,
-
-                '@select': 'id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
-                    'tipoPontoCulturaDesejado,tipoOrganizacao,responsavel_operadora,responsavel_operadora2,' +
-                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
-                    'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,' +
-                    'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento',
-
-                '@permissions': 'view'
-            };
-
-            $scope.agent = Entity.get(params, function () {
-                extendController($scope, $timeout, Entity, agent_id, $http);
-
-                if ($location.search().invalid === '1') {
-                    $scope.showInvalid($scope.agent.rcv_tipo, 'form_entity');
-                }
-            });
-
-            $scope.closeAll = function () {
-                ngDialog.close();
-            };
-
-            extendController($scope, $timeout, Entity, agent_id, $http);
-            $scope.validaCNPJ = function () {
-                if ($scope.agent.cnpj.length === 0) {
-                    $scope.agent.cnpj = null;
-                    $scope.save_field('cnpj');
-                } else {
-                    $http.get(MapasCulturais.createUrl('cadastro', 'validaCNPJ'), {
-                        params: {
-                            cnpj: $scope.agent.cnpj
-                        }
-                    }).
-                    success(function successCallback(sucesso) {
-                        if (sucesso.cdNaturezaJuridica.indexOf("1") === 0) {
-                            $scope.natuJuridica = sucesso.dsNaturezaJuridica;
-                            ngDialog.open({
-                                template: 'modalNJ',
-                                scope: $scope
-                            });
-                        }
-                        if ((sucesso.cdNaturezaJuridica.indexOf("3") === 0) || (sucesso.cdNaturezaJuridica === "2143")) {
-                            $scope.save_field('cnpj');
-                            $scope.messages.show('sucesso', 'alterações salvas');
-                        }
-
-                    }).error(function errorCallback(erro) {
-                        if (erro.data === "CNPJ invalido") {
-                            ngDialog.open({
-                                template: 'modalCNPJInvalido',
-                                scope: $scope
-                            });
-
-                        } else if (erro.data === "CNPJ com fins lucrativos") {
-                            ngDialog.open({
-                                template: 'modalFinsLucrativos',
-                                scope: $scope
-                            });
-                        }
-                    });
-                }
-            };
 
         }
     ]);
@@ -1468,5 +1476,4 @@
         }
 
     ]);
-
 })(angular);

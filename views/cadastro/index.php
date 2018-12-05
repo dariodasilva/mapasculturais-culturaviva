@@ -91,53 +91,34 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             </div>
         </article>
         </a>
-        <a href="<?php echo $app->createUrl('cadastro', 'pontoMapa'); ?>">
-        <article class="box-ponto-mapa">
-            <header>
-                    <span class="icon icon-location"></span>
-                    <h4> 3. Seu Ponto no Mapa</h4>
-                    <span class="btn_mais"> + </span>
-            </header>
-            <div class="infos">
-                <div class="texto">
-                     <p>Mostre onde você atua</p>
-                </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
-            </div>
-        </article>
-        </a>
+
         <a href="<?php echo $app->createUrl('cadastro', 'portifolio'); ?>">
-        <article class="box-portfolio border-left">
-            <header>
-              <span class="icon icon-picture"></span>
-              <h4> 4. Portfólio e Anexos</h4>
-              <span class="btn_mais"> + </span>
-            </header>
-            <div class="infos">
-                <div class="texto">
-                     <p>Anexe os documentos obrigatórios para a autodeclaração</p>
-                </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
+            <article class="box-portfolio border-left">
+                <header>
+                    <span class="icon icon-picture"></span>
+                    <h4> 3. Portfólio e Anexos</h4>
+                    <span class="btn_mais"> + </span>
+                </header>
+                <div class="infos">
+                    <div class="texto">
+                        <p>Anexe os documentos obrigatórios para a autodeclaração</p>
                     </div>
-                </div>-->
-            </div>
-        </article>
+                    <!--                <div class="circle-status c100 p56">
+                                        <span>56%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>-->
+                </div>
+            </article>
         </a>
-        <a href="<?php echo $app->createUrl('cadastro', 'articulacao'); ?>" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">
+
+        <a href="<?php echo $app->createUrl('cadastro', 'articulacao'); ?>" >
         <article class="box-atuacao-articulaco border-left">
             <header>
                     <span class="icon icon-chat"></span>
-                    <h4> 5. Atuação e Articulação</h4>
+                    <h4> 4. Atuação e Articulação</h4>
                     <span class="btn_mais"> + </span>
             </header>
             <div class="infos">
@@ -153,6 +134,28 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                 </div>-->
             </div>
         </article>
+        </a>
+
+        <a href="<?php echo $app->createUrl('cadastro', 'pontoMapa'); ?>">
+            <article class="box-ponto-mapa">
+                <header>
+                    <span class="icon icon-dollar"></span>
+                    <h4> 5. Economia viva</h4>
+                    <span class="btn_mais"> + </span>
+                </header>
+                <div class="infos">
+                    <div class="texto">
+                        <p>Fale mais sobre os recursos que o seu ponto tem para trocar com outros pontos de cultura</p>
+                    </div>
+                    <!--                <div class="circle-status c100 p56">
+                                        <span>56%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>-->
+                </div>
+            </article>
         </a>
 	<div ng-show="data.statusInscricao > 0">
 	<article class="boxs-cadastro" style="width: 100%; background: #078979 none repeat scroll 0% 0%;"><header><center><h4>Informações Complementares</h4></center></header></article>
