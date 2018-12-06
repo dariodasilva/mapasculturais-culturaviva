@@ -180,6 +180,7 @@
                     }
 
                     var marker, point;
+
                     for(var idx in markers) {
                         marker = markers[idx];
                         point = points[idx];

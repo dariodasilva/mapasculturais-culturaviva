@@ -802,6 +802,13 @@
                 }
             });
 
+            $scope.$watch('markers.main', function (point) {
+                if (point && point.lat && point.lng) {
+                    $scope.agent['location'] = [point.lng, point.lat];
+                    $scope.save_field('location');
+                }
+            }, true);
+
             $scope.closeAll = function () {
                 ngDialog.close();
             };

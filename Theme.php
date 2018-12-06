@@ -347,6 +347,10 @@ class Theme extends BaseV1\Theme {
 //                  'required' => true,
                     'private' => true
                 ],
+                'nomeCompleto' => [
+                    'label' => 'Nome completo',
+                    'private' =>  true
+                ],
                 'cpf' => [
                     'label' => 'CPF',
 //                  'required' => true,
