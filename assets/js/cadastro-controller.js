@@ -478,6 +478,7 @@
             extendController($scope, $timeout, Entity, agent_id);
 
             $scope.data = MapasCulturais.redeCulturaViva;
+
             $scope.enviar = function () {
                 $http.post(MapasCulturais.createUrl('cadastro', 'enviar')).
                 success(function successCallback(response) {

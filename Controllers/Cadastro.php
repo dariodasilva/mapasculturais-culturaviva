@@ -196,13 +196,13 @@ class Cadastro extends \MapasCulturais\Controller{
         $agent = $this->getEntidade();
 
         $required_properties = [
-            'tipoPontoCulturaDesejado',
+            'rederPertencente',
             'tipoOrganizacao',
+            'name',
+            'emailPrivado',
             'responsavel_nome',
-            'responsavel_cargo',
             'responsavel_email',
             'responsavel_telefone',
-            'emailPrivado',
             'telefone1',
             'pais',
         ];
@@ -222,6 +222,7 @@ class Cadastro extends \MapasCulturais\Controller{
         }
 
         return $required_properties;
+        //return
     }
 
     /**
