@@ -99,31 +99,33 @@
                     <input required name="En_Estado" type="text" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado"/>
                 </label>
 
-                <label class="colunm2">
+                <label class="colunm2" ng-class="{busy: cidadecoder.busy}">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
-                    <input required name="En_Municipio" type="text" ng-blur="save_field('En_Municipio')" ng-model="agent.En_Municipio"/>
+                    <input required name="En_Municipio" type="text" ng-blur="save_field('En_Municipio'); cidadecoder.code(agent.En_Municipio, agent.pais)"
+                           ng-model="agent.En_Municipio"/>
+                    <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
                 </label>
 
                 <label class="colunm2">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro')" ng-model="agent.En_Bairro"/>
+                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
                 </label>
             </div>
             <div class="clear"></div>
             <div class="row">
                 <label class="colunm2">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
-                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro')" ng-model="agent.En_Nome_Logradouro"/>
+                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
                 </label>
                 <label class="colunm2">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'Número*' : 'Número'}}</span>
                     <input required name="En_Num" type="text" ng-blur="save_field('En_Num')" ng-model="agent.En_Num"/>
                 </label>
-                <label class="colunm2">
+                <label class="colunm2" ng-class="{'busy': cepcoder.busy}">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
                     <input required type="text"
                            name="cep"
-                           ng-blur="save_field('cep')"
+                           ng-blur="save_field('cep'); cepcoder.code(agent.cep)"
                            ng-model="agent.cep"
                            ui-mask="99999-999"
                            ng-if="agent.pais === 'Brasil'">

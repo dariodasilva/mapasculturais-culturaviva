@@ -101,6 +101,10 @@ class Theme extends BaseV1\Theme {
             ];
         });
 
+        $app->hook('cultura-viva', function() use($app){
+            echo "<h1>Maria</h1>";
+        });
+
         $app->hook('view.render(cadastro/<<*>>):before', function() use($app) {
             $this->jsObject['templateUrl']['taxonomyCheckboxes'] = $this->asset('js/directives/taxonomy-checkboxes.html', false);
             $area = $app->getRegisteredTaxonomy('MapasCulturais\Entities\Agent', 'area');

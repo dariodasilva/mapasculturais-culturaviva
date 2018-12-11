@@ -769,8 +769,8 @@
 
 
     // Controller do 'Seu ponto no Mapa'
-    app.controller('EntityCtrl', ['$scope', '$timeout', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
-        function ($scope, $timeout, Entity, MapasCulturais, $location, $http, ngDialog) {
+    app.controller('EntityCtrl', ['$scope', '$timeout',  'geocoder', 'cepcoder', 'cidadecoder', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
+        function ($scope, $timeout, geocoder, cepcoder, cidadecoder, Entity, MapasCulturais, $location, $http, ngDialog) {
             var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
 
 
@@ -809,6 +809,98 @@
                     $scope.save_field('location');
                 }
             }, true);
+
+            $scope.cidadecoder = {
+                busy: false,
+                code: function (cidade, pais) {
+                    $scope.agent.En_Municipio = cidade;
+                    $scope.save_field('En_Municipio');
+                    $scope.cidadecoder.busy = true;
+                    cidadecoder.code(cidade, pais).then(function (res) {
+                        var addr = res.data[0];
+                        if (addr) {
+                            var string = (addr.display_name ? addr.display_name + ', ' : '');
+                        }
+
+                        return geocoder.code(string);
+
+                    }).then(function (point) {
+                        point.zoom = 14;
+                        $scope.markers.main = point;
+                    })['catch'](function () {
+                        $scope.markers.main = undefined;
+                    }).finally(function () {
+                        $scope.cepcoder.busy = false;
+                    });
+                }
+            };
+
+            $scope.cepcoder = {
+                busy: false,
+                code: function (cep) {
+                    $scope.agent.cep = cep;
+                    $scope.save_field('cep');
+                    $scope.cepcoder.busy = true;
+                    cepcoder.code(cep).then(function (res) {
+                        var addr = res.data;
+                        if (addr) {
+                            $scope.agent.En_Estado = addr.estado;
+                            $scope.save_field('En_Estado');
+
+                            $scope.agent.En_Municipio = addr.cidade;
+                            $scope.save_field('En_Municipio');
+
+                            $scope.agent.En_Bairro = addr.bairro;
+                            $scope.save_field('En_Bairro');
+
+                            $scope.agent.En_Nome_Logradouro = addr.logradouro;
+                            $scope.save_field('En_Nome_Logradouro');
+
+                            $scope.agent.pais = "Brasil";
+                            $scope.save_field('pais');
+
+                            var string = (addr.logradouro ? addr.logradouro + ', ' : '') +
+                                (addr.bairro ? addr.bairro + ', ' : '') +
+                                (addr.cidade ? addr.cidade + ', ' : '') +
+                                (addr.estado ? addr.estado + ' - ' : '') +
+                                ($scope.agent.pais ? $scope.agent.pais : '');
+
+                        }
+
+                        return geocoder.code(string);
+
+                    }).then(function (point) {
+                        point.zoom = 14;
+                        $scope.markers.main = point;
+                    })['catch'](function () {
+                        $scope.markers.main = undefined;
+                    }).finally(function () {
+                        $scope.cepcoder.busy = false;
+                    });
+                }
+            };
+
+            $scope.endcoder = {
+                busy: false,
+                code: function () {
+                    $scope.cepcoder.busy = true;
+                    var string = ($scope.agent.En_Nome_Logradouro ? $scope.agent.En_Nome_Logradouro + ', ' : '') +
+                        ($scope.agent.En_Bairro ? $scope.agent.En_Bairro + ', ' : '') +
+                        ($scope.agent.En_Municipio ? $scope.agent.En_Municipio + ', ' : '') +
+                        ($scope.agent.En_Estado ? $scope.agent.En_Estado + ' - ' : '') +
+                        ($scope.agent.pais ? $scope.agent.pais : '');
+
+                    geocoder.code(string).then(function (point) {
+                        console.log(point);
+                        point.zoom = 14;
+                        $scope.markers.main = point;
+                    })['catch'](function () {
+                        $scope.markers.main = undefined;
+                    }).finally(function () {
+                        $scope.cepcoder.busy = false;
+                    });
+                }
+            };
 
             $scope.closeAll = function () {
                 ngDialog.close();
@@ -855,6 +947,7 @@
                 }
             };
 
+            console.log( $scope.cidadecoder);
         }
     ]);
 
