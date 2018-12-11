@@ -136,7 +136,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         </article>
         </a>
 
-        <a href="<?php echo $app->createUrl('cadastro', 'pontoMapa'); ?>">
+        <a href="<?php echo $app->createUrl('cadastro', 'economiaViva'); ?>">
             <article class="box-ponto-mapa">
                 <header>
                     <span class="icon icon-dollar"></span>
