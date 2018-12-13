@@ -45,7 +45,7 @@
 
         <div class="row">
             <!--CNPJ-->
-            <div ng-show="agent.tipoOrganizacao==='pontao' || agent.desejaSer==='entidade'">
+            <div ng-show="agent.tipoOrganizacao==='pontao' || agent.tipoOrganizacao === 'entidade'">
                 <label class="colunm1">
                     <span class="destaque">CNPJ da Entidade*</span>
                     <input name="cnpj"
