@@ -107,7 +107,6 @@ Movendo arquivo '$grp' do agente {$owner_id} para o agente {$to_agent_id}:
                     grp = 'avatar'
             ");
             if ($avatar) {
-//                var_dump($avatar);
                 $fid = $avatar['id'];
                 $thumbs = $conn->fetchAll("
                     SELECT
