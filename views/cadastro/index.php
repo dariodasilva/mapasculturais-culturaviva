@@ -157,7 +157,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                 </div>
             </article>
         </a>
-	<div ng-show="data.statusInscricao > 0">
+        <!-- data.statusInscricao > 0-->
+	<div ng-show="0">
 	<article class="boxs-cadastro" style="width: 100%; background: #078979 none repeat scroll 0% 0%;"><header><center><h4>Informações Complementares</h4></center></header></article>
         <a href="<?php echo $app->createUrl('cadastro', 'entidadeFinanciamento'); ?>">
         <article class="box-entidade-financiados">
