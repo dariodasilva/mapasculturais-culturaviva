@@ -203,7 +203,6 @@ class Cadastro extends \MapasCulturais\Controller{
             'responsavel_nome',
             'responsavel_email',
             'responsavel_telefone',
-            'telefone1',
             'pais',
         ];
 
