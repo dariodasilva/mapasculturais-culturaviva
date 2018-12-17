@@ -616,8 +616,8 @@ class Cadastro extends \MapasCulturais\Controller{
         } else {
             $this->errorJson([
                 'responsavel' => $erros_responsavel,
-                'entidade' => $erros_entidade,
-                'ponto' => $erros_ponto
+                'entidade' => $erros_entidade//,
+                //'ponto' => $erros_ponto
             ], 400);
         }
     }
