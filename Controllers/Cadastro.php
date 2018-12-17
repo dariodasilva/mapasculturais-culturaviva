@@ -222,7 +222,6 @@ class Cadastro extends \MapasCulturais\Controller{
         }
 
         return $required_properties;
-        //return
     }
 
     /**
@@ -563,9 +562,9 @@ class Cadastro extends \MapasCulturais\Controller{
 
         $erros_responsavel = $this->getErrorsResponsavel();
         $erros_entidade = $this->getErrorsEntidade();
-        $erros_ponto = $this->getErrorsPonto();
+        //$erros_ponto = $this->getErrorsPonto();
 
-        if(!$erros_responsavel && !$erros_entidade && !$erros_ponto){
+        if(!$erros_responsavel && !$erros_entidade /*&& !$erros_ponto*/){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
             $ponto = $this->getPonto();

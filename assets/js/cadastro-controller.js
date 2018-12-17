@@ -946,8 +946,6 @@
                     });
                 }
             };
-
-            console.log( $scope.cidadecoder);
         }
     ]);
 
