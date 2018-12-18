@@ -132,10 +132,6 @@ class Theme extends BaseV1\Theme {
             unset($filters['agent']['verificados']);
         });
 
-
-
-
-
         /** DESABILITANDO ROTAS  * */
         return;
         if (!$app->user->is('admin') && !$app->user->is('guest')) {
