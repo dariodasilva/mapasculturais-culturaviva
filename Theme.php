@@ -1209,15 +1209,25 @@ class Theme extends BaseV1\Theme {
     {
         $filters = parent::_getFilters();
 
-        // $filters['agent']['tipoPontoCulturaDesejado'] = [
-        //     'label' => 'Tipo do Ponto',
-        //     'placeholder' => 'Todos',
-        //     'fieldType' => 'singleselect',
-        //     'filter' => [
-        //         'param' => 'tipoPontoCulturaDesejado',
-        //         'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
-        //     ]
-        // ];
+        /* $filters['agent']['tipoPontoCulturaDesejado'] = [
+             'label' => 'Tipo do Ponto',
+             'placeholder' => 'Todos',
+             'fieldType' => 'singleselect',
+             'filter' => [
+                 'param' => 'tipoPontoCulturaDesejado',
+                 'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
+             ]
+         ];*/
+
+        /*$filters['agent']['tipoOrganizacao'] = [
+             'label' => 'Tipo de Organização',
+             'placeholder' => 'Todas',
+             'fieldType' => 'singleselect',
+             'filter' => [
+                 'param' => 'tipoOrganizacao',
+                 'value' => 'ILIKE(*{val}*)'
+             ]
+        ];*/
 
         $filters['agent']['En_Estado'] = [
             'fieldType' => 'checklist',
