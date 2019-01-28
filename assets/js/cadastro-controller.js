@@ -499,39 +499,41 @@
                 error(function errorCallback(response) {
                     if (response.error) {
                         $scope.data.validationErrors = response.data;
-                    }
-                    var erroResponsavel = $scope.data.validationErrors.responsavel;
-                    var erroPonto = $scope.data.validationErrors.ponto;
-                    var erroEntidade = $scope.data.validationErrors.entidade;
-                    if (erroResponsavel.length > 0) {
-                        $scope.data.mostrarErroResponsavel = "responsavel";
-                    }
-                    if (erroPonto.length > 0) {
-                        if (erroPonto.indexOf("atividadesEmRealizacaoLink") !== -1) {
-                            $scope.data.mostrarErroPonto = "ponto_portifolio";
+                        var erroResponsavel = $scope.data.validationErrors.responsavel;
+                        var erroPonto = $scope.data.validationErrors.ponto;
+                        var erroEntidade = $scope.data.validationErrors.entidade;
+                        if (erroResponsavel.length > 0) {
+                            $scope.data.mostrarErroResponsavel = "responsavel";
                         }
-                        var i;
-                        var j;
-                        for (i = 0; i < erroPonto.length; i++) {
-                            for (j = 0; j < agentPontoMapa.length; j++) {
-                                if (erroPonto[i] === agentPontoMapa[j]) {
-                                    $scope.data.mostrarErroPontoMapa = "ponto_mapa";
+                        if (erroPonto.length > 0) {
+                            if (erroPonto.indexOf("atividadesEmRealizacaoLink") !== -1) {
+                                $scope.data.mostrarErroPonto = "ponto_portifolio";
+                            }
+                            var i;
+                            var j;
+                            for (i = 0; i < erroPonto.length; i++) {
+                                for (j = 0; j < agentPontoMapa.length; j++) {
+                                    if (erroPonto[i] === agentPontoMapa[j]) {
+                                        $scope.data.mostrarErroPontoMapa = "ponto_mapa";
+                                    }
                                 }
                             }
                         }
-                    }
-                    if (erroEntidade.length > 0) {
-                        var i;
-                        var j;
-                        for (i = 0; i < erroEntidade.length; i++) {
-                            for (j = 0; j < agentsPontoDados.length; j++) {
-                                if (erroEntidade[i] === agentsPontoDados[j]) {
-                                    $scope.data.mostrarErroEntidadeDado = "entidade_showdado";
+                        if (erroEntidade.length > 0) {
+                            var i;
+                            var j;
+                            for (i = 0; i < erroEntidade.length; i++) {
+                                for (j = 0; j < agentsPontoDados.length; j++) {
+                                    if (erroEntidade[i] === agentsPontoDados[j]) {
+                                        $scope.data.mostrarErroEntidadeDado = "entidade_showdado";
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        alert('Erro ao enviar dados. Tente novamente mais tarde!');
+                        return false;
                     }
-
                 });
             };
         }
