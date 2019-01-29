@@ -101,11 +101,6 @@
                 <span><b>{{entidade.responsavel_telefone}}</b></span>
                 <span ng-if="!entidade.responsavel_telefone"><b>Não informado</b></span>
             </label>
-            <label class="colunm02">
-                <span>Operadora</span>
-                <span><b>{{entidade.responsavel_operadora}}</b></span>
-                <span ng-if="!entidade.responsavel_operadora"><b>Não informado</b></span>
-            </label>
         </div>
         <div class="clear"></div>
 
@@ -123,12 +118,6 @@
                 <span><b>{{entidade.telefone1}}</b></span>
                 <span ng-if="!entidade.telefone1"><b>Não informado</b></span>
             </label>
-
-            <label class="colunm02">
-                <span>Operadora</span>
-                <span><b>{{entidade.telefone1_operadora}}</b></span>
-                <span ng-if="!entidade.telefone1_operadora"><b>Não informado</b></span>
-            </label>
         </div>
         <div class="clear"></div>
         <div class="row">
@@ -136,12 +125,6 @@
                 <span>Outro Telefone</span>
                 <span><b>{{entidade.telefone2}}</b></span>
                 <span ng-if="!entidade.telefone2"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm02">
-                <span>Operadora</span>
-                <span><b>{{entidade.telefone2_operadora}}</b></span>
-                <span ng-if="!entidade.telefone2_operadora"><b>Não informado</b></span>
             </label>
         </div>
         <div class="clear"></div>

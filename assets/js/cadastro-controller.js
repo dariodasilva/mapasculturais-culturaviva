@@ -558,7 +558,7 @@
                     'id': agent_id,
                     '@select': 'id,files',
                     '@permissions': 'view',
-                    '@files': '(avatar,avatar.avatarSmall,avatar.avatarMedium,avatar.avatarBig,gallery,ata,portifolio,carta1,carta2):url,id,name'
+                    '@files': '(avatar,avatar.avatarSmall,avatar.avatarMedium,avatar.avatarBig,gallery,ata,portifolio,carta1,carta2, cartaReferencia1, cartaReferencia2):url,id,name'
                 };
 
 
@@ -587,6 +587,16 @@
                         $scope.agent.files.gallery.forEach(function (value, key) {
                             $scope.agent.files.gallery[key].group = 'gallery';
                         });
+                    }
+                    if ($scope.agent['@files:cartaReferencia1']) {
+                        $scope.agent.files.cartaReferencia1 = $scope.agent['@files:cartaReferencia1'];
+                        $scope.agent.files.cartaReferencia1.name = $scope.agent['@files:cartaReferencia1'].name;
+                        $scope.agent.files.cartaReferencia1.group = 'cartaReferencia1';
+                    }
+                    if ($scope.agent['@files:cartaReferencia2']) {
+                        $scope.agent.files.cartaReferencia2 = $scope.agent['@files:cartaReferencia2'];
+                        $scope.agent.files.cartaReferencia2.name = $scope.agent['@files:cartaReferencia2'].name;
+                        $scope.agent.files.cartaReferencia2.group = 'cartaReferencia2';
                     }
                     if ($scope.agent['@files:carta1']) {
                         $scope.agent.files.carta1 = $scope.agent['@files:carta1'];
@@ -1088,7 +1098,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
+                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada, parceriaPrivadaQual,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
                 '@permissions': 'view'
             };
 

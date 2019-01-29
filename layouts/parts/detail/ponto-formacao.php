@@ -15,10 +15,6 @@
                 <span class="destaque">Telefone: </span>
                 <input disabled="true" type="text" ng-model="ponto.formador1_telefone" ui-mask="(99) ?99999 9999">
             </label>
-            <label class="colunm2">
-                <span class="destaque">Operadora: </span>
-                <input disabled="true" type="text" ng-model="ponto.formador1_operadora">
-            </label>
             <label class="colunm1">
                 <span class="destaque">Áreas de atuação (oficinas/atividades ministradas):</span>
                 <input disabled="true" type="text" ng-model="ponto.formador1_areaAtuacao">

@@ -259,6 +259,8 @@ class Theme extends BaseV1\Theme {
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('portifolio', ['.*'], 'O portifólio deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('carta1', ['.*'], 'a carta deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('carta2', ['.*'], 'a carta deve ser um arquivo pdf.', true));
+        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('cartaReferencia1', ['.*'], 'a carta deve ser um arquivo pdf.', true));
+        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('cartaReferencia2', ['.*'], 'a carta deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('logoponto', ['.*'], 'O logotipo deve ser uma imagem.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('ata', ['.*'], 'a ata deve ser um arquivo pdf', true));
 
@@ -909,6 +911,11 @@ class Theme extends BaseV1\Theme {
                     'required' => false,
                     'private' => true
                 ],
+                'parceriaPrivadaQual' => [
+                    'label' => 'Qual?',
+                    'required' => false,
+                    'private' => true
+                ],
                 'simPoderPublico' => [
                     'label' => 'Quais para radio participa poder publico',
                     //              'required' => false,
@@ -1219,7 +1226,7 @@ class Theme extends BaseV1\Theme {
              ]
          ];*/
 
-        /*$filters['agent']['tipoOrganizacao'] = [
+        $filters['agent']['tipoOrganizacao'] = [
              'label' => 'Tipo de Organização',
              'placeholder' => 'Todas',
              'fieldType' => 'singleselect',
@@ -1227,7 +1234,7 @@ class Theme extends BaseV1\Theme {
                  'param' => 'tipoOrganizacao',
                  'value' => 'ILIKE(*{val}*)'
              ]
-        ];*/
+        ];
 
         $filters['agent']['En_Estado'] = [
             'fieldType' => 'checklist',

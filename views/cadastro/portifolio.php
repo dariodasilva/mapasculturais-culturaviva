@@ -142,6 +142,54 @@
             </label>
         </div>
         <div class="clear"></div>
+
+        <!-- Carta de Referência -->
+        <div ng-show="agent_entidade.tipoOrganizacao==='pontao'">
+            <div class="row">
+                <h4>Cartas de Referência</h4>
+                <p style="text-align:justify;">Anexar uma carta de referência de ao menos 2 Pontos de Cultura reconhecendo o trabalho de Pontão realizado pela entidade, conforme os termos da Lei 13.018/2014 e da IN 08/2016</p>
+            </div>
+            <div class="row">
+                <span class="destaque espacoleft">Carta de Referência * <i class='hltip' title='As cartas de apoio nos ajudam a entender como o Ponto de Cultura se conecta com a comunidade ao seu redor e certifica a participação da comunidade no processo.'>?</i></span>
+                <div class="colunm-20" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
+                    <div class="file-item">
+                        <a ng-if="agent.files.cartaReferencia1" href="#" class="exclui" ng-click="deleteFile(agent.files.cartaReferencia1)" title="Excluir Carta de Referência">x</a>
+                        <div type="file" ngf-select="uploadFile($file, 'cartaReferencia1')" accept="config.pdf.validation" ngf-max-size="config.pdf.maxUploadSize" title="{{agent.files.cartaReferencia1 ? 'Clique para alterar a carta de referência' : 'Clique para incluir uma carta de referência'}}">
+                            <img ng-if="!agent.files.cartaReferencia1" src="<?php $this->asset('img/incluir_img.png') ?>" width="160" height="138">
+                            <img ng-if="agent.files.cartaReferencia1" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
+                        </div>
+                    </div>
+
+                    <a ng-if="agent.files.cartaReferencia1" href="{{agent.files.cartaReferencia1.url}}" target="_blank">{{agent.files.cartaReferencia1.name}}</a>
+                    <div class="progress row" ng-show="f.progress >= 0">
+                        <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
+                    </div>
+                </div>
+                <div class="colunm-20" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
+                    <div class="file-item">
+                        <a ng-if="agent.files.cartaReferencia2" href="#" class="exclui" ng-click="deleteFile(agent.files.cartaReferencia2)" title="Excluir Carta de Referência">x</a>
+                        <div type="file" ngf-select="uploadFile($file, 'cartaReferencia2')" accept="config.pdf.validation" ngf-max-size="config.pdf.maxUploadSize" title="{{agent.files.cartaReferencia2 ? 'Clique para alterar a carta de referência' : 'Clique para incluir uma carta de referência'}}">
+                            <img ng-if="!agent.files.cartaReferencia2" src="<?php $this->asset('img/incluir_img.png') ?>" width="160" height="138">
+                            <img ng-if="agent.files.cartaReferencia2" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
+                        </div>
+                    </div>
+                    <a ng-if="agent.files.cartaReferencia2" href="{{agent.files.cartaReferencia2.url}}" target="_blank">{{agent.files.cartaReferencia2.name}}</a>
+                    <div class="progress row" ng-show="f.progress >= 0">
+                        <span style="width:{{f.progress}}%;" ng-bind="f.progress + '%'"></span>
+                    </div>
+                </div>
+
+                <label class="colunm-50">
+
+                    <p>
+                        Precisa de um modelo de carta?
+                        <br>
+                        <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                    </p>
+                </label>
+            </div>
+            <div class="clear"></div>
+        </div>
     </div>
 
     <div class="form form-opcional">

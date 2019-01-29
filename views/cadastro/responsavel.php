@@ -40,18 +40,9 @@
                 <input type="text" name="telefone1" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999 9999" required>
             </label>
 
-            <label class="colunm3">
-                <span class="destaque">Operadora</span>
-                <input type="text" name="telefone1_operadora" ng-blur="save_field('telefone1_operadora')" ng-model="agent.telefone1_operadora">
-            </label>
             <label class="colunm2">
                 <span class="destaque">Outro Telefone </span>
                 <input type="text" name="telefone2" ng-blur="save_field('telefone2')" ng-model="agent.telefone2" ui-mask="(99) ?99999 9999">
-            </label>
-
-            <label class="colunm3">
-                <span class="destaque">Operadora</span>
-                <input type="text" name="telefone2_operadora" ng-blur="save_field('telefone2_operadora')" ng-model="agent.telefone2_operadora">
             </label>
         </div>
         <div class="clear"></div>

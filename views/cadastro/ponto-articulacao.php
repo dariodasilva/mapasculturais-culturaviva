@@ -123,7 +123,7 @@
                        ng-model="agent.parceriaPoderPublico">  Sim
                 <!-- textarea></textarea -->
             </label>
-            <div class="colunm-full" ng-show="agent.parceriaPoderPublico">
+            <div class="colunm-full" ng-show="agent.parceriaPoderPublico == 1">
                 <span class="destaque">Recebe ou recebeu fomento?*</span>
                 <label class="colunm1">
                     <input type="radio"
@@ -141,7 +141,7 @@
                 </label>
             </div>
 
-            <div class="colunm-full" ng-show="agent.fomentoPublico">
+            <div class="colunm-full" ng-show="agent.fomentoPublico == 1">
                 <span class="destaque">
                     Qual esfera do fomento?*
                 </span>
@@ -171,6 +171,16 @@
                            ng-model="agent.parceriaPrivada">  Sim
                 </label>
             </div>
+            <div class="colunm-full" ng-show="agent.parceriaPrivada == 1">
+                <span class="destaque">
+                    Qual?*
+                </span>
+                <input type="text"
+                       ng-change="save_field('parceriaPrivadaQual')"
+                       ng-model="agent.parceriaPrivadaQual"
+                       name="parceriaPrivadaQual">
+            </div>
+
             <!--<div class="colunm-full" ng-show="agent.parceriaPoderPublico">
                 <span class="destaque">Quais?*
                 <input name="simPoderPublico" class="colunm1" type="text" ng-blur="save_field('simPoderPublico')" ng-model="agent.simPoderPublico" /></span>

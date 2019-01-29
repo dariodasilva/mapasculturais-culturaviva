@@ -210,11 +210,6 @@
                 <span class="destaque">Telefone institucional da Entidade *</span>
                 <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
             </label>
-
-            <label class="colunm02">
-                <span class="destaque">Operadora</span>
-                <input name="telefone1_operadora" type="text" ng-blur="save_field('telefone1_operadora')" ng-model="agent.telefone1_operadora">
-            </label>
         </div>
         <!-- Fim Telefone entidade-->
 
@@ -398,11 +393,6 @@
             <label class="colunm05">
                 <span class="destaque">Telefone do Responsável*</span>
                 <input name="responsavel_telefone" type="text" ng-blur="save_field('responsavel_telefone')" ng-model="agent.responsavel_telefone" ui-mask="(99) ?99999-9999"/>
-            </label>
-
-            <label class="colunm02">
-                <span class="destaque">Operadora</span>
-                <input name="responsavel_operadora" type="text" ng-blur="save_field('responsavel_operadora')" ng-model="agent.responsavel_operadora">
             </label>
         </div>
         <div class="clear"></div>

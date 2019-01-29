@@ -39,10 +39,6 @@
                 <span class="destaque">Telefone: </span>
                 <input type="text" ng-blur="save_field('formador1_telefone')" ng-model="agent.formador1_telefone" ui-mask="(99) ?99999 9999">
             </label>
-            <label class="colunm2">
-                <span class="destaque">Operadora: </span>
-                <input type="text" ng-blur="save_field('formador1_operadora')" ng-model="agent.formador1_operadora">
-            </label>
             <label class="colunm1">
                 <span class="destaque">Áreas de atuação (oficinas/atividades ministradas):</span>
                 <input type="text" ng-blur="save_field('formador1_areaAtuacao')" ng-model="agent.formador1_areaAtuacao">
