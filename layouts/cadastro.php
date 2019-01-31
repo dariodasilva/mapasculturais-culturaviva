@@ -2,6 +2,8 @@
 $this->part('header');
 
 $link = $this->cadastroLinkContinuar;
+$link_back = $this->cadastroLinkBack;
+
 $link_continuar = $app->createUrl('cadastro', $link );
 ?>
 
@@ -19,8 +21,8 @@ $link_continuar = $app->createUrl('cadastro', $link );
 
     <?php echo $TEMPLATE_CONTENT; ?>
 
-    <!--<button type="button" class="btn btn_continuar" data-path='<?php /*echo $link_continuar;*/?>'>Continuar >></button>-->
     <a href="<?php echo $link_continuar;  ?>" class="btn btn_continuar" target="_self">Continuar >> </a>
+    <a href="<?php echo $app->createUrl('cadastro', $link_back);  ?>" class="btn btn_voltar" target="_self"> << Voltar </a>
     <div class="clear"></div>
 </div>
 

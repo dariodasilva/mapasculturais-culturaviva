@@ -6,6 +6,7 @@
     $this->cadastroIcon = 'icon-dollar';
     $this->cadastroPageClass = 'economia-viva page-base-form';
     $this->cadastroLinkContinuar = '';
+    $this->cadastroLinkBack = 'articulacao';
 
 ?>
 

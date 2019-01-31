@@ -6,6 +6,7 @@
     $this->cadastroIcon = 'icon-chat';
     $this->cadastroPageClass = 'ponto-mais page-base-form';
     $this->cadastroLinkContinuar = 'economiaViva';
+    $this->cadastroLinkBack = 'portifolio';
 
 ?>
 

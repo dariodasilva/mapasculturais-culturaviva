@@ -8,6 +8,7 @@
     $this->cadastroPageClass = 'dados-entidade page-base-form';
     //$this->cadastroLinkContinuar = 'pontoMapa';
     $this->cadastroLinkContinuar = 'portifolio';
+    $this->cadastroLinkBack = 'responsavel';
 ?>
 
 <!--Dados da Entidade ou Coletivo Cultural-->

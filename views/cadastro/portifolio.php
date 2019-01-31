@@ -7,6 +7,7 @@
     $this->cadastroPageClass = 'portfolio page-base-form';
     //$this->cadastroLinkContinuar = 'entidadeFinanciamento';
     $this->cadastroLinkContinuar = 'articulacao';
+    $this->cadastroLinkBack = 'entidadeDados';
 ?>
 <style>
 

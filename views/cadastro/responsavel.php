@@ -6,6 +6,7 @@
     $this->cadastroIcon = 'icon-user';
     $this->cadastroPageClass = 'responsavel page-base-form';
     $this->cadastroLinkContinuar = 'entidadeDados';
+    $this->cadastroLinkBack = 'index';
 ?>
 
 <!-- Informações do Responsável -->
