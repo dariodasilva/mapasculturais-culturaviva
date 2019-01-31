@@ -140,7 +140,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             <article class="box-ponto-mapa">
                 <header>
                     <span class="icon icon-dollar"></span>
-                    <h4> 5. Economia viva</h4>
+                    <h4> 5. Selos rede viva</h4>
                     <span class="btn_mais"> + </span>
                 </header>
                 <div class="infos">
