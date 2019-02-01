@@ -21,8 +21,13 @@ $link_continuar = $app->createUrl('cadastro', $link );
 
     <?php echo $TEMPLATE_CONTENT; ?>
 
+
     <a href="<?php echo $link_continuar;  ?>" class="btn btn_continuar" target="_self">Continuar >> </a>
-    <a href="<?php echo $app->createUrl('cadastro', $link_back);  ?>" class="btn btn_voltar" target="_self"> << Voltar </a>
+
+    <?php if ($link_back !== "index") { ?>
+        <a href="<?php echo $app->createUrl('cadastro', $link_back);  ?>" class="btn btn_voltar" target="_self"> << Voltar </a>
+    <?php } ?>
+
     <div class="clear"></div>
 </div>
 

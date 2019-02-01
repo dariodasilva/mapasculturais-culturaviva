@@ -1502,14 +1502,20 @@ section{
     .btn_continuar{
         float: right;
         margin-right: 100px;
-        background-color: #F7931E
-        ;
+        background-color: #F7931E;
         border: none;
         border-radius: 6px;
-        color: #fff;
-        margin-left:8%;
+        color: #fff !important;
+        margin-left: 8%;
     }
-}
+
+    .btn_voltar {
+        background-color: #078979;
+        color: white !important;
+    }
+
+} // .page-base-form
+
 /*
 * Fim Estrutura Base Forms
 **
