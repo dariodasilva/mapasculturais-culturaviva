@@ -23,9 +23,9 @@ class Theme extends BaseV1\Theme {
         });
 
         // @todo: Remover
-//        ini_set('display_errors', 1);
-//        ini_set('display_startup_errors', 1);
-//        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
     }
 
     function initUsermeta() {
@@ -1216,15 +1216,16 @@ class Theme extends BaseV1\Theme {
     {
         $filters = parent::_getFilters();
 
-        $filters['agent']['tipoOrganizacao'] = [
-             'label' => 'Tipo organização',
+        /*
+         $filters['agent']['tipoPontoCulturaDesejado'] = [
+             'label' => 'Tipo do Ponto',
              'placeholder' => 'Todos',
              'fieldType' => 'singleselect',
              'filter' => [
                  'param' => 'tipoOrganizacao',
-                 'value' => 'EQ({val})/*&rcv_tipo=EQ(entidade)*/'
+                 'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
              ]
-        ];
+         ]; */
 
         $filters['agent']['tipoOrganizacao'] = [
              'label' => 'Tipo de Organização',
@@ -1275,6 +1276,9 @@ class Theme extends BaseV1\Theme {
             $filters['agent']['publico_participante']['options'][] = ['value' => $t, 'label' => $t];
 
         App::i()->applyHookBoundTo($this, 'search.filters', [&$filters]);
+
+        unset($filters['agent']['tipos']);
+
         return $filters;
     }
 
