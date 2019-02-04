@@ -10,8 +10,7 @@ $link_continuar = $app->createUrl('cadastro', $link );
 <div class="page-<?php echo $this->cadastroPageClass ?>">
 
     <header>
-        <div class="icon <?php echo $this->cadastroIcon ?>"></div>
-        <h3><?php echo $this->cadastroTitle ?></h3>
+        <h3> <div class="icon <?php echo $this->cadastroIcon ?>"></div> <?php echo $this->cadastroTitle ?></h3>
     </header>
 
     <p><?php echo $this->cadastroText ?></p>

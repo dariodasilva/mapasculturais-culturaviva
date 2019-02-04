@@ -79,7 +79,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                     <div ng-show="data.naoEncontrouCNPJ" class="resposta-cnpj">
                         <p>Não encontramos seu CNPJ em nossa base de dados. Isso quer dizer que você ainda não é um Ponto ou Pontão de Cultura certificado, mas basta continuar para fazer sua autodeclaração e entrar na Rede Cultura Viva.</p>
                         <a href="#" class="btn btn_active btn_continuar" ng-click="registrar()">Continuar</a>
-                        <a href="#" class="ja-sou js-modal">Já sou um Ponto ou Pontão de Cultura. Por que isto aconteceu? <span>?</spa></a>
+                        <a href="#" class="ja-sou js-modal">Já sou um Ponto ou Pontão de Cultura. Por que isto aconteceu? <span>?</span></a>
                     </div>
             </div>
         </div>

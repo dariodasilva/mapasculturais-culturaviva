@@ -26,17 +26,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-responsavel page-base-form">
 
       <header>
-
-          <div class="icon icon-user"></div>
-          <h3>1. Informações do Responsável</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
+          <h3> <div class="icon icon-user"></div> 1. Informações do Responsável</h3>
       </header>
 
       <div class="btn_voltar_topo">
@@ -46,37 +36,15 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   </div>
 
   <div class="page-dados-entidade page-base-form">
-
       <header>
-
-          <div class="icon icon-home"></div>
-          <h3>2. Dados da Entidade ou Coletivo Cultural</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
+          <h3> <div class="icon icon-home"></div> 2. Dados da Entidade ou Coletivo Cultural</h3>
       </header>
       <?php echo $this->part('detail/entidade-dados'); ?>
   </div>
 
   <div class="page-ponto-mapa page-base-form">
-
       <header>
-
-          <div class="icon icon-location"></div>
-          <h3>3. Seu Ponto no Mapa</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
+          <h3> <div class="icon icon-location"></div> 3. Seu Ponto no Mapa</h3>
       </header>
       <?php echo $this->part('detail/ponto-mapa'); ?>
   </div>
@@ -84,17 +52,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-portfolio page-base-form">
 
       <header>
-
-          <div class="icon icon-picture"></div>
-          <h3>4. Portfólio e Anexos</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
+          <h3> <div class="icon icon-picture"></div> 4. Portfólio e Anexos</h3>
       </header>
       <?php echo $this->part('detail/portfolio'); ?>
   </div>
@@ -102,17 +60,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-contato-entidade page-base-form">
 
       <header>
-
-          <div class="icon icon-dollar"></div>
-          <h3>5. Projetos Financiados</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
+          <h3> <div class="icon icon-dollar"></div> 5. Projetos Financiados</h3>
       </header>
       <?php echo $this->part('detail/entidade-financiamento'); ?>
   </div>
@@ -172,4 +120,4 @@ $this->bodyProperties['ng-app'] = "culturaviva";
       <div class="clear"></div>
   </div>
 </div>
-<?php echo $this->part('footer'); ?>
+<?php echo $this->part('footer');
