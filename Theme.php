@@ -21,11 +21,6 @@ class Theme extends BaseV1\Theme {
         $app->hook('mapasculturais.run:before', function() use($view) {
             $view->initUsermeta();
         });
-
-        // @todo: Remover
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
     }
 
     function initUsermeta() {
@@ -1277,8 +1272,6 @@ class Theme extends BaseV1\Theme {
             $filters['agent']['publico_participante']['options'][] = ['value' => $t, 'label' => $t];
 
         App::i()->applyHookBoundTo($this, 'search.filters', [&$filters]);
-
-        unset($filters['agent']['tipos']);
 
         return $filters;
     }
