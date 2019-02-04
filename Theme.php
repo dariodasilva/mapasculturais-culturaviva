@@ -1217,15 +1217,16 @@ class Theme extends BaseV1\Theme {
         $filters = parent::_getFilters();
 
         /*
-         $filters['agent']['tipoPontoCulturaDesejado'] = [
-             'label' => 'Tipo do Ponto',
+        $filters['agent']['tipoOrganizacao'] = [
+             'label' => 'Tipo organização',
              'placeholder' => 'Todos',
              'fieldType' => 'singleselect',
              'filter' => [
                  'param' => 'tipoOrganizacao',
-                 'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
+                 // 'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
              ]
-         ]; */
+        ];
+        */
 
         $filters['agent']['tipoOrganizacao'] = [
              'label' => 'Tipo de Organização',
