@@ -563,44 +563,34 @@ class Cadastro extends \MapasCulturais\Controller{
         $erros_entidade = $this->getErrorsEntidade();
         //$erros_ponto = $this->getErrorsPonto();
 
-        if(!$erros_responsavel && !$erros_entidade /*&& !$erros_ponto*/){
+        if (!$erros_responsavel && !$erros_entidade){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
-            $ponto = $this->getPonto();
+            // $ponto = $this->getPonto();
 
             $responsavel->publish(true);
             $entidade->publish(true);
-            $ponto->publish(true);
+            // $ponto->publish(true);
 
-            if($ponto->sede_realizaAtividades){
-                if($ponto->rcv_sede_spaceId){
-                    $espaco = App::i()->repo('Space')->find($ponto->rcv_sede_spaceId);
-                }else{
-                    $espaco = new \MapasCulturais\Entities\Space;
-                }
-                $espaco->type = 125; // ponto de cultura
-                $espaco->owner = $ponto;
-                $espaco->name = $ponto->name;
-                $espaco->nomeCompleto = $ponto->nomeCompleto;
-                $espaco->shortDescription = $ponto->shortDescription;
-                $espaco->longDescription = $ponto->longDescription;
-                $espaco->location = $ponto->location;
-                $espaco->En_Estado = $ponto->En_Estado;
-                $espaco->En_Municipio = $ponto->En_Municipio;
-                $espaco->En_Bairro = $ponto->En_Bairro;
-                $espaco->En_Num = $ponto->En_Num;
-                $espaco->En_Nome_Logradouro = $ponto->En_Nome_Logradouro;
-                $espaco->En_Complemento = $ponto->En_Complemento;
-                $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
-                //$espaco->terms = $ponto->terms;
+            $espaco = new \MapasCulturais\Entities\Space;
+            $espaco->type = 125; // ponto de cultura
+            $espaco->owner = $entidade;
+            $espaco->name = $entidade->name;
+            $espaco->nomeCompleto = $entidade->nomeCompleto;
+            $espaco->shortDescription = $entidade->shortDescription;
+            $espaco->longDescription = $entidade->longDescription;
+            $espaco->location = $entidade->location;
+            $espaco->En_Estado = $entidade->En_Estado;
+            $espaco->En_Municipio = $entidade->En_Municipio;
+            $espaco->En_Bairro = $entidade->En_Bairro;
+            $espaco->En_Num = $entidade->En_Num;
+            $espaco->En_Nome_Logradouro = $entidade->En_Nome_Logradouro;
+            $espaco->En_Complemento = $entidade->En_Complemento;
+            $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
+            //$espaco->terms = $ponto->terms;
 
-                $espaco->save(true);
-                if(!$ponto->rcv_sede_spaceId){
-                    $ponto->rcv_sede_spaceId = $espaco->id;
-                    $ponto->save(true);
-                }
-
-            }
+            $espaco->save(true);
+            $entidade->save(true);
 
             $inscricao->send();
             $app = \MapasCulturais\App::i();
