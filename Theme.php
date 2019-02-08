@@ -21,6 +21,11 @@ class Theme extends BaseV1\Theme {
         $app->hook('mapasculturais.run:before', function() use($view) {
             $view->initUsermeta();
         });
+
+        // @todo: Remover
+//        ini_set('display_errors', 1);
+//        ini_set('display_startup_errors', 1);
+//        error_reporting(E_ALL);
     }
 
     function initUsermeta() {
@@ -127,6 +132,10 @@ class Theme extends BaseV1\Theme {
             unset($filters['agent']['verificados']);
         });
 
+
+
+
+
         /** DESABILITANDO ROTAS  * */
         return;
         if (!$app->user->is('admin') && !$app->user->is('guest')) {
@@ -172,14 +181,6 @@ class Theme extends BaseV1\Theme {
     protected function _enqueueScripts() {
         $app = App::i();
 
-        $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
-        $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
-        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['app.googleApiKey']);
-        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
-        $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
-        $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
-        $this->enqueueScript('vendor', 'dropdown', 'vendor/dropdown.js');
-
         $this->enqueueScript('culturaviva', 'angular-resource', 'vendor/angular-resource.js');
         $this->enqueueScript('culturaviva', 'angular-messages', 'vendor/angular-1.5.5/angular-messages.min.js');
         $this->enqueueScript('culturaviva', 'ui-mask', 'vendor/mask.js');
@@ -191,6 +192,13 @@ class Theme extends BaseV1\Theme {
 
         $this->enqueueScript('culturaviva', 'cadastro-culturaviva', 'js/culturaviva.js');
         $this->enqueueScript('culturaviva', 'FileSaver', 'js/FileSaver.min.js');
+
+        $this->enqueueScript('vendor', 'ng-file-upload', 'vendor/ng-file-upload.js', ['angular']);
+        $this->enqueueScript('vendor', 'ngDialog', 'vendor/ngDialog.min.js');
+        $this->enqueueScript('vendor', 'google-maps-api', 'https://maps.googleapis.com/maps/api/js?key=' . $app->config['app.googleApiKey']);
+        $this->enqueueScript('vendor', 'angularQR', 'vendor/angular-qr.js', ['QR']);
+        $this->enqueueScript('vendor', 'QR', 'vendor/qrcode.min.js');
+        $this->enqueueScript('vendor', 'jsPDF', 'vendor/jspdf.min.js');
     }
 
     protected function _publishAssets() {
@@ -254,8 +262,6 @@ class Theme extends BaseV1\Theme {
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('portifolio', ['.*'], 'O portifólio deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('carta1', ['.*'], 'a carta deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('carta2', ['.*'], 'a carta deve ser um arquivo pdf.', true));
-        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('cartaReferencia1', ['.*'], 'a carta deve ser um arquivo pdf.', true));
-        $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('cartaReferencia2', ['.*'], 'a carta deve ser um arquivo pdf.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('logoponto', ['.*'], 'O logotipo deve ser uma imagem.', true));
         $app->registerFileGroup('agent', new \MapasCulturais\Definitions\FileGroup('ata', ['.*'], 'a ata deve ser um arquivo pdf', true));
 
@@ -340,17 +346,8 @@ class Theme extends BaseV1\Theme {
 //                  'required' => true,
                     'private' => true
                 ],
-                'nomeCompleto' => [
-                    'label' => 'Nome completo',
-                    'private' =>  true
-                ],
                 'cpf' => [
                     'label' => 'CPF',
-//                  'required' => true,
-                    'private' => true
-                ],
-                'responsavel_cpf' => [
-                    'label' => 'CPF responsável',
 //                  'required' => true,
                     'private' => true
                 ],
@@ -389,60 +386,11 @@ class Theme extends BaseV1\Theme {
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'estadual' => 'Estadual',
-                        'municipal' => 'Municipal',
-                        'intermunicipal' => 'Intermunicipal',
-                        'nao' => 'Não'
-                    )
-                ],
-                'redePertencente' => [
-                    'label' => 'Pertence ou pertenceu a alguma rede?',
-//                  'required' => true,
-                    'private' => true,
-                    'type' => 'select',
-                    'options' => array(
                         'ponto' => 'Ponto',
                         'pontao' => 'Pontão'
                     )
                 ],
-                'esferaFomento' => [
-                    'label' => 'Qual esfera do fomento?',
-//                  'required' => true,
-                    'private' => true,
-                    'type' => 'select',
-                    'options' => array(
-                        'municipal' => 'Municipal',
-                        'estadual' => 'Estadual',
-                        'federal' => 'federal'
-                    )
-                ],
                 'tipoOrganizacao' => [
-                    'label' => 'Deseja ser',
-//                  'required' => true,
-                    'private' => true,
-                    'type' => 'select',
-                    'options' => array(
-                        'entidade' => 'Entidade',
-                        'coletivo' => 'Coletivo',
-                        'pontao' => 'Pontão'
-                    )
-                ],
-                'mesmoEndereco' => [
-                    'label' => 'O endereço da unidade é o mesmo do ponto ou pontão?',
-//                  'required' => true,
-                    'private' => true,
-                    'type' => 'select',
-                    'options' => array(
-                        'sim' => 'Sim',
-                        'nao' => 'Não'
-                    )
-                ],
-                'nomePonto' => [
-                    'label' => 'Nome ponto',
-//                  'required' => true,
-                    'private' => true,
-                ],
-                /*'tipoOrganizacao' => [
                     'label' => 'Tipo de Organização',
 //                  'required' => true,
                     'private' => true,
@@ -451,7 +399,7 @@ class Theme extends BaseV1\Theme {
                         'coletivo' => 'Coletivo Cultural',
                         'entidade' => 'Entidade Cultural'
                     )
-                ],*/
+                ],
                 'cnpj' => [
                     'label' => 'CNPJ',
 //                  'required' => true,
@@ -671,36 +619,7 @@ class Theme extends BaseV1\Theme {
 //                  'required' => true,
                     'private' => function() {
                         return !$this->publicLocation;
-                    },
-                    'options' => [
-                        'AC' => 'Acre',
-                        'AL' => 'Alagoas',
-                        'AP' => 'Amapá',
-                        'AM' => 'Amazonas',
-                        'BA' => 'Bahia',
-                        'CE' => 'Ceará',
-                        'DF' => 'Distrito Federal',
-                        'ES' => 'Espírito Santo',
-                        'GO' => 'Goiás',
-                        'MA' => 'Maranhão',
-                        'MT' => 'Mato Grosso',
-                        'MS' => 'Mato Grosso do Sul',
-                        'MG' => 'Minas Gerais',
-                        'PA' => 'Pará',
-                        'PB' => 'Paraíba',
-                        'PR' => 'Paraná',
-                        'PE' => 'Pernambuco',
-                        'PI' => 'Piauí',
-                        'RJ' => 'Rio de Janeiro',
-                        'RN' => 'Rio Grande do Norte',
-                        'RS' => 'Rio Grande do Sul',
-                        'RO' => 'Rondônia',
-                        'RR' => 'Roraima',
-                        'SC' => 'Santa Catarina',
-                        'SP' => 'São Paulo',
-                        'SE' => 'Sergipe',
-                        'TO' => 'Tocantins',
-                    ]
+                    }
                 ],
                 'pais' => [
                     'label' => 'Pais',
@@ -710,85 +629,6 @@ class Theme extends BaseV1\Theme {
                     }
                 ],
                 'En_Municipio' => [
-                    'label' => 'Município',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-                ],
-                'En_BairroPontaPontao' => [
-                    'label' => 'Bairro',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-                ],
-                'En_NumPontaPontao' => [
-                    'label' => 'Número',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-                ],
-                'En_Nome_LogradouroPontaPontao' => [
-                    'label' => 'Logradouro',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-                ],
-                'En_ComplementoPontaPontao' => [
-                    'label' => 'Complemento',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    },
-                ],
-                // @TODO: comentar quando importar os shapefiles
-                'En_EstadoPontaPontao' => [
-                    'label' => 'Estado',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    },
-                    'options' => [
-                        'AC' => 'Acre',
-                        'AL' => 'Alagoas',
-                        'AP' => 'Amapá',
-                        'AM' => 'Amazonas',
-                        'BA' => 'Bahia',
-                        'CE' => 'Ceará',
-                        'DF' => 'Distrito Federal',
-                        'ES' => 'Espírito Santo',
-                        'GO' => 'Goiás',
-                        'MA' => 'Maranhão',
-                        'MT' => 'Mato Grosso',
-                        'MS' => 'Mato Grosso do Sul',
-                        'MG' => 'Minas Gerais',
-                        'PA' => 'Pará',
-                        'PB' => 'Paraíba',
-                        'PR' => 'Paraná',
-                        'PE' => 'Pernambuco',
-                        'PI' => 'Piauí',
-                        'RJ' => 'Rio de Janeiro',
-                        'RN' => 'Rio Grande do Norte',
-                        'RS' => 'Rio Grande do Sul',
-                        'RO' => 'Rondônia',
-                        'RR' => 'Roraima',
-                        'SC' => 'Santa Catarina',
-                        'SP' => 'São Paulo',
-                        'SE' => 'Sergipe',
-                        'TO' => 'Tocantins',
-                    ]
-                ],
-                'paisPontaPontao' => [
-                    'label' => 'Pais',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-                ],
-                'En_MunicipioPontaPontao' => [
                     'label' => 'Município',
 //                  'required' => true,
                     'private' => function() {
@@ -814,16 +654,6 @@ class Theme extends BaseV1\Theme {
                     'required' => false
                 ],
                 'cep' => [
-                    'label' => 'CEP',
-//                  'required' => true,
-                    'private' => function() {
-                        return !$this->publicLocation;
-                    }
-//                    'validations' => array(
-//                        'v::regex("#^\d\d\d\d\d-\d\d\d$#")' => 'Use cep no formato 99999-999'
-//                    )
-                ],
-                'cepPontaPontao' => [
                     'label' => 'CEP',
 //                  'required' => true,
                     'private' => function() {
@@ -893,21 +723,6 @@ class Theme extends BaseV1\Theme {
                 ],
                 'parceriaPoderPublico' => [
                     'label' => '',
-                    'required' => false,
-                    'private' => true
-                ],
-                'fomentoPublico' => [
-                    'label' => 'Possui fomento público?',
-                    'required' => false,
-                    'private' => true
-                ],
-                'parceriaPrivada' => [
-                    'label' => 'Possui parceria privada?',
-                    'required' => false,
-                    'private' => true
-                ],
-                'parceriaPrivadaQual' => [
-                    'label' => 'Qual?',
                     'required' => false,
                     'private' => true
                 ],
@@ -1211,8 +1026,8 @@ class Theme extends BaseV1\Theme {
     {
         $filters = parent::_getFilters();
 
-        /*
-        $filters['agent']['tipoOrganizacao'] = [
+
+        /*$filters['agent']['tipoOrganizacao'] = [
              'label' => 'Tipo organização',
              'placeholder' => 'Todos',
              'fieldType' => 'singleselect',
@@ -1220,8 +1035,8 @@ class Theme extends BaseV1\Theme {
                  'param' => 'tipoOrganizacao',
                  // 'value' => 'EQ({val})&rcv_tipo=EQ(entidade)'
              ]
-        ];
-        */
+        ];*/
+
 
         $filters['agent']['tipoOrganizacao'] = [
              'label' => 'Tipo de Organização',
@@ -1275,5 +1090,4 @@ class Theme extends BaseV1\Theme {
 
         return $filters;
     }
-
 }

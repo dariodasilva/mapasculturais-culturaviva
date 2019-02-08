@@ -97,14 +97,24 @@ class Cadastro extends \MapasCulturais\Controller{
      * @return array
      */
     function getPontoRequiredProperties(){
-	    $agent = $this->getPonto();
-        $entidadeAgent = $this->getEntidade();
+	     $agent = $this->getPonto();
+       $entidadeAgent = $this->getEntidade();
         $required_properties = [
             'name',
             'shortDescription',
             'tem_sede',
             'pais',
             'location', // ponto no mapa
+
+
+            //portifólio
+
+            //'atividadesEmRealizacao'
+	    //'atividadesEmRealizacaoLink'
+
+
+//            'atividadesEmRealizacao'
+
         ];
 
         if($agent->pais === 'Brasil'){
@@ -137,8 +147,8 @@ class Cadastro extends \MapasCulturais\Controller{
             }
         }
 
-  	    return $required_properties;
-    }
+  	return $required_properties;
+      }
 
     /**
     * Taxonomias obrigatórias do Ponto
@@ -174,13 +184,10 @@ class Cadastro extends \MapasCulturais\Controller{
         $required_files = [];
 
         $required_files = [
+            'portifolio',
             'carta1',
             'carta2',
         ];
-
-        if(is_null($agent->atividadesEmRealizacaoLink) || $agent->atividadesEmRealizacaoLink === ''){
-            $required_files[] = 'portifolio';
-        }
 
         if ($agentEntidade->tipoOrganizacao === 'coletivo') {
           $required_files [] = 'ata';
@@ -196,14 +203,16 @@ class Cadastro extends \MapasCulturais\Controller{
         $agent = $this->getEntidade();
 
         $required_properties = [
-            'redePertencente',
             'tipoOrganizacao',
-            'name',
-            'emailPrivado',
             'responsavel_nome',
+            'responsavel_cargo',
             'responsavel_email',
             'responsavel_telefone',
+            'emailPrivado',
+            'telefone1',
             'pais',
+
+          //'foiFomentado'
         ];
 
         if($agent->pais === 'Brasil'){
@@ -219,6 +228,36 @@ class Cadastro extends \MapasCulturais\Controller{
             $required_properties[] = 'cnpj';
             $required_properties[] = 'representanteLegal';
         }
+
+
+        /*if($agent->foiFomentado){
+            $required_properties[] = 'tipoFomento';
+            if($agent->tipoFomento === 'outros'){
+                $required_properties[] = 'tipoFomentoOutros';
+            }
+
+            $required_properties[] = 'tipoReconhecimento';
+            $required_properties[] = 'edital_num';
+            $required_properties[] = 'edital_ano';
+            $required_properties[] = 'edital_projeto_nome';
+            $required_properties[] = 'edital_localRealizacao';
+            $required_properties[] = 'edital_proponente';
+            $required_properties[] = 'edital_projeto_resumo';
+            $required_properties[] = 'edital_projeto_etapa';
+
+            if($agent->edital_projeto_etapa === 'executado'){
+                $required_properties[] = 'edital_prestacaoContas_envio';
+
+
+                if($agent->edital_prestacaoContas_envio === 'enviada'){
+                    $required_properties[] = 'edital_prestacaoContas_status';
+                }
+            }
+
+            $required_properties[] = 'edital_projeto_vigencia_inicio';
+            $required_properties[] = 'edital_projeto_vigencia_fim';
+
+        }*/
 
         return $required_properties;
     }
@@ -245,6 +284,10 @@ class Cadastro extends \MapasCulturais\Controller{
         $this->requireAuthentication();
 
         $app = App::i();
+
+//        var_dump($app->user);
+//        exit(0);
+
         if(!$app->user->redeCulturaViva){
             $app->redirect($app->createUrl('rede', 'entrada'), 307);
         }
@@ -561,16 +604,16 @@ class Cadastro extends \MapasCulturais\Controller{
 
         $erros_responsavel = $this->getErrorsResponsavel();
         $erros_entidade = $this->getErrorsEntidade();
-        //$erros_ponto = $this->getErrorsPonto();
+        $erros_ponto = $this->getErrorsPonto();
 
-        if (!$erros_responsavel && !$erros_entidade){
+        if(!$erros_responsavel && !$erros_entidade && !$erros_ponto){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
-            // $ponto = $this->getPonto();
+            $ponto = $this->getPonto();
 
             $responsavel->publish(true);
             $entidade->publish(true);
-            // $ponto->publish(true);
+            $ponto->publish(true);
 
             $espaco = new \MapasCulturais\Entities\Space;
             $espaco->type = 125; // ponto de cultura
@@ -589,8 +632,23 @@ class Cadastro extends \MapasCulturais\Controller{
             $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
             //$espaco->terms = $ponto->terms;
 
+            $ponto->owner = $entidade;
+            $ponto->name = $entidade->name;
+            $ponto->nomeCompleto = $entidade->nomeCompleto;
+            $ponto->shortDescription = $entidade->shortDescription;
+            $ponto->longDescription = $entidade->longDescription;
+            $ponto->location = $entidade->location;
+            $ponto->En_Estado = $entidade->En_Estado;
+            $ponto->En_Municipio = $entidade->En_Municipio;
+            $ponto->En_Bairro = $entidade->En_Bairro;
+            $ponto->En_Num = $entidade->En_Num;
+            $ponto->En_Nome_Logradouro = $entidade->En_Nome_Logradouro;
+            $ponto->En_Complemento = $entidade->En_Complemento;
+            $ponto->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
+
             $espaco->save(true);
             $entidade->save(true);
+            $ponto->save(true);
 
             $inscricao->send();
             $app = \MapasCulturais\App::i();
@@ -601,12 +659,13 @@ class Cadastro extends \MapasCulturais\Controller{
                 'subject' => $message['title'],
                 'body' => $message['body']
             ]);
+
             $this->json($inscricao);
         } else {
             $this->errorJson([
                 'responsavel' => $erros_responsavel,
-                'entidade' => $erros_entidade//,
-                //'ponto' => $erros_ponto
+                'entidade' => $erros_entidade,
+                'ponto' => $erros_ponto
             ], 400);
         }
     }
@@ -666,4 +725,5 @@ class Cadastro extends \MapasCulturais\Controller{
             $this->Json($f["naturezaJuridica"]["cdNaturezaJuridica"]);
         }
     }
+
 }
