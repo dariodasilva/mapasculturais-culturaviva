@@ -210,7 +210,7 @@ class Cadastro extends \MapasCulturais\Controller{
             'responsavel_telefone',
             'emailPrivado',
             'telefone1',
-            'pais',
+            'pais'
 
           //'foiFomentado'
         ];
@@ -604,9 +604,8 @@ class Cadastro extends \MapasCulturais\Controller{
 
         $erros_responsavel = $this->getErrorsResponsavel();
         $erros_entidade = $this->getErrorsEntidade();
-        $erros_ponto = $this->getErrorsPonto();
 
-        if(!$erros_responsavel && !$erros_entidade && !$erros_ponto){
+        if(!$erros_responsavel && !$erros_entidade){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
             $ponto = $this->getPonto();
@@ -664,8 +663,7 @@ class Cadastro extends \MapasCulturais\Controller{
         } else {
             $this->errorJson([
                 'responsavel' => $erros_responsavel,
-                'entidade' => $erros_entidade,
-                'ponto' => $erros_ponto
+                'entidade' => $erros_entidade
             ], 400);
         }
     }
