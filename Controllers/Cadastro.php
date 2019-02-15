@@ -566,11 +566,11 @@ class Cadastro extends \MapasCulturais\Controller{
         if (!$erros_responsavel && !$erros_entidade){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
-            // $ponto = $this->getPonto();
+            $ponto = $this->getPonto();
 
             $responsavel->publish(true);
             $entidade->publish(true);
-            // $ponto->publish(true);
+            $ponto->publish(true);
 
             $espaco = new \MapasCulturais\Entities\Space;
             $espaco->type = 125; // ponto de cultura
@@ -589,8 +589,23 @@ class Cadastro extends \MapasCulturais\Controller{
             $espaco->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
             //$espaco->terms = $ponto->terms;
 
+            $ponto->owner = $entidade;
+            $ponto->name = $entidade->name;
+            $ponto->nomeCompleto = $entidade->nomeCompleto;
+            $ponto->shortDescription = $entidade->shortDescription;
+            $ponto->longDescription = $entidade->longDescription;
+            $ponto->location = $entidade->location;
+            $ponto->En_Estado = $entidade->En_Estado;
+            $ponto->En_Municipio = $entidade->En_Municipio;
+            $ponto->En_Bairro = $entidade->En_Bairro;
+            $ponto->En_Num = $entidade->En_Num;
+            $ponto->En_Nome_Logradouro = $entidade->En_Nome_Logradouro;
+            $ponto->En_Complemento = $entidade->En_Complemento;
+            $ponto->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
+
             $espaco->save(true);
             $entidade->save(true);
+            $ponto->save(true);
 
             $inscricao->send();
             $app = \MapasCulturais\App::i();
