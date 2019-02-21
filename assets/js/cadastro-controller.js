@@ -903,7 +903,6 @@
                         ($scope.agent.pais ? $scope.agent.pais : '');
 
                     geocoder.code(string).then(function (point) {
-                        console.log(point);
                         point.zoom = 14;
                         $scope.markers.main = point;
                     })['catch'](function () {
@@ -1078,7 +1077,6 @@
                         ($scope.agent.pais ? $scope.agent.pais : '');
 
                     geocoder.code(string).then(function (point) {
-                        console.log(point);
                         point.zoom = 14;
                         $scope.markers.main = point;
                     })['catch'](function () {

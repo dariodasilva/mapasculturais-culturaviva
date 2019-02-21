@@ -21,9 +21,9 @@
             <!--Pertence a alguma rede-->
             <label class="colunm1">
                 <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
-                <select name="redePertencente"
-                        ng-change="save_field('redePertencente')"
-                        ng-model="agent.redePertencente" required>
+                <select name="tipoPontoCulturaDesejado"
+                        ng-change="save_field('tipoPontoCulturaDesejado')"
+                        ng-model="agent.tipoPontoCulturaDesejado" required>
                     <option value="estadual">Estadual</option>
                     <option value="municipal">Municipal</option>
                     <option value="intermunicipal">Intermunicipal</option>

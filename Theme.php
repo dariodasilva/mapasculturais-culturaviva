@@ -413,7 +413,7 @@ class Theme extends BaseV1\Theme {
                     'options' => array(
                         'municipal' => 'Municipal',
                         'estadual' => 'Estadual',
-                        'federal' => 'federal'
+                        'federal' => 'Federal'
                     )
                 ],
                 'tipoOrganizacao' => [
