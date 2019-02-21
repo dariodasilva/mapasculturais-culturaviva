@@ -91,7 +91,7 @@ class Theme extends BaseV1\Theme {
 
         $app->hook('view.render(site/search):before', function() use($app) {
             $this->jsObject['searchFilters'] = [
-                'agent' => ['rcv_tipo' => 'EQ(ponto)','homologado_rcv' => 'EQ(1)'],
+                'agent' => [/*'rcv_tipo' => 'EQ(ponto)',*/'homologado_rcv' => 'EQ(1)'],
                 'event' => ['subsite' => "NULL()"]
             ];
         });
