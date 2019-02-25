@@ -196,7 +196,6 @@ class Cadastro extends \MapasCulturais\Controller{
         $agent = $this->getEntidade();
 
         $required_properties = [
-            'redePertencente',
             'tipoOrganizacao',
             'name',
             'emailPrivado',
