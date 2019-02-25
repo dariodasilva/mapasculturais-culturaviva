@@ -196,7 +196,7 @@ class Cadastro extends \MapasCulturais\Controller{
         $agent = $this->getEntidade();
 
         $required_properties = [
-            'tipoOrganizacao',
+            'tipoPonto',
             'name',
             'emailPrivado',
             'responsavel_nome',
@@ -601,6 +601,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $ponto->En_Nome_Logradouro = $entidade->En_Nome_Logradouro;
             $ponto->En_Complemento = $entidade->En_Complemento;
             $ponto->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
+            $ponto->tipoPonto = $entidade->tipoPonto;
 
             $espaco->save(true);
             $entidade->save(true);

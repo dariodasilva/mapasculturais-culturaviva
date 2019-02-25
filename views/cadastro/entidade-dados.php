@@ -34,11 +34,11 @@
             <!--Deseja ser-->
             <label class="colunm1">
                 <span class="destaque">Deseja ser*:</span>
-                <select name="tipoOrganizacao"
-                        ng-change="save_field('tipoOrganizacao')"
-                        ng-model="agent.tipoOrganizacao" required>
-                    <option value="entidade">Entidade (ponto com constituição jurídica)</option>
-                    <option value="coletivo">Coletivo (ponto sem constituição jurídica)</option>
+                <select name="tipoPonto"
+                        ng-change="save_field('tipoPonto')"
+                        ng-model="agent.tipoPonto" required>
+                    <option value="ponto_entidade">Entidade (ponto com constituição jurídica)</option>
+                    <option value="ponto_coletivo">Coletivo (ponto sem constituição jurídica)</option>
                     <option value="pontao">Pontão</option>
                 </select>
             </label>
@@ -46,7 +46,7 @@
 
         <div class="row">
             <!--CNPJ-->
-            <div ng-show="agent.tipoOrganizacao==='pontao' || agent.tipoOrganizacao === 'entidade'">
+            <div ng-show="agent.tipoPonto==='pontao' || agent.tipoPonto === 'ponto_entidade'">
                 <label class="colunm1">
                     <span class="destaque">CNPJ da Entidade*</span>
                     <input name="cnpj"
@@ -62,7 +62,7 @@
         <div>
             <div class="row">
                 <label class="colunm1">
-                    <span class="destaque">Endereço  {{agent.tipoOrganizacao == 'coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
+                    <span class="destaque">Endereço  {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
                 </label>
             </div>
             <div class="clear"></div>
@@ -145,7 +145,7 @@
         <!--Fim Endereço-->
 
         <!-- Nome fantasia e Razão Social -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'pontao'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
             <label class="colunm1">
                 <span class="destaque">Nome da Razão Social*</span>
                 <input required name="nomeCompleto"
@@ -167,7 +167,7 @@
         </div>
 
         <div class="row">
-            <div ng-show="agent.tipoOrganizacao==='coletivo'">
+            <div ng-show="agent.tipoPonto==='ponto_coletivo'">
                 <div class="row">
                     <label>
                     <span class="destaque">Nome do Coletivo Cultural* <i class='hltip' title='Nome dado ao grupo que compõe o coletivo cultural'>?</i>
@@ -196,9 +196,9 @@
         <!--Fim Nome ponto-->
 
         <!-- Email institucional -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'coletivo'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
             <label class="colunm-full">
-                <span class="destaque">Email institucional {{agent.tipoOrganizacao == 'coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
+                <span class="destaque">Email institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
             </label>
         </div>
@@ -206,7 +206,7 @@
         <!-- Fim Email institucional -->
 
         <!--Telefone entidade-->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
             <label class="colunm1" style="width:300px;">
                 <span class="destaque">Telefone institucional da Entidade *</span>
                 <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
@@ -215,7 +215,7 @@
         <!-- Fim Telefone entidade-->
 
         <!-- Endereço ponto pontão -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'pontao'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
             <label>
                 <span class="destaque">O endereço da unidade é o mesmo do ponto ou pontão?*</span>
                 <select name="mesmoEndereco"
@@ -375,7 +375,7 @@
         <!-- Informações do responsavel -->
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Nome do Responsável {{agent.tipoOrganizacao == 'coletivo' ? 'pelo Coletivo' : 'pela Entidade'}}* <i class='hltip' title='Pessoa que representa o Ponto de Cultura'>?</i></span>
+                <span class="destaque">Nome do Responsável {{agent.tipoPonto == 'ponto_coletivo' ? 'pelo Coletivo' : 'pela Entidade'}}* <i class='hltip' title='Pessoa que representa o Ponto de Cultura'>?</i></span>
                 <input name="responsavel_nome" type="text" ng-blur="save_field('responsavel_nome')" ng-model="agent.responsavel_nome" />
             </label>
 

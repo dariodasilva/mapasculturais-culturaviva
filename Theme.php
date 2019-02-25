@@ -91,7 +91,7 @@ class Theme extends BaseV1\Theme {
 
         $app->hook('view.render(site/search):before', function() use($app) {
             $this->jsObject['searchFilters'] = [
-                'agent' => [/*'rcv_tipo' => 'EQ(ponto)',*/'homologado_rcv' => 'EQ(1)'],
+                'agent' => ['rcv_tipo' => 'EQ(ponto)','homologado_rcv' => 'EQ(1)'],
                 'event' => ['subsite' => "NULL()"]
             ];
         });
@@ -417,13 +417,23 @@ class Theme extends BaseV1\Theme {
                     )
                 ],
                 'tipoOrganizacao' => [
+                    'label' => 'Tipo de Organização',
+//                  'required' => true,
+                    'private' => true,
+                    'type' => 'select',
+                    'options' => array(
+                        'coletivo' => 'Coletivo Cultural',
+                        'entidade' => 'Entidade Cultural'
+                    )
+                ],
+                'tipoPonto' => [
                     'label' => 'Deseja ser',
 //                  'required' => true,
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'entidade' => 'Entidade',
-                        'coletivo' => 'Coletivo',
+                        'ponto_entidade' => 'Entidade',
+                        'ponto_coletivo' => 'Coletivo',
                         'pontao' => 'Pontão'
                     )
                 ],
@@ -1222,13 +1232,14 @@ class Theme extends BaseV1\Theme {
              ]
         ];
         */
+        unset($filters['agent']['tipos']);
 
-        $filters['agent']['tipoOrganizacao'] = [
+        $filters['agent']['tipoPonto'] = [
              'label' => 'Tipo de Organização',
              'placeholder' => 'Todas',
-             'fieldType' => 'singleselect',
+             'fieldType' => 'checklist',
              'filter' => [
-                 'param' => 'tipoOrganizacao',
+                 'param' => 'tipoPonto',
                  'value' => 'ILIKE(*{val}*)'
              ]
         ];
