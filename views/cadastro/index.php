@@ -59,13 +59,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
               <div class="texto">
                 <p>Precisamos saber quem é você e pegar seus contatos</p>
               </div>
-<!--                <div class="circle-status c100 p56 small">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -81,13 +74,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                 <div class="texto">
                      <p>Conte mais sobre sua organização</p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -103,13 +89,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                     <div class="texto">
                         <p>Anexe os documentos obrigatórios para a autodeclaração</p>
                     </div>
-                    <!--                <div class="circle-status c100 p56">
-                                        <span>56%</span>
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
-                                        </div>
-                                    </div>-->
                 </div>
             </article>
         </a>
@@ -125,13 +104,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                <div class="texto">
                      <p>Fale um pouco mais sobre as atividades realizadas pelo seu Ponto</p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -147,13 +119,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                     <div class="texto">
                         <p>Fale mais sobre os recursos que o seu ponto tem para trocar com outros pontos de cultura</p>
                     </div>
-                    <!--                <div class="circle-status c100 p56">
-                                        <span>56%</span>
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
-                                        </div>
-                                    </div>-->
                 </div>
             </article>
         </a>
@@ -172,13 +137,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                <div class="texto">
                      <p>Já recebeu recursos do Ministério da Cultura? </p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -193,13 +151,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                <div class="texto">
                      <p>Fale um pouco mais sobre as atividades realizadas pelo seu Ponto</p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -214,13 +165,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                <div class="texto">
                      <p>Compartilhe recursos e serviços</p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -235,13 +179,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                <div class="texto">
                      <p>Conecte conhecimentos e metodologias</p>
                 </div>
-<!--                <div class="circle-status c100 p56">
-                    <span>56%</span>
-                    <div class="slice">
-                        <div class="bar"></div>
-                        <div class="fill"></div>
-                    </div>
-                </div>-->
             </div>
         </article>
         </a>
@@ -250,7 +187,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
     </section>
     <section class="box-status">
         <article class="validar-ponto">
-<!--            <h4><i class="icon-publish"> </i> Enviar </h4>-->
             <label class="colunm-full aceito-termo" style="color:#FFF">
               <p>
                 <input type="checkbox"

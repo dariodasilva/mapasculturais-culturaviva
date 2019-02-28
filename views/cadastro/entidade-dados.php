@@ -198,7 +198,7 @@
         <!-- Email institucional -->
         <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
             <label class="colunm-full">
-                <span class="destaque">Email institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
+                <span class="destaque">E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
             </label>
         </div>
@@ -387,7 +387,7 @@
         <div class="clear"></div>
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Email do Responsável* </span>
+                <span class="destaque">E-mail do Responsável* </span>
                 <input name="responsavel_email" type="email" ng-blur="save_field('responsavel_email')" ng-model="agent.responsavel_email" />
             </label>
 
