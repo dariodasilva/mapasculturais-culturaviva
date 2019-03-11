@@ -51,7 +51,7 @@
              <taxonomy-checkboxes taxonomy="area_atuacao" entity="agent" terms="termos.area_atuacao"></taxonomy-checkboxes>
         </div>
         <div class="row">
-          <h4> Articulação </h4>
+          <h4 style="background-color: #078979"> Articulação </h4>
             <div class="colunm-full">
                 <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de algum movimento cultural? </span>
                 <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de algum movimento cultural?* </span>

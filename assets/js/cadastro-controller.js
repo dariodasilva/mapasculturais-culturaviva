@@ -207,6 +207,7 @@
             'Comissões',
             'Conferência Nacional de Cultura',
             'Grupo de Trabalho',
+            'Não participa',
             'Conselhos'
         ],
 
