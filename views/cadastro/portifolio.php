@@ -17,7 +17,21 @@
     <div class="form">
         <h4>Informações Obrigatórias</h4>
         <div class="row" ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
-            <span class="destaque espacoleft">Atividades já realizadas* <i class='hltip' title='Nos ajude a entender o histórico de seu Ponto de Cultura e as atividades desenvolvidas nele.'>?</i></span>
+<!--            <span class="destaque espacoleft">Portifólio* <i class='hltip' title='Nos ajude a entender o histórico de seu Ponto de Cultura e as atividades desenvolvidas nele.'>?</i></span>-->
+
+            <!-- Portifolio online -->
+            <label class="colunm-100">
+                <div class="row" ng-controller="PortifolioCtrl">
+                    <label class="colunm1">
+                                <span class="destaque">
+                                          Portfólio Online
+                        <i class='hltip' title="Caso possua um portfólio online, coloque o link aqui.">?</i></span>
+                        <input type="text" name="atividadesEmRealizacaoLink" placeholder="http://" ng-blur="save_field('atividadesEmRealizacaoLink')" ng-model="agent.atividadesEmRealizacaoLink" />
+                    </label>
+                </div>
+                <p>Outra possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura. Publique-o no Youtube e compartilhe o link aqui.</p>
+                <p>Caso não possua portfólio online você pode anexar arquivos no formato PDF de até 20MB. <strong>Você deve adicionar somente um, ou portifólio online ou arquivo PDF.</strong></p>
+            </label>
 
             <!-- Portifolio -->
             <div class="colunm-20">
@@ -28,8 +42,8 @@
                         <img ng-if="agent.files.portifolio" src="<?php $this->asset('img/pdflogo.png') ?>" width="160" height="138">
                     </div>
                     <div id="errorBox">
-                      <span id="msg_errorBox" ng-hide=errozao>Arquivos devem possuir no máximo 20MB</span>
-                  </div>
+                        <span id="msg_errorBox" ng-hide=errozao>Arquivos devem possuir no máximo 20MB</span>
+                    </div>
                 </div>
                 <a ng-if="agent.files.portifolio" href="{{agent.files.portifolio.url}}" target="_blank">{{agent.files.portifolio.name}}</a>
                 <div class="progress row" ng-show="f.progress >= 0">
@@ -37,29 +51,15 @@
                 </div>
             </div>
 
-            <!-- Portifolio online -->
-            <label class="colunm-50">
-                <p>Caso não possua portfólio online você pode anexar arquivos no formato PDF de até 20MB.</p>
-                <p>Outra possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura. Publique-o no Youtube e compartilhe o link aqui.</p>
-                <div class="row" ng-controller="PortifolioCtrl">
-                    <label class="colunm1">
-                                <span class="destaque">
-                                          Portfólio Online
-                        <i class='hltip' title="Caso possua um portfólio online, coloque o link aqui.">?</i></span>
-                            <input type="text" name="atividadesEmRealizacaoLink" placeholder="http://" ng-blur="save_field('atividadesEmRealizacaoLink')" ng-model="agent.atividadesEmRealizacaoLink" />
-                    </label>
-                </div>
-                <p>Precisa de ajuda para montar seu portfólio?
-                    <i class='hltip' title='Um portifólio é um relatório das atividades desenvolvidas pelo Ponto de Cultura com imagens, vídeos e outros itens que comprovem a sua existência'>?</i>
-                    <br>
-                    <a href="<?php $this->asset('pdf/modelos_de_portfolio.docx')?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
-                </p>
-            </label>
-
+            <p>Precisa de ajuda para montar seu portfólio?
+                <i class='hltip' title='Um portifólio é um relatório das atividades desenvolvidas pelo Ponto de Cultura com imagens, vídeos e outros itens que comprovem a sua existência'>?</i>
+                <br>
+                <a href="<?php $this->asset('pdf/modelos_de_portfolio.docx')?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
+            </p>
             <!--Hitória do ponto de cultura-->
             <div class="row">
                 <label class="colunm-full">
-                    <span class="destaque">Conte um pouco sobre a história do Ponto de Cultura (max. 800 caracteres) <i class='hltip' title='Nos diga um pouco mais sobre o ponto de cultura, como por exemplo como ele começou e como surgiu a idéia'>?</i>  </span>
+                    <span class="destaque">Conte um pouco sobre a história do Ponto de Cultura (max. 800 caracteres)* <i class='hltip' title='Nos diga um pouco mais sobre o ponto de cultura, como por exemplo como ele começou e como surgiu a idéia'>?</i>  </span>
                     <textarea required ng-blur="save_field('longDescription')" maxlength="800" ng-model="agent.longDescription"></textarea>
                     <span>{{800 - agent.longDescription.length}} Characters</span>
                 </label>
@@ -100,7 +100,7 @@
         </div>
 
         <div class="row">
-            <h4>Cartas de Reconhecimento</h4>
+            <h4 style="background-color: #078979">Cartas de Reconhecimento</h4>
             <p style="text-align:justify;">Anexar 02 cartas de apoio à entidade ou coletivo cultural requerente, emitidas por Pontos de Cultura, instituições públicas, privadas, ou coletivos culturais relacionadas com arte, cultura, educação ou desenvolvimento comunitário. As cartas devem ser assinadas e digitalizadas. Serão aceitas somente assinaturas manuscritas em papel ou impressões digitais em caso de pessoas não alfabetizadas.</p>
             <p>O ato de assinar uma Carta de Reconhecimento implica na responsabilidade da instituições públicas, privadas, ou coletivos culturais para com a credibilidade do Ponto/Pontão de Cultura, firmando a legitimidade do mesmo.</p>
         </div>
