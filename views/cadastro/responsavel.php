@@ -40,11 +40,6 @@
                 <span class="destaque">Telefone Pessoal (com DDD)*</span>
                 <input type="text" name="telefone1" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999 9999" required>
             </label>
-
-            <label class="colunm2">
-                <span class="destaque">Outro Telefone </span>
-                <input type="text" name="telefone2" ng-blur="save_field('telefone2')" ng-model="agent.telefone2" ui-mask="(99) ?99999 9999">
-            </label>
         </div>
         <div class="clear"></div>
         <div class="row">
@@ -65,6 +60,10 @@
             <label class="nome_chamado">
                 <span class="destaque">Qual nome você gostaria de ser chamado <i class='hltip' title='Utilize este espaço para nos informar se você possui um nome social, nome artístico ou nome pelo qual é conhecido em sua comunidade'>?</i></span>
                 <input type="text" ng-blur="save_field('name')" ng-model="agent.name"/>
+            </label>
+            <label class="colunm2">
+                <span class="destaque">Outro Telefone </span>
+                <input type="text" name="telefone2" ng-blur="save_field('telefone2')" ng-model="agent.telefone2" ui-mask="(99) ?99999 9999">
             </label>
             <div class="clear"></div>
         </div>

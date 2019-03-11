@@ -723,8 +723,8 @@
                 'id': agent_id,
                 '@select': 'id,rcv_tipo,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
                     'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,nomeCompleto,' +
-                    'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,' +
-                    'flickr,youtube,mesmoEndereco,shortDescription',
+                    'En_Municipio, culturadigital,diaspora,' +
+                    'mesmoEndereco,shortDescription',
                 '@files': '(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
@@ -795,7 +795,7 @@
                     'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
                     'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
                     'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
-                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location',
+                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf',
 
                 '@permissions': 'view'
             };
@@ -812,6 +812,14 @@
 
                 if ($location.search().invalid === '1') {
                     $scope.showInvalid($scope.agent.rcv_tipo, 'form_entity');
+                }
+
+                if(agent.relacaoPonto == 'responsavel')
+                {
+                    agent.responsavel_nome = agent.nomeCompleto;
+                    agent.responsavel_cpf = agent.cpf;
+                    agent.responsavel_email = agent.emailPrivado;
+                    agent.responsavel_telefone = agent.telefone1;
                 }
             });
 
