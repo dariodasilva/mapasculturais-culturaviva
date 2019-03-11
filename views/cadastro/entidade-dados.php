@@ -198,7 +198,10 @@
         <!-- Email institucional -->
         <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
             <label class="colunm-full">
-                <span class="destaque">E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
+                <span class="destaque">
+                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
+                    <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
+                </span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
             </label>
         </div>

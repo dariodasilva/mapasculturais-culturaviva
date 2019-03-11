@@ -795,7 +795,7 @@
                     'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
                     'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
                     'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
-                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf',
+                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf, tipoPonto',
 
                 '@permissions': 'view'
             };
@@ -830,7 +830,7 @@
                 }
             }, true);
 
-            $scope.cidadecoder = {
+            /*$scope.cidadecoder = {
                 busy: false,
                 code: function (cidade, pais) {
                     $scope.agent.En_Municipio = cidade;
@@ -843,7 +843,6 @@
                         }
 
                         return geocoder.code(string);
-
                     }).then(function (point) {
                         point.zoom = 14;
                         $scope.markers.main = point;
@@ -919,7 +918,7 @@
                         $scope.cepcoder.busy = false;
                     });
                 }
-            };
+            };*/
 
             $scope.closeAll = function () {
                 ngDialog.close();
