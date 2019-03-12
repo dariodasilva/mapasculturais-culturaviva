@@ -785,8 +785,6 @@
     app.controller('EntityCtrl', ['$scope', '$timeout',  'geocoder', 'cepcoder', 'cidadecoder', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
         function ($scope, $timeout, geocoder, cepcoder, cidadecoder, Entity, MapasCulturais, $location, $http, ngDialog) {
             var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
-
-
             var params = {
                 'id': agent_id,
 
@@ -923,6 +921,13 @@
 
             $scope.closeAll = function () {
                 ngDialog.close();
+            };
+
+            $scope.infoDesejaSer = function(){
+                ngDialog.open({
+                    template: 'modalDesejaSer',
+                    scope: $scope
+                });
             };
 
             extendController($scope, $timeout, Entity, agent_id, $http);

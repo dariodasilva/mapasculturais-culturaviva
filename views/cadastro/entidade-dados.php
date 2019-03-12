@@ -33,7 +33,7 @@
 
             <!--Deseja ser-->
             <label class="colunm1">
-                <span class="destaque">Deseja ser*:</span>
+                <span class="destaque">Deseja ser*<i class='hltip' ng-click="infoDesejaSer()" title=''>?</i>:</span>
                 <select name="tipoPonto"
                         ng-change="save_field('tipoPonto')"
                         ng-model="agent.tipoPonto" required>
