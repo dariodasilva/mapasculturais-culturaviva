@@ -26,7 +26,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-responsavel page-base-form">
 
       <header>
-          <h3> <div class="icon icon-user"></div> 1. Informações do Responsável</h3>
+          <h3> <div class="icon icon-user"></div> 1. Identificação do Responsável pelo Cadastro</h3>
       </header>
 
       <div class="btn_voltar_topo">

@@ -34,26 +34,31 @@ $this->bodyProperties['ng-app'] = "culturaviva";
                     <input type="submit" class="btn" value="OK" ng-click="validaCNPJ()"/>
                 </form>
             </div>
+
             <script type="text/ng-template" id="modalNJ">
               <h4><b>{{natuJuridica}}</b></h4>
               <p style="font-size: 13px;"><b>Identificamos que seu CNPJ está relacionado a órgãos ou entidades públicas. Para poder receber a certificação sua instituição deve ser qualificada como Instituição Pública de Ensino.</b></p>
               <a style="color: red;" ng-click="consultaCNPJ()">Continuar</a>
               <a href="http://culturaviva.gov.br/saiba-mais/#quais-os-criterios" style="color: red; float: right;" target="_blank">Critérios</a>
             </script>
+
             <script type="text/ng-template" id="modalErro">
               <p style="font-size: 13px;"><b>Não encontramos seu CNPJ em nossa base de dados. Isso quer dizer que você ainda não é um Ponto ou Pontão de Cultura certificado, mas basta continuar para fazer sua autodeclaração e entrar na Rede Cultura Viva.</b></p>
               <a style="color: red;" ng-click="registrar()">Continuar</a>
             </script>
+
             <script type="text/ng-template" id="modalCNPJInvalido">
               <p style="font-size: 15px;"><b>CNPJ informado é invalido!</b></p>
               <a style="color: red;" ng-click="closeAll()">Corrigir</a>
             </script>
+
             <script type="text/ng-template" id="modalFinsLucrativos">
               <h4><b>CNPJ com fins lucrativos</b></h4>
               <p style="font-size: 13px;"><b>Sua instituição foi identificada com Natureza Jurídica de fins lucrativos. Para se habilitar no processo de certificação sua instituição de ser sem fins lucrativos.</b></p>
               <a style="color: red;" ng-click="closeAll()">Ok</a>
               <a href="http://culturaviva.gov.br/saiba-mais/#quais-os-criterios" style="color: red; float: right;" target="_blank">Critérios</a>
             </script>
+
             <p>Responda e verificaremos se já temos informações sobre seu Ponto ou Pontão de Cultura na base de dados do MinC.</p>
             <a href="#" id="btn_nao" class="btn-cnpj js-btn-sem-cnpj btn_active" ng-click="data.comCNPJ = false">Não tenho CNPJ</a>
         </div>

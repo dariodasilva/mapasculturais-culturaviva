@@ -51,10 +51,9 @@
              <taxonomy-checkboxes taxonomy="area_atuacao" entity="agent" terms="termos.area_atuacao"></taxonomy-checkboxes>
         </div>
         <div class="row">
-          <h4> Articulação </h4>
+          <h4 style="background-color: #078979"> Articulação </h4>
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de algum movimento cultural? </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de algum movimento cultural?* </span>
+                <span class="destaque">Participa de algum movimento cultural?* </span>
             </div>
             <label class="colunm1">
                 <input type="radio"
@@ -77,8 +76,7 @@
             </div>
 
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de algum Fórum e/ou Conselho de Cultura? </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de algum Fórum e/ou Conselho de Cultura?* </span>
+                <span class="destaque">Participa de algum Fórum e/ou Conselho de Cultura?* </span>
             </div>
             <label class="colunm1">
                 <input type="radio"
@@ -101,13 +99,11 @@
                 <input name="simForumCultural" class="colunm1"type="text" ng-blur="save_field('simForumCultural')" ng-model="agent.simForumCultural" /></span>
             </div>
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de instância de representação junto ao Ministério da Cultura? </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de instância de representação junto ao Ministério da Cultura?* </span>
+                <span class="destaque">Participa de instância de representação junto ao Ministério da Cultura?* </span>
             </div>
             <taxonomy-checkboxes taxonomy="instancia_representacao_minc" entity="agent" terms="termos.instancia_representacao_minc"></taxonomy-checkboxes>
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Possui parceria com o Poder Público? </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Possui parceria com o Poder Público?* </span>
+                <span class="destaque">Possui parceria com o Poder Público?* </span>
             </div>
             <label class="colunm1">
                 <input type="radio"

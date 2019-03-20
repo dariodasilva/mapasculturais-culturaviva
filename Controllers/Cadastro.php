@@ -202,17 +202,20 @@ class Cadastro extends \MapasCulturais\Controller{
     function getEntidadeRequiredProperties(){
         $agent = $this->getEntidade();
 
+        // 'tipoOrganizacao',
+        // 'responsavel_cargo',
+        // 'emailPrivado',
+        // 'telefone1',
+        // 'foiFomentado'
+
         $required_properties = [
-            'tipoOrganizacao',
+            'tipoPonto',
+            'name',
+            'emailPrivado',
             'responsavel_nome',
-            'responsavel_cargo',
             'responsavel_email',
             'responsavel_telefone',
-            'emailPrivado',
-            'telefone1',
             'pais'
-
-          //'foiFomentado'
         ];
 
         if($agent->pais === 'Brasil'){
@@ -644,6 +647,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $ponto->En_Nome_Logradouro = $entidade->En_Nome_Logradouro;
             $ponto->En_Complemento = $entidade->En_Complemento;
             $ponto->endereco = "{$espaco->En_Nome_Logradouro} {$espaco->En_Num}, {$espaco->En_Bairro}, {$espaco->En_Municipio}, {$espaco->En_Estado}";
+            $ponto->tipoPonto = $entidade->tipoPonto;
 
             $espaco->save(true);
             $entidade->save(true);

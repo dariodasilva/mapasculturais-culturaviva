@@ -21,9 +21,9 @@
             <!--Pertence a alguma rede-->
             <label class="colunm1">
                 <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
-                <select name="redePertencente"
-                        ng-change="save_field('redePertencente')"
-                        ng-model="agent.redePertencente" required>
+                <select name="tipoPontoCulturaDesejado"
+                        ng-change="save_field('tipoPontoCulturaDesejado')"
+                        ng-model="agent.tipoPontoCulturaDesejado" required>
                     <option value="estadual">Estadual</option>
                     <option value="municipal">Municipal</option>
                     <option value="intermunicipal">Intermunicipal</option>
@@ -33,12 +33,12 @@
 
             <!--Deseja ser-->
             <label class="colunm1">
-                <span class="destaque">Deseja ser*:</span>
-                <select name="tipoOrganizacao"
-                        ng-change="save_field('tipoOrganizacao')"
-                        ng-model="agent.tipoOrganizacao" required>
-                    <option value="entidade">Entidade (ponto com constituição jurídica)</option>
-                    <option value="coletivo">Coletivo (ponto sem constituição jurídica)</option>
+                <span class="destaque">Deseja ser*<i class='hltip' ng-click="infoDesejaSer()" title=''>?</i>:</span>
+                <select name="tipoPonto"
+                        ng-change="save_field('tipoPonto')"
+                        ng-model="agent.tipoPonto" required>
+                    <option value="ponto_entidade">Entidade (ponto com constituição jurídica)</option>
+                    <option value="ponto_coletivo">Coletivo (ponto sem constituição jurídica)</option>
                     <option value="pontao">Pontão</option>
                 </select>
             </label>
@@ -46,7 +46,7 @@
 
         <div class="row">
             <!--CNPJ-->
-            <div ng-show="agent.tipoOrganizacao==='pontao' || agent.tipoOrganizacao === 'entidade'">
+            <div ng-show="agent.tipoPonto==='pontao' || agent.tipoPonto === 'ponto_entidade'">
                 <label class="colunm1">
                     <span class="destaque">CNPJ da Entidade*</span>
                     <input name="cnpj"
@@ -62,7 +62,7 @@
         <div>
             <div class="row">
                 <label class="colunm1">
-                    <span class="destaque">Endereço  {{agent.tipoOrganizacao == 'coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
+                    <span class="destaque">Endereço  {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
                 </label>
             </div>
             <div class="clear"></div>
@@ -145,7 +145,7 @@
         <!--Fim Endereço-->
 
         <!-- Nome fantasia e Razão Social -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'pontao'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
             <label class="colunm1">
                 <span class="destaque">Nome da Razão Social*</span>
                 <input required name="nomeCompleto"
@@ -167,7 +167,7 @@
         </div>
 
         <div class="row">
-            <div ng-show="agent.tipoOrganizacao==='coletivo'">
+            <div ng-show="agent.tipoPonto==='ponto_coletivo'">
                 <div class="row">
                     <label>
                     <span class="destaque">Nome do Coletivo Cultural* <i class='hltip' title='Nome dado ao grupo que compõe o coletivo cultural'>?</i>
@@ -196,9 +196,12 @@
         <!--Fim Nome ponto-->
 
         <!-- Email institucional -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'coletivo'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
             <label class="colunm-full">
-                <span class="destaque">Email institucional {{agent.tipoOrganizacao == 'coletivo' ? 'do Coletivo' : 'da Entidade'}} *</span>
+                <span class="destaque">
+                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
+                    <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
+                </span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
             </label>
         </div>
@@ -206,7 +209,7 @@
         <!-- Fim Email institucional -->
 
         <!--Telefone entidade-->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
             <label class="colunm1" style="width:300px;">
                 <span class="destaque">Telefone institucional da Entidade *</span>
                 <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
@@ -215,7 +218,7 @@
         <!-- Fim Telefone entidade-->
 
         <!-- Endereço ponto pontão -->
-        <div class="row" ng-show="agent.tipoOrganizacao === 'entidade' || agent.tipoOrganizacao === 'pontao'">
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
             <label>
                 <span class="destaque">O endereço da unidade é o mesmo do ponto ou pontão?*</span>
                 <select name="mesmoEndereco"
@@ -306,62 +309,6 @@
         </div>
         <!-- Endereço ponto pontão -->
 
-        <!--Redes sociais-->
-        <div class="row">
-            <span class="destaque redessociais">Seu perfil nas redes sociais: <i class='hltip' title='Queremos saber seu perfil nas redes sociais para podermos conectá-l@ com nossas atualizações e novidades.'>?</i></span>
-            <label class="colunm-redes facebook">
-                <span class="destaque"><img src="<?php $this->asset('img/facebook.png') ?>"> Seu perfil no Facebook</span>
-                <input type="text" ng-blur="save_field('facebook')" ng-model="agent.facebook" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes twitter">
-                <span class="destaque"><img src="<?php $this->asset('img/twitter.png') ?>"> Seu perfil no Twitter</span>
-                <input type="text" ng-blur="save_field('twitter')" ng-model="agent.twitter" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes googleplus">
-                <span class="destaque"><img src="<?php $this->asset('img/googlePlus.ico') ?>"> Seu perfil no Google+</span>
-                <input type="text" ng-blur="save_field('googleplus')" ng-model="agent.googleplus" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes telegram">
-                <span class="destaque"><img src="<?php $this->asset('img/telegram.ico') ?>"> Seu usuário no Telegram</span>
-                <input type="text" ng-blur="save_field('telegram')" ng-model="agent.telegram" placeholder="@SeuNome"/>
-            </label>
-
-            <label class="colunm-redes whatsapp">
-                <span class="destaque"><img src="<?php $this->asset('img/whatsapp.png') ?>"> Seu número do WhatsApp</span>
-                <input type="text" ng-blur="save_field('whatsapp')" ng-model="agent.whatsapp" placeholder="(11) _____-_____ "/>
-            </label>
-
-            <label class="colunm-redes culturadigital">
-                <span class="destaque"><img src="<?php $this->asset('img/CulturaDigital_favi.png') ?>"> Seu perfil no CulturaDigital.br</span>
-                <input type="text" ng-blur="save_field('culturadigital')" ng-model="agent.culturadigital" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes diaspora">
-                <span class="destaque"><img src="<?php $this->asset('img/icon_diaspora.png') ?>">Perfil na Diáspora:</span>
-                <input type="text" ng-blur="save_field('diaspora')" ng-model="agent.diaspora" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes instagram">
-                <span class="destaque"><img src="<?php $this->asset('img/instagram.png') ?>"> Seu perfil no Instagram.com</span>
-                <input type="text" ng-blur="save_field('instagram')" ng-model="agent.instagram" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes flick">
-                <span class="destaque"><img src="<?php $this->asset('img/icon_flicker.png') ?>"> Página no Flickr</span>
-                <input type="text" ng-blur="save_field('flickr')" ng-model="agent.flickr" placeholder="http://"/>
-            </label>
-
-            <label class="colunm-redes youtube">
-                <span class="destaque"><img src="<?php $this->asset('img/icon_youtube.png') ?>"> Perfil no Youtube:</span>
-                <input type="text" ng-blur="save_field('youtube')" ng-model="agent.youtube" placeholder="http://"/>
-            </label>
-        </div>
-        <div class="clear"></div>
-        <!--Fim Redes sociais-->
-
         <!-- Indicação no mapa -->
         <label>
             <span class="destaque">Indique a posição no mapa</span>
@@ -375,8 +322,8 @@
         <!-- Informações do responsavel -->
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Nome do Responsável {{agent.tipoOrganizacao == 'coletivo' ? 'pelo Coletivo' : 'pela Entidade'}}* <i class='hltip' title='Pessoa que representa o Ponto de Cultura'>?</i></span>
-                <input name="responsavel_nome" type="text" ng-blur="save_field('responsavel_nome')" ng-model="agent.responsavel_nome" />
+                <span class="destaque">Nome do Responsável {{agent.tipoPonto == 'ponto_coletivo' ? 'pelo Coletivo' : 'pela Entidade'}}* <i class='hltip' title='Pessoa que representa o Ponto de Cultura'>?</i></span>
+                <input name="responsavel_nome" type="text" ng-blur="save_field('responsavel_nome')" ng-model="agent.responsavel_nome"/>
             </label>
 
             <label class="colunm05">
@@ -387,7 +334,7 @@
         <div class="clear"></div>
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Email do Responsável* </span>
+                <span class="destaque">E-mail do Responsável* </span>
                 <input name="responsavel_email" type="email" ng-blur="save_field('responsavel_email')" ng-model="agent.responsavel_email" />
             </label>
 
@@ -396,6 +343,67 @@
                 <input name="responsavel_telefone" type="text" ng-blur="save_field('responsavel_telefone')" ng-model="agent.responsavel_telefone" ui-mask="(99) ?99999-9999"/>
             </label>
         </div>
-        <div class="clear"></div>
         <!-- Fim Informações do responsavel -->
+        <div class="clear"></div>
+    </div>
+    <div class="form form-opcional">
+        <h4>Informações Opcionais</h4>
+        <div class="row">
+            <!--Redes sociais-->
+            <div class="row">
+                <span class="destaque redessociais">Seu perfil nas redes sociais: <i class='hltip' title='Queremos saber seu perfil nas redes sociais para podermos conectá-l@ com nossas atualizações e novidades.'>?</i></span>
+                <label class="colunm-redes facebook">
+                    <span class="destaque"><img src="<?php $this->asset('img/facebook.png') ?>"> Seu perfil no Facebook</span>
+                    <input type="text" ng-blur="save_field('facebook')" ng-model="agent.facebook" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes twitter">
+                    <span class="destaque"><img src="<?php $this->asset('img/twitter.png') ?>"> Seu perfil no Twitter</span>
+                    <input type="text" ng-blur="save_field('twitter')" ng-model="agent.twitter" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes googleplus">
+                    <span class="destaque"><img src="<?php $this->asset('img/googlePlus.ico') ?>"> Seu perfil no Google+</span>
+                    <input type="text" ng-blur="save_field('googleplus')" ng-model="agent.googleplus" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes telegram">
+                    <span class="destaque"><img src="<?php $this->asset('img/telegram.ico') ?>"> Seu usuário no Telegram</span>
+                    <input type="text" ng-blur="save_field('telegram')" ng-model="agent.telegram" placeholder="@SeuNome"/>
+                </label>
+
+                <label class="colunm-redes whatsapp">
+                    <span class="destaque"><img src="<?php $this->asset('img/whatsapp.png') ?>"> Seu número do WhatsApp</span>
+                    <input type="text" ng-blur="save_field('whatsapp')" ng-model="agent.whatsapp" placeholder="(11) _____-_____ "/>
+                </label>
+
+                <label class="colunm-redes culturadigital">
+                    <span class="destaque"><img src="<?php $this->asset('img/CulturaDigital_favi.png') ?>"> Seu perfil no CulturaDigital.br</span>
+                    <input type="text" ng-blur="save_field('culturadigital')" ng-model="agent.culturadigital" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes diaspora">
+                    <span class="destaque"><img src="<?php $this->asset('img/icon_diaspora.png') ?>">Perfil na Diáspora:</span>
+                    <input type="text" ng-blur="save_field('diaspora')" ng-model="agent.diaspora" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes instagram">
+                    <span class="destaque"><img src="<?php $this->asset('img/instagram.png') ?>"> Seu perfil no Instagram.com</span>
+                    <input type="text" ng-blur="save_field('instagram')" ng-model="agent.instagram" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes flick">
+                    <span class="destaque"><img src="<?php $this->asset('img/icon_flicker.png') ?>"> Página no Flickr</span>
+                    <input type="text" ng-blur="save_field('flickr')" ng-model="agent.flickr" placeholder="http://"/>
+                </label>
+
+                <label class="colunm-redes youtube">
+                    <span class="destaque"><img src="<?php $this->asset('img/icon_youtube.png') ?>"> Perfil no Youtube:</span>
+                    <input type="text" ng-blur="save_field('youtube')" ng-model="agent.youtube" placeholder="http://"/>
+                </label>
+            </div>
+            <div class="clear"></div>
+            <!--Fim Redes sociais-->
+        </div>
+    </div>
 </form>
