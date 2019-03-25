@@ -267,7 +267,7 @@
                     </label>
 
                     <label class="colunm2">
-                        <span class="destaque">{{agent.pais == 'BrasilPontaPontao' ? 'Cidade*' : 'Cidade'}}</span>
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
                         <input required name="En_MunicipioPontaPontao" type="text" ng-blur="save_field('En_MunicipioPontaPontao')" ng-model="agent.En_MunicipioPontaPontao"/>
                     </label>
 
