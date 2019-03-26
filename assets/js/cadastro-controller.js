@@ -756,7 +756,7 @@
 
             var params_entidade = {
                 'id': agent_id_entidade,
-                '@select': 'id,tipoOrganizacao',
+                '@select': 'id,tipoOrganizacao,tipoPonto',
                 '@permissions': 'view'
             };
 
