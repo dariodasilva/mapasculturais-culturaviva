@@ -346,7 +346,11 @@ $this->bodyProperties['ng-app'] = "culturaviva";
     <p>Dados enviados com sucesso!</p>
     <p ng-if ="data.statusInscricao = 1">Agora que preencheu nosso cadastro, conheça também o <a color="#078979" href="http://cadsol.mte.gov.br/inter/cadsol/main.seam" target="_blank">cadastro de economia solidária</a> e o <a href="http://simmc.c3sl.ufpr.br/#/pid" target="_blank"> cadastro de pontos de inclusão digital.</a></p>
     <b> Existe alguma observação que você gostaria de fazer?</b>
-    <textarea cols="65" ng-model="agent.obs" ng-blur="save_field('obs')"></textarea>
+    <p>
+        <textarea cols="65" ng-model="agent.obs" ng-blur="save_field('obs')"></textarea>
+        <button ng-click="save_field('obs')"> Enviar </button>
+    </p>
+
   </script>
   <script type="text/ng-template" id="modal2">
     <p>Dados atualizados com sucesso!</p>
