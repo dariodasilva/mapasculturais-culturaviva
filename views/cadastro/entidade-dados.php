@@ -274,21 +274,6 @@
                     </label>
 
                     <label class="colunm2">
-                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                        <input required name="En_BairroPontaPontao" type="text" ng-blur="save_field('En_BairroPontaPontao')" ng-model="agent.En_BairroPontaPontao"/>
-                    </label>
-                </div>
-                <div class="clear"></div>
-                <div class="row">
-                    <label class="colunm2">
-                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
-                        <input required name="En_Nome_LogradouroPontaPontao" type="text" ng-blur="save_field('En_Nome_LogradouroPontaPontao')" ng-model="agent.En_Nome_LogradouroPontaPontao"/>
-                    </label>
-                    <label class="colunm2">
-                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Número*' : 'Número'}}</span>
-                        <input required name="En_NumPontaPontao" type="text" ng-blur="save_field('En_NumPontaPontao')" ng-model="agent.En_NumPontaPontao"/>
-                    </label>
-                    <label class="colunm2">
                         <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
                         <input required type="text"
                                name="cepPontaPontao"
@@ -302,6 +287,24 @@
                                ng-model="agent.cepPontaPontao"
                                ng-if="agent.paisPontaPontao !== 'Brasil'">
                     </label>
+
+                </div>
+                <div class="clear"></div>
+                <div class="row">
+                    <label class="colunm2">
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
+                        <input required name="En_Nome_LogradouroPontaPontao" type="text" ng-blur="save_field('En_Nome_LogradouroPontaPontao')" ng-model="agent.En_Nome_LogradouroPontaPontao"/>
+                    </label>
+                    <label class="colunm2">
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Número*' : 'Número'}}</span>
+                        <input required name="En_NumPontaPontao" type="text" ng-blur="save_field('En_NumPontaPontao')" ng-model="agent.En_NumPontaPontao"/>
+                    </label>
+                    
+                    <label class="colunm2">
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
+                        <input required name="En_BairroPontaPontao" type="text" ng-blur="save_field('En_BairroPontaPontao')" ng-model="agent.En_BairroPontaPontao"/>
+                    </label>
+
                     <label class="colunm2">
                         <span class="destaque">Complemento</span>
                         <input type="text" ng-blur="save_field('En_ComplementoPontaPontao')" ng-model="agent.En_ComplementoPontaPontao"/>
