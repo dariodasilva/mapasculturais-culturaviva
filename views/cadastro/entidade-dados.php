@@ -218,7 +218,7 @@
         <!-- Fim Telefone entidade-->
 
         <!-- Endereço ponto pontão -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
+        <div class="row">
             <label>
                 <span class="destaque">O endereço da unidade é o mesmo do ponto ou pontão?*</span>
                 <select name="mesmoEndereco"
