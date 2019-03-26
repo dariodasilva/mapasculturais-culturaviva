@@ -33,7 +33,7 @@
 
             <!--Deseja ser-->
             <label class="colunm1">
-                <span class="destaque">Deseja ser*<i class='hltip' ng-click="infoDesejaSer()" title=''>?</i>:</span>
+                <span class="destaque">Deseja ser: * <i class='hltip' ng-click="infoDesejaSer()" title=''>?</i></span>
                 <select name="tipoPonto"
                         ng-change="save_field('tipoPonto')"
                         ng-model="agent.tipoPonto" required>
@@ -62,7 +62,7 @@
         <div>
             <div class="row">
                 <label class="colunm1">
-                    <span class="destaque">Endereço  {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
+                    <span class="destaque">Endereço {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
                 </label>
             </div>
             <div class="clear"></div>
@@ -107,21 +107,6 @@
                     <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
                 </label>
 
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
-                </label>
-            </div>
-            <div class="clear"></div>
-            <div class="row">
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
-                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
-                </label>
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Número*' : 'Número'}}</span>
-                    <input required name="En_Num" type="text" ng-blur="save_field('En_Num')" ng-model="agent.En_Num"/>
-                </label>
                 <label class="colunm2" ng-class="{'busy': cepcoder.busy}">
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
                     <input required type="text"
@@ -136,6 +121,23 @@
                            ng-model="agent.cep"
                            ng-if="agent.pais !== 'Brasil'">
                 </label>
+            </div>
+            <div class="clear"></div>
+            <div class="row">
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
+                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
+                </label>
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Número*' : 'Número'}}</span>
+                    <input required name="En_Num" type="text" ng-blur="save_field('En_Num')" ng-model="agent.En_Num"/>
+                </label>
+
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
+                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
+                </label>
+
                 <label class="colunm2">
                     <span class="destaque">Complemento</span>
                     <input type="text" ng-blur="save_field('En_Complemento')" ng-model="agent.En_Complemento"/>
