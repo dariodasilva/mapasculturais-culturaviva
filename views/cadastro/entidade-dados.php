@@ -58,6 +58,79 @@
             </div>
         </div>
 
+        <!-- Nome fantasia e Razão Social -->
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
+            <label class="colunm1">
+                <span class="destaque">Nome da Razão Social*</span>
+                <input required name="nomeCompleto"
+                       type="text"
+                       ng-blur="save_field('nomeCompleto')"
+                       ng-model="agent.nomeCompleto">
+            </label>
+
+            <label class="colunm1">
+                <span class="destaque">Nome Fantasia* <i class='hltip' title='Nome da entidade, tal como se reconhece e é reconhecida junto à comunidade'>?</i></span>
+                </span>
+                <div ng-messages="agent.name.$error" style="color:maroon" role="alert">
+                    <div ng-message="required">You did not enter a field</div>
+                    <div ng-message="minlength">Your field is too short</div>
+                    <div ng-message="maxlength">Your field is too long</div>
+                </div>
+                <input required type="text" ng-blur="save_field('name')" ng-model="agent.name" >
+            </label>
+        </div>
+
+        <div class="row">
+            <div ng-show="agent.tipoPonto==='ponto_coletivo'">
+                <div class="row">
+                    <label>
+                    <span class="destaque">Nome do Coletivo Cultural* <i class='hltip' title='Nome dado ao grupo que compõe o coletivo cultural'>?</i>
+                    </span>
+                        <input required name="name" type="text" ng-blur="save_field('name')" ng-model="agent.name">
+                    </label>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- Fim Nome fantasia e Razão Social -->
+
+        <!--Nome ponto-->
+        <div class="row">
+            <label>
+                <span class="destaque">
+                    Nome do ponto*
+                </span>
+                <input  required type="text"
+                        name="nomePonto"
+                        ng-blur="save_field('nomePonto')"
+                        ng-model="agent.nomePonto"
+                >
+            </label>
+        </div>
+        <!--Fim Nome ponto-->
+
+        <!-- Email institucional -->
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
+            <label class="colunm-full">
+                <span class="destaque">
+                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
+                    <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
+                </span>
+                <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
+            </label>
+        </div>
+        <div class="clear"></div>
+        <!-- Fim Email institucional -->
+
+        <!--Telefone entidade-->
+        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
+            <label class="colunm1" style="width:300px;">
+                <span class="destaque">Telefone institucional da Entidade *</span>
+                <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
+            </label>
+        </div>
+        <!-- Fim Telefone entidade-->
+
         <!--Endereço-->
         <div>
             <div class="row">
@@ -145,79 +218,6 @@
             </div>
         </div>
         <!--Fim Endereço-->
-
-        <!-- Nome fantasia e Razão Social -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
-            <label class="colunm1">
-                <span class="destaque">Nome da Razão Social*</span>
-                <input required name="nomeCompleto"
-                       type="text"
-                       ng-blur="save_field('nomeCompleto')"
-                       ng-model="agent.nomeCompleto">
-            </label>
-
-            <label class="colunm1">
-                <span class="destaque">Nome Fantasia* <i class='hltip' title='Nome da entidade, tal como se reconhece e é reconhecida junto à comunidade'>?</i></span>
-                </span>
-                <div ng-messages="agent.name.$error" style="color:maroon" role="alert">
-                    <div ng-message="required">You did not enter a field</div>
-                    <div ng-message="minlength">Your field is too short</div>
-                    <div ng-message="maxlength">Your field is too long</div>
-                </div>
-                <input required type="text" ng-blur="save_field('name')" ng-model="agent.name" >
-            </label>
-        </div>
-
-        <div class="row">
-            <div ng-show="agent.tipoPonto==='ponto_coletivo'">
-                <div class="row">
-                    <label>
-                    <span class="destaque">Nome do Coletivo Cultural* <i class='hltip' title='Nome dado ao grupo que compõe o coletivo cultural'>?</i>
-                    </span>
-                        <input required name="name" type="text" ng-blur="save_field('name')" ng-model="agent.name">
-                    </label>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        <!-- Fim Nome fantasia e Razão Social -->
-
-        <!--Nome ponto-->
-        <div class="row">
-            <label>
-                <span class="destaque">
-                    Nome do ponto*
-                </span>
-                <input  required type="text"
-                        name="nomePonto"
-                        ng-blur="save_field('nomePonto')"
-                        ng-model="agent.nomePonto"
-                >
-            </label>
-        </div>
-        <!--Fim Nome ponto-->
-
-        <!-- Email institucional -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
-            <label class="colunm-full">
-                <span class="destaque">
-                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
-                    <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
-                </span>
-                <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
-            </label>
-        </div>
-        <div class="clear"></div>
-        <!-- Fim Email institucional -->
-
-        <!--Telefone entidade-->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
-            <label class="colunm1" style="width:300px;">
-                <span class="destaque">Telefone institucional da Entidade *</span>
-                <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
-            </label>
-        </div>
-        <!-- Fim Telefone entidade-->
 
         <!-- Endereço ponto pontão -->
         <div class="row">
