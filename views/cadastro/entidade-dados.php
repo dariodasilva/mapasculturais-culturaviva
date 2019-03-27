@@ -299,7 +299,7 @@
                         <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Número*' : 'Número'}}</span>
                         <input required name="En_NumPontaPontao" type="text" ng-blur="save_field('En_NumPontaPontao')" ng-model="agent.En_NumPontaPontao"/>
                     </label>
-                    
+
                     <label class="colunm2">
                         <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
                         <input required name="En_BairroPontaPontao" type="text" ng-blur="save_field('En_BairroPontaPontao')" ng-model="agent.En_BairroPontaPontao"/>

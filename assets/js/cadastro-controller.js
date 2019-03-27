@@ -495,6 +495,10 @@
                             scope: $scope
                         });
                     }
+                    $scope.saveObs = function () {
+                        $scope.save_field('obs');
+                        ngDialog.close();
+                    };
                     $scope.data.statusInscricao = 1;
                 }).
                 error(function errorCallback(response) {
