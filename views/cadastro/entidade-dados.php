@@ -110,10 +110,14 @@
         <!--Fim Nome ponto-->
 
         <!-- Email institucional -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
+        <div class="row">
             <label class="colunm-full">
                 <span class="destaque">
-                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
+                    E-mail institucional
+                    <label ng-if="agent.tipoPonto == 'ponto_entidade'"> da Entidade </label>
+                    <label ng-if="agent.tipoPonto == 'ponto_coletivo'"> do Coletivo </label>
+                    <label ng-if="agent.tipoPonto == 'pontao'"> do Pontão </label> *
+
                     <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
                 </span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
@@ -123,9 +127,14 @@
         <!-- Fim Email institucional -->
 
         <!--Telefone entidade-->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
+        <div class="row">
             <label class="colunm1" style="width:300px;">
-                <span class="destaque">Telefone institucional da Entidade *</span>
+                <span class="destaque">
+                    Telefone institucional
+                    <label ng-if="agent.tipoPonto == 'ponto_entidade'"> da Entidade </label>
+                    <label ng-if="agent.tipoPonto == 'ponto_coletivo'"> do Coletivo </label>
+                    <label ng-if="agent.tipoPonto == 'pontao'"> do Pontão </label> *
+                </span>
                 <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
             </label>
         </div>
