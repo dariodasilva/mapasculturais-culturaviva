@@ -921,6 +921,11 @@ class Theme extends BaseV1\Theme {
                     'required' => false,
                     'private' => true
                 ],
+                'representacaoMinc' => [
+                    'label' => 'Participa de instância de representação junto ao Ministério da Cultura?',
+                    'required' => false,
+                    'private' => true
+                ],
                 'simPoderPublico' => [
                     'label' => 'Quais para radio participa poder publico',
                     //              'required' => false,

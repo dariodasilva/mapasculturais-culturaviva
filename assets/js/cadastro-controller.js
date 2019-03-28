@@ -207,7 +207,6 @@
             'Comissões',
             'Conferência Nacional de Cultura',
             'Grupo de Trabalho',
-            'Não participa',
             'Conselhos'
         ],
 
@@ -1113,7 +1112,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada, parceriaPrivadaQual,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
+                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada, parceriaPrivadaQual,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico,representacaoMinc',
                 '@permissions': 'view'
             };
 

@@ -98,10 +98,30 @@
                 <span class="destaque">Quais?*
                 <input name="simForumCultural" class="colunm1"type="text" ng-blur="save_field('simForumCultural')" ng-model="agent.simForumCultural" /></span>
             </div>
+
             <div class="colunm-full">
-                <span class="destaque">Participa de instância de representação junto ao Ministério da Cultura?* </span>
+                <span class="destaque">Participa de instância de representação junto ao Ministério da Cultura? * </span>
             </div>
-            <taxonomy-checkboxes taxonomy="instancia_representacao_minc" entity="agent" terms="termos.instancia_representacao_minc"></taxonomy-checkboxes>
+
+            <label class="colunm1">
+                <input type="radio"
+                       name="representacaominc"
+                       ng-value="0"
+                       ng-change="save_field('representacaoMinc')"
+                       ng-model="agent.representacaoMinc"> Não
+            </label>
+
+            <label class="colunm2">
+                <input type="radio" name="representacaominc"
+                       ng-value="1"
+                       ng-change="save_field('representacaoMinc')"
+                       ng-model="agent.representacaoMinc"> Sim
+            </label>
+
+            <div ng-show="agent.representacaoMinc == 1">
+                <taxonomy-checkboxes taxonomy="instancia_representacao_minc" entity="agent" terms="termos.instancia_representacao_minc"></taxonomy-checkboxes>
+            </div>
+
             <div class="colunm-full">
                 <span class="destaque">Possui parceria com o Poder Público?* </span>
             </div>
