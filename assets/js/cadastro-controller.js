@@ -792,8 +792,7 @@
                 'id': agent_id,
 
                 '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
-                    'tipoPontoCulturaDesejado,tipoOrganizacao,responsavel_operadora,responsavel_operadora2,' +
-                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
+                    'tipoPontoCulturaDesejado,tipoOrganizacao,emailPrivado,telefone1,telefone2,' +
                     'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
                     'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
                     'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
@@ -832,7 +831,7 @@
                 }
             }, true);
 
-            /*$scope.cidadecoder = {
+            $scope.cidadecoder = {
                 busy: false,
                 code: function (cidade, pais) {
                     $scope.agent.En_Municipio = cidade;
@@ -920,7 +919,7 @@
                         $scope.cepcoder.busy = false;
                     });
                 }
-            };*/
+            };
 
             $scope.closeAll = function () {
                 ngDialog.close();
