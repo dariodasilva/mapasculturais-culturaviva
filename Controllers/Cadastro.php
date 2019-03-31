@@ -501,10 +501,6 @@ class Cadastro extends \MapasCulturais\Controller{
         $this->render('CNPJcadastrado');
     }
 
-    function GET_pogressio(){
-        echo var_dump($this->_ponto->files);die;
-    }
-
     function ALL_registra(){
         $this->requireAuthentication();
         $app = App::i();
