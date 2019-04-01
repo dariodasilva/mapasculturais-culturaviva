@@ -726,9 +726,8 @@
             var params = {
                 'id': agent_id,
                 '@select': 'id,rcv_tipo,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
-                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,nomeCompleto,' +
-                    'En_Municipio, culturadigital,diaspora,' +
-                    'mesmoEndereco,shortDescription',
+                    'emailPrivado,telefone1,telefone2,nomeCompleto,' +
+                    'En_Municipio,mesmoEndereco,shortDescription',
                 '@files': '(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
