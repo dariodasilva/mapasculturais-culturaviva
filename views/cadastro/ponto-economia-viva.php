@@ -224,8 +224,8 @@
 
             <label class="colunm-full">
                 <span class="destaque">Quanto custa por ano o Ponto/Pontão de Cultura? (valore todas as atividades realizadas, pagamento de pessoal envolvido, aluguel e manutenção de sede e equipamentos, entre outros - custeados ou não com recursos do Ministério da Cultura).</span>
-                <textarea ng-model="agent.pontoCustoAnual"
-                          ng-blur="save_field('pontoCustoAnual')"></textarea>
+                <input type="number" min="0" placeholder="Informe o valor total" 
+                       ng-model="agent.pontoCustoAnual" ng-blur="save_field('pontoCustoAnual')">
             </label>
         </div>
     </div>
