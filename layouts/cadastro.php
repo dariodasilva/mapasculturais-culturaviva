@@ -20,7 +20,6 @@ $link_continuar = $app->createUrl('cadastro', $link );
 
     <?php echo $TEMPLATE_CONTENT; ?>
 
-
     <a href="<?php echo $link_continuar;  ?>" class="btn btn_continuar" target="_self">Continuar >> </a>
 
     <?php if ($link_back !== "index") { ?>

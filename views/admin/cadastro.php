@@ -71,14 +71,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 
           <div class="icon icon-chat"></div>
           <h3>6. Atuação e Articulação</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
       </header>
       <?php echo $this->part('detail/ponto-articulacao'); ?>
   </div>
@@ -89,14 +81,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 
           <div class="icon icon-dollar"></div>
           <h3>7. Economia Viva</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
       </header>
       <?php echo $this->part('detail/ponto-economia-viva'); ?>
   </div>
@@ -104,17 +88,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-formacao page-base-form">
 
       <header>
-
           <div class="icon icon-book-open"></div>
           <h3>8. Formação</h3>
-
-  <!--        <div class="circle-status c100 p56 small">
-              <span>56%</span>
-              <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-              </div>
-         </div>-->
       </header>
       <?php echo $this->part('detail/ponto-formacao'); ?>
       <div class="clear"></div>
