@@ -62,7 +62,7 @@
                 <input type="text" ng-blur="save_field('name')" ng-model="agent.name"/>
             </label>
             <label class="colunm2">
-                <span class="destaque">Outro Telefone </span>
+                <span class="destaque">Outro Telefone (com DDD)</span>
                 <input type="text" name="telefone2" ng-blur="save_field('telefone2')" ng-model="agent.telefone2" ui-mask="(99) ?99999 9999">
             </label>
             <div class="clear"></div>

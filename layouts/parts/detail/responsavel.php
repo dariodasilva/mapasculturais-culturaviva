@@ -1,9 +1,9 @@
-<div  >
+<div>
     <?php $this->part('messages'); ?>
     <div class="form">
-        <div class="row">
-            <span><b> * Campos Obrigatórios </b></span>
-        </div>
+<!--        <div class="row">-->
+<!--            <span><b> * Campos Obrigatórios </b></span>-->
+<!--        </div>-->
         <!-- <h4>Informações Obrigatórias</h4> -->
         <div class="row">
             <label class="colunm1">
@@ -43,12 +43,12 @@
             </label>
 
             <label class="colunm2">
-                <span>Telefone Pessoal*</span>
+                <span>Telefone Pessoal (com DDD)*</span>
                 <span><b>{{responsavel.telefone1}}</b></span>
                 <span ng-if="!responsavel.telefone1"><b>Não informado</b></span>
             </label>
             <label class="colunm2">
-                <span>Telefone Pessoal</span>
+                <span>Outro Telefone (com DDD)</span>
                 <span><b>{{responsavel.telefone2}}</b></span>
                 <span ng-if="!responsavel.telefone2"><b>Não informado</b></span>
             </label>

@@ -1468,7 +1468,7 @@
                 var responsavel = {
                     'id': rcv.agenteIndividual,
                     '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
-                        'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,' +
+                        'emailPrivado,telefone1,telefone2,nomeCompleto,' +
                         'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,mesmoEndereco,shortDescription',
                     '@permissions': 'view'
                 };
