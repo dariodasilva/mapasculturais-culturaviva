@@ -100,7 +100,7 @@
             </div>
 
             <div class="colunm-full">
-                <span class="destaque">Participa de instância de representação junto ao Ministério da Cultura? * </span>
+                <span class="destaque">Participa de instância de representação junto ao Ministério da Cidadania? * </span>
             </div>
 
             <label class="colunm1">

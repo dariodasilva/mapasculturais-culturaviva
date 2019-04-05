@@ -922,7 +922,7 @@ class Theme extends BaseV1\Theme {
                     'private' => true
                 ],
                 'representacaoMinc' => [
-                    'label' => 'Participa de instância de representação junto ao Ministério da Cultura?',
+                    'label' => 'Participa de instância de representação junto ao Ministério da Cidadania?',
                     'required' => false,
                     'private' => true
                 ],

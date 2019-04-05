@@ -135,7 +135,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             </header>
             <div class="infos">
                <div class="texto">
-                     <p>Já recebeu recursos do Ministério da Cultura? </p>
+                     <p>Já recebeu recursos do Ministério da Cidadania? </p>
                 </div>
             </div>
         </article>

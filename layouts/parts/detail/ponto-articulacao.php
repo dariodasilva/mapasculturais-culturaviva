@@ -95,8 +95,8 @@
                 <span style="height:auto"><b>{{ponto.simForumCultural}}</b></span>
             </div>
             <div class="colunm-full">
-                <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Participa de instância de representação junto ao Ministério da Cultura? </span>
-                <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Participa de instância de representação junto ao Ministério da Cultura?* </span>
+                <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Participa de instância de representação junto ao Ministério da Cidadania? </span>
+                <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Participa de instância de representação junto ao Ministério da Cidadania?* </span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.instancia_representacao_minc"><b>{{termo}}</b></span>
                 <span ng-if="!ponto.terms.instancia_representacao_minc.length"><b>Não informado</b></span>
             </div>
