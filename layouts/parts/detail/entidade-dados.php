@@ -1,8 +1,8 @@
-<div  >
+<div>
     <div class="form">
-        <div class="row">
-            <span><b> * Campos Obrigatórios </b></span>
-        </div>
+<!--        <div class="row">-->
+<!--            <span><b> * Campos Obrigatórios </b></span>-->
+<!--        </div>-->
         <!-- <h4>Informações Obrigatórias</h4> -->
         <div class="row">
             <label class="colunm1">
@@ -176,5 +176,55 @@
             </label>
         </div>
         <div class="clear"></div>
+
+        <div class="row">
+            <label class="colunm1">
+                <span class="destaque redessociais">Perfil nas redes sociais: <i class='hltip' title='Queremos saber Perfil nas redes sociais para podermos conectá-l@ com nossas atualizações e novidades.'>?</i></span>
+            </label>
+            <label class="colunm2"></label>
+            <label class="colunm-redes facebook">
+                <span><i class="icon icon-facebook-squared"></i> Perfil no Facebook</span>
+                <span><b>{{entidade.facebook}}</b></span>
+                <span ng-if="!entidade.facebook"><b>Não informado</b></span>
+            </label>
+
+            <label class="colunm-redes twitter">
+                <span><i class="icon icon-twitter"></i> Perfil no Twitter</span>
+                <span><b>{{entidade.twitter}}</b></span>
+                <span ng-if="!entidade.twitter"><b>Não informado</b></span>
+            </label>
+
+            <label class="colunm-redes googleplus">
+                <span><i class="icon icon-gplus"></i> Perfil no Google+</span>
+                <span><b>{{entidade.googleplus}}</b></span>
+                <span ng-if="!entidade.googleplus"><b>Não informado</b></span>
+            </label>
+            <label class="colunm-redes telegram">
+                <span><i class="icon icon-telegram"></i> Usuário no Telegram</span>
+                <span><b>{{entidade.telegram}}</b></span>
+                <span ng-if="!entidade.telegram"><b>Não informado</b></span>
+            </label>
+            <label class="colunm-redes whatsapp">
+                <span><i class="icon icon-whatsapp"></i> Número do WhatsApp</span>
+                <span><b>{{entidade.whatsapp}}</b></span>
+                <span ng-if="!entidade.whatsapp"><b>Não informado</b></span>
+            </label>
+            <label class="colunm-redes culturadigital">
+                <span><i class="icon icon-culturadigital"></i> Perfil no CulturaDigital.br</span>
+                <span><b>{{entidade.culturadigital}}</b></span>
+                <span ng-if="!entidade.culturadigital"><b>Não informado</b></span>
+            </label>
+            <label class="colunm-redes diaspora">
+                <span><i class="icon icon-diaspora"></i> Perfil no Diasporabr.com.br</span>
+                <span><b>{{entidade.diaspora}}</b></span>
+                <span ng-if="!entidade.diaspora"><b>Não informado</b></span>
+            </label>
+            <label class="colunm-redes instagram">
+                <span><i class="icon icon-instagram"></i> Perfil no Instagram.com</span>
+                <span><b>{{entidade.instagram}}</b></span>
+                <span ng-if="!entidade.instagram"><b>Não informado</b></span>
+            </label>
+        </div>
+
     </div>
 </div>

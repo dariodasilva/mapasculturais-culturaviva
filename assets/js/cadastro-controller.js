@@ -1468,7 +1468,7 @@
                     'id': rcv.agenteIndividual,
                     '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
                         'emailPrivado,telefone1,telefone2,nomeCompleto,' +
-                        'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,mesmoEndereco,shortDescription',
+                        'En_Municipio,mesmoEndereco,shortDescription',
                     '@permissions': 'view'
                 };
                 var entidade = {
@@ -1483,7 +1483,7 @@
                         'edital_proponente,edital_projeto_resumo,edital_prestacaoContas_envio,' +
                         'edital_prestacaoContas_status,edital_projeto_vigencia_inicio,' +
                         'edital_projeto_vigencia_fim,outrosFinanciamentos,outrosFinanciamentos_descricao,' +
-                        'rcv_Ds_Edital',
+                        'rcv_Ds_Edital,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram',
                     '@permissions': 'view'
                 };
                 var ponto = {

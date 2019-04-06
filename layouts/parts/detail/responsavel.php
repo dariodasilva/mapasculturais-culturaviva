@@ -60,19 +60,18 @@
                 <span><b>{{responsavel.relacaoPonto}}</b></span>
                 <span ng-if="!responsavel.relacaoPonto"><b>Não informado</b></span>
             </label>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="form">
-        <!-- <h4>Informações Opcionais</h4> -->
-        <div class="row">
             <label class="colunm1">
-                <span class="destaque">Qual nome você gostaria de ser chamado <i class='hltip' title='Utilize este espaço para nos informar se você possui um nome social, nome artístico ou nome pelo qual é conhecido em sua comunidade'>?</i></span>
+                <span class="destaque">Qual nome você gostaria de ser chamado?<i class='hltip' title='Utilize este espaço para nos informar se você possui um nome social, nome artístico ou nome pelo qual é conhecido em sua comunidade'>?</i></span>
                 <span><b>{{responsavel.name}}</b></span>
                 <span ng-if="!responsavel.name"><b>Não informado</b></span>
             </label>
         </div>
-        <div class="row">
+    </div>
+    <?php /*
+    <div class="form">
+        <!-- <h4>Informações Opcionais</h4> -->
+
+         <div class="row">
             <label class="colunm1">
                 <span class="destaque">Onde você mora?</span>
             </label>
@@ -92,54 +91,6 @@
                 <span ng-if="!responsavel.En_Municipio"><b>Não informado</b></span>
             </label>
         </div>
-        <div class="clear"></div>
-        <div class="row">
-            <label class="colunm1">
-                <span class="destaque redessociais">Perfil nas redes sociais: <i class='hltip' title='Queremos saber Perfil nas redes sociais para podermos conectá-l@ com nossas atualizações e novidades.'>?</i></span>
-            </label>
-            <label class="colunm2"></label>
-            <label class="colunm-redes facebook">
-                <span><i class="icon icon-facebook-squared"></i> Perfil no Facebook</span>
-                <span><b>{{responsavel.facebook}}</b></span>
-                <span ng-if="!responsavel.facebook"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes twitter">
-                <span><i class="icon icon-twitter"></i> Perfil no Twitter</span>
-                <span><b>{{responsavel.twitter}}</b></span>
-                <span ng-if="!responsavel.twitter"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes googleplus">
-                <span><i class="icon icon-gplus"></i> Perfil no Google+</span>
-                <span><b>{{responsavel.googleplus}}</b></span>
-                <span ng-if="!responsavel.googleplus"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes telegram">
-                <span><i class="icon icon-telegram"></i> Usuário no Telegram</span>
-                <span><b>{{responsavel.telegram}}</b></span>
-                <span ng-if="!responsavel.telegram"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes whatsapp">
-                <span><i class="icon icon-whatsapp"></i> Número do WhatsApp</span>
-                <span><b>{{responsavel.whatsapp}}</b></span>
-                <span ng-if="!responsavel.whatsapp"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes culturadigital">
-                <span><i class="icon icon-culturadigital"></i> Perfil no CulturaDigital.br</span>
-                <span><b>{{responsavel.culturadigital}}</b></span>
-                <span ng-if="!responsavel.culturadigital"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes diaspora">
-                <span><i class="icon icon-diaspora"></i> Perfil no Diasporabr.com.br</span>
-                <span><b>{{responsavel.diaspora}}</b></span>
-                <span ng-if="!responsavel.diaspora"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes instagram">
-                <span><i class="icon icon-instagram"></i> Perfil no Instagram.com</span>
-                <span><b>{{responsavel.instagram}}</b></span>
-                <span ng-if="!responsavel.instagram"><b>Não informado</b></span>
-            </label>
-        </div>
     </div>
+  */ ?>
 </div>
