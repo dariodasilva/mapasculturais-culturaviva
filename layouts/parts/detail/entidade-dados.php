@@ -81,23 +81,22 @@
                 <span><b>{{entidade.responsavel_nome}}</b></span>
                 <span ng-if="!entidade.responsavel_nome"><b>Não informado</b></span>
             </label>
-
-            <label class="colunm2">
-                <span>Cargo do Responsável*</span>
-                <span><b>{{entidade.responsavel_cargo}}</b></span>
-                <span ng-if="!entidade.responsavel_cargo"><b>Não informado</b></span>
+            <label class="colunm1">
+                <span class="destaque">CPF do Responsável*</span>
+                <span><b>{{entidade.responsavel_cpf}}</b></span>
+                <span ng-if="!entidade.responsavel_nome"><b>Não informado</b></span>
             </label>
         </div>
         <div class="clear"></div>
         <div class="row">
             <label class="colunm1">
-                <span>Email do Responsável*</span>
+                <span class="destaque">Email do Responsável*</span>
                 <span><b>{{entidade.responsavel_email}}</b></span>
                 <span ng-if="!entidade.responsavel_email"><b>Não informado</b></span>
             </label>
 
             <label class="colunm2">
-                <span>Telefone do Responsável*</span>
+                <span class="destaque">Telefone do Responsável*</span>
                 <span><b>{{entidade.responsavel_telefone}}</b></span>
                 <span ng-if="!entidade.responsavel_telefone"><b>Não informado</b></span>
             </label>
@@ -105,29 +104,17 @@
         <div class="clear"></div>
 
         <div class="row">
-            <label class="colunm-full">
+            <label class="colunm1">
                 <span class="destaque">Email institucional da Entidade/Coletivo*</span>
                 <span><b>{{entidade.emailPrivado}}</b></span>
                 <span ng-if="!entidade.emailPrivado"><b>Não informado</b></span>
             </label>
-        </div>
-        <div class="clear"></div>
-        <div class="row">
-            <label class="colunm05">
-                <span>Telefone institucional da Entidade/Coletivo*</span>
+            <label class="colunm1">
+                <span class="destaque">Telefone institucional da Entidade/Coletivo*</span>
                 <span><b>{{entidade.telefone1}}</b></span>
                 <span ng-if="!entidade.telefone1"><b>Não informado</b></span>
             </label>
         </div>
-        <div class="clear"></div>
-        <div class="row">
-            <label class="colunm05">
-                <span>Outro Telefone</span>
-                <span><b>{{entidade.telefone2}}</b></span>
-                <span ng-if="!entidade.telefone2"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="clear"></div>
 
         <div class="row">
             <label class="colunm1">
@@ -178,53 +165,59 @@
         <div class="clear"></div>
 
         <div class="row">
-            <label class="colunm1">
-                <span class="destaque redessociais">Perfil nas redes sociais: <i class='hltip' title='Queremos saber Perfil nas redes sociais para podermos conectá-l@ com nossas atualizações e novidades.'>?</i></span>
-            </label>
-            <label class="colunm2"></label>
-            <label class="colunm-redes facebook">
-                <span><i class="icon icon-facebook-squared"></i> Perfil no Facebook</span>
-                <span><b>{{entidade.facebook}}</b></span>
-                <span ng-if="!entidade.facebook"><b>Não informado</b></span>
-            </label>
+            <div class="row">
+                <label class="colunm-full">
+                    <span class="destaque redessociais">Perfil nas redes sociais:</span>
+                </label>
+                <label class="colunm-redes facebook">
+                    <span><i class="icon icon-facebook-squared"></i> Perfil no Facebook</span>
+                    <span><b>{{entidade.facebook}}</b></span>
+                    <span ng-if="!entidade.facebook"><b>Não informado</b></span>
+                </label>
 
-            <label class="colunm-redes twitter">
-                <span><i class="icon icon-twitter"></i> Perfil no Twitter</span>
-                <span><b>{{entidade.twitter}}</b></span>
-                <span ng-if="!entidade.twitter"><b>Não informado</b></span>
-            </label>
+                <label class="colunm-redes twitter">
+                    <span><i class="icon icon-twitter"></i> Perfil no Twitter</span>
+                    <span><b>{{entidade.twitter}}</b></span>
+                    <span ng-if="!entidade.twitter"><b>Não informado</b></span>
+                </label>
 
-            <label class="colunm-redes googleplus">
-                <span><i class="icon icon-gplus"></i> Perfil no Google+</span>
-                <span><b>{{entidade.googleplus}}</b></span>
-                <span ng-if="!entidade.googleplus"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes telegram">
-                <span><i class="icon icon-telegram"></i> Usuário no Telegram</span>
-                <span><b>{{entidade.telegram}}</b></span>
-                <span ng-if="!entidade.telegram"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes whatsapp">
-                <span><i class="icon icon-whatsapp"></i> Número do WhatsApp</span>
-                <span><b>{{entidade.whatsapp}}</b></span>
-                <span ng-if="!entidade.whatsapp"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes culturadigital">
-                <span><i class="icon icon-culturadigital"></i> Perfil no CulturaDigital.br</span>
-                <span><b>{{entidade.culturadigital}}</b></span>
-                <span ng-if="!entidade.culturadigital"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes diaspora">
-                <span><i class="icon icon-diaspora"></i> Perfil no Diasporabr.com.br</span>
-                <span><b>{{entidade.diaspora}}</b></span>
-                <span ng-if="!entidade.diaspora"><b>Não informado</b></span>
-            </label>
-            <label class="colunm-redes instagram">
-                <span><i class="icon icon-instagram"></i> Perfil no Instagram.com</span>
-                <span><b>{{entidade.instagram}}</b></span>
-                <span ng-if="!entidade.instagram"><b>Não informado</b></span>
-            </label>
+                <label class="colunm-redes googleplus">
+                    <span><i class="icon icon-gplus"></i> Perfil no Google+</span>
+                    <span><b>{{entidade.googleplus}}</b></span>
+                    <span ng-if="!entidade.googleplus"><b>Não informado</b></span>
+                </label>
+            </div>
+
+            <div class="row">
+                <label class="colunm-redes telegram">
+                    <span><i class="icon icon-telegram"></i> Usuário no Telegram</span>
+                    <span><b>{{entidade.telegram}}</b></span>
+                    <span ng-if="!entidade.telegram"><b>Não informado</b></span>
+                </label>
+                <label class="colunm-redes whatsapp">
+                    <span><i class="icon icon-whatsapp"></i> Número do WhatsApp</span>
+                    <span><b>{{entidade.whatsapp}}</b></span>
+                    <span ng-if="!entidade.whatsapp"><b>Não informado</b></span>
+                </label>
+                <label class="colunm-redes culturadigital">
+                    <span><i class="icon icon-culturadigital"></i> Perfil no CulturaDigital.br</span>
+                    <span><b>{{entidade.culturadigital}}</b></span>
+                    <span ng-if="!entidade.culturadigital"><b>Não informado</b></span>
+                </label>
+            </div>
+
+            <div class="row">
+                <label class="colunm-redes diaspora">
+                    <span><i class="icon icon-diaspora"></i> Perfil no Diasporabr.com.br</span>
+                    <span><b>{{entidade.diaspora}}</b></span>
+                    <span ng-if="!entidade.diaspora"><b>Não informado</b></span>
+                </label>
+                <label class="colunm-redes instagram">
+                    <span><i class="icon icon-instagram"></i> Perfil no Instagram.com</span>
+                    <span><b>{{entidade.instagram}}</b></span>
+                    <span ng-if="!entidade.instagram"><b>Não informado</b></span>
+                </label>
+            </div>
         </div>
-
     </div>
 </div>

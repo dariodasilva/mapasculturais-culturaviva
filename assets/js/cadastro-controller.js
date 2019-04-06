@@ -1476,7 +1476,7 @@
                     '@select': 'id,rcv_tipo,files,name,nomeCompleto,cnpj,representanteLegal,' +
                         'tipoPontoCulturaDesejado,tipoOrganizacao,' +
                         'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
-                        'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,' +
+                        'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_cpf,' +
                         'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
                         'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
                         'edital_ano,edital_projeto_nome,edital_localRealizacao,edital_projeto_etapa,' +
