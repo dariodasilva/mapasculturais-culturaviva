@@ -344,6 +344,11 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   </div>
   <script type="text/ng-template" id="modal1">
       <p><center>Dados enviados com sucesso!</center></p>
+      <b> Existe alguma observação que você gostaria de fazer?</b>
+      <p class="msg-obs-container">
+          <textarea cols="65" ng-model="agent.obs"></textarea>
+          <button ng-click="saveObs()" type="submit"> Enviar </button>
+      </p>
   </script>
   <script type="text/ng-template" id="modal2">
     <p>Dados atualizados com sucesso!</p>

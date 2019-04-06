@@ -39,56 +39,6 @@
         <div class="clear"></div>
     </div>
     <div class="form form-opcional">
-        <!-- <h4>Informações Opcionais</h4> -->
-        <div class="row">
-            <span class="destaque destaque-conecte">Redes sociais:</span>
-        </div>
-        <div class="row">
-            <label class="colunm-redes site-oficial">
-                <span><i class="icon icon-location"></i> Site oficial</span>
-                <span><b>{{ponto.site}}</b></span>
-                <span ng-if="!ponto.site"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="row">
-            <label class="colunm-redes facebook">
-                <span><i class="icon icon-facebook-squared"></i> Página Facebook</span>
-                <span><b>{{ponto.facebook}}</b></span>
-                <span ng-if="!ponto.facebook"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes twitter">
-                <span><i class="icon icon-twitter"></i> Perfil no Twitter</span>
-                <span><b>{{ponto.twitter}}</b></span>
-                <span ng-if="!ponto.twitter"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes googleplus">
-                <span><i class="icon icon-gplus"></i> Perfil no Google+</span>
-                <span><b>{{ponto.googleplus}}</b></span>
-                <span ng-if="!ponto.googleplus"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="row">
-            <label class="colunm-redes flick">
-                <span><img src="<?php $this->asset('img/icon_flicker.png') ?>"> Página no Flickr</span>
-                <span><b>{{ponto.flickr}}</b></span>
-                <span ng-if="!ponto.flickr"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes diaspora">
-                <span><img src="<?php $this->asset('img/icon_diaspora.png') ?>"> Perfil na Diáspora:</span>
-                <span><b>{{ponto.diaspora}}</b></span>
-                <span ng-if="!ponto.diaspora"><b>Não informado</b></span>
-            </label>
-
-            <label class="colunm-redes youtube">
-                <span><img src="<?php $this->asset('img/icon_youtube.png') ?>"> Perfil no Youtube:</span>
-                <span><b>{{ponto.youtube}}</b></span>
-                <span ng-if="!ponto.youtube"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="clear"></div>
         <div class="row">
             <span class="destaque">Conte um pouco sobre a história do ponto de Cultura (800 caracteres) <i class='hltip' title='Nos diga um pouco mais sobre o ponto de cultura, como por exemplo como ele começou e como surgiu a idéia'>?</i>  </span>
             <label class="colunm1">
