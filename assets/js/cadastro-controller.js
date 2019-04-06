@@ -789,14 +789,13 @@
             var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
             var params = {
                 'id': agent_id,
-
                 '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
-                    'tipoPontoCulturaDesejado,tipoOrganizacao,emailPrivado,telefone1,telefone2,' +
-                    'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
+                    'tipoPontoCulturaDesejado,emailPrivado,telefone1,' +
+                    'responsavel_nome,responsavel_email,responsavel_telefone,responsavel_cpf,' +
                     'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
+                    'facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,flickr,youtube,' +
                     'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
                     'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf, tipoPonto',
-
                 '@permissions': 'view'
             };
 
