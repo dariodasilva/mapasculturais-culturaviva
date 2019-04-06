@@ -6,17 +6,62 @@
         <!-- <h4>Informações Obrigatórias</h4> -->
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Tipo de organização*</span>
-                <span><b>{{entidade.tipoOrganizacao}}</b></span>
-                <span ng-if="!entidade.tipoOrganizacao"><b>Não informado</b></span>
+                <span class="destaque">Deseja ser*</span>
+                <span><b>{{entidade.tipoPonto}}</b></span>
+                <span ng-if="!entidade.tipoPonto"><b>Não informado</b></span>
             </label>
-            <label class="colunm-50" ng-show="entidade.tipoOrganizacao">
-                <span class="destaque">Quero ser*</span>
+            <label class="colunm1" ng-show="entidade.tipoPonto">
+                <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
                 <span><b>{{entidade.tipoPontoCulturaDesejado}}</b></span>
                 <span ng-if="!entidade.tipoPontoCulturaDesejado"><b>Não informado</b></span>
             </label>
         </div>
         <div class="clear"></div>
+
+        <div class="row">
+            <label class="colunm-full">
+                <span class="destaque">Endereço da Entidade/Coletivo*</span>
+            </label>
+
+            <label class="colunm05">
+                <span>País*</span>
+                <span><b>{{entidade.pais}}</b></span>
+                <span ng-if="!entidade.pais"><b>Não informado</b></span>
+            </label>
+            <label class="colunm05" ng-show="entidade.pais==='Brasil'">
+                <span>Estado</span>
+                <span><b>{{entidade.En_Estado}}</b></span>
+                <span ng-if="!entidade.En_Estado"><b>Não informado</b></span>
+            </label>
+            <label class="colunm2">
+                <span>Cidade</span>
+                <span><b>{{entidade.En_Municipio}}</b></span>
+                <span ng-if="!entidade.En_Municipio"><b>Não informado</b></span>
+            </label>
+            <label class="colunm3">
+                <span>Bairro</span>
+                <span><b>{{entidade.En_Bairro}}</b></span>
+                <span ng-if="!entidade.En_Bairro"><b>Não informado</b></span>
+            </label>
+
+            <div class="row">
+                <label class="colunm05">
+                    <span>Rua</span>
+                    <span><b>{{entidade.En_Nome_Logradouro}}</b></span>
+                    <span ng-if="!entidade.En_Nome_Logradouro"><b>Não informado</b></span>
+                </label>
+                <label class="colunm2">
+                    <span>Número</span>
+                    <span><b>{{entidade.En_Num}}</b></span>
+                    <span ng-if="!entidade.En_Num"><b>Não informado</b></span>
+                </label>
+                <label class="colunm3">
+                    <span>Complemento</span>
+                    <span><b>{{entidade.En_Complemento}}</b></span>
+                    <span ng-if="!entidade.En_Complemento"><b>Não informado</b></span>
+                </label>
+            </div>
+        </div>
 
         <div ng-show="entidade.tipoOrganizacao==='coletivo'">
             <div class="row">
@@ -116,52 +161,6 @@
             </label>
         </div>
 
-        <div class="row">
-            <label class="colunm1">
-                <span class="destaque">Endereço da Entidade/Coletivo*</span>
-            </label>
-        </div>
-        <div class="clear"></div>
-        <div class="row">
-          <label class="colunm05">
-            <span>País*</span>
-            <span><b>{{entidade.pais}}</b></span>
-            <span ng-if="!entidade.pais"><b>Não informado</b></span>
-          </label>
-            <label class="colunm05" ng-show="entidade.pais==='Brasil'">
-                <span>Estado</span>
-                <span><b>{{entidade.En_Estado}}</b></span>
-                <span ng-if="!entidade.En_Estado"><b>Não informado</b></span>
-            </label>
-            <label class="colunm2">
-                <span>Cidade</span>
-                <span><b>{{entidade.En_Municipio}}</b></span>
-                <span ng-if="!entidade.En_Municipio"><b>Não informado</b></span>
-            </label>
-            <label class="colunm3">
-                <span>Bairro</span>
-                <span><b>{{entidade.En_Bairro}}</b></span>
-                <span ng-if="!entidade.En_Bairro"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="clear"></div>
-        <div class="row">
-          <label class="colunm05">
-              <span>Rua</span>
-              <span><b>{{entidade.En_Nome_Logradouro}}</b></span>
-              <span ng-if="!entidade.En_Nome_Logradouro"><b>Não informado</b></span>
-          </label>
-            <label class="colunm2">
-                <span>Número</span>
-                <span><b>{{entidade.En_Num}}</b></span>
-                <span ng-if="!entidade.En_Num"><b>Não informado</b></span>
-            </label>
-            <label class="colunm3">
-                <span>Complemento</span>
-                <span><b>{{entidade.En_Complemento}}</b></span>
-                <span ng-if="!entidade.En_Complemento"><b>Não informado</b></span>
-            </label>
-        </div>
         <div class="clear"></div>
 
         <div class="row">

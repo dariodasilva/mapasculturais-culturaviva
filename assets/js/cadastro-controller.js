@@ -1474,7 +1474,7 @@
                 var entidade = {
                     'id': rcv.agenteEntidade,
                     '@select': 'id,rcv_tipo,files,name,nomeCompleto,cnpj,representanteLegal,' +
-                        'tipoPontoCulturaDesejado,tipoOrganizacao,' +
+                        'tipoPontoCulturaDesejado,tipoPonto,' +
                         'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
                         'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_cpf,' +
                         'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
