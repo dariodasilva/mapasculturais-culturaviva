@@ -25,13 +25,16 @@
                     <label class="colunm1">
                                 <span class="destaque">
                                           Portfólio Online
-                        <i class='hltip' title="Caso possua um portfólio online, coloque o link aqui.">?</i></span>
+                        <i class='hltip' title="Caso possua um portfolio online, coloque o link aqui.">?</i></span>
                         <input type="text" name="atividadesEmRealizacaoLink" placeholder="http://" ng-blur="save_field('atividadesEmRealizacaoLink')" ng-model="agent.atividadesEmRealizacaoLink" />
                     </label>
                 </div>
-                <p>Outra possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura. Publique-o no Youtube e compartilhe o link aqui.</p>
-                <p>Caso não possua portfólio online você pode anexar arquivos no formato PDF de até 20MB. <strong>Você deve adicionar somente um, ou portifólio online ou arquivo PDF.</strong></p>
+                <p>Caso ainda não possua um portfolio online, uma possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura.
+                    Publique-o no Youtube e compartilhe o link aqui.</p>
+                <p>Se preferir, envie no campo abaixo arquivos no formato PDF de até 20MB. </p>
             </label>
+
+            <p><strong>Você deve adicionar somente um: ou portifólio online ou arquivo PDF.</strong></p>
 
             <!-- Portifolio -->
             <div class="colunm-20">
