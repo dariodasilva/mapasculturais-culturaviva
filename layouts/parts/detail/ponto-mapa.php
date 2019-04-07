@@ -4,13 +4,6 @@
             <span><b> * Campos Obrigatórios </b></span>
         </div>
         <!-- <h4>Informações Obrigatórias</h4> -->
-        <div class="row">
-            <label class="colunm-full">
-                <span class="destaque">Nome do Ponto/Pontão de Cultura*</span>
-                <span><b>{{entidade.nomePonto}}</b></span>
-                <span ng-if="!entidade.nomePonto"><b>Não informado</b></span>
-            </label>
-        </div>
 
         <div class="clear"></div>
 
@@ -48,6 +41,7 @@
             */ ?>
         </div>
 
+        <?php /*
         <div class="clear"></div>
 
         <div class="row">
@@ -105,5 +99,7 @@
                 <span ng-if="!ponto.En_Complemento"><b>Não informado</b></span>
             </label>
         </div>
+        */ ?>
+
     </div>
 </div>

@@ -16,6 +16,33 @@
                 <span ng-if="!entidade.tipoPontoCulturaDesejado"><b>Não informado</b></span>
             </label>
         </div>
+
+        <div class="row">
+            <label class="colunm1">
+                <span class="destaque">Nome do Ponto/Pontão de Cultura*</span>
+                <span><b>{{entidade.nomePonto}}</b></span>
+                <span ng-if="!entidade.nomePonto"><b>Não informado</b></span>
+            </label>
+            <label class="colunm1">
+                <span class="destaque">Nome do Coletivo Cultural</span>
+                <span><b>{{entidade.name}}</b></span>
+                <span ng-if="!entidade.name"><b>Não informado</b></span>
+            </label>
+        </div>
+
+        <div class="row">
+            <label class="colunm1">
+                <span class="destaque">E-mail institucional da Entidade/Coletivo*</span>
+                <span><b>{{entidade.emailPrivado}}</b></span>
+                <span ng-if="!entidade.emailPrivado"><b>Não informado</b></span>
+            </label>
+            <label class="colunm1">
+                <span class="destaque">Telefone institucional da Entidade/Coletivo*</span>
+                <span><b>{{entidade.telefone1}}</b></span>
+                <span ng-if="!entidade.telefone1"><b>Não informado</b></span>
+            </label>
+        </div>
+
         <div class="clear"></div>
 
         <div class="row">
@@ -120,6 +147,8 @@
             </div>
         </div>
 
+        <hr>
+
         <div class="row">
             <label class="colunm1">
                 <span class="destaque">Nome do Responsável pela Entidade/Coletivo*</span>
@@ -135,7 +164,7 @@
         <div class="clear"></div>
         <div class="row">
             <label class="colunm1">
-                <span class="destaque">Email do Responsável*</span>
+                <span class="destaque">E-mail do Responsável*</span>
                 <span><b>{{entidade.responsavel_email}}</b></span>
                 <span ng-if="!entidade.responsavel_email"><b>Não informado</b></span>
             </label>
@@ -144,20 +173,6 @@
                 <span class="destaque">Telefone do Responsável*</span>
                 <span><b>{{entidade.responsavel_telefone}}</b></span>
                 <span ng-if="!entidade.responsavel_telefone"><b>Não informado</b></span>
-            </label>
-        </div>
-        <div class="clear"></div>
-
-        <div class="row">
-            <label class="colunm1">
-                <span class="destaque">Email institucional da Entidade/Coletivo*</span>
-                <span><b>{{entidade.emailPrivado}}</b></span>
-                <span ng-if="!entidade.emailPrivado"><b>Não informado</b></span>
-            </label>
-            <label class="colunm1">
-                <span class="destaque">Telefone institucional da Entidade/Coletivo*</span>
-                <span><b>{{entidade.telefone1}}</b></span>
-                <span ng-if="!entidade.telefone1"><b>Não informado</b></span>
             </label>
         </div>
 

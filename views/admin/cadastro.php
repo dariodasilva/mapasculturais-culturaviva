@@ -43,9 +43,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   </div>
 
   <div class="page-ponto-mapa page-base-form">
-      <header>
-          <h3> <div class="icon icon-location"></div> 3. Seu Ponto no Mapa</h3>
-      </header>
       <?php echo $this->part('detail/ponto-mapa'); ?>
   </div>
 
