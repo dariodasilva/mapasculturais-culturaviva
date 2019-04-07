@@ -11,9 +11,7 @@
         "tipoOrganizacao",
         "emailPrivado",
         "telefone1",
-        "telefone1_operadora",
         "telefone2",
-        "telefone2_operadora",
         "responsavel_nome",
         "responsavel_email",
         "responsavel_cargo",
@@ -453,7 +451,7 @@
             var params = {
                 'id': agent_id,
                 '@select': 'id,singleUrl,name,rg,rg_orgao,relacaoPonto,cpf,En_Estado,terms,' +
-                    'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,' +
+                    'emailPrivado,telefone1,nomeCompleto,' +
                     'En_Municipio,facebook,twitter,googleplus,mesmoEndereco,shortDescription,' +
                     'termos_de_uso,info_verdadeira,obs',
                 '@permissions': 'view'
@@ -1168,7 +1166,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,formador1_nome,formador1_email,formador1_telefone,formador1_operadora,formador1_areaAtuacao,' +
+                '@select': 'id,rcv_tipo,terms,formador1_nome,formador1_email,formador1_telefone,formador1_areaAtuacao,' +
                     'formador1_bio,formador1_facebook,formador1_twitter,formador1_google,espacoAprendizagem1_atuacao,espacoAprendizagem1_tipo,' +
                     'espacoAprendizagem1_desc,metodologia1_nome,metodologia1_desc,metodologia1_necessidades,metodologia1_capacidade,' +
                     'metodologia1_cargaHoraria,metodologia1_certificacao,',
@@ -1475,7 +1473,7 @@
                     'id': rcv.agenteEntidade,
                     '@select': 'id,rcv_tipo,files,name,nomeCompleto,cnpj,representanteLegal,' +
                         'tipoPontoCulturaDesejado,tipoPonto,' +
-                        'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
+                        'emailPrivado,telefone1,telefone2,' +
                         'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_cpf,' +
                         'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
                         'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
@@ -1499,7 +1497,7 @@
                         'pontoEconomiaCultura,pontoEconomiaCulturaDescricao,pontoMoedaSocial,pontoMoedaSocialDescricao,' +
                         'pontoTrocasServicos,pontoTrocasServicosOutros,pontoContrataServicos,pontoContrataServicosOutros,' +
                         'pontoInvestimentosColetivos,pontoInvestColetivosOutros,pontoCustoAnual,' +
-                        'formador1_nome,formador1_email,formador1_telefone,formador1_operadora,formador1_areaAtuacao,' +
+                        'formador1_nome,formador1_email,formador1_telefone,formador1_areaAtuacao,' +
                         'formador1_bio,formador1_facebook,formador1_twitter,formador1_google,espacoAprendizagem1_atuacao,espacoAprendizagem1_tipo,' +
                         'espacoAprendizagem1_desc,metodologia1_nome,metodologia1_desc,metodologia1_necessidades,metodologia1_capacidade,' +
                         'metodologia1_cargaHoraria,metodologia1_certificacao,homologado_rcv',
