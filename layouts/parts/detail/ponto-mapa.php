@@ -7,8 +7,8 @@
         <div class="row">
             <label class="colunm-full">
                 <span class="destaque">Nome do Ponto/Pontão de Cultura*</span>
-                <span><b>{{ponto.name}}</b></span>
-                <span ng-if="!ponto.name"><b>Não informado</b></span>
+                <span><b>{{entidade.nomePonto}}</b></span>
+                <span ng-if="!entidade.nomePonto"><b>Não informado</b></span>
             </label>
         </div>
 
@@ -29,6 +29,7 @@
                 <span ng-if="!ponto.cep"><b>Não informado</b></span>
             </label>
 
+            <?php /*
             <label class="colunm1">
                 <span class="destaque">O pontão tem sede própria?*</span>
                 <span ng-if="ponto.tem_sede"><b>Sim</b></span>
@@ -43,6 +44,8 @@
                     realiza atividades culturais na sede
                 </label>
             </label>
+
+            */ ?>
         </div>
 
         <div class="clear"></div>

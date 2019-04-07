@@ -55,7 +55,7 @@
                     <span><b>{{entidade.En_Num}}</b></span>
                     <span ng-if="!entidade.En_Num"><b>Não informado</b></span>
                 </label>
-                <label class="colunm3">
+                <label class="colunm1">
                     <span>Complemento</span>
                     <span><b>{{entidade.En_Complemento}}</b></span>
                     <span ng-if="!entidade.En_Complemento"><b>Não informado</b></span>

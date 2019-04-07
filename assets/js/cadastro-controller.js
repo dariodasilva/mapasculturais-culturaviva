@@ -1481,7 +1481,7 @@
                         'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
                         'edital_ano,edital_projeto_nome,edital_localRealizacao,edital_projeto_etapa,' +
                         'edital_proponente,edital_projeto_resumo,edital_prestacaoContas_envio,' +
-                        'edital_prestacaoContas_status,edital_projeto_vigencia_inicio,' +
+                        'edital_prestacaoContas_status,edital_projeto_vigencia_inicio,nomePonto,' +
                         'edital_projeto_vigencia_fim,outrosFinanciamentos,outrosFinanciamentos_descricao,' +
                         'rcv_Ds_Edital,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram',
                     '@permissions': 'view'
