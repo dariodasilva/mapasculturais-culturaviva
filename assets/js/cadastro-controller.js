@@ -748,8 +748,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,site,facebook,twitter,googleplus,telegram,whatsapp,' +
-                    'culturadigital,diaspora,instagram,flickr,youtube,atividadesEmRealizacaoLink',
+                '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,atividadesEmRealizacaoLink,',
                 '@files': '(portifolio,gallery,carta1,carta2,ata):url',
                 '@permissions': 'view'
             };
