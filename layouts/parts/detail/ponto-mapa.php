@@ -7,6 +7,7 @@
 
         <div class="clear"></div>
 
+        <?php /*
         <div class="row">
             <label class="colunm-full">
                 <span class="destaque">Breve descrição (400 caracteres) do ponto de cultura*</span>
@@ -22,7 +23,7 @@
                 <span ng-if="!ponto.cep"><b>Não informado</b></span>
             </label>
 
-            <?php /*
+
             <label class="colunm1">
                 <span class="destaque">O pontão tem sede própria?*</span>
                 <span ng-if="ponto.tem_sede"><b>Sim</b></span>
@@ -37,11 +38,8 @@
                     realiza atividades culturais na sede
                 </label>
             </label>
-
-            */ ?>
         </div>
 
-        <?php /*
         <div class="clear"></div>
 
         <div class="row">

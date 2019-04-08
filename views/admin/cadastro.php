@@ -42,10 +42,6 @@ $this->bodyProperties['ng-app'] = "culturaviva";
       <?php echo $this->part('detail/entidade-dados'); ?>
   </div>
 
-  <div class="page-ponto-mapa page-base-form">
-      <?php echo $this->part('detail/ponto-mapa'); ?>
-  </div>
-
   <div class="page-portfolio page-base-form">
 
       <header>

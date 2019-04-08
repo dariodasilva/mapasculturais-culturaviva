@@ -1465,16 +1465,16 @@
                     'id': rcv.agenteIndividual,
                     '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
                         'emailPrivado,telefone1,telefone2,nomeCompleto,' +
-                        'En_Municipio,mesmoEndereco,shortDescription',
+                        'En_Municipio,shortDescription',
                     '@permissions': 'view'
                 };
                 var entidade = {
                     'id': rcv.agenteEntidade,
                     '@select': 'id,rcv_tipo,files,name,nomeCompleto,cnpj,representanteLegal,' +
-                        'tipoPontoCulturaDesejado,tipoPonto,' +
+                        'tipoPontoCulturaDesejado,tipoPonto,mesmoEndereco,' +
                         'emailPrivado,telefone1,telefone2,' +
                         'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_cpf,' +
-                        'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
+                        'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,cep,' +
                         'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
                         'edital_ano,edital_projeto_nome,edital_localRealizacao,edital_projeto_etapa,' +
                         'edital_proponente,edital_projeto_resumo,edital_prestacaoContas_envio,' +
@@ -1486,7 +1486,7 @@
                 var ponto = {
                     'id': rcv.agentePonto,
                     '@select': 'id,rcv_tipo,files,longDescription,atividadesEmRealizacaoLink,site,facebook,twitter,googleplus,flickr,diaspora,youtube,instagram,culturadigital,atividadesEmRealizacaoLink,' +
-                        'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,En_Estado,En_Municipio,' +
+                        'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,pais,En_Estado,En_Municipio,' +
                         'En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,localRealizacao_estado,localRealizacao_cidade,' +
                         'localRealizacao_cidade,localRealizacao_espaco,location,' +
                         'participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico,' +
