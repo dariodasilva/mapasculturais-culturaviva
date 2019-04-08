@@ -61,19 +61,12 @@ $this->bodyProperties['ng-app'] = "culturaviva";
   <div class="page-economia-viva page-base-form">
 
       <header>
-
-          <div class="icon icon-dollar"></div>
-          <h3>5. Selos Rede Viva</h3>
+          <h3><div class="icon icon-dollar"></div> 5. Selos Rede Viva</h3>
       </header>
       <?php echo $this->part('detail/ponto-economia-viva'); ?>
   </div>
 
   <div class="page-formacao page-base-form">
-
-      <header>
-          <div class="icon icon-book-open"></div>
-          <h3>8. Formação</h3>
-      </header>
       <?php echo $this->part('detail/ponto-formacao'); ?>
       <div class="clear"></div>
   </div>

@@ -1,14 +1,14 @@
-<div  >
+<div>
     <div class="form">
-        <div class="row">
-            <span><b> * Campos Obrigatórios </b></span>
-        </div>
+<!--        <div class="row">-->
+<!--            <span><b> * Campos Obrigatórios </b></span>-->
+<!--        </div>-->
         <!-- <h4>Informações Obrigatórias</h4> -->
         <div class="row">
             <span class="destaque">Portfólio*</span>
                 <div class="colunm1">
                     <a ng-if="ponto['@files:portifolio'].url" href="{{ponto['@files:portifolio'].url}}" target="_blank">Baixar Arquivo</a>
-                    <a ng-if="ponto.atividadesEmRealizacaoLink" href="{{ponto.atividadesEmRealizacaoLink}}" target="_blank">{{ponto.atividadesEmRealizacaoLink}}</a>
+                    <a style="font-size: 12px" ng-if="ponto.atividadesEmRealizacaoLink" href="{{ponto.atividadesEmRealizacaoLink}}" target="_blank">{{ponto.atividadesEmRealizacaoLink}}</a>
                     <span ng-if="!ponto['@files:portifolio'].url && !ponto.atividadesEmRealizacaoLink"><b>Não informado</b></span>
                 </div>
         </div>
@@ -28,11 +28,11 @@
         <div class="row">
             <span class="destaque">Cartas de Reconhecimento*</span>
             <div class="colunm1">
-              <a ng-if="ponto['@files:carta1'].url" href="{{ponto['@files:carta1'].url}}" target="_blank">Baixar primeira carta</a>
+              <a style="font-size: 12px; color: inherit" ng-if="ponto['@files:carta1'].url" href="{{ponto['@files:carta1'].url}}" target="_blank">Baixar primeira carta</a>
               <span ng-if="!ponto['@files:carta1'].url"><b>Não informado</b></span>
             </div>
             <div class="colunm2">
-              <a ng-if="ponto['@files:carta2'].url" href="{{ponto['@files:carta2'].url}}" target="_blank">Baixar segunda carta</a>
+              <a style="font-size: 12px; color: inherit" ng-if="ponto['@files:carta2'].url" href="{{ponto['@files:carta2'].url}}" target="_blank">Baixar segunda carta</a>
               <span ng-if="!ponto['@files:carta2'].url"><b>Não informado</b></span>
             </div>
         </div>

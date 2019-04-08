@@ -1,9 +1,10 @@
-<div  >
+<div>
     <div class="form">
-        <div class="row">
-            <span><b> * Campos Obrigatórios </b></span>
-        </div>
+<!--        <div class="row">-->
+<!--            <span><b> * Campos Obrigatórios </b></span>-->
+<!--        </div>-->
         <!-- <h4>Informações Obrigatórias</h4> -->
+        <?php /*
         <div class="row">
             <div class="colunm-full">
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Em qual edital do Ministério da Cultura a Entidade/Coletivo Cultural já foi contemplado?</span>
@@ -12,8 +13,10 @@
                 <span ng-if="!ponto.terms.contemplado_edital.length"><b>Não informado</b></span>
             </div>
         </div>
+         */ ?>
         <div class="row">
             <div class="colunm-full">
+                <label class="destaque">Quais são as ações estruturantes do Ponto/Pontão de Cultura?</label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Quais são as ações estruturantes do Ponto/Pontão de Cultura?</span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Quais são as ações estruturantes do Ponto/Pontão de Cultura?*</span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.acao_estruturante"><b>{{termo}}</b></span>
@@ -22,6 +25,7 @@
         </div>
         <div class="row">
             <div class="colunm-full">
+                <label class="destaque">Quais são as áreas do Ponto/Pontão de Cultura? </label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Quais são as áreas do Ponto/Pontão de Cultura?</span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Quais são as áreas do Ponto/Pontão de Cultura?*</span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.area"><b>{{termo}}</b></span>
@@ -30,6 +34,7 @@
         </div>
         <div class="row">
             <div class="colunm-full">
+                <label class="destaque">Quais os públicos que participam das ações do Ponto/Pontão de Cultura? </label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Quais os públicos que participam das ações do Ponto/Pontão de Cultura?</span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Quais os públicos que participam das ações do Ponto/Pontão de Cultura?*</span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.publico_participante"><b>{{termo}}</b></span>
@@ -38,6 +43,7 @@
         </div>
         <div class="row">
             <div class="colunm-full">
+                <label class="destaque">Especifique a área de experiência e temas que você pode compartilhar conhecimento </label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Especifique a área de experiência e temas que você pode compartilhar conhecimento:</span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Especifique a área de experiência e temas que você pode compartilhar conhecimento:*</span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.area_atuacao"><b>{{termo}}</b></span>
@@ -47,6 +53,7 @@
         <div class="row">
           <h4> Articulação </h4>
             <div class="colunm-full">
+                <label class="destaque"> Participa de algum movimento cultural? </label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Participa de algum movimento cultural? </span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Participa de algum movimento cultural?* </span>
             </div>
@@ -71,6 +78,7 @@
             </div>
 
             <div class="colunm-full">
+                <label class="destaque"> Participa de algum Fórum e/ou Conselho de Cultura? </label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Participa de algum Fórum e/ou Conselho de Cultura? </span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Participa de algum Fórum e/ou Conselho de Cultura?* </span>
             </div>
@@ -95,6 +103,7 @@
                 <span style="height:auto"><b>{{ponto.simForumCultural}}</b></span>
             </div>
             <div class="colunm-full">
+                <label class="destaque"> Participa de instância de representação junto ao Ministério da Cidadania?</label>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'ponto'" class="destaque">Participa de instância de representação junto ao Ministério da Cidadania? </span>
                 <span ng-if="entidade.tipoPontoCulturaDesejado == 'pontao'" class="destaque">Participa de instância de representação junto ao Ministério da Cidadania?* </span>
                 <span style="height:auto" ng-repeat="termo in ponto.terms.instancia_representacao_minc"><b>{{termo}}</b></span>
