@@ -784,6 +784,15 @@
     app.controller('EntityCtrl', ['$scope', '$timeout',  'geocoder', 'cepcoder', 'cidadecoder', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
         function ($scope, $timeout, geocoder, cepcoder, cidadecoder, Entity, MapasCulturais, $location, $http, ngDialog) {
             var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
+
+            var registrant_id = MapasCulturais.redeCulturaViva.agenteIndividual;
+
+            var registrant_params = {
+                'id': registrant_id,
+                '@select': 'id,singleUrl,relacaoPonto,cpf,emailPrivado,telefone1,nomeCompleto',
+                '@permissions': 'view'
+            };
+
             var params = {
                 'id': agent_id,
                 '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
@@ -796,6 +805,7 @@
                 '@permissions': 'view'
             };
 
+            $scope.registrant = Entity.get(registrant_params);
             $scope.markers = {};
             $scope.agent = Entity.get(params, function (agent) {
                 $scope.markers.main = {
@@ -810,12 +820,11 @@
                     $scope.showInvalid($scope.agent.rcv_tipo, 'form_entity');
                 }
 
-                if(agent.relacaoPonto == 'responsavel')
-                {
-                    agent.responsavel_nome = agent.nomeCompleto;
-                    agent.responsavel_cpf = agent.cpf;
-                    agent.responsavel_email = agent.emailPrivado;
-                    agent.responsavel_telefone = agent.telefone1;
+                if ($scope.registrant.relacaoPonto === 'responsavel') {
+                    agent.responsavel_nome = $scope.registrant.nomeCompleto;
+                    agent.responsavel_cpf = $scope.registrant.cpf;
+                    agent.responsavel_email = $scope.registrant.emailPrivado;
+                    agent.responsavel_telefone = $scope.registrant.telefone1;
                 }
             });
 
