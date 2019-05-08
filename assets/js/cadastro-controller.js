@@ -413,28 +413,35 @@
                     case 'responsavel':
                         var form = $scope[nomeForm];
                         var erros_responsavel = $scope.data.validationErrors.responsavel;
-                        erros_responsavel.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_responsavel) {
+                            erros_responsavel.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
                         break;
                     case 'entidade':
                         var form = $scope[nomeForm];
                         var erros_entidade = $scope.data.validationErrors.entidade;
-                        erros_entidade.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_entidade) {
+                            erros_entidade.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
+                        break;
                     case 'ponto':
                         var form = $scope[nomeForm];
                         var erros_ponto = $scope.data.validationErrors.ponto;
-                        erros_ponto.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_ponto) {
+                            erros_ponto.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
                         break;
                 }
             });

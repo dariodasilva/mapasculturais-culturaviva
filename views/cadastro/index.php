@@ -327,7 +327,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         */ ?>
 
     <div class='alert danger' style="margin:0 10%" ng-show="data.validationErrors">
-                Alguns campos obrigatórios não foram preenchidos
+                Alguns campos obrigatórios não foram preenchidos.
+                Clique no(s) link(s) abaixo para mais informações:
 		    <!-- Dados do responsavel -->
     		<strong ng-show="data.mostrarErroResponsavel == 'responsavel'"><br/>
 			       <a href="/cadastro/responsavel/#?invalid=1">Em "Informações do Responsável" </a>
