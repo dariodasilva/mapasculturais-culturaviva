@@ -507,7 +507,7 @@
                         if (erroResponsavel.length > 0) {
                             $scope.data.mostrarErroResponsavel = "responsavel";
                         }
-                        if (erroPonto.length > 0) {
+                        if (erroPonto && erroPonto.length > 0) {
                             if (erroPonto.indexOf("atividadesEmRealizacaoLink") !== -1) {
                                 $scope.data.mostrarErroPonto = "ponto_portifolio";
                             }
@@ -521,7 +521,7 @@
                                 }
                             }
                         }
-                        if (erroEntidade.length > 0) {
+                        if (erroEntidade && erroEntidade.length > 0) {
                             var i;
                             var j;
                             for (i = 0; i < erroEntidade.length; i++) {
