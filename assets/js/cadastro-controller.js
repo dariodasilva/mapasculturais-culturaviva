@@ -829,9 +829,16 @@
 
                 if ($scope.registrant.relacaoPonto === 'responsavel') {
                     agent.responsavel_nome = $scope.registrant.nomeCompleto;
+                    $scope.save_field('responsavel_nome');
+
                     agent.responsavel_cpf = $scope.registrant.cpf;
+                    $scope.save_field('responsavel_cpf');
+
                     agent.responsavel_email = $scope.registrant.emailPrivado;
+                    $scope.save_field('responsavel_email');
+
                     agent.responsavel_telefone = $scope.registrant.telefone1;
+                    $scope.save_field('responsavel_telefone');
                 }
             });
 
