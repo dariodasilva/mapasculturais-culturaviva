@@ -26,6 +26,13 @@
             </label>
         </div>
 
+        <div class="row" ng-if="ponto.shortDescription">
+            <label class="colunm-full">
+                <span class="destaque">Breve descrição (400 caracteres) do ponto de cultura*</span>
+                <p><b>{{ponto.shortDescription}}</b></p>
+            </label>
+        </div>
+
         <div class="row">
             <label class="colunm1">
                 <span class="destaque">E-mail institucional da Entidade/Coletivo*</span>
