@@ -875,28 +875,48 @@
 
             $scope.cepcoder = {
                 busy: false,
-                code: function (cep) {
-                    $scope.agent.cep = cep;
-                    $scope.save_field('cep');
+                code: function (cep, field) {
+                    if (field === 'cep') {
+                        $scope.agent.cep = cep;
+                        $scope.save_field('cep');
+                    } else if (field === 'pontoPontao') {
+                        $scope.agent.cepPontaPontao = cep;
+                        $scope.save_field('cepPontaPontao');
+                    }
+
                     $scope.cepcoder.busy = true;
                     cepcoder.code(cep).then(function (res) {
                         var addr = res.data;
                         if (addr) {
-                            $scope.agent.En_Estado = addr.estado;
-                            $scope.save_field('En_Estado');
 
-                            $scope.agent.En_Municipio = addr.cidade;
-                            $scope.save_field('En_Municipio');
+                            if (field === 'cep') {
+                                $scope.agent.En_Estado = addr.estado;
+                                $scope.save_field('En_Estado');
 
-                            $scope.agent.En_Bairro = addr.bairro;
-                            $scope.save_field('En_Bairro');
+                                $scope.agent.En_Municipio = addr.cidade;
+                                $scope.save_field('En_Municipio');
 
-                            $scope.agent.En_Nome_Logradouro = addr.logradouro;
-                            $scope.save_field('En_Nome_Logradouro');
+                                $scope.agent.En_Bairro = addr.bairro;
+                                $scope.save_field('En_Bairro');
+
+                                $scope.agent.En_Nome_Logradouro = addr.logradouro;
+                                $scope.save_field('En_Nome_Logradouro');
+                            } else if (field === 'pontoPontao') {
+                                $scope.agent.En_EstadoPontaPontao = addr.estado;
+                                $scope.save_field('En_EstadoPontaPontao');
+
+                                $scope.agent.En_MunicipioPontaPontao = addr.cidade;
+                                $scope.save_field('En_MunicipioPontaPontao');
+
+                                $scope.agent.En_BairroPontaPontao = addr.bairro;
+                                $scope.save_field('En_BairroPontaPontao');
+
+                                $scope.agent.En_Nome_LogradouroPontaPontao = addr.logradouro;
+                                $scope.save_field('En_Nome_LogradouroPontaPontao');
+                            }
 
                             $scope.agent.pais = "Brasil";
                             $scope.save_field('pais');
-
                             var string = (addr.logradouro ? addr.logradouro + ', ' : '') +
                                 (addr.bairro ? addr.bairro + ', ' : '') +
                                 (addr.cidade ? addr.cidade + ', ' : '') +

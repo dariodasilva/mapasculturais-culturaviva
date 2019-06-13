@@ -193,7 +193,7 @@
                     <span class="destaque">{{agent.pais == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
                     <input required type="text"
                            name="cep"
-                           ng-blur="save_field('cep'); cepcoder.code(agent.cep)"
+                           ng-blur="save_field('cep'); cepcoder.code(agent.cep, 'cep')"
                            ng-model="agent.cep"
                            ui-mask="99999-999"
                            ng-if="agent.pais === 'Brasil'">
@@ -286,7 +286,7 @@
                         <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
                         <input required type="text"
                                name="cepPontaPontao"
-                               ng-blur="save_field('cepPontaPontao')"
+                               ng-blur="save_field('cepPontaPontao'); cepcoder.code(agent.cepPontaPontao,'pontoPontao')"
                                ng-model="agent.cepPontaPontao"
                                ui-mask="99999-999"
                                ng-if="agent.paisPontaPontao === 'Brasil'">
