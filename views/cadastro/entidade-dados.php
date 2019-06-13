@@ -244,6 +244,12 @@
         <div ng-if="agent.mesmoEndereco === 'nao'">
             <div>
                 <div class="row">
+                    <label class="colunm1">
+                        <span class="destaque"> Endereço do ponto ou pontão: </span>
+                    </label>
+                    <hr>
+                </div>
+                <div class="row">
                     <label class="colunm2">
                         <span class="destaque">País*</span>
                         <select required name="paisPontaPontao" ng-blur="save_field('paisPontaPontao')" ng-model="agent.paisPontaPontao">
