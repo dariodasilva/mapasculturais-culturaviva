@@ -13,7 +13,15 @@ $link_continuar = $app->createUrl('cadastro', $link );
         <h3> <div class="icon <?php echo $this->cadastroIcon ?>"></div> <?php echo $this->cadastroTitle ?></h3>
     </header>
 
-    <p><?php echo $this->cadastroText ?></p>
+    <p>
+        <?php
+        echo $this->cadastroText;
+
+        if (isset($this->pageSubtitle)) {
+            echo "<span class='page-header-subtitle'> $this->pageSubtitle </span>";
+        }
+        ?>
+    </p>
     <div class="btn_voltar_topo">
        <a href="<?php echo $app->createUrl('cadastro', 'index'); ?>" target="_self">voltar ao início <i class="icon icon-home"></i></a>
     </div>
@@ -30,3 +38,7 @@ $link_continuar = $app->createUrl('cadastro', $link );
 </div>
 
 <?php echo $this->part('footer'); ?>
+
+<style>
+
+</style>

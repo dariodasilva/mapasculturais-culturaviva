@@ -3,13 +3,13 @@
     $this->layout = 'cadastro';
     $this->cadastroTitle = '4. Atuação e Articulação';
     $this->cadastroText = 'Queremos entender melhor quais são as atividades realizadas pelo seu Ponto e quem é o público que as frequenta';
+    $this->pageSubtitle = 'É necessário selecionar ao menos uma opção em cada questão';
     $this->cadastroIcon = 'icon-chat';
     $this->cadastroPageClass = 'ponto-mais page-base-form';
     $this->cadastroLinkContinuar = 'economiaViva';
     $this->cadastroLinkBack = 'portifolio';
 
 ?>
-
 <form name="form_pontoArticulacao" ng-controller="PontoArticulacaoCtrl">
     <?php $this->part('messages'); ?>
     <div class="form">
