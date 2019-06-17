@@ -45,8 +45,8 @@ class Theme extends BaseV1\Theme {
 
     protected static function _getTexts() {
         return array(
-            'site: owner' => 'Ministério da Cultura',
-            'site: by the site owner' => 'pelo Ministério da Cultura',
+            'site: owner' => 'Ministério da Cidadania',
+            'site: by the site owner' => 'pelo Ministério da Cidadania',
             'search: verified results' => 'Pontos Certificados',
             'search: verified' => "Certificados",
         );
@@ -422,17 +422,17 @@ class Theme extends BaseV1\Theme {
                     )
                 ],
                 'foiFomentado' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true
                 ],
                 'tipoFomento' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'convenio' => 'Direto com o MinC',
+                        'convenio' => 'Direto com o Min. Cidadania',
                         'tcc' => 'Estatual',
                         'bolsa' => 'Municipal',
                         'premio' => 'Intermunicipal',
@@ -441,7 +441,7 @@ class Theme extends BaseV1\Theme {
                     )
                 ],
                 'tipoFomentoOutros' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true
                 ],
@@ -451,7 +451,7 @@ class Theme extends BaseV1\Theme {
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'minc' => 'Direto com o MinC',
+                        'minc' => 'Direto com o Min. Cidadania',
                         'estadual' => 'Estatual',
                         'municipal' => 'Municipal',
                         'intermunicpal' => 'Intermunicipal'
@@ -1025,12 +1025,12 @@ class Theme extends BaseV1\Theme {
         $taxonomies = [
             // Atuação e Articulação
 //            'area' => 'São as áreas do Ponto/Pontão de Cultura',
-            'contemplado_edital' => 'Editais do Ministério da Cultura em que foi contemplado',
+            'contemplado_edital' => 'Editais do Ministério da Cidadania em que foi contemplado',
             'acao_estruturante' => 'Ações Estruturantes',
             'publico_participante' => 'Públicos que participam das ações',
             'local_realizacao' => 'Locais onde são realizadas as ações culturais',
             'area_atuacao' => 'Área de experiência e temas',
-            'instancia_representacao_minc' => 'Instância de representação junto ao Ministério da Cultura',
+            'instancia_representacao_minc' => 'Instância de representação junto ao Ministério da Cidadania',
             // Economia Viva
             'ponto_infra_estrutura' => '',
             'ponto_equipamentos' => '',
