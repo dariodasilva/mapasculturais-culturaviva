@@ -15,8 +15,8 @@
         <h4>Informações Opcionais</h4>
         <div class="row">
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Em qual edital do Ministério da Cultura  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado? <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Em qual edital do Ministério da Cultura  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado?* <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
+                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Em qual edital do Ministério da Cidadania  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado? <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
+                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Em qual edital do Ministério da Cidadania  {{data.tipoOrganizacao == 'coletivo' ? 'a Entidade' : 'o Coletivo'}} de Cultura já foi contemplado?* <i class="hltip" title='Caso nunca tenha sido contemplado, selecione "Ainda não fui Contemplado"'>?</i><br>(Pode escolher mais de uma opção) </span>
             </div>
             <taxonomy-checkboxes taxonomy="contemplado_edital" entity="agent" terms="termos.contemplado_edital"></taxonomy-checkboxes>
         </div>
@@ -100,8 +100,8 @@
                 <input name="simForumCultural" class="colunm1"type="text" ng-blur="save_field('simForumCultural')" ng-model="agent.simForumCultural" /></span>
             </div>
             <div class="colunm-full">
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de instância de representação junto ao Ministério da Cultura? </span>
-                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de instância de representação junto ao Ministério da Cultura?* </span>
+                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado != 'pontao'">Participa de instância de representação junto ao Ministério da Cidadania? </span>
+                <span class="destaque" ng-if="agent_entidade.tipoPontoCulturaDesejado == 'pontao'">Participa de instância de representação junto ao Ministério da Cidadania?* </span>
             </div>
             <taxonomy-checkboxes taxonomy="instancia_representacao_minc" entity="agent" terms="termos.instancia_representacao_minc"></taxonomy-checkboxes>
             <div class="colunm-full">
