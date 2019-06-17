@@ -145,7 +145,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         <div class="modal-content">
             <a class="js-close-modal">x</a>
             <h6><span>?</span> Já sou um Ponto ou Pontão de Cultura. Por que isso aconteceu?</h6>
-            <p>Se você colocou o CNPJ da instituição e o mesmo não foi localizado, isso significa que não possuímos as informações de sua entidade em nossa base de dados e necessitamos que você preencha as informações para a complementação do cadastro. Isso acontece porque apesar de a Secretaria da Cidadania e da Diversidade Cultural reconhecer todas as formas de Ponto de Cultura, o banco de dados de Pontos e Pontões conveniados diretamente com o Minc e/ou coneniados com as Redes não está completo. Agora, com a nova Política Nacional de Cultura Viva, todos os Pontos de Cultura serão contemplados no Cadastro.</p>
+            <p>Se você colocou o CNPJ da instituição e o mesmo não foi localizado, isso significa que não possuímos as informações de sua entidade em nossa base de dados e necessitamos que você preencha as informações para a complementação do cadastro. Isso acontece porque apesar de a Secretaria de Diversidade Cultural reconhecer todas as formas de Ponto de Cultura, o banco de dados de Pontos e Pontões conveniados diretamente com o Min. Cidadania e/ou conveniados com as Redes não está completo. Agora, com a nova Política Nacional de Cultura Viva, todos os Pontos de Cultura serão contemplados no Cadastro.</p>
             <p>Se ainda tem dúvidas, entre em contato conosco em <a href="#">email@email.com</a></p>
         </div>
     </section>
