@@ -119,15 +119,20 @@
 
         <div ng-show="entidade.tipoOrganizacao">
             <div ng-show="entidade.tipoOrganizacao==='entidade'">
-                <div class="row">
+                <div>
                     <label class="colunm-50">
                         <span class="destaque"><b>CNPJ da Entidade*</b></span>
                         <span><b>{{entidade.cnpj}}</b></span>
+                    </label>
+
+                    <br>
+
                     <label class="colunm-50">
                         <span class="destaque">Nome da Razão Social da Entidade*</span>
                         <span><b>{{entidade.nomeCompleto}}</b></span>
                         <span ng-if="!entidade.nomeCompleto"><b>Não informado</b></span>
                     </label>
+                    
                 </div>
 
                 <div class="clear"></div>
