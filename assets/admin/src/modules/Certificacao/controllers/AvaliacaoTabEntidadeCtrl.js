@@ -39,7 +39,8 @@ function AvaliacaoTabEntidadeCtrl($scope, Entity, estadosBrasil) {
            'En_Num',
            'En_Nome_Logradouro',
            'cep',
-           'En_Complemento'
+           'En_Complemento',
+           'tipoPonto'
         ].join(','),
         '@permissions': 'view'
     };
