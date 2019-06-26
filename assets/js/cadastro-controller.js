@@ -1372,22 +1372,8 @@
         };
         extendController($scope, $timeout);
         $scope.consultaCNPJ = function () {
-            $scope.data.buscandoCNPJ = true;
-            $scope.messages.show('enviando', "Procurando CNPJ em nossa base");
-            $http.get(MapasCulturais.apiCNPJ + '?action=get_cultura&cnpj=' + $scope.data.cnpj).
-            success(function success(data) {
-                if (data.Id) {
-                    $scope.registrar();
-                    $scope.data.encontrouCNPJ = $scope.data.cnpj;
-                } else {
-                    $scope.data.encontrouCNPJ = false;
-                    ngDialog.open({
-                        template: 'modalErro',
-                        scope: $scope
-                    });
-                    $scope.data.encontrouCNPJ = $scope.data.cnpj;
-                }
-            });
+            $scope.registrar();
+            $scope.data.encontrouCNPJ = $scope.data.cnpj;
         };
 
         $scope.validaCNPJ = function () {
