@@ -59,7 +59,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
               <a href="http://culturaviva.gov.br/saiba-mais/#quais-os-criterios" style="color: red; float: right;" target="_blank">Critérios</a>
             </script>
 
-            <p>Responda e verificaremos se já temos informações sobre seu Ponto ou Pontão de Cultura na base de dados do MinC.</p>
+            <p>Responda e verificaremos se já temos informações sobre seu Ponto ou Pontão de Cultura na base de dados.</p>
             <a href="#" id="btn_nao" class="btn-cnpj js-btn-sem-cnpj btn_active" ng-click="data.comCNPJ = false">Não tenho CNPJ</a>
         </div>
         <div class="row">
