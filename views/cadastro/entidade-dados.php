@@ -21,14 +21,7 @@
             <!--Pertence a alguma rede-->
             <label class="colunm1">
                 <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
-                <select name="tipoPontoCulturaDesejado"
-                        ng-change="save_field('tipoPontoCulturaDesejado')"
-                        ng-model="agent.tipoPontoCulturaDesejado" required>
-                    <option value="estadual">Estadual</option>
-                    <option value="municipal">Municipal</option>
-                    <option value="intermunicipal">Intermunicipal</option>
-                    <option value="nao">Não</option>
-                </select>
+                <taxonomy-checkboxes taxonomy="rede_pertencente" entity="agent" terms="termos.rede_pertencente"></taxonomy-checkboxes>
             </label>
 
             <!--Deseja ser-->

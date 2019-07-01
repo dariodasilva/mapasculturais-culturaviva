@@ -167,6 +167,7 @@ class Cadastro extends \MapasCulturais\Controller{
           'publico_participante',
           'area_atuacao',
           'instancia_representacao_minc',
+          'rede_pertencente'
         ];
       }
 

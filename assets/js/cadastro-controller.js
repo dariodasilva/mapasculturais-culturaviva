@@ -135,6 +135,13 @@
             'Cultura circense'
         ],
 
+        rede_pertencente: [
+            'Estadual',
+            'Municipal',
+            'Intermunicipal',
+            'Não'
+        ],
+
         publico_participante: [
             'Afro-Brasileiros',
             'Ciganos',
@@ -802,7 +809,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
+                '@select': 'terms,redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
                     'tipoPontoCulturaDesejado,emailPrivado,telefone1,' +
                     'responsavel_nome,responsavel_email,responsavel_telefone,responsavel_cpf,' +
                     'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
@@ -814,6 +821,7 @@
 
             $scope.registrant = Entity.get(registrant_params);
             $scope.markers = {};
+            $scope.termos = termos;
             $scope.agent = Entity.get(params, function (agent) {
                 $scope.markers.main = {
                     lat: agent.location.latitude,

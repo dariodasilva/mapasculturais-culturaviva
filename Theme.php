@@ -397,12 +397,14 @@ class Theme extends BaseV1\Theme {
                 ],
                 'redePertencente' => [
                     'label' => 'Pertence ou pertenceu a alguma rede?',
-//                  'required' => true,
+                    'required' => true,
                     'private' => true,
-                    'type' => 'select',
+                    'type' => 'multiselect',
                     'options' => array(
-                        'ponto' => 'Ponto',
-                        'pontao' => 'Pontão'
+                        'estadual' => 'Estadual',
+                        'municipal' => 'Municipal',
+                        'intermunicipal' => 'Intermunicipal',
+                        'nao' => 'Não'
                     )
                 ],
                 'esferaFomento' => [
@@ -1210,7 +1212,8 @@ class Theme extends BaseV1\Theme {
             'ponto_comunicacao' => '',
             'ponto_sustentabilidade' => '',
             // Formação
-            'metodologias_areas' => ''
+            'metodologias_areas' => '',
+            'rede_pertencente' => 'Pertence ou pertenceu a alguma rede?'
         ];
 
         $id = 10;
