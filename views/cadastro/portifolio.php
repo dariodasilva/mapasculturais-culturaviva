@@ -103,6 +103,8 @@
             </div>
         </div>
 
+        <div ng-show="agent_entidade.tipoPonto==='ponto_entidade' || agent_entidade.tipoPonto==='ponto_coletivo'">
+
         <div class="row">
             <h4 style="background-color: #078979">Cartas de Reconhecimento</h4>
             <p style="text-align:justify;">Anexar 02 cartas de apoio à entidade ou coletivo cultural requerente, emitidas por Pontos de Cultura, instituições públicas, privadas, ou coletivos culturais relacionadas com arte, cultura, educação ou desenvolvimento comunitário. As cartas devem ser assinadas e digitalizadas. Serão aceitas somente assinaturas manuscritas em papel ou impressões digitais em caso de pessoas não alfabetizadas.</p>
@@ -142,14 +144,16 @@
                 <p>
                     Precisa de um modelo de carta?
                     <br>
-                    <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                    <a href="<?php $this->asset('pdf/modelo_de_carta_de_referencia_ponto.docx')?>" target="_blank">Clique aqui</a> para baixar.
                 </p>
             </label>
         </div>
         <div class="clear"></div>
 
+        </div>
+
         <!-- Carta de Referência -->
-        <div ng-show="agent_entidade.tipoOrganizacao==='pontao'">
+        <div ng-show="agent_entidade.tipoPonto==='pontao'">
             <div class="row">
                 <h4>Cartas de Referência</h4>
                 <p style="text-align:justify;">Anexar uma carta de referência de ao menos 2 Pontos de Cultura reconhecendo o trabalho de Pontão realizado pela entidade, conforme os termos da Lei 13.018/2014 e da IN 08/2016</p>
@@ -187,9 +191,9 @@
                 <label class="colunm-50">
 
                     <p>
-                        Precisa de um modelo de carta?
+                        Precisa de um modelo de carta de referência?
                         <br>
-                        <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                        <a href="<?php $this->asset('pdf/modelo_de_carta_de_referencia_pontao.docx')?>" target="_blank">Clique aqui</a> para baixar.
                     </p>
                 </label>
             </div>
