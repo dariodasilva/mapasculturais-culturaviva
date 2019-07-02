@@ -3,8 +3,8 @@
         <div class="row">
             <label class="colunm1" ng-show="entidade.tipoPonto">
                 <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
-                <span><b>{{entidade.tipoPontoCulturaDesejado}}</b></span>
-                <span ng-if="!entidade.tipoPontoCulturaDesejado"><b>Não informado</b></span>
+                <span><b>{{entidade.rede_pertencente}}</b></span>
+                <span ng-if="!entidade.rede_pertencente"><b>Não informado</b></span>
             </label>
             <label class="colunm1">
                 <span class="destaque">Deseja ser*</span>
