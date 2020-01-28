@@ -686,7 +686,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $result = curl_exec($ch);
             $f = json_decode($result, true);
 
-			if ( $f == null ) {
+            if ( $f == null OR array_key_exists('erro', $f) ) {
 				//if (strcmp($f["erro"], 'CNPJ Inválido') === 0) {
 				$this->errorJson('CNPJ invalido', 401);
 				//}
