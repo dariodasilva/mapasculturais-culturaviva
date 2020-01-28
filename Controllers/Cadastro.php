@@ -686,11 +686,11 @@ class Cadastro extends \MapasCulturais\Controller{
             $result = curl_exec($ch);
             $f = json_decode($result, true);
 
-            if(array_key_exists("erro", $f)){
-                if(strcmp($f["erro"], 'CNPJ Inválido') === 0){
-                    $this->errorJson('CNPJ invalido', 401);
-                }
-            }else if(strpos($f["naturezaJuridica"]["cdNaturezaJuridica"], '1') === 0){
+			if ( $f == null ) {
+				//if (strcmp($f["erro"], 'CNPJ Inválido') === 0) {
+				$this->errorJson('CNPJ invalido', 401);
+				//}
+			}else if(strpos($f["naturezaJuridica"]["cdNaturezaJuridica"], '1') === 0){
                 $this->Json($f["naturezaJuridica"]);
 
             }else if(strpos($f["naturezaJuridica"]["cdNaturezaJuridica"], '3') === 0){
