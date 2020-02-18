@@ -1,6 +1,6 @@
-<div  >
+<div>
     <div class="form">
-        <h4>Conhecimento em Rede</h4>
+<!--        <h4>Conhecimento em Rede</h4>-->
         <div class="row">
             <h4> Formadores</h4>
             <label class="colunm1">
@@ -11,11 +11,13 @@
                 <span class="destaque">Email: </span>
                 <input disabled="true" type="email" ng-model="ponto.formador1_email">
             </label>
+            <?php /*
             <label class="colunm2">
                 <span class="destaque">Telefone: </span>
                 <input disabled="true" type="text" ng-model="ponto.formador1_telefone" ui-mask="(99) ?99999 9999">
             </label>
-            <label class="colunm1">
+            */ ?>
+            <label class="colunm2">
                 <span class="destaque">Áreas de atuação (oficinas/atividades ministradas):</span>
                 <input disabled="true" type="text" ng-model="ponto.formador1_areaAtuacao">
             </label>
@@ -23,6 +25,9 @@
                 <span class="destaque">Descrição/Mini-bio:  </span>
                 <textarea disabled="true" ng-model="ponto.formador1_bio"></textarea>
             </label>
+
+            <?php /*
+
             <div class="colunm-full">
                 <span class="destaque redessociais">Seu perfil nas redes sociais: <i class='hltip' title='Caso possua um perfil nas redes sociais abaixo coloque o link do perfil'>?</i></span>
             </div>
@@ -66,6 +71,8 @@
                 <span class="destaque">Descreva o espaço (Cite atividades realizadas, público alcançado, periodicidade de ações):</span>
                 <textarea disabled="true" ng-model="ponto.espacoAprendizagem1_desc"></textarea>
             </label>
+
+            */ ?>
 
             <h4> Metodologias</h4>
 

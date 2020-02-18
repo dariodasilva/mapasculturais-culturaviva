@@ -40,7 +40,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             <h2>Seja bem-vindo(a) à Rede Cultura Viva</h2>
             <p>Esta é a página do seu Ponto de Cultura. Apenas você tem acesso a ela.</p>
             <p>Fique a vontade para ir preenchendo as sessões. Você não precisa fazer tudo agora! Quando sua página estiver completa clique em "Enviar".</p>
-            <p>Depois, seu ponto poderá criar eventos, projetos e usar a plataforma para se manter em contato com o Ministério da Cultura.</p>
+            <p>Depois, seu ponto poderá criar eventos, projetos e usar a plataforma para se manter em contato com o Ministério da Cidadania.</p>
         </article>
         <div ng-if="agent_ponto.homologado_rcv" id="selo-index">
           <img id="selo-img" src="<?php $this->asset('img/verified-icon-big.png') ?>">
@@ -135,7 +135,7 @@ $this->bodyProperties['ng-app'] = "culturaviva";
             </header>
             <div class="infos">
                <div class="texto">
-                     <p>Já recebeu recursos do Ministério da Cultura? </p>
+                     <p>Já recebeu recursos do Ministério da Cidadania? </p>
                 </div>
             </div>
         </article>
@@ -327,7 +327,8 @@ $this->bodyProperties['ng-app'] = "culturaviva";
         */ ?>
 
     <div class='alert danger' style="margin:0 10%" ng-show="data.validationErrors">
-                Alguns campos obrigatórios não foram preenchidos
+                Alguns campos obrigatórios não foram preenchidos.
+                Clique no(s) link(s) abaixo para mais informações:
 		    <!-- Dados do responsavel -->
     		<strong ng-show="data.mostrarErroResponsavel == 'responsavel'"><br/>
 			       <a href="/cadastro/responsavel/#?invalid=1">Em "Informações do Responsável" </a>
@@ -343,10 +344,12 @@ $this->bodyProperties['ng-app'] = "culturaviva";
 		    </strong>
   </div>
   <script type="text/ng-template" id="modal1">
-    <p>Dados enviados com sucesso!</p>
-    <p ng-if ="data.statusInscricao = 1">Agora que preencheu nosso cadastro, conheça também o <a color="#078979" href="http://cadsol.mte.gov.br/inter/cadsol/main.seam" target="_blank">cadastro de economia solidária</a> e o <a href="http://simmc.c3sl.ufpr.br/#/pid" target="_blank"> cadastro de pontos de inclusão digital.</a></p>
-    <b> Existe alguma observação que você gostaria de fazer?</b>
-    <textarea cols="65" ng-model="agent.obs" ng-blur="save_field('obs')"></textarea>
+      <p><center>Dados enviados com sucesso!</center></p>
+      <b> Existe alguma observação que você gostaria de fazer?</b>
+      <p class="msg-obs-container">
+          <textarea cols="65" ng-model="agent.obs"></textarea>
+          <button ng-click="saveObs()" type="submit"> Enviar </button>
+      </p>
   </script>
   <script type="text/ng-template" id="modal2">
     <p>Dados atualizados com sucesso!</p>

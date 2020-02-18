@@ -2,7 +2,7 @@
     $this->bodyProperties['ng-app'] = "culturaviva";
     $this->layout = 'cadastro';
     $this->cadastroTitle = '5. Projetos Financiados';
-    $this->cadastroText = 'O MinC possui diversas formas de financiamento. Você já recebeu algum prêmio ou participou de algum edital?';
+    $this->cadastroText = 'O Min. Cidadania possui diversas formas de financiamento. Você já recebeu algum prêmio ou participou de algum edital?';
     $this->cadastroIcon = 'icon-dollar';
     $this->cadastroPageClass = 'contato-entidade page-base-form';
     $this->cadastroLinkContinuar = 'articulacao';
@@ -16,8 +16,8 @@
 
         <div class="row">
             <div class="colunm-50">
-                <span class="destaque" ng-show="agent.tipoOrganizacao==='entidade' || !agent.tipoOrganizacao">A Entidade já foi financiada pelo MinC <i class='hltip' title='Marque caso você tenha recebido algum recurso direto do MinC'>?</i></span>
-                <span class="destaque" ng-show="agent.tipoOrganizacao==='coletivo'">O Coletivo já foi financiada pelo MinC <i class='hltip' title='Marque SIM se o coletivo cultural ja recebeu algum recurso do MiniC'>?</i></span>
+                <span class="destaque" ng-show="agent.tipoOrganizacao==='entidade' || !agent.tipoOrganizacao">A Entidade já foi financiada pelo Min. Cidadania <i class='hltip' title='Marque caso você tenha recebido algum recurso direto do Min. Cidadania'>?</i></span>
+                <span class="destaque" ng-show="agent.tipoOrganizacao==='coletivo'">O Coletivo já foi financiada pelo Min. Cidadania <i class='hltip' title='Marque SIM se o coletivo cultural ja recebeu algum recurso do MiniC'>?</i></span>
                 <label class="label-radio">
                     <input type="radio"
                            name="foiFomentado"
@@ -44,22 +44,22 @@
                                                      name="tipoFomento"
                                                      value="tcc"
                                                      ng-change="save_field('tipoFomento')"
-                                                     ng-model="agent.tipoFomento" > TCC - Celebração de Termo de Compromisso Cultural como resultado de seleção em edital público do Ministério da Cultura ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
+                                                     ng-model="agent.tipoFomento" > TCC - Celebração de Termo de Compromisso Cultural como resultado de seleção em edital público do Ministério da Cidadania ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
                     <label class="label-radio"><input type="radio"
                                                      name="tipoFomento"
                                                      value="premio"
                                                      ng-change="save_field('tipoFomento')"
-                                                     ng-model="agent.tipoFomento" > Prêmio - Recebimento de Premiação em recursos financeiros como resultado de seleção em edital público do Ministério da Cultura ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
+                                                     ng-model="agent.tipoFomento" > Prêmio - Recebimento de Premiação em recursos financeiros como resultado de seleção em edital público do Ministério da Cidadania ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
                     <label class="label-radio"><input type="radio"
                                                      name="tipoFomento"
                                                      value="bolsa"
                                                      ng-change="save_field('tipoFomento')"
-                                                     ng-model="agent.tipoFomento" > Bolsa - Recebimento de Bolsa como resultado de seleção em edital público do Ministério da Cultura ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
+                                                     ng-model="agent.tipoFomento" > Bolsa - Recebimento de Bolsa como resultado de seleção em edital público do Ministério da Cidadania ou de entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.</label>
                     <label class="label-radio"><input type="radio"
                                                      name="tipoFomento"
                                                      value="convenio"
                                                      ng-change="save_field('tipoFomento')"
-                                                     ng-model="agent.tipoFomento" > Convênio - Celebração de Convênio com o Ministério da Cultura ou com entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.para realização de projeto cultural.</label>
+                                                     ng-model="agent.tipoFomento" > Convênio - Celebração de Convênio com o Ministério da Cidadania ou com entes federados parceiros nas Redes Estaduais/Municipais/Intermunicipais de Pontos e Pontões de Cultura.para realização de projeto cultural.</label>
                     <label class="label-radio"><input type="radio"
                                                      name="tipoFomento"
                                                      value="rouanet"
@@ -84,7 +84,7 @@
                                                      name="fomento_tipoReconhecimento"
                                                      value="minc"
                                                      ng-change="save_field('tipoReconhecimento')"
-                                                     ng-model="agent.tipoReconhecimento" > Direto com o MinC</label>
+                                                     ng-model="agent.tipoReconhecimento" > Direto com o Min. Cidadania</label>
                     <label class="label-radio"><input type="radio"
                                                      name="fomento_tipoReconhecimento"
                                                      value="estadual"

@@ -40,8 +40,8 @@ class Theme extends BaseV1\Theme {
 
     protected static function _getTexts() {
         return array(
-            'site: owner' => 'Ministério da Cultura',
-            'site: by the site owner' => 'pelo Ministério da Cultura',
+            'site: owner' => 'Ministério da Cidadania',
+            'site: by the site owner' => 'pelo Ministério da Cidadania',
             'search: verified results' => 'Pontos Certificados',
             'search: verified' => "Certificados",
         );
@@ -397,12 +397,14 @@ class Theme extends BaseV1\Theme {
                 ],
                 'redePertencente' => [
                     'label' => 'Pertence ou pertenceu a alguma rede?',
-//                  'required' => true,
+                    'required' => true,
                     'private' => true,
-                    'type' => 'select',
+                    'type' => 'multiselect',
                     'options' => array(
-                        'ponto' => 'Ponto',
-                        'pontao' => 'Pontão'
+                        'estadual' => 'Estadual',
+                        'municipal' => 'Municipal',
+                        'intermunicipal' => 'Intermunicipal',
+                        'nao' => 'Não'
                     )
                 ],
                 'esferaFomento' => [
@@ -483,17 +485,17 @@ class Theme extends BaseV1\Theme {
                     )
                 ],
                 'foiFomentado' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true
                 ],
                 'tipoFomento' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'convenio' => 'Direto com o MinC',
+                        'convenio' => 'Direto com o Min. Cidadania',
                         'tcc' => 'Estatual',
                         'bolsa' => 'Municipal',
                         'premio' => 'Intermunicipal',
@@ -502,7 +504,7 @@ class Theme extends BaseV1\Theme {
                     )
                 ],
                 'tipoFomentoOutros' => [
-                    'label' => 'Você já foi fomentado pelo MinC',
+                    'label' => 'Você já foi fomentado pelo Min. Cidadania',
 //                  'required' => true,
                     'private' => true
                 ],
@@ -512,7 +514,7 @@ class Theme extends BaseV1\Theme {
                     'private' => true,
                     'type' => 'select',
                     'options' => array(
-                        'minc' => 'Direto com o MinC',
+                        'minc' => 'Direto com o Min. Cidadania',
                         'estadual' => 'Estatual',
                         'municipal' => 'Municipal',
                         'intermunicpal' => 'Intermunicipal'
@@ -921,6 +923,11 @@ class Theme extends BaseV1\Theme {
                     'required' => false,
                     'private' => true
                 ],
+                'representacaoMinc' => [
+                    'label' => 'Participa de instância de representação junto ao Ministério da Cidadania?',
+                    'required' => false,
+                    'private' => true
+                ],
                 'simPoderPublico' => [
                     'label' => 'Quais para radio participa poder publico',
                     //              'required' => false,
@@ -1152,7 +1159,7 @@ class Theme extends BaseV1\Theme {
                 'homologado_rcv' => [
                     'label' => '',
                     'required' => false,
-                //'private' => false
+                    //'private' => false
                 ],
                 'info_verdadeira' => [
                     'label' => '',
@@ -1190,12 +1197,12 @@ class Theme extends BaseV1\Theme {
         $taxonomies = [
             // Atuação e Articulação
 //            'area' => 'São as áreas do Ponto/Pontão de Cultura',
-            'contemplado_edital' => 'Editais do Ministério da Cultura em que foi contemplado',
+            'contemplado_edital' => 'Editais do Ministério da Cidadania em que foi contemplado',
             'acao_estruturante' => 'Ações Estruturantes',
             'publico_participante' => 'Públicos que participam das ações',
             'local_realizacao' => 'Locais onde são realizadas as ações culturais',
             'area_atuacao' => 'Área de experiência e temas',
-            'instancia_representacao_minc' => 'Instância de representação junto ao Ministério da Cultura',
+            'instancia_representacao_minc' => 'Instância de representação junto ao Ministério da Cidadania',
             // Economia Viva
             'ponto_infra_estrutura' => '',
             'ponto_equipamentos' => '',
@@ -1205,7 +1212,8 @@ class Theme extends BaseV1\Theme {
             'ponto_comunicacao' => '',
             'ponto_sustentabilidade' => '',
             // Formação
-            'metodologias_areas' => ''
+            'metodologias_areas' => '',
+            'rede_pertencente' => 'Pertence ou pertenceu a alguma rede?'
         ];
 
         $id = 10;
@@ -1235,13 +1243,13 @@ class Theme extends BaseV1\Theme {
         unset($filters['agent']['tipos']);
 
         $filters['agent']['tipoPonto'] = [
-             'label' => 'Tipo de Organização',
-             'placeholder' => 'Todas',
-             'fieldType' => 'checklist',
-             'filter' => [
-                 'param' => 'tipoPonto',
-                 'value' => 'ILIKE(*{val}*)'
-             ]
+            'label' => 'Tipo de Organização',
+            'placeholder' => 'Todas',
+            'fieldType' => 'checklist',
+            'filter' => [
+                'param' => 'tipoPonto',
+                'value' => 'ILIKE(*{val}*)'
+            ]
         ];
 
         $filters['agent']['En_Estado'] = [
@@ -1268,16 +1276,16 @@ class Theme extends BaseV1\Theme {
         $terms = App::i()->repo('Term')->getTermsAsString('publico_participante');
 
         $filters['agent']['publico_participante'] =
-        [
-            'label' => 'Público Alvo',
-            'placeholder' => 'Selecione o público alvo',
-            'type' => 'term',
-            'isInline' => false,
-            'filter' => [
-                'param' => 'publico_participante',
-                'value' => 'IN({val})'
-            ],
-        ];
+            [
+                'label' => 'Público Alvo',
+                'placeholder' => 'Selecione o público alvo',
+                'type' => 'term',
+                'isInline' => false,
+                'filter' => [
+                    'param' => 'publico_participante',
+                    'value' => 'IN({val})'
+                ],
+            ];
 
         foreach($terms as $t)
             $filters['agent']['publico_participante']['options'][] = ['value' => $t, 'label' => $t];

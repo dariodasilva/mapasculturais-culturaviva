@@ -1062,10 +1062,9 @@ section{
 /*
 * Estrutra Base Forms
 */
-.page-base-form{
+.page-base-form {
     background: #fff;
     padding-bottom:50px;
-
 
     header{
         background:$base-color-info-responsavel;
@@ -1097,15 +1096,25 @@ section{
         }
     }
 
-    p{
+    p {
         color: #078979;
         padding: 50px 17%;
         font-size: 17px;
         text-align: center;
         font-weight: bold;
+
+        .page-header-subtitle {
+            text-align: center;
+            color: black;
+            font-weight: normal;
+            font-size: 14px;
+            font-style: italic;
+            display: block;
+            padding-top: 10px;
+        }
     }
 
-    .form{
+    .form {
         padding: 10px 4%;
 
         .inputqtd{
@@ -2695,6 +2704,21 @@ section{
                     margin-right: 20px;
                 }
             }
+        }
+    }
+}
+
+#modal1 {
+    .msg-obs-container {
+        textarea {
+            width: 100%
+        }
+        button {
+            display: inherit;
+            background: #078979;
+            color: white;
+            font-size: 16px;
+            float: right;
         }
     }
 }

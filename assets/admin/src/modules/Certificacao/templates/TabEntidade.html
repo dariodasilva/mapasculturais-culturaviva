@@ -1,17 +1,9 @@
 <div ng-controller="AvaliacaoTabEntidadeCtrl" class="row" style="padding-top: 30px;" ng-form>
 
     <tc-input
-        ng-model="agent._tipoOrganizacao"
-        label="Tipo de organização"
+        ng-model="agent.tipoPonto"
+        label="Deseja Ser"
         col="6"
-        readonly="true"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent._tipoPontoCulturaDesejado"
-        label="Tipo do Ponto de Cultura Desejado"
-        col="3"
         readonly="true"
         >
     </tc-input>
@@ -69,8 +61,7 @@
     <tc-input
         ng-model="agent.emailPrivado"
         label="Email institucional"
-        col="12"
-        col-input="3"
+        col="6"
         readonly="true"
         >
     </tc-input>
@@ -78,34 +69,9 @@
     <tc-input
         ng-model="agent.telefone1"
         label="Telefone institucional"
-        col="3"
+        col="6"
         readonly="true"
         ui-mask="(99) ?99999-9999"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.telefone1_operadora"
-        label="Operadora"
-        col="3"
-        readonly="true"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.telefone2"
-        label="Outro Telefone"
-        col="3"
-        readonly="true"
-        ui-mask="(99) ?99999-9999"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.telefone2_operadora"
-        label="Operadora"
-        readonly="true"
-        col="3"
         >
     </tc-input>
 
@@ -117,14 +83,6 @@
         ng-model="agent.responsavel_nome"
         label="Nome do Responsável"
         col="6"
-        readonly="true"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.responsavel_cargo"
-        label="Cargo do Responsável"
-        col="3"
         readonly="true"
         >
     </tc-input>
@@ -143,31 +101,6 @@
         col="3"
         readonly="true"
         ui-mask="(99) ?99999-9999"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.responsavel_operadora"
-        label="Operadora"
-        col="3"
-        readonly="true"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.responsavel_telefone2"
-        label="Outro Telefone"
-        col="3"
-        readonly="true"
-        mask="(99) ?99999-9999"
-        >
-    </tc-input>
-
-    <tc-input
-        ng-model="agent.responsavel_operadora2"
-        label="Operadora"
-        col="3"
-        readonly="true"
         >
     </tc-input>
 

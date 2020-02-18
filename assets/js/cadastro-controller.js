@@ -11,9 +11,7 @@
         "tipoOrganizacao",
         "emailPrivado",
         "telefone1",
-        "telefone1_operadora",
         "telefone2",
-        "telefone2_operadora",
         "responsavel_nome",
         "responsavel_email",
         "responsavel_cargo",
@@ -137,6 +135,13 @@
             'Cultura circense'
         ],
 
+        rede_pertencente: [
+            'Estadual',
+            'Municipal',
+            'Intermunicipal',
+            'Não'
+        ],
+
         publico_participante: [
             'Afro-Brasileiros',
             'Ciganos',
@@ -207,7 +212,6 @@
             'Comissões',
             'Conferência Nacional de Cultura',
             'Grupo de Trabalho',
-            'Não participa',
             'Conselhos'
         ],
 
@@ -416,28 +420,35 @@
                     case 'responsavel':
                         var form = $scope[nomeForm];
                         var erros_responsavel = $scope.data.validationErrors.responsavel;
-                        erros_responsavel.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_responsavel) {
+                            erros_responsavel.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
                         break;
                     case 'entidade':
                         var form = $scope[nomeForm];
                         var erros_entidade = $scope.data.validationErrors.entidade;
-                        erros_entidade.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_entidade) {
+                            erros_entidade.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
+                        break;
                     case 'ponto':
                         var form = $scope[nomeForm];
                         var erros_ponto = $scope.data.validationErrors.ponto;
-                        erros_ponto.forEach(function (elemento, index, array) {
-                            if (form[elemento]) {
-                                angular.element("[name='" + elemento + "']").addClass('input_erro');
-                            }
-                        });
+                        if (erros_ponto) {
+                            erros_ponto.forEach(function (elemento, index, array) {
+                                if (form[elemento]) {
+                                    angular.element("[name='" + elemento + "']").addClass('input_erro');
+                                }
+                            });
+                        }
                         break;
                 }
             });
@@ -454,7 +465,7 @@
             var params = {
                 'id': agent_id,
                 '@select': 'id,singleUrl,name,rg,rg_orgao,relacaoPonto,cpf,En_Estado,terms,' +
-                    'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,' +
+                    'emailPrivado,telefone1,nomeCompleto,' +
                     'En_Municipio,facebook,twitter,googleplus,mesmoEndereco,shortDescription,' +
                     'termos_de_uso,info_verdadeira,obs',
                 '@permissions': 'view'
@@ -495,6 +506,10 @@
                             scope: $scope
                         });
                     }
+                    $scope.saveObs = function () {
+                        $scope.save_field('obs');
+                        ngDialog.close();
+                    };
                     $scope.data.statusInscricao = 1;
                 }).
                 error(function errorCallback(response) {
@@ -506,7 +521,7 @@
                         if (erroResponsavel.length > 0) {
                             $scope.data.mostrarErroResponsavel = "responsavel";
                         }
-                        if (erroPonto.length > 0) {
+                        if (erroPonto && erroPonto.length > 0) {
                             if (erroPonto.indexOf("atividadesEmRealizacaoLink") !== -1) {
                                 $scope.data.mostrarErroPonto = "ponto_portifolio";
                             }
@@ -520,7 +535,7 @@
                                 }
                             }
                         }
-                        if (erroEntidade.length > 0) {
+                        if (erroEntidade && erroEntidade.length > 0) {
                             var i;
                             var j;
                             for (i = 0; i < erroEntidade.length; i++) {
@@ -723,9 +738,8 @@
             var params = {
                 'id': agent_id,
                 '@select': 'id,rcv_tipo,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
-                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,nomeCompleto,' +
-                    'En_Municipio, culturadigital,diaspora,' +
-                    'mesmoEndereco,shortDescription',
+                    'emailPrivado,telefone1,telefone2,nomeCompleto,' +
+                    'En_Municipio,mesmoEndereco,shortDescription',
                 '@files': '(avatar.avatarBig,portifolio,gallery.avatarBig):id,url',
                 '@permissions': 'view'
             };
@@ -748,15 +762,14 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,site,facebook,twitter,googleplus,telegram,whatsapp,' +
-                    'culturadigital,diaspora,instagram,flickr,youtube,atividadesEmRealizacaoLink',
+                '@select': 'id,rcv_tipo,longDescription,atividadesEmRealizacao,atividadesEmRealizacaoLink,',
                 '@files': '(portifolio,gallery,carta1,carta2,ata):url',
                 '@permissions': 'view'
             };
 
             var params_entidade = {
                 'id': agent_id_entidade,
-                '@select': 'id,tipoOrganizacao',
+                '@select': 'id,tipoOrganizacao,tipoPonto',
                 '@permissions': 'view'
             };
 
@@ -785,21 +798,30 @@
     app.controller('EntityCtrl', ['$scope', '$timeout',  'geocoder', 'cepcoder', 'cidadecoder', 'Entity', 'MapasCulturais', '$location', '$http', 'ngDialog',
         function ($scope, $timeout, geocoder, cepcoder, cidadecoder, Entity, MapasCulturais, $location, $http, ngDialog) {
             var agent_id = MapasCulturais.redeCulturaViva.agenteEntidade;
-            var params = {
-                'id': agent_id,
 
-                '@select': 'redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
-                    'tipoPontoCulturaDesejado,tipoOrganizacao,responsavel_operadora,responsavel_operadora2,' +
-                    'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
-                    'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_telefone2,responsavel_cpf,' +
-                    'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
-                    'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
-                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf, tipoPonto',
+            var registrant_id = MapasCulturais.redeCulturaViva.agenteIndividual;
 
+            var registrant_params = {
+                'id': registrant_id,
+                '@select': 'id,singleUrl,relacaoPonto,cpf,emailPrivado,telefone1,nomeCompleto',
                 '@permissions': 'view'
             };
 
+            var params = {
+                'id': agent_id,
+                '@select': 'terms,redePertencente,nomePonto,mesmoEndereco,id,rcv_tipo,name,nomeCompleto,cnpj,representanteLegal,' +
+                    'tipoPontoCulturaDesejado,emailPrivado,telefone1,' +
+                    'responsavel_nome,responsavel_email,responsavel_telefone,responsavel_cpf,' +
+                    'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,cep,En_Complemento,' +
+                    'facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,flickr,youtube,' +
+                    'En_EstadoPontaPontao,En_MunicipioPontaPontao,paisPontaPontao,En_BairroPontaPontao,En_NumPontaPontao,' +
+                    'En_Nome_LogradouroPontaPontao,cepPontaPontao,En_ComplementoPontaPontao,location, relacaoPonto, cpf, tipoPonto',
+                '@permissions': 'view'
+            };
+
+            $scope.registrant = Entity.get(registrant_params);
             $scope.markers = {};
+            $scope.termos = termos;
             $scope.agent = Entity.get(params, function (agent) {
                 $scope.markers.main = {
                     lat: agent.location.latitude,
@@ -813,12 +835,18 @@
                     $scope.showInvalid($scope.agent.rcv_tipo, 'form_entity');
                 }
 
-                if(agent.relacaoPonto == 'responsavel')
-                {
-                    agent.responsavel_nome = agent.nomeCompleto;
-                    agent.responsavel_cpf = agent.cpf;
-                    agent.responsavel_email = agent.emailPrivado;
-                    agent.responsavel_telefone = agent.telefone1;
+                if ($scope.registrant.relacaoPonto === 'responsavel') {
+                    agent.responsavel_nome = $scope.registrant.nomeCompleto;
+                    $scope.save_field('responsavel_nome');
+
+                    agent.responsavel_cpf = $scope.registrant.cpf;
+                    $scope.save_field('responsavel_cpf');
+
+                    agent.responsavel_email = $scope.registrant.emailPrivado;
+                    $scope.save_field('responsavel_email');
+
+                    agent.responsavel_telefone = $scope.registrant.telefone1;
+                    $scope.save_field('responsavel_telefone');
                 }
             });
 
@@ -829,7 +857,7 @@
                 }
             }, true);
 
-            /*$scope.cidadecoder = {
+            $scope.cidadecoder = {
                 busy: false,
                 code: function (cidade, pais) {
                     $scope.agent.En_Municipio = cidade;
@@ -855,28 +883,48 @@
 
             $scope.cepcoder = {
                 busy: false,
-                code: function (cep) {
-                    $scope.agent.cep = cep;
-                    $scope.save_field('cep');
+                code: function (cep, field) {
+                    if (field === 'cep') {
+                        $scope.agent.cep = cep;
+                        $scope.save_field('cep');
+                    } else if (field === 'pontoPontao') {
+                        $scope.agent.cepPontaPontao = cep;
+                        $scope.save_field('cepPontaPontao');
+                    }
+
                     $scope.cepcoder.busy = true;
                     cepcoder.code(cep).then(function (res) {
                         var addr = res.data;
                         if (addr) {
-                            $scope.agent.En_Estado = addr.estado;
-                            $scope.save_field('En_Estado');
 
-                            $scope.agent.En_Municipio = addr.cidade;
-                            $scope.save_field('En_Municipio');
+                            if (field === 'cep') {
+                                $scope.agent.En_Estado = addr.estado;
+                                $scope.save_field('En_Estado');
 
-                            $scope.agent.En_Bairro = addr.bairro;
-                            $scope.save_field('En_Bairro');
+                                $scope.agent.En_Municipio = addr.cidade;
+                                $scope.save_field('En_Municipio');
 
-                            $scope.agent.En_Nome_Logradouro = addr.logradouro;
-                            $scope.save_field('En_Nome_Logradouro');
+                                $scope.agent.En_Bairro = addr.bairro;
+                                $scope.save_field('En_Bairro');
+
+                                $scope.agent.En_Nome_Logradouro = addr.logradouro;
+                                $scope.save_field('En_Nome_Logradouro');
+                            } else if (field === 'pontoPontao') {
+                                $scope.agent.En_EstadoPontaPontao = addr.estado;
+                                $scope.save_field('En_EstadoPontaPontao');
+
+                                $scope.agent.En_MunicipioPontaPontao = addr.cidade;
+                                $scope.save_field('En_MunicipioPontaPontao');
+
+                                $scope.agent.En_BairroPontaPontao = addr.bairro;
+                                $scope.save_field('En_BairroPontaPontao');
+
+                                $scope.agent.En_Nome_LogradouroPontaPontao = addr.logradouro;
+                                $scope.save_field('En_Nome_LogradouroPontaPontao');
+                            }
 
                             $scope.agent.pais = "Brasil";
                             $scope.save_field('pais');
-
                             var string = (addr.logradouro ? addr.logradouro + ', ' : '') +
                                 (addr.bairro ? addr.bairro + ', ' : '') +
                                 (addr.cidade ? addr.cidade + ', ' : '') +
@@ -917,7 +965,7 @@
                         $scope.cepcoder.busy = false;
                     });
                 }
-            };*/
+            };
 
             $scope.closeAll = function () {
                 ngDialog.close();
@@ -1109,7 +1157,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada, parceriaPrivadaQual,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico',
+                '@select': 'id,rcv_tipo,terms,fomentoPublico,esferaFomento,parceriaPrivada, parceriaPrivadaQual,participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico,representacaoMinc',
                 '@permissions': 'view'
             };
 
@@ -1168,7 +1216,7 @@
 
             var params = {
                 'id': agent_id,
-                '@select': 'id,rcv_tipo,terms,formador1_nome,formador1_email,formador1_telefone,formador1_operadora,formador1_areaAtuacao,' +
+                '@select': 'id,rcv_tipo,terms,formador1_nome,formador1_email,formador1_telefone,formador1_areaAtuacao,' +
                     'formador1_bio,formador1_facebook,formador1_twitter,formador1_google,espacoAprendizagem1_atuacao,espacoAprendizagem1_tipo,' +
                     'espacoAprendizagem1_desc,metodologia1_nome,metodologia1_desc,metodologia1_necessidades,metodologia1_capacidade,' +
                     'metodologia1_cargaHoraria,metodologia1_certificacao,',
@@ -1332,22 +1380,8 @@
         };
         extendController($scope, $timeout);
         $scope.consultaCNPJ = function () {
-            $scope.data.buscandoCNPJ = true;
-            $scope.messages.show('enviando', "Procurando CNPJ em nossa base");
-            $http.get(MapasCulturais.apiCNPJ + '?action=get_cultura&cnpj=' + $scope.data.cnpj).
-            success(function success(data) {
-                if (data.Id) {
-                    $scope.registrar();
-                    $scope.data.encontrouCNPJ = $scope.data.cnpj;
-                } else {
-                    $scope.data.encontrouCNPJ = false;
-                    ngDialog.open({
-                        template: 'modalErro',
-                        scope: $scope
-                    });
-                    $scope.data.encontrouCNPJ = $scope.data.cnpj;
-                }
-            });
+            $scope.registrar();
+            $scope.data.encontrouCNPJ = $scope.data.cnpj;
         };
 
         $scope.validaCNPJ = function () {
@@ -1467,29 +1501,29 @@
                 var responsavel = {
                     'id': rcv.agenteIndividual,
                     '@select': 'id,rcv_tipo,files,singleUrl,name,rg,rg_orgao,relacaoPonto,pais,cpf,En_Estado,terms,' +
-                        'emailPrivado,telefone1,telefone1_operadora,nomeCompleto,' +
-                        'En_Municipio,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram,mesmoEndereco,shortDescription',
+                        'emailPrivado,telefone1,telefone2,nomeCompleto,' +
+                        'En_Municipio,shortDescription',
                     '@permissions': 'view'
                 };
                 var entidade = {
                     'id': rcv.agenteEntidade,
                     '@select': 'id,rcv_tipo,files,name,nomeCompleto,cnpj,representanteLegal,' +
-                        'tipoPontoCulturaDesejado,tipoOrganizacao,' +
-                        'emailPrivado,telefone1,telefone1_operadora,telefone2,telefone2_operadora,' +
-                        'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,' +
-                        'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,' +
+                        'tipoPontoCulturaDesejado,tipoPonto,mesmoEndereco,' +
+                        'emailPrivado,telefone1,telefone2,' +
+                        'responsavel_nome,responsavel_email,responsavel_cargo,responsavel_telefone,responsavel_cpf,' +
+                        'En_Estado,En_Municipio,pais,En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,cep,' +
                         'tipoCertificacao,foiFomentado,tipoFomento,tipoFomentoOutros,tipoReconhecimento,edital_num,' +
                         'edital_ano,edital_projeto_nome,edital_localRealizacao,edital_projeto_etapa,' +
                         'edital_proponente,edital_projeto_resumo,edital_prestacaoContas_envio,' +
-                        'edital_prestacaoContas_status,edital_projeto_vigencia_inicio,' +
-                        'edital_projeto_vigencia_fim,outrosFinanciamentos,outrosFinanciamentos_descricao,' +
-                        'rcv_Ds_Edital',
+                        'edital_prestacaoContas_status,edital_projeto_vigencia_inicio,nomePonto,' +
+                        'edital_projeto_vigencia_fim,outrosFinanciamentos,outrosFinanciamentos_descricao,tipoOrganizacao,' +
+                        'rcv_Ds_Edital,facebook,twitter,googleplus,telegram,whatsapp,culturadigital,diaspora,instagram',
                     '@permissions': 'view'
                 };
                 var ponto = {
                     'id': rcv.agentePonto,
                     '@select': 'id,rcv_tipo,files,longDescription,atividadesEmRealizacaoLink,site,facebook,twitter,googleplus,flickr,diaspora,youtube,instagram,culturadigital,atividadesEmRealizacaoLink,' +
-                        'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,mesmoEndereco,pais,En_Estado,En_Municipio,' +
+                        'terms,name,shortDescription,cep,tem_sede,sede_realizaAtividades,pais,En_Estado,En_Municipio,' +
                         'En_Bairro,En_Num,En_Nome_Logradouro,En_Complemento,localRealizacao_estado,localRealizacao_cidade,' +
                         'localRealizacao_cidade,localRealizacao_espaco,location,' +
                         'participacaoMovPolitico,participacaoForumCultura,parceriaPoderPublico, simMovimentoPoliticoCultural, simForumCultural, simPoderPublico,' +
@@ -1499,7 +1533,7 @@
                         'pontoEconomiaCultura,pontoEconomiaCulturaDescricao,pontoMoedaSocial,pontoMoedaSocialDescricao,' +
                         'pontoTrocasServicos,pontoTrocasServicosOutros,pontoContrataServicos,pontoContrataServicosOutros,' +
                         'pontoInvestimentosColetivos,pontoInvestColetivosOutros,pontoCustoAnual,' +
-                        'formador1_nome,formador1_email,formador1_telefone,formador1_operadora,formador1_areaAtuacao,' +
+                        'formador1_nome,formador1_email,formador1_telefone,formador1_areaAtuacao,' +
                         'formador1_bio,formador1_facebook,formador1_twitter,formador1_google,espacoAprendizagem1_atuacao,espacoAprendizagem1_tipo,' +
                         'espacoAprendizagem1_desc,metodologia1_nome,metodologia1_desc,metodologia1_necessidades,metodologia1_capacidade,' +
                         'metodologia1_cargaHoraria,metodologia1_certificacao,homologado_rcv',
@@ -1573,7 +1607,7 @@
                     doc.setFontType("bold");
                     doc.setTextColor("#FFFFFF");
                     doc.setFontSize(35);
-                    var text = "O Ministério da Cultura, por meio da Secretaria da Diversidade Cultural, reconhece o coletivo/entidade\n\n" +
+                    var text = "A Secretaria Especial da Cultura do Ministério da Cidadania, por meio da Secretaria da Diversidade Cultural, reconhece o coletivo/entidade\n\n" +
                     "\n\n" +
                     "como Ponto de Cultura a partir dos critérios estabelecidos na Lei Cultura Viva (13.018/2014).\n\n" +
                     "Este certificado comprova que a iniciativa desenvolve e articula atividades culturais em sua comunidade, " +

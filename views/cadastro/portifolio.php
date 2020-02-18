@@ -25,13 +25,16 @@
                     <label class="colunm1">
                                 <span class="destaque">
                                           Portfólio Online
-                        <i class='hltip' title="Caso possua um portfólio online, coloque o link aqui.">?</i></span>
+                        <i class='hltip' title="Caso possua um portfolio online, coloque o link aqui.">?</i></span>
                         <input type="text" name="atividadesEmRealizacaoLink" placeholder="http://" ng-blur="save_field('atividadesEmRealizacaoLink')" ng-model="agent.atividadesEmRealizacaoLink" />
                     </label>
                 </div>
-                <p>Outra possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura. Publique-o no Youtube e compartilhe o link aqui.</p>
-                <p>Caso não possua portfólio online você pode anexar arquivos no formato PDF de até 20MB. <strong>Você deve adicionar somente um, ou portifólio online ou arquivo PDF.</strong></p>
+                <p>Caso ainda não possua um portfolio online, uma possibilidade é gravar um vídeo de até 10 minutos contando sobre seu Ponto de Cultura.
+                    Publique-o no Youtube e compartilhe o link aqui.</p>
+                <p>Se preferir, envie no campo abaixo arquivos no formato PDF de até 20MB. </p>
             </label>
+
+            <p><strong>Você deve adicionar somente um: ou portifólio online ou arquivo PDF.</strong></p>
 
             <!-- Portifolio -->
             <div class="colunm-20">
@@ -51,24 +54,25 @@
                 </div>
             </div>
 
-            <p>Precisa de ajuda para montar seu portfólio?
-                <i class='hltip' title='Um portifólio é um relatório das atividades desenvolvidas pelo Ponto de Cultura com imagens, vídeos e outros itens que comprovem a sua existência'>?</i>
-                <br>
+            <p>
+                Precisa de ajuda para montar seu portfólio?
+                <span class="destaque" style="display: inline-block">
+                    <i class="hltip" title='Um portfólio é um relatório das atividades desenvolvidas pelo Ponto de Cultura com imagens, vídeos e outros itens que comprovem a sua existência'>?</i>
+                </span> <br>
                 <a href="<?php $this->asset('pdf/modelos_de_portfolio.docx')?>" target="_blank">Clique aqui</a> para baixar um modelo com orientações.
             </p>
             <!--Hitória do ponto de cultura-->
             <div class="row">
                 <label class="colunm-full">
                     <span class="destaque">Conte um pouco sobre a história do Ponto de Cultura (max. 800 caracteres)* <i class='hltip' title='Nos diga um pouco mais sobre o ponto de cultura, como por exemplo como ele começou e como surgiu a idéia'>?</i>  </span>
-                    <textarea required ng-blur="save_field('longDescription')" maxlength="800" ng-model="agent.longDescription"></textarea>
-                    <span>{{800 - agent.longDescription.length}} Characters</span>
+                    <textarea rows="8" required ng-blur="save_field('longDescription')" maxlength="800" ng-model="agent.longDescription"></textarea>
+                    <span>{{800 - agent.longDescription.length}} caracteres restantes</span>
                 </label>
             </div>
             <div class="clear"></div>
         </div>
 
-
-        <div class="row" ng-if="agent_entidade.tipoOrganizacao == 'coletivo'">
+        <div class="row" ng-if="agent_entidade.tipoPonto == 'ponto_coletivo'">
             <div ng-controller="ImageUploadCtrl" ng-init="init('ponto')">
                 <h4>Carta de Autorização de Coletivo sem Constituição Jurídica</h4>
                 <div class="colunm-20">
@@ -98,6 +102,8 @@
                 </label>
             </div>
         </div>
+
+        <div ng-show="agent_entidade.tipoPonto==='ponto_entidade' || agent_entidade.tipoPonto==='ponto_coletivo'">
 
         <div class="row">
             <h4 style="background-color: #078979">Cartas de Reconhecimento</h4>
@@ -138,14 +144,16 @@
                 <p>
                     Precisa de um modelo de carta?
                     <br>
-                    <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                    <a href="<?php $this->asset('pdf/modelo_de_carta_de_referencia_ponto.docx')?>" target="_blank">Clique aqui</a> para baixar.
                 </p>
             </label>
         </div>
         <div class="clear"></div>
 
+        </div>
+
         <!-- Carta de Referência -->
-        <div ng-show="agent_entidade.tipoOrganizacao==='pontao'">
+        <div ng-show="agent_entidade.tipoPonto==='pontao'">
             <div class="row">
                 <h4>Cartas de Referência</h4>
                 <p style="text-align:justify;">Anexar uma carta de referência de ao menos 2 Pontos de Cultura reconhecendo o trabalho de Pontão realizado pela entidade, conforme os termos da Lei 13.018/2014 e da IN 08/2016</p>
@@ -183,9 +191,9 @@
                 <label class="colunm-50">
 
                     <p>
-                        Precisa de um modelo de carta?
+                        Precisa de um modelo de carta de referência?
                         <br>
-                        <a href="<?php $this->asset('pdf/modelos_de_carta_de_referencia.docx')?>" target="_blank">Clique aqui</a> para baixar.
+                        <a href="<?php $this->asset('pdf/modelo_de_carta_de_referencia_pontao.docx')?>" target="_blank">Clique aqui</a> para baixar.
                     </p>
                 </label>
             </div>

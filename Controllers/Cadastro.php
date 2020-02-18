@@ -97,14 +97,24 @@ class Cadastro extends \MapasCulturais\Controller{
      * @return array
      */
     function getPontoRequiredProperties(){
-	    $agent = $this->getPonto();
-        $entidadeAgent = $this->getEntidade();
+	     $agent = $this->getPonto();
+       $entidadeAgent = $this->getEntidade();
         $required_properties = [
             'name',
             'shortDescription',
             'tem_sede',
             'pais',
             'location', // ponto no mapa
+
+
+            //portifólio
+
+            //'atividadesEmRealizacao'
+	    //'atividadesEmRealizacaoLink'
+
+
+//            'atividadesEmRealizacao'
+
         ];
 
         if($agent->pais === 'Brasil'){
@@ -137,8 +147,8 @@ class Cadastro extends \MapasCulturais\Controller{
             }
         }
 
-  	    return $required_properties;
-    }
+  	return $required_properties;
+      }
 
     /**
     * Taxonomias obrigatórias do Ponto
@@ -157,6 +167,7 @@ class Cadastro extends \MapasCulturais\Controller{
           'publico_participante',
           'area_atuacao',
           'instancia_representacao_minc',
+          'rede_pertencente'
         ];
       }
 
@@ -174,13 +185,10 @@ class Cadastro extends \MapasCulturais\Controller{
         $required_files = [];
 
         $required_files = [
+            'portifolio',
             'carta1',
             'carta2',
         ];
-
-        if(is_null($agent->atividadesEmRealizacaoLink) || $agent->atividadesEmRealizacaoLink === ''){
-            $required_files[] = 'portifolio';
-        }
 
         if ($agentEntidade->tipoOrganizacao === 'coletivo') {
           $required_files [] = 'ata';
@@ -195,6 +203,12 @@ class Cadastro extends \MapasCulturais\Controller{
     function getEntidadeRequiredProperties(){
         $agent = $this->getEntidade();
 
+        // 'tipoOrganizacao',
+        // 'responsavel_cargo',
+        // 'emailPrivado',
+        // 'telefone1',
+        // 'foiFomentado'
+
         $required_properties = [
             'tipoPonto',
             'name',
@@ -202,7 +216,7 @@ class Cadastro extends \MapasCulturais\Controller{
             'responsavel_nome',
             'responsavel_email',
             'responsavel_telefone',
-            'pais',
+            'pais'
         ];
 
         if($agent->pais === 'Brasil'){
@@ -218,6 +232,36 @@ class Cadastro extends \MapasCulturais\Controller{
             $required_properties[] = 'cnpj';
             $required_properties[] = 'representanteLegal';
         }
+
+
+        /*if($agent->foiFomentado){
+            $required_properties[] = 'tipoFomento';
+            if($agent->tipoFomento === 'outros'){
+                $required_properties[] = 'tipoFomentoOutros';
+            }
+
+            $required_properties[] = 'tipoReconhecimento';
+            $required_properties[] = 'edital_num';
+            $required_properties[] = 'edital_ano';
+            $required_properties[] = 'edital_projeto_nome';
+            $required_properties[] = 'edital_localRealizacao';
+            $required_properties[] = 'edital_proponente';
+            $required_properties[] = 'edital_projeto_resumo';
+            $required_properties[] = 'edital_projeto_etapa';
+
+            if($agent->edital_projeto_etapa === 'executado'){
+                $required_properties[] = 'edital_prestacaoContas_envio';
+
+
+                if($agent->edital_prestacaoContas_envio === 'enviada'){
+                    $required_properties[] = 'edital_prestacaoContas_status';
+                }
+            }
+
+            $required_properties[] = 'edital_projeto_vigencia_inicio';
+            $required_properties[] = 'edital_projeto_vigencia_fim';
+
+        }*/
 
         return $required_properties;
     }
@@ -244,6 +288,10 @@ class Cadastro extends \MapasCulturais\Controller{
         $this->requireAuthentication();
 
         $app = App::i();
+
+//        var_dump($app->user);
+//        exit(0);
+
         if(!$app->user->redeCulturaViva){
             $app->redirect($app->createUrl('rede', 'entrada'), 307);
         }
@@ -454,10 +502,6 @@ class Cadastro extends \MapasCulturais\Controller{
         $this->render('CNPJcadastrado');
     }
 
-    function GET_pogressio(){
-        echo var_dump($this->_ponto->files);die;
-    }
-
     function ALL_registra(){
         $this->requireAuthentication();
         $app = App::i();
@@ -560,9 +604,8 @@ class Cadastro extends \MapasCulturais\Controller{
 
         $erros_responsavel = $this->getErrorsResponsavel();
         $erros_entidade = $this->getErrorsEntidade();
-        //$erros_ponto = $this->getErrorsPonto();
 
-        if (!$erros_responsavel && !$erros_entidade){
+        if(!$erros_responsavel && !$erros_entidade){
             $responsavel = $this->getResponsavel();
             $entidade = $this->getEntidade();
             $ponto = $this->getPonto();
@@ -616,12 +659,12 @@ class Cadastro extends \MapasCulturais\Controller{
                 'subject' => $message['title'],
                 'body' => $message['body']
             ]);
+
             $this->json($inscricao);
         } else {
             $this->errorJson([
                 'responsavel' => $erros_responsavel,
-                'entidade' => $erros_entidade//,
-                //'ponto' => $erros_ponto
+                'entidade' => $erros_entidade
             ], 400);
         }
     }
@@ -643,7 +686,7 @@ class Cadastro extends \MapasCulturais\Controller{
             $result = curl_exec($ch);
             $f = json_decode($result, true);
 
-			if ( $f == null ) {
+            if ( $f == null OR array_key_exists('erro', $f) ) {
 				//if (strcmp($f["erro"], 'CNPJ Inválido') === 0) {
 				$this->errorJson('CNPJ invalido', 401);
 				//}
@@ -681,4 +724,5 @@ class Cadastro extends \MapasCulturais\Controller{
             $this->Json($f["naturezaJuridica"]["cdNaturezaJuridica"]);
         }
     }
+
 }

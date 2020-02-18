@@ -4,16 +4,10 @@
             <span><b> * Campos Obrigatórios </b></span>
         </div>
         <!-- <h4>Informações Obrigatórias</h4> -->
-        <div class="row">
-            <label class="colunm-full">
-                <span class="destaque">Nome do Ponto/Pontão de Cultura*</span>
-                <span><b>{{ponto.name}}</b></span>
-                <span ng-if="!ponto.name"><b>Não informado</b></span>
-            </label>
-        </div>
 
         <div class="clear"></div>
 
+        <?php /*
         <div class="row">
             <label class="colunm-full">
                 <span class="destaque">Breve descrição (400 caracteres) do ponto de cultura*</span>
@@ -28,6 +22,7 @@
                 <span><b>{{ponto.cep}}</b></span>
                 <span ng-if="!ponto.cep"><b>Não informado</b></span>
             </label>
+
 
             <label class="colunm1">
                 <span class="destaque">O pontão tem sede própria?*</span>
@@ -102,5 +97,7 @@
                 <span ng-if="!ponto.En_Complemento"><b>Não informado</b></span>
             </label>
         </div>
+        */ ?>
+
     </div>
 </div>

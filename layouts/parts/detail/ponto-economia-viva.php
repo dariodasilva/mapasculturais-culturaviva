@@ -147,6 +147,7 @@
                        ng-model="ponto.pontoEconomiaCultura"> Não, mas gostaria
             </label>
 
+            <?php /*
             <div class="colunm-full">
                 <span class="destaque">O Ponto/Pontão de Cultura tem moeda complementar (social)?</span>
             </div>
@@ -201,6 +202,7 @@
                 <span class="destaque">Conte em um parágrafo a definição e o funcionamento da sua moeda, seja física ou digital.</span>
                 <textarea ng-model="ponto.pontoMoedaSocialDescricao" disabled="true"></textarea>
             </div>
+            */ ?>
 
             <div class="colunm-full">
                 <span class="destaque">O Ponto/Pontão de Cultura está disponível para as trocas de serviços ou produtos?</span>

@@ -21,19 +21,12 @@
             <!--Pertence a alguma rede-->
             <label class="colunm1">
                 <span class="destaque">Pertence ou pertenceu a alguma rede?*</span>
-                <select name="tipoPontoCulturaDesejado"
-                        ng-change="save_field('tipoPontoCulturaDesejado')"
-                        ng-model="agent.tipoPontoCulturaDesejado" required>
-                    <option value="estadual">Estadual</option>
-                    <option value="municipal">Municipal</option>
-                    <option value="intermunicipal">Intermunicipal</option>
-                    <option value="nao">Não</option>
-                </select>
+                <taxonomy-checkboxes taxonomy="rede_pertencente" entity="agent" terms="termos.rede_pertencente"></taxonomy-checkboxes>
             </label>
 
             <!--Deseja ser-->
             <label class="colunm1">
-                <span class="destaque">Deseja ser*<i class='hltip' ng-click="infoDesejaSer()" title=''>?</i>:</span>
+                <span class="destaque">Deseja ser: * <i class='hltip' ng-click="infoDesejaSer()" title=''>?</i></span>
                 <select name="tipoPonto"
                         ng-change="save_field('tipoPonto')"
                         ng-model="agent.tipoPonto" required>
@@ -57,92 +50,6 @@
                 </label>
             </div>
         </div>
-
-        <!--Endereço-->
-        <div>
-            <div class="row">
-                <label class="colunm1">
-                    <span class="destaque">Endereço  {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
-                </label>
-            </div>
-            <div class="clear"></div>
-            <div class="row">
-                <label class="colunm2">
-                    <span class="destaque">País*</span>
-                    <select required name="pais" ng-blur="save_field('pais')" ng-model="agent.pais">
-                        <?php echo get_countries_html();?>
-                    </select>
-                </label>
-
-                <label class="colunm2" ng-if="agent.pais === 'Brasil'">
-                    <span class="destaque">Estado*</span>
-                    <select required name="En_Estado" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado">
-                        <option value="AC">Acre</option>              <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>             <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>             <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>  <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>             <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>       <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>      <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>           <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>    <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option> <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>           <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>         <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                    </select>
-                    <span class="error" ng-repeat="error in errors.estado">{{ error }}</span>
-                </label>
-
-                <label class="colunm2" ng-if="agent.pais !== 'Brasil'">
-                    <span class="destaque">Estado</span>
-                    <input required name="En_Estado" type="text" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado"/>
-                </label>
-
-                <label class="colunm2" ng-class="{busy: cidadecoder.busy}">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
-                    <input required name="En_Municipio" type="text" ng-blur="save_field('En_Municipio'); cidadecoder.code(agent.En_Municipio, agent.pais)"
-                           ng-model="agent.En_Municipio"/>
-                    <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
-                </label>
-
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
-                </label>
-            </div>
-            <div class="clear"></div>
-            <div class="row">
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
-                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
-                </label>
-                <label class="colunm2">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Número*' : 'Número'}}</span>
-                    <input required name="En_Num" type="text" ng-blur="save_field('En_Num')" ng-model="agent.En_Num"/>
-                </label>
-                <label class="colunm2" ng-class="{'busy': cepcoder.busy}">
-                    <span class="destaque">{{agent.pais == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
-                    <input required type="text"
-                           name="cep"
-                           ng-blur="save_field('cep'); cepcoder.code(agent.cep)"
-                           ng-model="agent.cep"
-                           ui-mask="99999-999"
-                           ng-if="agent.pais === 'Brasil'">
-                    <input required type="text"
-                           name="cep"
-                           ng-blur="save_field('cep')"
-                           ng-model="agent.cep"
-                           ng-if="agent.pais !== 'Brasil'">
-                </label>
-                <label class="colunm2">
-                    <span class="destaque">Complemento</span>
-                    <input type="text" ng-blur="save_field('En_Complemento')" ng-model="agent.En_Complemento"/>
-                </label>
-            </div>
-        </div>
-        <!--Fim Endereço-->
 
         <!-- Nome fantasia e Razão Social -->
         <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
@@ -196,10 +103,14 @@
         <!--Fim Nome ponto-->
 
         <!-- Email institucional -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'ponto_coletivo'">
+        <div class="row">
             <label class="colunm-full">
                 <span class="destaque">
-                    E-mail institucional {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}} *
+                    E-mail institucional
+                    <label ng-if="agent.tipoPonto == 'ponto_entidade'"> da Entidade </label>
+                    <label ng-if="agent.tipoPonto == 'ponto_coletivo'"> do Coletivo </label>
+                    <label ng-if="agent.tipoPonto == 'pontao'"> do Pontão </label> *
+
                     <i class='hltip' title='Este e-mail será utilizado pela Secretaria para comunicação, chamada de atualização, realização de pesquisa e quaisquer outros contatos que se fizerem necessários.'>?</i>
                 </span>
                 <input name="emailPrivado" type="email" ng-blur="save_field('emailPrivado')" ng-model="agent.emailPrivado" />
@@ -209,16 +120,109 @@
         <!-- Fim Email institucional -->
 
         <!--Telefone entidade-->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade'">
+        <div class="row">
             <label class="colunm1" style="width:300px;">
-                <span class="destaque">Telefone institucional da Entidade *</span>
+                <span class="destaque">
+                    Telefone institucional
+                    <label ng-if="agent.tipoPonto == 'ponto_entidade'"> da Entidade </label>
+                    <label ng-if="agent.tipoPonto == 'ponto_coletivo'"> do Coletivo </label>
+                    <label ng-if="agent.tipoPonto == 'pontao'"> do Pontão </label> *
+                </span>
                 <input name="telefone1" type="text" ng-blur="save_field('telefone1')" ng-model="agent.telefone1" ui-mask="(99) ?99999-9999">
             </label>
         </div>
         <!-- Fim Telefone entidade-->
 
+        <!--Endereço-->
+        <div>
+            <div class="row">
+                <label class="colunm1">
+                    <span class="destaque">Endereço {{agent.tipoPonto == 'ponto_coletivo' ? 'do Coletivo' : 'da Entidade'}}* <i class='hltip' title='Endereço atrelado ao CNPJ (não precisa ser o mesmo endereço do Ponto de Cultura)'>?</i></span>
+                </label>
+            </div>
+            <div class="clear"></div>
+            <div class="row">
+                <label class="colunm2">
+                    <span class="destaque">País*</span>
+                    <select required name="pais" ng-blur="save_field('pais')" ng-model="agent.pais">
+                        <?php echo get_countries_html();?>
+                    </select>
+                </label>
+
+                <label class="colunm2" ng-if="agent.pais === 'Brasil'">
+                    <span class="destaque">Estado*</span>
+                    <select required name="En_Estado" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado">
+                        <option value="AC">Acre</option>              <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>             <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>             <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>  <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>             <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>       <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>      <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>           <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>    <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option> <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>           <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>         <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                    <span class="error" ng-repeat="error in errors.estado">{{ error }}</span>
+                </label>
+
+                <label class="colunm2" ng-if="agent.pais !== 'Brasil'">
+                    <span class="destaque">Estado</span>
+                    <input required name="En_Estado" type="text" ng-blur="save_field('En_Estado')" ng-model="agent.En_Estado"/>
+                </label>
+
+                <label class="colunm2" ng-class="{busy: cidadecoder.busy}">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
+                    <input required name="En_Municipio" type="text" ng-blur="save_field('En_Municipio'); cidadecoder.code(agent.En_Municipio, agent.pais)"
+                           ng-model="agent.En_Municipio"/>
+                    <span class="error" ng-repeat="error in errors.cidade">{{ error }}</span>
+                </label>
+
+                <label class="colunm2" ng-class="{'busy': cepcoder.busy}">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
+                    <input required type="text"
+                           name="cep"
+                           ng-blur="save_field('cep'); cepcoder.code(agent.cep, 'cep')"
+                           ng-model="agent.cep"
+                           ui-mask="99999-999"
+                           ng-if="agent.pais === 'Brasil'">
+                    <input required type="text"
+                           name="cep"
+                           ng-blur="save_field('cep')"
+                           ng-model="agent.cep"
+                           ng-if="agent.pais !== 'Brasil'">
+                </label>
+            </div>
+            <div class="clear"></div>
+            <div class="row">
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Rua*' : 'Rua'}}</span>
+                    <input required name="En_Nome_Logradouro" type="text" ng-blur="save_field('En_Nome_Logradouro'); endcoder.code();" ng-model="agent.En_Nome_Logradouro"/>
+                </label>
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Número*' : 'Número'}}</span>
+                    <input required name="En_Num" type="text" ng-blur="save_field('En_Num')" ng-model="agent.En_Num"/>
+                </label>
+
+                <label class="colunm2">
+                    <span class="destaque">{{agent.pais == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
+                    <input required name="En_Bairro" type="text" ng-blur="save_field('En_Bairro'); endcoder.code();" ng-model="agent.En_Bairro"/>
+                </label>
+
+                <label class="colunm2">
+                    <span class="destaque">Complemento</span>
+                    <input type="text" ng-blur="save_field('En_Complemento')" ng-model="agent.En_Complemento"/>
+                </label>
+            </div>
+        </div>
+        <!--Fim Endereço-->
+
         <!-- Endereço ponto pontão -->
-        <div class="row" ng-show="agent.tipoPonto === 'ponto_entidade' || agent.tipoPonto === 'pontao'">
+        <div class="row">
             <label>
                 <span class="destaque">O endereço da unidade é o mesmo do ponto ou pontão?*</span>
                 <select name="mesmoEndereco"
@@ -232,6 +236,12 @@
 
         <div ng-if="agent.mesmoEndereco === 'nao'">
             <div>
+                <div class="row">
+                    <label class="colunm1">
+                        <span class="destaque"> Endereço do ponto ou pontão: </span>
+                    </label>
+                    <hr>
+                </div>
                 <div class="row">
                     <label class="colunm2">
                         <span class="destaque">País*</span>
@@ -267,14 +277,25 @@
                     </label>
 
                     <label class="colunm2">
-                        <span class="destaque">{{agent.pais == 'BrasilPontaPontao' ? 'Cidade*' : 'Cidade'}}</span>
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Cidade*' : 'Cidade'}}</span>
                         <input required name="En_MunicipioPontaPontao" type="text" ng-blur="save_field('En_MunicipioPontaPontao')" ng-model="agent.En_MunicipioPontaPontao"/>
                     </label>
 
                     <label class="colunm2">
-                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
-                        <input required name="En_BairroPontaPontao" type="text" ng-blur="save_field('En_BairroPontaPontao')" ng-model="agent.En_BairroPontaPontao"/>
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
+                        <input required type="text"
+                               name="cepPontaPontao"
+                               ng-blur="save_field('cepPontaPontao'); cepcoder.code(agent.cepPontaPontao,'pontoPontao')"
+                               ng-model="agent.cepPontaPontao"
+                               ui-mask="99999-999"
+                               ng-if="agent.paisPontaPontao === 'Brasil'">
+                        <input required type="text"
+                               name="cepPontaPontao"
+                               ng-blur="save_field('cepPontaPontao')"
+                               ng-model="agent.cepPontaPontao"
+                               ng-if="agent.paisPontaPontao !== 'Brasil'">
                     </label>
+
                 </div>
                 <div class="clear"></div>
                 <div class="row">
@@ -286,20 +307,12 @@
                         <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Número*' : 'Número'}}</span>
                         <input required name="En_NumPontaPontao" type="text" ng-blur="save_field('En_NumPontaPontao')" ng-model="agent.En_NumPontaPontao"/>
                     </label>
+
                     <label class="colunm2">
-                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'CEP*' : 'CEP'}}</span>
-                        <input required type="text"
-                               name="cepPontaPontao"
-                               ng-blur="save_field('cepPontaPontao')"
-                               ng-model="agent.cepPontaPontao"
-                               ui-mask="99999-999"
-                               ng-if="agent.paisPontaPontao === 'Brasil'">
-                        <input required type="text"
-                               name="cepPontaPontao"
-                               ng-blur="save_field('cepPontaPontao')"
-                               ng-model="agent.cepPontaPontao"
-                               ng-if="agent.paisPontaPontao !== 'Brasil'">
+                        <span class="destaque">{{agent.paisPontaPontao == 'Brasil' ? 'Bairro*' : 'Bairro'}}</span>
+                        <input required name="En_BairroPontaPontao" type="text" ng-blur="save_field('En_BairroPontaPontao')" ng-model="agent.En_BairroPontaPontao"/>
                     </label>
+
                     <label class="colunm2">
                         <span class="destaque">Complemento</span>
                         <input type="text" ng-blur="save_field('En_ComplementoPontaPontao')" ng-model="agent.En_ComplementoPontaPontao"/>
